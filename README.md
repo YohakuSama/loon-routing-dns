@@ -6,13 +6,17 @@
 
 ![Platform](https://img.shields.io/badge/平台-Loon%20iOS-2675db?style=flat-square) ![Format](https://img.shields.io/badge/配置-.lcf-6554c0?style=flat-square) ![Status](https://img.shields.io/badge/第三方-非官方-555?style=flat-square)
 
-**[📥 复制配置直链](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf) · [📂 查看配置文件](https://github.com/YohakuSama/loon-routing-dns/blob/main/Loon_Routing_DNS.lcf)**
+**[🐦 关注作者 X](https://x.com/yohakusama) · [📥 复制配置直链](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf) · [📂 查看配置文件](https://github.com/YohakuSama/loon-routing-dns/blob/main/Loon_Routing_DNS.lcf)**
 
 </div>
 
 ---
 
 > **第三方 Loon 配置分享，非 Loon 官方项目。** 面向中国大陆网络环境下的日常使用，整理分流、DNS、广告过滤和策略组。**目前仅在 Loon iOS 环境进行过测试，macOS 尚未测试。**
+
+## 👤 作者与交流
+
+由 **[YohakuSama](https://github.com/YohakuSama)** 整理维护。欢迎在 **[X / Twitter 关注 @yohakusama](https://x.com/yohakusama)**，交流 Loon、DNS 隐私与实际测试反馈。如果项目对你有帮助，欢迎给仓库点个 ⭐ Star。
 
 ## 这个项目适合谁？
 
