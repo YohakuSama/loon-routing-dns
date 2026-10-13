@@ -1,0 +1,214 @@
+# Loon Routing DNS v4.2 — Public Release
+# Icons: Qure Color + social-icons
+# Speed test: Cloudflare
+# DNS: AdGuard DNS (DoH)
+# Add your own subscriptions under [Remote Proxy].
+# IMPORTANT: In Loon settings, keep DoH traffic mode = RULE and manually disable encrypted DNS fallback.
+# DNS test results can include resolvers distinct from proxy egress; this alone does not prove leakage.
+# Changes from v4.1: GEOIP,CN,DIRECT,no-resolve; documentation clarified.
+
+[General]
+dns-server = 94.140.14.14,94.140.15.15
+doh-server = https://dns.adguard-dns.com/dns-query
+hijack-dns = *:53
+ip-mode = ipv4-preferred
+ipv6-vif = auto
+interface-mode = auto
+
+skip-proxy = 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,localhost,*.local,captive.apple.com
+bypass-tun = 0.0.0.0/8,10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
+
+real-ip = dns.msftncsi.com,*.srv.nintendo.net,*.stun.playstation.net,*.xboxlive.com,*.turn.twilio.com,*.stun.twilio.com,stun.syncthing.net
+
+disable-stun = true
+udp-fallback-mode = REJECT
+domain-reject-mode = Request
+
+proxy-test-url = http://cp.cloudflare.com/generate_204
+internet-test-url = http://www.gstatic.com/generate_204
+test-timeout = 5
+
+allow-wifi-access = false
+wifi-access-http-port = 7222
+wifi-access-socks5-port = 7221
+
+[Proxy]
+
+[Remote Proxy]
+# Paste your existing subscription definitions here.
+
+[Remote Filter]
+ALL_Filter = NameRegex, FilterKey = ".*"
+
+[Proxy Group]
+# Core — Qure Color
+Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png
+Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png
+AdBlock = select,REJECT,Proxy,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Reject.png
+Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+
+# AI and Platforms
+AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png
+Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google.png
+Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+
+# Streaming
+YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png
+Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney%2B.png
+PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Prime_Video.png
+Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png
+Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitch.png
+HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/HBO.png
+Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AbemaTV.png
+動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png
+Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/DAZN.png
+BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/BBC_iPlayer.png
+Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png
+
+# Social — flat-color brand icons
+Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Color/WhatsApp.png
+Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Instagram.png
+Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Facebook.png
+Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png
+Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Discord.png
+Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Line.png
+Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Color/Reddit.png
+Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/gauravghongde/social-icons/master/PNG/Color/LinkedIN.png
+
+# Games and Payments
+Steam = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Steam.png
+Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+
+[Remote Rule]
+# Advertising
+https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-surge.txt, policy=AdBlock, tag=AntiAD, enabled=true
+
+# Streaming
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list, policy=YouTube, tag=YouTube, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list, policy=Google, tag=Google, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list, policy=Netflix, tag=Netflix, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Disney/Disney.list, policy=Disney, tag=Disney, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PrimeVideo/PrimeVideo.list, policy=PrimeVideo, tag=PrimeVideo, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list, policy=Spotify, tag=Spotify, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list, policy=TikTok, tag=TikTok, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AbemaTV/AbemaTV.list, policy=Abema, tag=AbemaTV, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BBC/BBC.list, policy=BBC, tag=BBC, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list, policy=Bilibili, tag=BiliBili, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitch/Twitch.list, policy=Twitch, tag=Twitch, enabled=true
+
+# Social
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list, policy=Telegram, tag=Telegram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list, policy=Instagram, tag=Instagram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list, policy=Twitter, tag=Twitter, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Discord/Discord.list, policy=Discord, tag=Discord, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Line/Line.list, policy=Line, tag=Line, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/LinkedIn/LinkedIn.list, policy=Linkedin, tag=LinkedIn, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Reddit/Reddit.list, policy=Reddit, tag=Reddit, enabled=true
+
+# Platform, Games and Payments
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list, policy=Apple, tag=Apple, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple_Domain.list, policy=Apple, tag=AppleDomain, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list, policy=Steam, tag=Steam, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list, policy=Paypal, tag=PayPal, enabled=true
+
+# China Direct
+https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/direct.txt, policy=DIRECT, tag=ChinaDirect, enabled=true
+
+[Rule]
+# Remote Resources
+DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
+
+# AI
+DOMAIN-SUFFIX,openai.com,AI
+DOMAIN-SUFFIX,chatgpt.com,AI
+DOMAIN-SUFFIX,oaistatic.com,AI
+DOMAIN-SUFFIX,oaiusercontent.com,AI
+DOMAIN-SUFFIX,anthropic.com,AI
+DOMAIN-SUFFIX,claude.ai,AI
+DOMAIN-SUFFIX,claude.com,AI
+DOMAIN-SUFFIX,perplexity.ai,AI
+DOMAIN-SUFFIX,perplexity.com,AI
+DOMAIN-SUFFIX,cursor.com,AI
+DOMAIN-SUFFIX,cursor.sh,AI
+DOMAIN-SUFFIX,grok.com,AI
+DOMAIN,gemini.google.com,AI
+DOMAIN,aistudio.google.com,AI
+DOMAIN,copilot.microsoft.com,AI
+
+# Netflix
+DOMAIN-SUFFIX,netflix.com,Netflix
+DOMAIN-SUFFIX,netflix.net,Netflix
+DOMAIN-SUFFIX,nflxvideo.net,Netflix
+DOMAIN-SUFFIX,nflximg.com,Netflix
+DOMAIN-SUFFIX,nflximg.net,Netflix
+DOMAIN-SUFFIX,nflxso.net,Netflix
+DOMAIN-SUFFIX,nflxext.com,Netflix
+DOMAIN-SUFFIX,nflxsearch.net,Netflix
+
+# WhatsApp
+DOMAIN-SUFFIX,whatsapp.com,Whatsapp
+DOMAIN-SUFFIX,whatsapp.net,Whatsapp
+DOMAIN-SUFFIX,whatsapp.biz,Whatsapp
+DOMAIN-SUFFIX,wa.me,Whatsapp
+
+# Facebook
+DOMAIN-SUFFIX,facebook.com,Facebook
+DOMAIN-SUFFIX,facebook.net,Facebook
+DOMAIN-SUFFIX,fb.com,Facebook
+DOMAIN-SUFFIX,fb.me,Facebook
+DOMAIN-SUFFIX,messenger.com,Facebook
+DOMAIN-SUFFIX,m.me,Facebook
+
+# DAZN
+DOMAIN-SUFFIX,dazn.com,Dazn
+DOMAIN-SUFFIX,dazn-api.com,Dazn
+DOMAIN-SUFFIX,dazndn.com,Dazn
+DOMAIN-SUFFIX,indazn.com,Dazn
+DOMAIN-SUFFIX,indaznlab.com,Dazn
+
+# HBO
+DOMAIN-SUFFIX,hbo.com,HBO
+DOMAIN-SUFFIX,hbomax.com,HBO
+DOMAIN-SUFFIX,hbomaxcdn.com,HBO
+DOMAIN-SUFFIX,hbogo.com,HBO
+DOMAIN-SUFFIX,hboasia.com,HBO
+DOMAIN-SUFFIX,max.com,HBO
+
+# Bahamut
+DOMAIN-SUFFIX,gamer.com.tw,動畫瘋
+DOMAIN-SUFFIX,bahamut.com.tw,動畫瘋
+
+# Microsoft
+DOMAIN-SUFFIX,microsoft.com,Microsoft
+DOMAIN-SUFFIX,microsoftonline.com,Microsoft
+DOMAIN-SUFFIX,microsoft365.com,Microsoft
+DOMAIN-SUFFIX,office.com,Microsoft
+DOMAIN-SUFFIX,office365.com,Microsoft
+DOMAIN-SUFFIX,office.net,Microsoft
+DOMAIN-SUFFIX,outlook.com,Microsoft
+DOMAIN-SUFFIX,onedrive.com,Microsoft
+DOMAIN-SUFFIX,1drv.ms,Microsoft
+DOMAIN-SUFFIX,live.com,Microsoft
+DOMAIN-SUFFIX,windows.com,Microsoft
+DOMAIN-SUFFIX,windowsupdate.com,Microsoft
+DOMAIN-SUFFIX,xboxlive.com,Microsoft
+
+# Domestic Services
+DOMAIN-SUFFIX,ccb.com,DIRECT
+DOMAIN-SUFFIX,abcchina.com,DIRECT
+DOMAIN-SUFFIX,abcchina.com.cn,DIRECT
+DOMAIN-SUFFIX,t3go.cn,DIRECT
+DOMAIN-SUFFIX,wo.cn,DIRECT
+
+# Default Routing
+# Avoid pre-resolution solely for GEOIP matching; may affect some China-direct matches.
+GEOIP,CN,DIRECT,no-resolve
+FINAL,Final
+
+[Mitm]
+skip-server-cert-verify = false
