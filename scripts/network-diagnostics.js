@@ -1,5 +1,5 @@
 /*
- * Loon Network Diagnostics v1.0
+ * Loon Network Diagnostics v1.2
  * One script for Generic (manual) and Network Changed (automatic).
  * No MITM, rewrites, policy changes, or modifications to DNS settings.
  * Requirements: Loon >= 3.5.1 (983).
@@ -166,6 +166,54 @@
     }
   }
 
+  function probeNativeDNS(done) {
+    // $dns.query is available only in Loon Build 988 or later.
+    if (typeof $dns === "undefined" || !$dns || typeof $dns.query !== "function") {
+      done({ available: false, text: "原生 DNS：当前 Loon 不支持 $dns.query（需 Build 988+）；HTTP DoH 检测仍可用。" });
+      return;
+    }
+    var start = Date.now();
+    var returned = false;
+    function finishNative(v) {
+      if (returned) return;
+      returned = true;
+      done(v);
+    }
+    try {
+      $dns.query({ domain: "example.com", protocol: "auto", timeout: HTTP_TIMEOUT },
+        function (error, reply) {
+          var elapsed = Date.now() - start;
+          if (error || !reply) {
+            var code = error && error.code ? safeDNSLabel(error.code) : "QUERY_FAILED";
+            finishNative({ available: true, text: "原生 DNS：失败（" + code + "，" + elapsed + " ms）" });
+            return;
+          }
+          var protocol = safeDNSLabel(reply.protocol || "未知");
+          var answers = Array.isArray(reply.answers) ? reply.answers : [];
+          var a = 0, aaaa = 0;
+          for (var i = 0; i < answers.length; i++) {
+            if (answers[i].type === "A") a++;
+            if (answers[i].type === "AAAA") aaaa++;
+          }
+          var passed = a + aaaa > 0;
+          // Never print the resolver's full URL because personal DoH URLs may contain tokens.
+          finishNative({
+            available: true,
+            text: (passed ? "✓ " : "✗ ") + "Loon 原生 DNS：" +
+              (passed ? "有解析记录" : "无 A/AAAA") + "，协议 " + protocol +
+              "，A " + a + " / AAAA " + aaaa +
+              "，缓存 " + (reply.fromCache === true ? "命中" : "未命中/未知") +
+              "，" + elapsed + " ms（服务器完整地址已隐藏）"
+          });
+        });
+    } catch (e) {
+      finishNative({ available: true, text: "原生 DNS：API 调用失败，请检查 Loon Build 988+。" });
+    }
+  }
+  function safeDNSLabel(text) {
+    return String(text || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40) || "未知";
+  }
+
   function runBatch(which, callback) {
     var pending = which.length;
     var results = {};
@@ -218,7 +266,9 @@
 
   if (!auto) {
     runBatch(["direct", "doh", "proxy"], function (results) {
-      finish(fullReport(results, false));
+      probeNativeDNS(function (native) {
+        finish(fullReport(results, false) + "\n" + native.text);
+      });
     });
     return;
   }
