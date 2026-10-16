@@ -102,6 +102,7 @@
       vpn: typeof risk.is_vpn === "boolean" ? risk.is_vpn : null,
       proxy: typeof risk.is_proxy === "boolean" ? risk.is_proxy : null,
       tor: typeof risk.is_tor === "boolean" ? risk.is_tor : null,
+      riskScore: typeof risk.risk_score === "number" && isFinite(risk.risk_score) && risk.risk_score >= 0 && risk.risk_score <= 100 ? risk.risk_score : null,
       provider: "ipquery.io"
     };
   }
@@ -122,6 +123,7 @@
       asn: isp.asn ? "AS" + String(isp.asn).replace(/^AS/i, "") : "未知",
       org: safe(isp.org), isp: safe(isp.isp),
       mobile: null, datacenter: null, vpn: null, proxy: null, tor: null,
+      riskScore: null,
       provider: "ipwho.is（仅位置与 ASN）"
     };
   }
@@ -160,8 +162,11 @@
       "ASN：" + info.asn,
       "ISP：" + info.isp,
       "运营组织：" + info.org,
-      "所在机房品牌：" + (info.datacenter === true ? "可能属于 " + info.org + "（非精确机房地址）" : "无法确认具体机房"),
+      "机房/托管组织：" + (info.datacenter === true ? info.org + "（ASN 归属线索，并非精确数据中心）" : "无法确定"),
       "时区：" + info.timezone,
+      "邮编/地区代码：" + info.zip,
+      "近似坐标：" + (info.lat !== null && info.lon !== null ? info.lat.toFixed(3) + ", " + info.lon.toFixed(3) : "无数据"),
+      "风险分数：" + (info.riskScore !== null ? info.riskScore + "/100（服务商自有风控指标，非节点质量评分）" : "无数据"),
       "VPN 特征：" + signal(info.vpn),
       "代理特征：" + signal(info.proxy),
       "Tor 特征：" + signal(info.tor),
