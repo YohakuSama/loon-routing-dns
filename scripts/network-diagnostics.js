@@ -1,0 +1,206 @@
+/*
+ * Loon Network Diagnostics v1.0
+ * One script for Generic (manual) and Network Changed (automatic).
+ * No MITM, rewrites, policy changes, or modifications to DNS settings.
+ * Requirements: Loon >= 3.5.1 (983).
+ */
+(function () {
+  "use strict";
+
+  var TAG_AUTO = "网络切换诊断";
+  var tag = typeof $script !== "undefined" && $script && $script.name || "";
+  var auto = tag === TAG_AUTO;
+  var args = typeof $argument !== "undefined" && $argument && typeof $argument === "object" ? $argument : {};
+  var dohURL = typeof args.doh_url === "string" ? args.doh_url.trim() : "https://dns.alidns.com/dns-query";
+  var DIRECT_URL = "http://wifi.vivo.com.cn/generate_204";
+  var PROXY_URL = "http://cp.cloudflare.com/generate_204";
+  var STORE_KEY = "loon-routing-dns:diagnostics:auto-alert:v1";
+  var COOLDOWN_MS = 30 * 60 * 1000;
+  var HTTP_TIMEOUT = 6500;
+  var finished = false;
+
+  function finish(report) {
+    if (finished) return;
+    finished = true;
+    console.log("[Network Diagnostics] " + report);
+    if (auto) {
+      $done();
+    } else {
+      $done({ title: "Loon 网络诊断", content: report });
+    }
+  }
+
+  function classifyError(error) {
+    var msg = String(error || "").toLowerCase();
+    if (/timed? ?out|timeout/.test(msg)) return "连接超时";
+    if (/certificat|ssl|tls|handshake/.test(msg)) return "TLS/证书错误";
+    if (/resolve|dns|host not found|unknown host/.test(msg)) return "域名解析失败";
+    if (/cancel/.test(msg)) return "请求被取消";
+    return "连接失败";
+  }
+
+  function result(ok, label, ms, detail) {
+    return { ok: ok, label: label, ms: ms, detail: detail };
+  }
+
+  function makeDnsQuery() {
+    // RFC 1035: example.com A IN, RD=1; DNS transaction ID=0 per RFC 8484.
+    var bytes = [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+    var labels = ["example", "com"];
+    for (var i = 0; i < labels.length; i++) {
+      bytes.push(labels[i].length);
+      for (var j = 0; j < labels[i].length; j++) bytes.push(labels[i].charCodeAt(j));
+    }
+    bytes.push(0, 0, 1, 0, 1);
+    return new Uint8Array(bytes);
+  }
+
+  function validateDnsReply(data) {
+    if (!(data instanceof Uint8Array) || data.length < 12) return "非 DNS 二进制响应";
+    if (data[0] !== 0 || data[1] !== 0) return "DNS 请求 ID 不匹配";
+    if ((data[2] & 128) === 0) return "响应缺少 DNS QR 标志";
+    var rcode = data[3] & 15;
+    if (rcode !== 0) return "DNS 返回 RCODE " + rcode;
+    var questions = (data[4] << 8) | data[5];
+    var answers = (data[6] << 8) | data[7];
+    if (questions !== 1) return "DNS Question 数量异常";
+    if (answers < 1) return "DNS 无有效回答";
+    return null;
+  }
+
+  function probeDirect(done) {
+    var start = Date.now();
+    try {
+      $httpClient.get({
+        url: DIRECT_URL, node: "DIRECT", timeout: HTTP_TIMEOUT,
+        "auto-redirect": false, "auto-cookie": false
+      }, function (error, response) {
+        var ms = Date.now() - start;
+        if (error) return done(result(false, "直连网络", ms, classifyError(error)));
+        var status = response && response.status;
+        done(result(status === 204, "直连网络", ms, status === 204 ? "HTTP 204" : "探测站点返回 HTTP " + String(status || "未知")));
+      });
+    } catch (error) {
+      done(result(false, "直连网络", Date.now() - start, classifyError(error)));
+    }
+  }
+
+  function probeDoh(done) {
+    var start = Date.now();
+    if (!/^https:\/\/[^\s#]+$/i.test(dohURL)) {
+      done(result(false, "加密 DNS", 0, "DoH 地址必须是完整 HTTPS URL"));
+      return;
+    }
+    try {
+      $httpClient.post({
+        url: dohURL, node: "DIRECT", timeout: HTTP_TIMEOUT,
+        headers: { "Accept": "application/dns-message", "Content-Type": "application/dns-message" },
+        body: makeDnsQuery(), "binary-mode": true,
+        "auto-redirect": false, "auto-cookie": false, insecure: false
+      }, function (error, response, data) {
+        var ms = Date.now() - start;
+        if (error) return done(result(false, "加密 DNS", ms, classifyError(error)));
+        var status = response && response.status;
+        if (status !== 200) {
+          return done(result(false, "加密 DNS", ms, "DoH HTTP " + String(status || "未知")));
+        }
+        var err = validateDnsReply(data);
+        done(result(!err, "加密 DNS", ms, err || "DNS A 查询成功 (example.com)"));
+      });
+    } catch (error) {
+      done(result(false, "加密 DNS", Date.now() - start, classifyError(error)));
+    }
+  }
+
+  function probeProxy(done) {
+    var start = Date.now();
+    try {
+      $httpClient.get({
+        url: PROXY_URL, node: "Proxy", timeout: HTTP_TIMEOUT,
+        "auto-redirect": false, "auto-cookie": false
+      }, function (error, response) {
+        var ms = Date.now() - start;
+        if (error) return done(result(false, "代理策略 Proxy", ms, classifyError(error) + "（检查节点订阅与 Proxy 选择）"));
+        var status = response && response.status;
+        done(result(status === 204, "代理策略 Proxy", ms,
+          status === 204 ? "HTTP 204" : "探测站点返回 HTTP " + String(status || "未知")));
+      });
+    } catch (error) {
+      done(result(false, "代理策略 Proxy", Date.now() - start, classifyError(error)));
+    }
+  }
+
+  function runBatch(which, callback) {
+    var pending = which.length;
+    var results = {};
+    function collect(name, value) {
+      results[name] = value;
+      pending -= 1;
+      if (!pending) callback(results);
+    }
+    for (var i = 0; i < which.length; i++) {
+      (function (name) {
+        var fn = name === "direct" ? probeDirect : name === "doh" ? probeDoh : probeProxy;
+        fn(function (value) { collect(name, value); });
+      })(which[i]);
+    }
+  }
+
+  function line(item) {
+    return (item.ok ? "✓ " : "✗ ") + item.label + "：" + item.detail + "，" + item.ms + " ms";
+  }
+
+  function fullReport(results, isRetry) {
+    var list = [results.direct, results.doh];
+    if (results.proxy) list.push(results.proxy);
+    var parts = [];
+    for (var i = 0; i < list.length; i++) parts.push(line(list[i]));
+    if (isRetry) parts.push("已在网络切换后进行二次确认。");
+    parts.push("提示：这是探测请求，不等于证明 Loon 所有 DNS 查询均通过 DoH；请结合 Loon DNS 日志核对。");
+    return parts.join("\n");
+  }
+
+  function notifyIfNeeded(results) {
+    var directFailed = !results.direct.ok;
+    var dohFailed = !results.doh.ok;
+    if (!dohFailed && !directFailed) {
+      try { $persistentStore.write(JSON.stringify({ key: "ok", time: Date.now() }), STORE_KEY); } catch (error) {}
+      return;
+    }
+    // An isolated failure of the chosen HTTP 204 endpoint does not prove loss of internet.
+    if (!dohFailed && directFailed) return;
+    var key = directFailed ? "direct+doh" : "doh";
+    var old = {};
+    try { old = JSON.parse($persistentStore.read(STORE_KEY) || "{}"); } catch (error) {}
+    if (old.key === key && Date.now() - Number(old.time || 0) < COOLDOWN_MS) return;
+    try { $persistentStore.write(JSON.stringify({ key: key, time: Date.now() }), STORE_KEY); } catch (error) {}
+    try {
+      $notification.post("Loon 网络诊断", directFailed ? "网络切换后直连与 DoH 均异常" : "网络切换后 DoH 连接异常",
+        directFailed ? "已二次检测失败；可能网络尚未恢复。请打开 Loon 查看日志。" : "直连探测正常，但 DoH 测试失败。请检查 DNS 服务器与网络连接。");
+    } catch (error) {}
+  }
+
+  if (!auto) {
+    runBatch(["direct", "doh", "proxy"], function (results) {
+      finish(fullReport(results, false));
+    });
+    return;
+  }
+
+  // iOS network switching can trigger before the new route is ready.
+  setTimeout(function () {
+    runBatch(["direct", "doh"], function (first) {
+      if (first.direct.ok && first.doh.ok) {
+        notifyIfNeeded(first);
+        finish(fullReport(first, false));
+        return;
+      }
+      setTimeout(function () {
+        runBatch(["direct", "doh"], function (second) {
+          notifyIfNeeded(second);
+          finish(fullReport(second, true));
+        });
+      }, 2500);
+    });
+  }, 1800);
+})();
