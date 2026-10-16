@@ -56,16 +56,52 @@
   }
 
   function validateDnsReply(data) {
-    if (!(data instanceof Uint8Array) || data.length < 12) return "非 DNS 二进制响应";
+    if (!(data instanceof Uint8Array) || data.length < 33) return "DNS 响应不完整";
     if (data[0] !== 0 || data[1] !== 0) return "DNS 请求 ID 不匹配";
-    if ((data[2] & 128) === 0) return "响应缺少 DNS QR 标志";
+    if ((data[2] & 128) === 0) return "缺少 DNS 响应标志";
+    if ((data[2] & 2) !== 0) return "DNS 响应被截断";
+    if ((data[2] & 120) !== 0) return "DNS 操作码异常";
     var rcode = data[3] & 15;
     if (rcode !== 0) return "DNS 返回 RCODE " + rcode;
     var questions = (data[4] << 8) | data[5];
     var answers = (data[6] << 8) | data[7];
     if (questions !== 1) return "DNS Question 数量异常";
-    if (answers < 1) return "DNS 无有效回答";
-    return null;
+    if (answers < 1) return "DNS 未返回答案";
+
+    // Match the exact example.com A/IN question sent by this script.
+    var request = makeDnsQuery();
+    if (data.length < request.length) return "DNS Question 不完整";
+    for (var k = 12; k < request.length; k++) {
+      if (data[k] !== request[k]) return "DNS Question 与请求不一致";
+    }
+    var offset = request.length;
+    for (var i = 0; i < answers; i++) {
+      // The answer name may use RFC 1035 compression pointers.
+      var steps = 0;
+      while (true) {
+        if (offset >= data.length || ++steps > 128) return "DNS Answer 域名不完整";
+        var length = data[offset];
+        if ((length & 192) === 192) {
+          if (offset + 1 >= data.length) return "DNS 压缩指针不完整";
+          offset += 2;
+          break;
+        }
+        if ((length & 192) !== 0) return "DNS Answer 域名格式错误";
+        offset += 1;
+        if (length === 0) break;
+        if (offset + length > data.length) return "DNS Answer 域名不完整";
+        offset += length;
+      }
+      if (offset + 10 > data.length) return "DNS Answer 记录头不完整";
+      var type = (data[offset] << 8) | data[offset + 1];
+      var klass = (data[offset + 2] << 8) | data[offset + 3];
+      var rdlength = (data[offset + 8] << 8) | data[offset + 9];
+      offset += 10;
+      if (offset + rdlength > data.length) return "DNS Answer 记录数据不完整";
+      if (type === 1 && klass === 1 && rdlength === 4) return null;
+      offset += rdlength;
+    }
+    return "DNS 未返回有效 A 记录";
   }
 
   function probeDirect(done) {
