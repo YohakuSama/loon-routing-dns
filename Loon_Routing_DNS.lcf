@@ -1,4 +1,4 @@
-# Loon Routing DNS v4.4.5
+# Loon Routing DNS v4.4.6
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loon-routing-dns
 # X: https://x.com/yohakusama
@@ -17,7 +17,7 @@ real-ip = *.apple.com,*.icloud.com,dns.msftncsi.com,*.srv.nintendo.net,*.xboxliv
 disable-stun = true
 udp-fallback-mode = REJECT
 domain-reject-mode = DNS
-dns-reject-mode = NoAnswer
+dns-reject-mode = NOANSWER
 proxy-test-url = http://cp.cloudflare.com/generate_204
 internet-test-url = http://wifi.vivo.com.cn/generate_204
 test-timeout = 5
@@ -64,7 +64,7 @@ Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.gi
 Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Communication/Telegram/Telegram.png
 Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Meta/Facebook/WhatsApp/WhatsApp.png
 Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Meta/Facebook/Instagram/Instagram.png
-Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Meta/Facebook/Facebook/Facebook.png
+Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Meta/Facebook/Facebook.png
 Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/SpaceXAI/X/X.png
 Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Communication/Discord/Discord.png
 Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Communication/LINE/LINE.png
