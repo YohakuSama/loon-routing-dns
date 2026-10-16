@@ -2,7 +2,7 @@
 
 一份面向 **Loon iOS** 的第三方完整配置：国内直连、国外按策略代理、AliDNS 加密解析、广告拦截，以及常用服务与 CDN 分流。
 
-**版本：v4.4.5 · AliDNS**　·　[获取配置](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf)　·　[查看源码](./Loon_Routing_DNS.lcf)　·　[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)
+**版本：v4.4.6 · AliDNS**　·　[获取配置](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf)　·　[查看源码](./Loon_Routing_DNS.lcf)　·　[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)
 
 > **这是完整配置，不是插件，也不包含节点。** 导入后必须添加自己的节点订阅。请先备份原配置和订阅地址。本项目与 Loon 官方无关联。
 
@@ -62,19 +62,19 @@ MySubscription = https://example.com/subscription.txt,enabled=true
 
 **验证完成：** 节点列表非空、远程规则正常加载、国内网站可用、国外网站按所选策略访问。
 
-### 可选插件：网络诊断 + 节点详情
+### 可选插件 v1.2：网络诊断 + 节点详情
 
-只需安装一个插件，不修改主配置，包含三种工具：
+**[安装 Loon Network Diagnostics & Node Intelligence](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin)** · [查看插件使用教程](./docs/NETWORK_DIAGNOSTICS.md)
 
-- **手动网络诊断：** 检测 DIRECT、AliDNS DoH、Proxy 策略连通性。
-- **网络切换检测：** Wi-Fi / 蜂窝变化时轻量检测；失败复测、异常去重通知。
-- **节点详情查询：** 手动查询指定节点或策略组的**出口 IP、国家、城市、ASN、ISP、机房/移动网络、VPN/代理特征**；可选与 DIRECT 出口对比。
+主配置无需安装插件也能正常工作。本插件包含三项独立功能：
 
-**[安装 Loon Network Diagnostics & Node Intelligence 插件](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin)**（Loon 3.5.1 Build 983 或更高版本）
+- **手动网络诊断：** 检测 DIRECT、AliDNS DoH、Proxy，并在 **Loon Build 988+** 上通过 `$dns.query()` 查询 Loon 原生 DNS 栈，显示解析协议、A/AAAA 记录数量和缓存状态。Build 983–987 会自动跳过原生功能。
+- **网络切换故障诊断：** Wi-Fi / 蜂窝变化后进行轻量检测，异常复测和去重通知。**不负责开启/关闭 VPN，也不切换 RULE/DIRECT 模式**。
+- **节点详情查询：** 获取实际出口 IP、ASN、运营商、所在国家/城市、疑似机房或移动网络标记，并与本地 GeoIP/ASN 数据交叉核对；从明确节点入口执行时可短时缓存结果。
 
-**[查看插件教程：怎么查询某个节点、怎样解读家宽/机房、常见故障](./docs/NETWORK_DIAGNOSTICS.md)**
+**隐私改进：DIRECT 出口对照默认关闭。** 只有手动开启参数「同时查询本地 DIRECT 出口」，才向第三方情报 API 额外查询真实直连公网 IP；即便关闭，查询代理节点时情报商仍可看到代理出口 IP。
 
-打开 **Loon → 插件 → ＋ → 从 URL 导入**，启用后在通用脚本中运行「节点详情查询」。如果从具体节点或策略组入口运行，将优先查询该节点/策略；一般情况下默认查询 `Proxy` 当前选中的出口。**是否真家宽、确切的数据中心位置不能仅凭 IP 情报确认。** 如开启 DIRECT 对照，第三方情报服务会看到你的本地公网 IP，可在插件参数中关闭。
+配置页 → 插件 → ＋ → 从 URL 导入，启用后在通用脚本中使用「手动网络诊断」或「节点详情查询」。插件还拥有独立图标。节点 IP 类型是数据库推断，**不等于证明真家宽或精确机房位置**。
 
 ## 二、DNS：默认值与自行替换
 
@@ -161,7 +161,13 @@ Loon 的「全覆盖更新」可能影响本地修改；不确定时不要开启
 
 个人 DoH 地址、节点链接、密钥和 token 请保存在私人配置中，**不要提交到本公开仓库**。
 
-## 七、来源与反馈
+## 七、自动化测试与更新质量
+
+每次向主分支提交修改，都由 [GitHub Actions](./.github/workflows/loon-ci.yml) 运行主配置结构、33 个策略组、28 条远程订阅、插件参数引用、JavaScript 语法及模拟测试。每周及手动触发时，另检查图标、远程规则和脚本 URL 是否可用。
+
+**通过静态检查不代表已经通过 iPhone 上的 Loon 实机验证。** 如远程检测失败，先排除临时的 GitHub 网络故障或限流，再修复已确认的失效链接。
+
+## 八、来源与反馈
 
 | 用途 | 上游项目 |
 |---|---|
