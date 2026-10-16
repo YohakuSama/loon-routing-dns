@@ -62,6 +62,15 @@ MySubscription = https://example.com/subscription.txt,enabled=true
 
 **验证完成：** 节点列表非空、远程规则正常加载、国内网站可用、国外网站按所选策略访问。
 
+### 可选工具：网络与 DNS 诊断
+
+本项目提供一个**独立的可选插件**，不修改主配置、DNS 或策略组。支持手动检查**直连网络、AliDNS DoH、Proxy 连接**，以及 Wi-Fi / 蜂窝网络切换后的自动轻量检查；确认 DoH 故障才发送通知，并限制重复提醒。
+
+- **[安装 Loon Network Diagnostics 插件](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin)**（Loon 3.5.1 Build 983 或更高版本）
+- **[查看安装步骤、插件参数与常见问题](./docs/NETWORK_DIAGNOSTICS.md)**
+
+在 **Loon → 插件 → ＋ → 从 URL 导入** 上述插件链接后启用，再在通用脚本中点击「手动网络诊断」。首次使用建议先手动确认结果。需要关闭自动检查，可在插件参数中关闭「网络切换后自动诊断」。不安装此插件也完全不影响分流。**插件能够测试指定 DoH 的连接与 DNS 回答，但不能据此证明 Loon 所有查询都使用该 DoH，更不能证明没有 DNS 泄漏。**
+
 ## 二、DNS：默认值与自行替换
 
 默认配置使用免费的 **阿里云公共 DNS（AliDNS）**，不需要注册账户：
