@@ -32,7 +32,7 @@ allow-wifi-access = false
 ALL_Filter = NameRegex, FilterKey = ".*"
 
 [Proxy Group]
-# Core — 
+# Core
 Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Proxy/Proxy.png
 Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Auto/Auto.png
 Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/lige47/lige_icon/main/icon/05icon/xunhuan.png
@@ -119,8 +119,6 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list, policy=DIRECT, tag=ChinaDomain, enabled=true
 
 [Rule]
-# DNS
-DOMAIN,dns.alidns.com,DIRECT
 
 # Remote Resources
 DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
