@@ -1,17 +1,18 @@
 #!name = Loon Network Diagnostics & Node Intelligence
-#!desc = 可选工具：网络/DNS 诊断、自动切换检测，以及手动查看节点出口 IP、机房/家宽特征、国家、城市和 ASN
+#!desc = 网络和 DNS 诊断、节点出口情报；不含 Wi-Fi/蜂窝代理自动切换
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loon-routing-dns
+#!icon = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Search/Search.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 网络,诊断,节点信息,可选
 #!type = normal
 
 [Argument]
-doh_url = input,"https://dns.alidns.com/dns-query",tag=待测 DoH 地址,desc=默认为 AliDNS；更换自定义 DNS 时填写完整 HTTPS DoH 地址
-auto_check = switch,true,tag=网络切换后自动诊断,desc=关闭后仅手动检查
-target_policy = input,"Proxy",tag=默认查询策略组,desc=从脚本页面运行节点详情查询时使用此策略；从具体节点运行则优先使用所选节点
-compare_direct = switch,true,tag=同时查询本地 DIRECT 出口,desc=用于对比节点出口与直连公网 IP
+doh_url = input,"https://dns.alidns.com/dns-query",type=string,tag=待测 DoH 地址,desc=默认为 AliDNS；更换自定义 DNS 时填写完整 HTTPS DoH 地址
+auto_check = switch,true,type=boolean,tag=网络切换后自动诊断,desc=关闭后仅手动检查
+target_policy = input,"Proxy",type=string,tag=默认查询策略组,desc=从脚本页面运行节点详情查询时使用此策略；从具体节点运行则优先使用所选节点
+compare_direct = switch,false,type=boolean,tag=同时查询本地 DIRECT 出口,desc=用于对比节点出口与直连公网 IP
 
 [Script]
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/network-diagnostics.js", {${doh_url}}) with enable=${auto_check}, tag="网络切换诊断", timeout=40
