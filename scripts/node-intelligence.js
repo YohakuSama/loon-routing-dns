@@ -1,5 +1,5 @@
 /*
- * Loon Network Diagnostics - Node Intelligence v1.1
+ * Loon Network Diagnostics - Node Intelligence v1.2
  * Manual only. No MITM, no DNS/policy mutation.
  * IP data: ipquery.io; fallback: ipwho.is.
  * Classification is heuristic. Outgoing IP != physical node entry address.
@@ -17,6 +17,30 @@
   var configured = typeof arg.target_policy === "string" && arg.target_policy.trim() || DEFAULT_POLICY;
   var compare = arg.compare_direct !== false;
   var route = selectRoute();
+  var CACHE_TTL = 120 * 1000;
+  var cacheKey = "loon:node-intel:v1:" + encodeURIComponent(route);
+  function cacheIsSafe() {
+    // Do not reuse potentially stale cached egress for dynamic selector groups.
+    // Only explicit node entry points have a stable identity; even then use short TTL.
+    var explicit = choose(context.node) ||
+      (context.nodeInfo && typeof context.nodeInfo === "object" && (choose(context.nodeInfo.name) || choose(context.nodeInfo.tag)));
+    return !!explicit && explicit === route && route !== "DIRECT";
+  }
+  function readCache() {
+    if (!cacheIsSafe() || typeof $persistentStore === "undefined") return null;
+    try {
+      var record = JSON.parse($persistentStore.read(cacheKey) || "null");
+      if (!record || !record.at || Date.now() - record.at > CACHE_TTL ||
+          !record.info || !validIp(record.info.ip)) return null;
+      record.info.cached = true;
+      return record.info;
+    } catch (e) { return null; }
+  }
+  function writeCache(info) {
+    if (!cacheIsSafe() || typeof $persistentStore === "undefined" || !info) return;
+    try { $persistentStore.write(JSON.stringify({at: Date.now(), info: info}), cacheKey); } catch (e) {}
+  }
+
 
   function choose(v) {
     return typeof v === "string" && v.trim() ? v.trim() : "";
@@ -150,6 +174,15 @@
   function signal(v) {
     return v === true ? "检测到" : v === false ? "未检测到" : "无数据";
   }
+  function localIntel(ip) {
+    if (typeof $utils === "undefined" || !$utils) return null;
+    function check(method) {
+      try { return typeof $utils[method] === "function" ? safe($utils[method](ip), "无数据") : "无数据"; }
+      catch (e) { return "无数据"; }
+    }
+    return {geo: check("geoip"), asn: check("ipasn"), org: check("ipaso")};
+  }
+
   function render(info, local) {
     var arr = [
       "检测对象：" + safe(route),
@@ -170,8 +203,18 @@
       "VPN 特征：" + signal(info.vpn),
       "代理特征：" + signal(info.proxy),
       "Tor 特征：" + signal(info.tor),
-      "情报服务：" + info.provider
+      "情报服务：" + info.provider +
+        (info.cached ? "（本机缓存，最多 2 分钟；动态出口请手动刷新或从 Proxy 查询）" : "")
     ];
+    var localData = localIntel(info.ip);
+    if (localData) {
+      arr.push("Loon 本地 GeoIP：" + localData.geo);
+      arr.push("Loon 本地 ASN / ASO：" + localData.asn + " / " + localData.org);
+      if (localData.geo !== "无数据" && info.countryCode !== "未知" &&
+          localData.geo.toUpperCase() !== info.countryCode.toUpperCase()) {
+        arr.push("位置数据源存在差异：仅供交叉核对，不说明节点异常。");
+      }
+    }
     if (local && local.ip) {
       arr.push("直连出口 IP：" + local.ip);
       if (route !== "DIRECT" && info.ip === local.ip) arr.push("注意：两条路线出口相同，检查 Proxy 是否选了 DIRECT，或代理是否未生效。");
@@ -194,7 +237,7 @@
     return;
   }
   // Both calls are routed explicitly. Do not silently replace a failed Proxy result with DIRECT.
-  fetchInfo(route, function (err, info) {
+  function onTargetInfo(err, info) {
     if (err) {
       finish("目标：「" + safe(route) + "」\n节点出口查询失败：" + err + "\n请检查节点可用性、策略是否为 DIRECT，以及情报 API 是否被拦截。未回退到本地 IP 冒充节点出口。");
       return;
@@ -206,5 +249,15 @@
     fetchInfo("DIRECT", function (directErr, direct) {
       finish(render(info, directErr ? null : direct));
     });
-  });
+  }
+
+  var cached = readCache();
+  if (cached) {
+    onTargetInfo(null, cached);
+  } else {
+    fetchInfo(route, function (err, info) {
+      if (!err) writeCache(info);
+      onTargetInfo(err, info);
+    });
+  }
 })();
