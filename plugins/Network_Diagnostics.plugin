@@ -1,0 +1,17 @@
+#!name = Loon Network Diagnostics
+#!desc = 可选网络诊断：手动检测直连、DoH、代理；网络切换后自动复测异常并去重通知
+#!author = YohakuSama
+#!homepage = https://github.com/YohakuSama/loon-routing-dns
+#!date = 2026-10-16
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = 网络,诊断,可选
+#!type = normal
+
+[Argument]
+doh_url = input,"https://dns.alidns.com/dns-query",type=string,tag=待测 DoH 地址,desc=默认为 AliDNS；更换自定义 DNS 时填写完整 HTTPS DoH 地址
+auto_check = switch,true,type=boolean,tag=网络切换后自动诊断,desc=关闭后只保留手动诊断
+
+[Script]
+network-changed then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/network-diagnostics.js", {${doh_url}}) with enable=${auto_check}, tag="网络切换诊断", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/network-diagnostics.js", {${doh_url}}) with tag="手动网络诊断", img_url="network.system", timeout=30
