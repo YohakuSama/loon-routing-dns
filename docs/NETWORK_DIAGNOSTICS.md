@@ -1,10 +1,10 @@
-# Loon Network Diagnostics & Node Intelligence
+# Loon Network Diagnostics & Node Intelligence v1.2
 
 Loon Routing DNS 的**可选插件**，一份插件同时提供：
 
 1. **手动网络诊断**：DIRECT、DoH 与 Proxy 策略连通性。
-2. **网络切换检测**：Wi-Fi / 蜂窝变化后轻量复测，DoH 故障时去重通知。
-3. **节点详情查询**：手动查看指定节点或策略组的出口 IP、IP 所在国家/城市、ASN、ISP、托管组织、机房/移动/VPN/代理特征，并可与直连出口对照。
+2. **网络切换故障检测**：Wi-Fi / 蜂窝变化后轻量复测，DoH 故障时去重通知；不自动改变 Loon 的代理运行模式，也不切换 VPN 开关。
+3. **节点详情查询**：手动查看指定节点或策略组出口 IP、国家/城市、ASN、ISP 和机房/移动等特征，交叉参考 Loon 本地 GeoIP/ASN；如需要，可主动开启与直连出口对照。
 
 插件**不会修改主配置**、DNS、节点选择、代理策略或 MITM 设置；网络变化时**不会自动查询 IP 情报**。
 
@@ -50,6 +50,8 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Netwo
 | 风险分数 | 情报商自身的风控参考，**不是代理质量或安全性评分** |
 | 直连出口对照 | 使用 `DIRECT` 单独查询当前网络出口，帮助发现代理策略意外选到直连 |
 
+报告同时展示 Loon 本地 GeoIP / ASN / ASO 核对信息，数据源不一致时仅作参考。明确的节点入口结果可在本机缓存 2 分钟；默认 Proxy / Auto 等动态选择策略不会使用缓存，避免节点切换后返回旧 IP。
+
 报告中「机房/托管组织」只是 ASN 组织线索。**无法从公开 IP 情报可靠获得实际服务器楼宇、机架位置、具体数据中心名称或真实家庭住址。**
 
 ### 出现同一个出口 IP 怎么办？
@@ -58,11 +60,11 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Netwo
 
 若节点查询失败，脚本只报告失败，**不会自动把 DIRECT 的 IP 当成这个节点的 IP**。
 
-## 网络诊断与自动切换检测
+## 网络诊断与网络变化故障检测
 
 | 模式 | 运行时机 | 检测 |
 |---|---|---|
-| **手动网络诊断** | 用户主动执行 | DIRECT 的 HTTP 204、AliDNS DoH 的 RFC 8484 DNS 查询、Proxy 策略的 HTTP 204 |
+| **手动网络诊断** | 用户主动执行 | DIRECT 的 HTTP 204、AliDNS DoH 的 RFC 8484 DNS 查询、Proxy 策略的 HTTP 204；Build 988+ 另测原生 DNS |
 | **网络切换诊断** | Wi-Fi / 蜂窝网络变化后 | DIRECT、DoH；失败后延迟复测，确认 DoH 异常时通知 |
 | **节点详情查询** | 用户主动执行 | 指定节点/策略出口 IP 情报；可选 DIRECT 出口对比 |
 
@@ -97,8 +99,12 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Netwo
 
 - **主要来源：** [ipquery.io](https://ipquery.io/)，自动从请求所在出口识别公网 IP，并返回位置、ISP、ASN、风险特征；无需用户提供 API Key。
 - **备用来源：** [ipwho.is](https://ipwho.is/)，主要提供公网 IP、位置、ASN 和 ISP，不具备同样的机房识别字段。
-- **查询路线：** `node: "Proxy"` 或你指定的节点/策略会让 API 收到**该节点的出口 IP**；如开启 DIRECT 对照，服务商也将看到**你的直连公网 IP**。这两种查询是手动触发的。
+- **查询路线：** `node: "Proxy"` 或你指定的节点/策略会让 API 收到**该节点的出口 IP**；DIRECT 对照**默认关闭**。只有你手动开启后，服务商才会额外看到**你的直连公网 IP**。这两种查询是手动触发的。
 - **本地隐私：** 脚本不读取或发送机场订阅 URL、节点密码、证书或密钥。若不想把直连公网 IP 交给情报服务商，可关闭 `compare_direct`。
 - **局限：** IP 情报标签并非权威的住宅/机房证明。任何来源的城市、风险分数、VPN 标志都可能不准确。此插件也不能单凭检测结果证明没有 DNS/WebRTC 泄漏。
 
 **[返回主 README](../README.md)** · **[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)**
+
+## 开发与自动化检查
+
+项目使用 [GitHub Actions](../.github/workflows/loon-ci.yml) 对配置、插件和 JS 进行静态及模拟测试，并每周检查远程链接。自动检查通过不代表 Loon iPhone 实机运行必然正常。
