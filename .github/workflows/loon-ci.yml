@@ -1,0 +1,58 @@
+name: Loon Configuration & Plugin CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '15 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-and-regression:
+    name: Config, plugin and JavaScript checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate Loon config and plugin references
+        run: python3 scripts/validate_repo.py
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check scripts/network-diagnostics.js
+          node --check scripts/node-intelligence.js
+          node --check tests/test_scripts.js
+
+      - name: Run Loon mocked-runtime regression tests
+        run: node tests/test_scripts.js
+
+  upstream-resource-check:
+    name: Check upstream rules, scripts, and icons
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify all external resource URLs
+        run: python3 scripts/validate_repo.py --check-remote
