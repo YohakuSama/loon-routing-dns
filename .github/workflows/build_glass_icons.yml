@@ -1,0 +1,33 @@
+name: Build Loon Glass Icons
+on:
+  push:
+    branches: [design/glass-icons-33-v3]
+    paths:
+      - "scripts/build_glass_icons.py"
+      - ".github/workflows/build_glass_icons.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install pillow numpy cairosvg fonttools
+      - name: Generate 33 dedicated PNG icons
+        run: python scripts/build_glass_icons.py
+      - name: Commit generated icons
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons/
+          if ! git diff --staged --quiet; then
+            git commit -m "Generate 33 glossy icons for Loon policies"
+            git push
+          fi
