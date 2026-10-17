@@ -37,9 +37,13 @@ jobs:
           node --check scripts/network-diagnostics.js
           node --check scripts/node-intelligence.js
           node --check tests/test_scripts.js
+          node --check tests/test_console.js
+          node --check scripts/console.js
 
       - name: Run Loon mocked-runtime regression tests
-        run: node tests/test_scripts.js
+        run: |
+          node tests/test_scripts.js
+          node tests/test_console.js
 
   upstream-resource-check:
     name: Check upstream rules, scripts, and icons
