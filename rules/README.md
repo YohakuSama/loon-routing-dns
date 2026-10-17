@@ -19,7 +19,7 @@
 
 ## 正式规则来源
 
-规则来源见 [sources.json](./sources.json)，目前 86 个启用输入，生成 33 个策略规则组。基础分类来自 blackmatrix7，服务域名补全来自 v2fly，Apple 中国相关优化域名来自 felixonmars，常用国内业务例外由项目自行维护。对应 GPL-2.0、MIT、WTFPL 原始许可正文位于本目录 `LICENSE.*`。
+规则来源见 [sources.json](./sources.json)，目前 87 个启用输入，生成 33 个策略规则组。基础分类来自 blackmatrix7，服务域名补全来自 v2fly，Apple 中国相关优化域名来自 felixonmars，常用国内业务例外由项目自行维护。对应 GPL-2.0、MIT、WTFPL 原始许可正文位于本目录 `LICENSE.*`。
 
 广告、隐私和劫持防护统一生成到 `AdBlock.list`；为降低误杀，广告保护仅保留精确域名和域名后缀，不引入模糊关键词、IP 共享网段封禁和需要 MITM 的 URL 正则。相同策略去重，同组父域覆盖的子规则裁剪；不同策略间精确相同匹配按订阅优先级保留第一条并记入 `audit.json`。不要对不同策略间的父子域名交叉直接推断为错误。
 
