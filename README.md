@@ -1,5 +1,7 @@
 # Loon Routing DNS
 
+> **复合型规则库建设中（不会影响当前稳定配置）：** 本项目将以已使用的上游 Loon 规则为基础，逐步增加 AI、社交、流媒体等补全来源，并建立统一的去重、冲突审计、来源追踪和定期更新机制。之所以采用复合型方案，是因为实际使用中发现部分特殊场景存在可能影响体验、且不符合现阶段精细化分流规划的遗漏与交叉覆盖；这不代表原作者的项目整体有问题，也不能把 DNS、节点或 CDN 问题一概归因于规则。新增来源先在独立分支测试，**不直接堆叠到现有配置**。详细原则、规则来源、版权声明、更新与回滚方案见 [复合规则库建设说明](./rules/README.md)。
+
 一份面向 **Loon iOS** 的第三方完整配置：国内直连、国外按策略代理、AliDNS 加密解析、广告拦截，以及常用服务与 CDN 分流。
 
 **版本：v4.4.8 · AliDNS**　·　[获取配置](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf)　·　[查看源码](./Loon_Routing_DNS.lcf)　·　[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)
