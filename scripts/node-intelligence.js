@@ -1,5 +1,5 @@
 /*
- * Loon Network Diagnostics - Node Intelligence v1.2
+ * Loon Network Diagnostics - Node Intelligence v1.3
  * Manual only. No MITM, no DNS/policy mutation.
  * IP data: ipquery.io; fallback: ipwho.is.
  * Classification is heuristic. Outgoing IP != physical node entry address.
@@ -8,17 +8,33 @@
   "use strict";
 
   var DEFAULT_POLICY = "Proxy";
-  var PRIMARY = "https://api.ipquery.io/?format=json";
-  var FALLBACK = "https://ipwho.is/";
   var TIMEOUT = 8500;
   var doneOnce = false;
   var arg = (typeof $argument === "object" && $argument) || {};
   var context = (typeof $environment === "object" && $environment && $environment.params) || {};
   var configured = typeof arg.target_policy === "string" && arg.target_policy.trim() || DEFAULT_POLICY;
-  var compare = arg.compare_direct !== false;
+  var compare = arg.compare_direct === true;
+  function url(value, fallback) {
+    var x = typeof value === "string" ? value.trim() : "";
+    return /^https:\/\/[^\s#]+$/i.test(x) && x.length <= 2048 ? x : fallback;
+  }
+  var PRIMARY = url(arg.primary_ip_url, "https://api.ipquery.io/?format=json");
+  var FALLBACK = url(arg.backup_ip_url, "https://ipwho.is/");
+  var FALLBACK_ENABLED = arg.enable_ip_backup !== false;
+  function cacheTTL(value) {
+    var n = Number(value);
+    return isFinite(n) && n >= 0 && n <= 600 ? Math.floor(n)*1000 : 120000;
+  }
+  var CACHE_DURATION = cacheTTL(arg.cache_seconds);
   var route = selectRoute();
-  var CACHE_TTL = 120 * 1000;
-  var cacheKey = "loon:node-intel:v1:" + encodeURIComponent(route);
+  function simpleHash(x) {
+    var h=2166136261;
+    for(var i=0;i<x.length;i++){h ^= x.charCodeAt(i); h = Math.imul(h,16777619);}
+    return (h>>>0).toString(16);
+  }
+  var cacheKey = "loon:node-intel:v2:" + encodeURIComponent(route) + ":" +
+    simpleHash(PRIMARY + "|" + FALLBACK + "|" + String(FALLBACK_ENABLED));
+  
   function cacheIsSafe() {
     // Do not reuse potentially stale cached egress for dynamic selector groups.
     // Only explicit node entry points have a stable identity; even then use short TTL.
@@ -27,17 +43,17 @@
     return !!explicit && explicit === route && route !== "DIRECT";
   }
   function readCache() {
-    if (!cacheIsSafe() || typeof $persistentStore === "undefined") return null;
+    if (!CACHE_DURATION || !cacheIsSafe() || typeof $persistentStore === "undefined") return null;
     try {
       var record = JSON.parse($persistentStore.read(cacheKey) || "null");
-      if (!record || !record.at || Date.now() - record.at > CACHE_TTL ||
+      if (!record || !record.at || Date.now() - record.at > CACHE_DURATION ||
           !record.info || !validIp(record.info.ip)) return null;
       record.info.cached = true;
       return record.info;
     } catch (e) { return null; }
   }
   function writeCache(info) {
-    if (!cacheIsSafe() || typeof $persistentStore === "undefined" || !info) return;
+    if (!CACHE_DURATION || !cacheIsSafe() || typeof $persistentStore === "undefined" || !info) return;
     try { $persistentStore.write(JSON.stringify({at: Date.now(), info: info}), cacheKey); } catch (e) {}
   }
 
@@ -151,15 +167,26 @@
       provider: "ipwho.is（仅位置与 ASN）"
     };
   }
+  function decodeAPI(raw) {
+    if (!raw || typeof raw !== "object") return null;
+    // Accept supported IPQuery or ipwho JSON schemas from user-configured HTTPS mirrors.
+    if (raw.success === false) return null;
+    if (raw.location && raw.isp && typeof raw.isp === "object")
+      return parsePrimary(raw);
+    if (raw.connection || (raw.country && raw.ip))
+      return parseFallback(raw);
+    return null;
+  }
   function fetchInfo(policy, cb) {
     request(PRIMARY, policy, function (r) {
-      var item = r.ok ? parsePrimary(r.value) : null;
+      var item = r.ok ? decodeAPI(r.value) : null;
       if (item) { item.ms = r.ms; return cb(null, item); }
-      var primaryError = r.ok ? "ipquery.io 返回字段异常" : r.reason;
+      var primaryError = r.ok ? "主要 API JSON 字段不兼容" : r.reason;
+      if (!FALLBACK_ENABLED || FALLBACK === PRIMARY) return cb("主要 API：" + primaryError + "；备用源已关闭/重复", null);
       request(FALLBACK, policy, function (f) {
-        item = f.ok ? parseFallback(f.value) : null;
+        item = f.ok ? decodeAPI(f.value) : null;
         if (item) { item.ms = f.ms; return cb(null, item); }
-        cb("ipquery.io：" + primaryError + "；ipwho.is：" + (f.ok ? "响应格式异常" : f.reason), null);
+        cb("主要 API：" + primaryError + "；备用 API：" + (f.ok ? "JSON 字段不兼容" : f.reason), null);
       });
     });
   }
@@ -204,7 +231,7 @@
       "代理特征：" + signal(info.proxy),
       "Tor 特征：" + signal(info.tor),
       "情报服务：" + info.provider +
-        (info.cached ? "（本机缓存，最多 2 分钟；动态出口请手动刷新或从 Proxy 查询）" : "")
+        (info.cached ? "（短时缓存；动态出口请从 Proxy 查询以获取即时数据）" : "")
     ];
     var localData = localIntel(info.ip);
     if (localData) {
@@ -223,7 +250,7 @@
       arr.push("DIRECT 对照：查询失败，不影响以上代理出口情报。");
     }
     arr.push("说明：城市是 IP 数据库估计；机房≠确切楼宇；未标记机房≠确认家宽。");
-    arr.push("数据仅在手动运行时查询，情报服务商会看到请求出口 IP。");
+    arr.push("仅手动查询；自定义源必须返回兼容 ipquery / ipwho 的 JSON。第三方会看到请求出口 IP。");
     return arr.join("\n");
   }
   function finish(text) {
