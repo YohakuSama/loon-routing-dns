@@ -2,7 +2,7 @@
 #!desc = 项目专属工具：网络/DoH 检测、节点情报、自动诊断记录与可定制的检测来源；不更改 Loon 配置
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loon-routing-dns
-#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Console.png
+#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018/Console.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 网络,控制台,诊断,可选
