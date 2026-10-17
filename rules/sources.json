@@ -856,7 +856,7 @@
       "format": "loon",
       "role": "privacy",
       "enabled": true,
-      "min_rules": 100
+      "min_rules": 10
     },
     {
       "id": "bm-hijacking",
@@ -972,6 +972,16 @@
       "skip_attrs": [
         "ads"
       ]
+    },
+    {
+      "id": "bm-privacy-domain",
+      "group": "AdBlock",
+      "policy": "AdBlock",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Privacy/Privacy_Domain.list",
+      "format": "domainset",
+      "role": "privacy",
+      "enabled": true,
+      "min_rules": 30000
     }
   ],
   "candidates": [
