@@ -64,19 +64,17 @@ MySubscription = https://example.com/subscription.txt,enabled=true
 
 **验证完成：** 节点列表非空、远程规则正常加载、国内网站可用、国外网站按所选策略访问。
 
-### 可选插件 v1.2：网络诊断 + 节点详情
+### 可选项目控制台 v1.3（推荐，但不是必需）
 
-**[安装 Loon Network Diagnostics & Node Intelligence](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin)** · [查看插件使用教程](./docs/NETWORK_DIAGNOSTICS.md)
+**[安装或更新控制台插件](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin)** · **[查看 12 项参数和操作说明](./docs/NETWORK_DIAGNOSTICS.md)**
 
-主配置无需安装插件也能正常工作。本插件包含三项独立功能：
+控制台有自己的图标，通过 Loon 官方插件 **[Argument] 参数页**调整项目专属检测设置；提供「控制台状态」「手动网络与 DNS 诊断」「模拟网络切换诊断」「节点详情查询」四项手动工具，以及网络变化时的可选轻量监测。
 
-- **手动网络诊断：** 检测 DIRECT、AliDNS DoH、Proxy，并在 **Loon Build 988+** 上通过 `$dns.query()` 查询 Loon 原生 DNS 栈，显示解析协议、A/AAAA 记录数量和缓存状态。Build 983–987 会自动跳过原生功能。
-- **网络切换故障诊断：** Wi-Fi / 蜂窝变化后进行轻量检测，异常复测和去重通知。**不负责开启/关闭 VPN，也不切换 RULE/DIRECT 模式**。
-- **节点详情查询：** 获取实际出口 IP、ASN、运营商、所在国家/城市、疑似机房或移动网络标记，并与本地 GeoIP/ASN 数据交叉核对；从明确节点入口执行时可短时缓存结果。
+支持填写 **DIRECT / Proxy 健康探测网址、DoH 测试地址、探测超时、主要和备用 IP 情报 JSON API、节点情报缓存时长**。这些选项只影响控制台自己的请求，**不会修改 Loon 原生节点测速服务器、实际 DNS、策略组或 VPN 开关**，以避免与 Loon 已有功能重复。
 
-**隐私改进：DIRECT 出口对照默认关闭。** 只有手动开启参数「同时查询本地 DIRECT 出口」，才向第三方情报 API 额外查询真实直连公网 IP；即便关闭，查询代理节点时情报商仍可看到代理出口 IP。
+**网络变化监测平时不会提示正常结果：** 如想验证是否触发，短时间开启「每次网络变化都通知」，切换一次 Wi-Fi ↔ 蜂窝数据，再在「控制台 · 状态与设置摘要」查看最近运行时间；「模拟网络切换诊断」可以验证代码，却不能单独证明系统事件触发成功。
 
-配置页 → 插件 → ＋ → 从 URL 导入，启用后在通用脚本中使用「手动网络诊断」或「节点详情查询」。插件还拥有独立图标。节点 IP 类型是数据库推断，**不等于证明真家宽或精确机房位置**。
+**隐私默认：DIRECT IP 对照关闭。** 节点情报从第三方服务取得，API 会看到所查节点的出口 IP；需要额外查询直连公网 IP 时才手动开启对照。安装仅需 Loon 3.5.1 Build 983+，部分原生 DNS 功能需要 Build 988+。**主配置即使不安装插件也能正常使用。**
 
 ## 二、DNS：默认值与自行替换
 
