@@ -43,7 +43,7 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 
 ## DNS 与隐私边界
 
-配置默认继续使用 `223.5.5.5,223.6.6.6` 和 `https://dns.alidns.com/dns-query`。Loon 的 DoH 流量模式建议选择 `DIRECT`；是否禁用加密 DNS 查询失败时回退到普通 DNS，需在 Loon App 手动设置。**DoH 不等于零泄漏或匿名**；浏览器检测所展示的 DNS 机房与代理出口不一致，不能单凭此判定 DNS 泄漏。
+配置默认继续使用 `223.5.5.5,223.6.6.6` 和 `https://dns.alidns.com/dns-query`。Loon 的 DoH 流量模式建议选择 `DIRECT`；是否禁用加密 DNS 查询失败时回退到普通 DNS，需在 Loon App 手动设置。**控制台的真实直连出口 IP 对照默认关闭，以减少诊断时意外暴露真实 IP。DoH 不等于零泄漏或匿名**；浏览器检测所展示的 DNS 机房与代理出口不一致，不能单凭此判定 DNS 泄漏。
 
 `disable-stun = true` 与 `udp-fallback-mode = REJECT` 延续原隐私优先设置；可能影响部分语音、游戏或实时通信，需要按真实业务测试。
 
