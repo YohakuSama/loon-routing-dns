@@ -32,6 +32,11 @@ jobs:
       - name: Validate Loon config and plugin references
         run: python3 scripts/validate_repo.py
 
+      - name: Run composite rule regression tests and verify catalog
+        run: |
+          python3 -m unittest discover -s tests -p 'test_composite_rules.py' -v
+          python3 -c "import sys; sys.path.insert(0, 'scripts'); from build_composite_rules import read_catalog; print('catalog sources:', len(read_catalog()))"
+
       - name: Check JavaScript syntax
         run: |
           node --check scripts/network-diagnostics.js

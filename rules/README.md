@@ -40,9 +40,9 @@ python3 scripts/build_composite_rules.py
 - 每个策略组生成单独的 Loon 原生 `.list`，保留来源标识。
 - `audit.json` 记录每个来源的内容指纹、成功解析数、组内去重数、跨组同策略重复数、跨策略冲突、域名后缀祖先冲突及被隔离的未知格式样本。
 - `*_Domain.list` 先按 domain-set 转换成 `DOMAIN` 或 `DOMAIN-SUFFIX`，再参与规则比对。
-- 对 IP-CIDR 做规范化，并显式使用 `no-resolve`。
+- 对 IP-CIDR/IP-CIDR6 的网络前缀进行规范化，**保留上游是否使用 `no-resolve` 的原始语义**，不得擅自增加或删去；同一网段的两种标志会单独进入冲突报告。
 - `URL-REGEX` 暂不混入结果：可能涉及 MITM、匹配开销与误杀；会记录在审计报告中。
-- 对未知语法不做猜测，隔离并记录。任何上游抓取失败、文件超限或低于来源设置的最低规则数时，**整次构建报错，不发布不完整输出**。
+- 对未知语法不做猜测：已知的 `URL-REGEX` 暂时隔离记录，其他无法识别或异常规则将导致构建失败。任何上游抓取失败、文件超限或低于来源最低规则数时，**整次构建报错，不发布不完整输出**。同一个输出策略组不能混入不同目标策略。
 - 不自动删除跨分组的重复规则：即使同属 DIRECT，不同订阅可单独关闭；跨分组删掉会引入隐蔽依赖。
 
 ### 需人工审核的重点
@@ -72,11 +72,13 @@ python3 scripts/build_composite_rules.py
 
 1. 自动运行离线单元测试；
 2. 定期重新拉取目录登记的上游规则、生成候选列表与审计报告；
-3. 有变更时由 GitHub Actions **自动打开更新 PR**，不会自动合并 `main`；
+3. GitHub Actions 每周一、周四执行远程规则审计；有变更时**自动打开 Draft PR**，同时上传可下载的 staging 规则与审计报告，绝不自动合并 `main`；
 4. 审核去重、冲突、隔离格式、文件变动和许可；
 5. 在真实 iPhone 上检查国内/海外、Apple、AI、登录与支付、WebRTC、流媒体、UDP、IPv6；
 6. 人工批准后，先灰度将部分自托管列表接入 `[Remote Rule]`，再按问题逐步扩展；保留回滚入口。
 
+> **GitHub 权限前提：** 仓库 Settings → Actions → General 需要允许 GitHub Actions 创建 Pull Request。机器人通过默认 `GITHUB_TOKEN` 创建的 PR 可能不会自动触发新的 `pull_request` 检查，合并前须手动重新运行验证或将 Draft 标为 Ready for review。
+>
 > GitHub Actions 执行成功只说明构建和静态测试通过，不代表分流和 DNS 实际运行无异常。规则更新也无法单独解决 DNS 解析器选择或 IP 出口显示的问题。
 
 ## 上游版权和许可
