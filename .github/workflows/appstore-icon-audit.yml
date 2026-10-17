@@ -7,6 +7,7 @@ on:
       - scripts/audit-appstore-icons.py
       - .github/workflows/appstore-icon-audit.yml
       - scripts/check-appstore-png-variants.py
+      - scripts/render-appstore-reference-sheet.py
   workflow_dispatch:
 permissions:
   contents: write
@@ -27,11 +28,13 @@ jobs:
         run: python scripts/audit-appstore-icons.py
       - name: Compare official JPEG and PNG artwork endpoints
         run: python scripts/check-appstore-png-variants.py
-      - name: Commit text-only candidate audit reports to review branch
+      - name: Render 24 official App Store icon visual references
+        run: python scripts/render-appstore-reference-sheet.py
+      - name: Commit visual references and audit reports to review branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reviews/APP_STORE_ICON_AUDIT_2026-10-18.json reviews/APP_STORE_ICON_AUDIT_2026-10-18.md reviews/APP_STORE_ICON_FORMAT_TEST_2026-10-18.md
+          git add reviews/APP_STORE_ICON_AUDIT_2026-10-18.json reviews/APP_STORE_ICON_AUDIT_2026-10-18.md reviews/APP_STORE_ICON_FORMAT_TEST_2026-10-18.md reviews/APP_STORE_24_LIGHT_REVIEW.png reviews/APP_STORE_24_DARK_REVIEW.png reviews/APP_STORE_VISUAL_REFERENCE_2026-10-18.md
           if ! git diff --cached --quiet; then
             git commit -m "audit: record App Store icon resolution and contrast results"
             git push origin HEAD:audit/appstore-icon-quality-20261018
