@@ -1,4 +1,4 @@
-# Loon Routing DNS v5.0.1-hybrid-review
+# Loon Routing DNS v5.1.0
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loon-routing-dns
 # X: https://x.com/yohakusama
@@ -79,39 +79,39 @@ Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.gith
 [Remote Rule]
 # Self-hosted, policy-scoped reviewed hybrid rules. Order is intentional.
 # First-party critical routes, specific services, advertising, mainland fallback.
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/AI.list, policy=AI, tag=Our-AI, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/SteamCN.list, policy=DIRECT, tag=Our-SteamCN, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/YouTube.list, policy=YouTube, tag=Our-YouTube, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Netflix.list, policy=Netflix, tag=Our-Netflix, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Disney.list, policy=Disney, tag=Our-Disney, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/PrimeVideo.list, policy=PrimeVideo, tag=Our-PrimeVideo, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Spotify.list, policy=Spotify, tag=Our-Spotify, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/TikTok.list, policy=TikTok, tag=Our-TikTok, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Twitch.list, policy=Twitch, tag=Our-Twitch, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/HBO.list, policy=HBO, tag=Our-HBO, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Abema.list, policy=Abema, tag=Our-Abema, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/BBC.list, policy=BBC, tag=Our-BBC, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Bilibili.list, policy=Bilibili, tag=Our-Bilibili, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/AnimeCrazy.list, policy=動畫瘋, tag=Our-AnimeCrazy, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Dazn.list, policy=Dazn, tag=Our-Dazn, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Telegram.list, policy=Telegram, tag=Our-Telegram, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Whatsapp.list, policy=Whatsapp, tag=Our-Whatsapp, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Instagram.list, policy=Instagram, tag=Our-Instagram, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Facebook.list, policy=Facebook, tag=Our-Facebook, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Twitter.list, policy=Twitter, tag=Our-Twitter, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Discord.list, policy=Discord, tag=Our-Discord, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Line.list, policy=Line, tag=Our-Line, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Reddit.list, policy=Reddit, tag=Our-Reddit, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Linkedin.list, policy=Linkedin, tag=Our-Linkedin, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Google.list, policy=Google, tag=Our-Google, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Microsoft.list, policy=Microsoft, tag=Our-Microsoft, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Apple.list, policy=Apple, tag=Our-Apple, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Steam.list, policy=Steam, tag=Our-Steam, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/Paypal.list, policy=Paypal, tag=Our-Paypal, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/AI.list, policy=AI, tag=Our-AI, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/SteamCN.list, policy=DIRECT, tag=Our-SteamCN, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/YouTube.list, policy=YouTube, tag=Our-YouTube, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Netflix.list, policy=Netflix, tag=Our-Netflix, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Disney.list, policy=Disney, tag=Our-Disney, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/PrimeVideo.list, policy=PrimeVideo, tag=Our-PrimeVideo, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Spotify.list, policy=Spotify, tag=Our-Spotify, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/TikTok.list, policy=TikTok, tag=Our-TikTok, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Twitch.list, policy=Twitch, tag=Our-Twitch, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/HBO.list, policy=HBO, tag=Our-HBO, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Abema.list, policy=Abema, tag=Our-Abema, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/BBC.list, policy=BBC, tag=Our-BBC, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Bilibili.list, policy=Bilibili, tag=Our-Bilibili, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/AnimeCrazy.list, policy=動畫瘋, tag=Our-AnimeCrazy, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Dazn.list, policy=Dazn, tag=Our-Dazn, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Telegram.list, policy=Telegram, tag=Our-Telegram, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Whatsapp.list, policy=Whatsapp, tag=Our-Whatsapp, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Instagram.list, policy=Instagram, tag=Our-Instagram, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Facebook.list, policy=Facebook, tag=Our-Facebook, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Twitter.list, policy=Twitter, tag=Our-Twitter, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Discord.list, policy=Discord, tag=Our-Discord, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Line.list, policy=Line, tag=Our-Line, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Reddit.list, policy=Reddit, tag=Our-Reddit, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Linkedin.list, policy=Linkedin, tag=Our-Linkedin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Google.list, policy=Google, tag=Our-Google, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Microsoft.list, policy=Microsoft, tag=Our-Microsoft, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Apple.list, policy=Apple, tag=Our-Apple, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Steam.list, policy=Steam, tag=Our-Steam, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/Paypal.list, policy=Paypal, tag=Our-Paypal, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
 
 [Rule]
 # Emergency resource routing and final fallbacks only.
