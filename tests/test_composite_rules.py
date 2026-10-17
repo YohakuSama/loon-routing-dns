@@ -77,6 +77,21 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertEqual(audit["ip_flag_variant_conflict_count"], 1)
         self.assertEqual(audit["duplicates_removed_within_group"], 0)
 
+    def test_refuses_unknown_upstream_syntax(self):
+        source = {"id": "a", "group": "Alpha", "policy": "Proxy",
+                  "url": "https://rules.invalid/a", "format": "loon",
+                  "min_rules": 1}
+        with self.assertRaisesRegex(ValueError, "unsupported/invalid"):
+            generate([source], lambda _: "DOMAIN,example.com\nPROCESS-NAME,app\n")
+
+    def test_drops_known_url_regex_but_records_quarantine(self):
+        source = {"id": "a", "group": "Alpha", "policy": "Proxy",
+                  "url": "https://rules.invalid/a", "format": "loon",
+                  "min_rules": 1}
+        _, audit = generate([source],
+                            lambda _: "DOMAIN,example.com\nURL-REGEX,^https://ads\n")
+        self.assertEqual(sum(audit["quarantined_by_reason"].values()), 1)
+
     def test_refuses_truncated_inputs(self):
         sources = [{"id": "small", "group": "Foo", "policy": "Proxy",
                     "url": "https://rules.invalid/", "format": "loon",
