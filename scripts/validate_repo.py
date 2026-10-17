@@ -89,7 +89,7 @@ def check_config():
 
     # Full configuration must discover the control console automatically.
     plugin_text = section(data, "Plugin")
-    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018/Network_Diagnostics.plugin"
+    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r2/Network_Diagnostics.plugin"
     entries = [line.strip() for line in plugin_text.splitlines()
                if line.strip() and not line.lstrip().startswith("#")]
     require(len(entries) == 1, "expected one auto-bundled Console plugin")
@@ -101,13 +101,13 @@ def check_config():
     icon_urls = re.findall(r"\bimg-url\s*=\s*(https://\S+)", groups_text)
     require(len(icon_urls) == 33, "expected one icon per proxy group")
     require(len(icon_urls) == len(set(icon_urls)), "duplicate group icon URLs")
-    icon_root = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018/"
+    icon_root = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/"
     for icon_url in icon_urls:
         require(icon_url.startswith(icon_root), "policy icon does not use the versioned release: " + icon_url)
         name = icon_url[len(icon_root):]
         require("/" not in name and name.endswith(".png"), "invalid versioned icon name: " + name)
-        require((ROOT / "icons" / "v20261018" / name).is_file(), "missing versioned PNG: " + name)
-        require((ROOT / "icons" / "v20261018" / name).read_bytes() == (ROOT / "icons" / name).read_bytes(), "pinned icon differs from current release: " + name)
+        require((ROOT / "icons" / "v20261018r2" / name).is_file(), "missing versioned PNG: " + name)
+        require((ROOT / "icons" / "v20261018r2" / name).read_bytes() == (ROOT / "icons" / name).read_bytes(), "pinned icon differs from current release: " + name)
 
     print("Config: %s groups; %s remote lists; %s local rules; %s icon links"
           % (len(groups), len(remote), local_count, len(icon_urls)))
@@ -119,12 +119,12 @@ def check_plugin():
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
     require("notify_every_change = switch,false" in data, "normal notification must default off")
-    pinned_plugin=ROOT / "plugins" / "v20261018" / "Network_Diagnostics.plugin"
+    pinned_plugin=ROOT / "plugins" / "v20261018r2" / "Network_Diagnostics.plugin"
     require(pinned_plugin.is_file(), "missing versioned Console plugin")
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
             "versioned Console plugin differs from checked source")
-    require("/main/icons/v20261018/Console.png" in data, "console icon must reference versioned release")
-    require((ROOT / "icons/v20261018/Console.png").read_bytes() == (ROOT / "icons/Console.png").read_bytes(), "versioned Console icon does not match validated source PNG")
+    require("/main/icons/v20261018r2/Console.png" in data, "console icon must reference versioned release")
+    require((ROOT / "icons/v20261018r2/Console.png").read_bytes() == (ROOT / "icons/Console.png").read_bytes(), "versioned Console icon does not match validated source PNG")
     require("ssid-trigger" not in data and "wifi-cellular-mode" not in data,
             "unexpected Wi-Fi automation in plugin")
     arg_text = section(data, "Argument")

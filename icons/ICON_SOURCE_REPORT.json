@@ -14,14 +14,10 @@
   {
     "name": "Netflix",
     "file": "Netflix.png",
-    "source": "Apple App Store official app artwork",
-    "appId": 363590051,
-    "storeFront": "us",
-    "developer": "Netflix, Inc.",
-    "appTitle": "Netflix",
-    "appStore": "https://apps.apple.com/us/app/netflix/id363590051?uo=4",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f6/ed/5f/f6ed5f40-2e41-30c1-d6ff-8d12f8c67c3e/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-0-85-220.png/512x512bb.png",
-    "sha256": "ee018d89005f425803961798520bc74a1b5f5b7fee9f2521fd51aa74df1c525c"
+    "source": "Brand vector adaptation (not App Store artwork)",
+    "sha256": "b1af05333c1796620f58590c1d2386027286611a892e4d9124d4b9d0905a1d42",
+    "sourceSvg": "icons/source/Netflix.svg",
+    "brandMarkReference": "https://github.com/simple-icons/simple-icons/blob/develop/icons/netflix.svg"
   },
   {
     "name": "Disney",
@@ -50,26 +46,18 @@
   {
     "name": "Spotify",
     "file": "Spotify.png",
-    "source": "Apple App Store official app artwork",
-    "appId": 324684580,
-    "storeFront": "us",
-    "developer": "Spotify",
-    "appTitle": "Spotify: Music and Podcasts",
-    "appStore": "https://apps.apple.com/us/app/spotify-music-and-podcasts/id324684580?uo=4",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b2/af/e8/b2afe87d-2d6a-8e4b-01bf-73b5752996dc/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.png/512x512bb.png",
-    "sha256": "2acaee831d236a30448b8dd4edc008fd0e26be0dbcff7ef177cfb839c154341c"
+    "source": "Brand vector adaptation (not App Store artwork)",
+    "sha256": "6b968433887f7067ffde37b9c40c29d207b1938d1f452d63b9f9375bb4139597",
+    "sourceSvg": "icons/source/Spotify.svg",
+    "brandMarkReference": "https://github.com/simple-icons/simple-icons/blob/develop/icons/spotify.svg"
   },
   {
     "name": "TikTok",
     "file": "TikTok.png",
-    "source": "Apple App Store official app artwork",
-    "appId": 835599320,
-    "storeFront": "us",
-    "developer": "TIKTOK PTE. LTD.",
-    "appTitle": "TikTok - Videos, Shop & LIVE",
-    "appStore": "https://apps.apple.com/us/app/tiktok-videos-shop-live/id835599320?uo=4",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d8/f0/b2/d8f0b203-3968-dd77-07ff-70134b89f7c1/TikTok_AppIcon26-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.png",
-    "sha256": "78bfed3b1d3a521f0d6b7ad706c50581ab3e721d4dd4aa351d45ae10565a6eb9"
+    "source": "Brand vector adaptation (not App Store artwork)",
+    "sha256": "4372d7e4a2adf0e77261fe78386140c94100e173fb13eb7943a7bfee1f5bd85e",
+    "sourceSvg": "icons/source/TikTok.svg",
+    "brandMarkReference": "https://github.com/simple-icons/simple-icons/blob/develop/icons/tiktok.svg"
   },
   {
     "name": "Twitch",
@@ -182,14 +170,10 @@
   {
     "name": "Telegram",
     "file": "Telegram.png",
-    "source": "Apple App Store official app artwork",
-    "appId": 686449807,
-    "storeFront": "us",
-    "developer": "Telegram FZ-LLC",
-    "appTitle": "Telegram Messenger",
-    "appStore": "https://apps.apple.com/us/app/telegram-messenger/id686449807?uo=4",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/52/47/26/5247269d-36db-c530-6d22-1918a5d6e357/Telegram-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.png",
-    "sha256": "972d0e5a98b2b84933d5a334245ec588e8667e3a69520f6b9897583d8d83490d"
+    "source": "Brand vector adaptation (not App Store artwork)",
+    "sha256": "6743b060c963c2220fc3c0e7e03e54f15395e532461575a17db32f03ff439e58",
+    "sourceSvg": "icons/source/Telegram.svg",
+    "brandMarkReference": "https://github.com/glincker/thesvg/blob/main/public/icons/telegram/default.svg"
   },
   {
     "name": "Whatsapp",
@@ -206,14 +190,10 @@
   {
     "name": "Instagram",
     "file": "Instagram.png",
-    "source": "Apple App Store official app artwork",
-    "appId": 389801252,
-    "storeFront": "us",
-    "developer": "Instagram, Inc.",
-    "appTitle": "Instagram",
-    "appStore": "https://apps.apple.com/us/app/instagram/id389801252?uo=4",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/41/41/0a/41410ad0-b22e-c93c-d4b1-7f14f8494e06/Prod-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.png",
-    "sha256": "317df7d77cc379d2e8aca192a7983200742ce3851277f56dbc53051154a4369a"
+    "source": "Brand vector adaptation (not App Store artwork)",
+    "sha256": "7bee0c7ca4b67e5dd23f4b8f1a4e69f4e35655717614c3056d47bd3494795698",
+    "sourceSvg": "icons/source/Instagram.svg",
+    "brandMarkReference": "https://github.com/simple-icons/simple-icons/blob/develop/icons/instagram.svg"
   },
   {
     "name": "Facebook",
@@ -242,14 +222,10 @@
   {
     "name": "Discord",
     "file": "Discord.png",
-    "source": "Apple App Store official app artwork",
-    "appId": 985746746,
-    "storeFront": "us",
-    "developer": "Discord Inc.",
-    "appTitle": "Discord - Talk, Play, Hang Out",
-    "appStore": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
-    "artworkUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/2b/c1/68/2bc1682e-91a1-8d2f-539c-bfda04dc16a3/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.png",
-    "sha256": "6bb4f1ee0c5c7148e8c01e0fb67ec76ad722e04543d80e5a723c7439d79d0387"
+    "source": "Brand vector adaptation (not App Store artwork)",
+    "sha256": "4c72a99cb2dc8946a64ff4f39968226f4cd884812874b0c21fd99a69f1a90ecc",
+    "sourceSvg": "icons/source/Discord.svg",
+    "brandMarkReference": "https://github.com/simple-icons/simple-icons/blob/develop/icons/discord.svg"
   },
   {
     "name": "Line",
@@ -290,9 +266,9 @@
   {
     "name": "Proxy",
     "file": "Proxy.png",
-    "source": "project vector artwork",
+    "source": "Loon Routing DNS original vector design",
     "sourceSvg": "icons/source/Proxy.svg",
-    "sha256": "83616d7470327d0aa5ba8c4c0a586899ee8723135f7de3d9e8a1504271a1ec11"
+    "sha256": "8daf49e0a5c89cc3c8d19e9f8b97688482472c18fb561a86d033098521a92540"
   },
   {
     "name": "Auto",
@@ -325,9 +301,9 @@
   {
     "name": "AI",
     "file": "AI.png",
-    "source": "project vector artwork",
+    "source": "Loon Routing DNS original vector design",
     "sourceSvg": "icons/source/AI.svg",
-    "sha256": "d46abc6de54e6d160a852975e65b6b2e77185973911c9fe33b1306c34421bc02"
+    "sha256": "9054398bd45c0ebd7affc925c1cf6984908db67c9a5089b3f2f5a87fc82f9a79"
   },
   {
     "name": "Google",
@@ -353,8 +329,8 @@
   {
     "name": "Console",
     "file": "Console.png",
-    "source": "project vector artwork",
+    "source": "Loon Routing DNS original vector design",
     "sourceSvg": "icons/source/Console.svg",
-    "sha256": "e373b4d351195f53fd50e8c638fa6f7c0fa487b99d5f540fc4036f9a3fe81603"
+    "sha256": "689e4680d92e436bfa14214b814eaba4baf842d2759a7ef7354ad274d35238fc"
   }
 ]

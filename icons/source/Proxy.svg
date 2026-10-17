@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><rect width="512" height="512" rx="111" fill="#173B86"/><path d="M132 366V246C132 157 185 112 256 112s124 45 124 134v120h-72V245c0-40-18-62-52-62s-52 22-52 62v121Z" fill="#FFFFFF"/><path d="M246 285h32c6 0 11 5 11 11v75c0 7-5 12-11 12h-32c-6 0-11-5-11-12v-75c0-6 5-11 11-11Z" fill="#3AD7E5"/><circle cx="262" cy="260" r="18" fill="#3AD7E5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>Proxy — crossed relay ribbons</title><rect x="0" y="0" width="512" height="512" rx="111" fill="#164889"/>
+<!-- A: top-left to bottom-right. Both ribbons have continuous, non-arrow endpoints. -->
+<path d="M124 174 H184 Q200 174 210 190 L306 325 Q316 339 333 339 H387" fill="none" stroke="#F8FBFF" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- B: bottom-left to top-right. Explicit underpass: disconnected near center for visual precedence. -->
+<path d="M124 338 H184 Q199 338 209 324 L240 280" fill="none" stroke="#69E5DA" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M277 227 L306 187 Q316 173 333 173 H387" fill="none" stroke="#69E5DA" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
