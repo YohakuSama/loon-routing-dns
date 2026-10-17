@@ -231,7 +231,7 @@
       "代理特征：" + signal(info.proxy),
       "Tor 特征：" + signal(info.tor),
       "情报服务：" + info.provider +
-        (info.cached ? "（短时缓存；动态出口请从 Proxy 查询以获取即时数据）" : "")
+        (info.cached ? "（本机缓存，最长由插件参数控制；动态出口请从 Proxy 查询）" : "")
     ];
     var localData = localIntel(info.ip);
     if (localData) {
