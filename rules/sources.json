@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Reviewed inputs for staging a self-hosted Loon rule library; generated rules are not yet active in the main config.",
+  "description": "Staging catalog: existing 28 remote rules + 10 optional-platform additions + 8 original project-local additions; active configuration is unchanged.",
   "licensing": "Source materials inherit their original licenses. Consult rules/README.md before publishing generated outputs.",
   "sources": [
     {
@@ -382,6 +382,86 @@
       "enabled": true,
       "min_rules": 1,
       "role": "extension"
+    },
+    {
+      "id": "local-ai",
+      "group": "AI",
+      "policy": "AI",
+      "path": "rules/custom/AI.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
+    },
+    {
+      "id": "local-whatsapp",
+      "group": "Whatsapp",
+      "policy": "Whatsapp",
+      "path": "rules/custom/Whatsapp.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
+    },
+    {
+      "id": "local-facebook",
+      "group": "Facebook",
+      "policy": "Facebook",
+      "path": "rules/custom/Facebook.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
+    },
+    {
+      "id": "local-dazn",
+      "group": "Dazn",
+      "policy": "Dazn",
+      "path": "rules/custom/Dazn.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
+    },
+    {
+      "id": "local-hbo",
+      "group": "HBO",
+      "policy": "HBO",
+      "path": "rules/custom/HBO.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
+    },
+    {
+      "id": "local-animecrazy",
+      "group": "動畫瘋",
+      "policy": "動畫瘋",
+      "path": "rules/custom/AnimeCrazy.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
+    },
+    {
+      "id": "local-microsoft",
+      "group": "Microsoft",
+      "policy": "Microsoft",
+      "path": "rules/custom/Microsoft.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
+    },
+    {
+      "id": "local-chinadirect",
+      "group": "ChinaDirect",
+      "policy": "DIRECT",
+      "path": "rules/custom/ChinaDirect.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "local"
     }
   ],
   "candidates": [
