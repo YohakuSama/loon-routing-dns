@@ -1,0 +1,74 @@
+name: Composite Rule Library — tests and review updates
+
+on:
+  pull_request:
+    paths:
+      - 'rules/**'
+      - 'scripts/build_composite_rules.py'
+      - 'tests/test_composite_rules.py'
+      - '.github/workflows/composite-rules.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '20 2 * * 1,4'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: composite-rules-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-parser:
+    name: Offline rule builder regression tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m unittest discover -s tests -p 'test_composite_rules.py' -v
+      - name: Validate catalog JSON
+        run: python3 -m json.tool rules/sources.json >/dev/null
+
+  build-draft:
+    name: Prepare staged upstream refresh for review
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref_name == 'main')
+    needs: validate-parser
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build candidate library and conflict report
+        run: python3 scripts/build_composite_rules.py
+      - name: Refuse empty generated library
+        run: |
+          test -s rules/generated/audit.json
+          test -s rules/generated/AI.list
+          test -s rules/generated/AdBlock.list
+          test -s rules/generated/ChinaDirect.list
+      - name: Open a draft PR on rule changes (never merge automatically)
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          add-paths: rules/generated
+          branch: automation/composite-rules-refresh
+          delete-branch: true
+          commit-message: 'chore(rules): stage upstream composite rules refresh'
+          title: 'chore(rules): review new upstream composite rules'
+          body: |
+            Automated, unmerged **staging-only** rules.
+            - Compare `rules/generated/audit.json` and changed .list files.
+            - Review different-policy conflicts, domain ancestor conflicts, quarantined syntax and copyright.
+            - Perform Loon iPhone tests before enabling any of these lists.
+            - This PR DOES NOT modify the active Loon_Routing_DNS.lcf.
+            - No automatic merge is configured.
+          draft: true
