@@ -1,5 +1,5 @@
 # Loon staged composite rules: Bilibili
-# Sources: bm-bilibili, v2-bilibili, v2-bilibili-cdn
+# Sources: bm-bilibili, v2-bilibili, v2-bilibili-cdn, v2-bilibili-game
 # Review rules/README.md before enabling; upstream licensing applies.
 DOMAIN,0gr4uqmtt8y41hcjsgrzdrc31.ourdvsss.com
 DOMAIN,0gr4uqmtt8y41hcjsgrzdrc3s.ourdvsss.com

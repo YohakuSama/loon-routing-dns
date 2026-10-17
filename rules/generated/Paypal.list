@@ -1,7 +1,6 @@
 # Loon staged composite rules: Paypal
 # Sources: bm-paypal, v2-paypal
 # Review rules/README.md before enabling; upstream licensing applies.
-DOMAIN,venmo.s3.amazonaws.com
 DOMAIN-KEYWORD,paypal
 DOMAIN-SUFFIX,account-paypal.info
 DOMAIN-SUFFIX,account-paypal.net

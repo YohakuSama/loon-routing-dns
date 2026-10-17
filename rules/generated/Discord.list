@@ -1,8 +1,6 @@
 # Loon staged composite rules: Discord
 # Sources: bm-discord, v2-discord
 # Review rules/README.md before enabling; upstream licensing applies.
-DOMAIN,discord-attachments-uploads-prd.storage.googleapis.com
-DOMAIN,hammerandchisel.ssl.zendesk.com
 DOMAIN-SUFFIX,airhorn.solutions
 DOMAIN-SUFFIX,airhornbot.com
 DOMAIN-SUFFIX,bigbeans.solutions

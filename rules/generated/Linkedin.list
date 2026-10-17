@@ -1,5 +1,5 @@
 # Loon staged composite rules: Linkedin
-# Sources: bm-linkedin
+# Sources: bm-linkedin, v2-linkedin
 # Review rules/README.md before enabling; upstream licensing applies.
 DOMAIN,e122475.dscg.akamaiedge.net
 DOMAIN,licdn.cn.cdn20.com

@@ -1,15 +1,12 @@
 # Loon staged composite rules: AI
 # Sources: bm-openai, bm-claude, bm-gemini, local-ai, v2-openai, v2-anthropic, v2-google-deepmind, v2-github-copilot, v2-perplexity, v2-cursor, v2-xai
 # Review rules/README.md before enabling; upstream licensing applies.
-DOMAIN,ai.google.dev
-DOMAIN,aistudio.google.com
 DOMAIN,alkalicore-pa.clients6.google.com
 DOMAIN,alkalimakersuite-pa.clients6.google.com
 DOMAIN,antigravity-pa.googleapis.com
 DOMAIN,antigravity.googleapis.com
 DOMAIN,browser-intake-datadoghq.com
 DOMAIN,cdn.usefathom.com
-DOMAIN,chat.openai.com.cdn.cloudflare.net
 DOMAIN,cloudaicompanion.googleapis.com
 DOMAIN,cloudcode-pa.googleapis.com
 DOMAIN,copilot-proxy.githubusercontent.com
@@ -19,17 +16,13 @@ DOMAIN,copilot-workspace.githubnext.com
 DOMAIN,copilot.microsoft.com
 DOMAIN,copilotprodattachments.blob.core.windows.net
 DOMAIN,daily-cloudcode-pa.googleapis.com
-DOMAIN,gemini.google.com
 DOMAIN,geminiweb-pa.clients.google.com
 DOMAIN,geminiweb-pa.clients6.google.com
-DOMAIN,makersuite.google.com
 DOMAIN,notebooklm-pa.googleapis.com
 DOMAIN,notebooklm.googleapis.com
 DOMAIN,openai-api.arkoselabs.com
-DOMAIN,openaiapi-site.azureedge.net
 DOMAIN,openaiassets.blob.core.windows.net
 DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
-DOMAIN,openaicom.imgix.net
 DOMAIN,openaicomproductionae4b.blob.core.windows.net
 DOMAIN,ppl-ai-file-upload.s3.amazonaws.com
 DOMAIN,pplx-res.cloudinary.com

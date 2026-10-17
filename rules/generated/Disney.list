@@ -1,6 +1,7 @@
 # Loon staged composite rules: Disney
-# Sources: bm-disney
+# Sources: bm-disney, v2-disney
 # Review rules/README.md before enabling; upstream licensing applies.
+DOMAIN-SUFFIX,20thcenturystudios.com
 DOMAIN-SUFFIX,20thcenturystudios.com.au
 DOMAIN-SUFFIX,20thcenturystudios.com.br
 DOMAIN-SUFFIX,20thcenturystudios.jp
@@ -19,6 +20,7 @@ DOMAIN-SUFFIX,braze.com
 DOMAIN-SUFFIX,cdn.optimizely.com
 DOMAIN-SUFFIX,conviva.com
 DOMAIN-SUFFIX,d9.flashtalking.com
+DOMAIN-SUFFIX,detpress.com
 DOMAIN-SUFFIX,dilcdn.com
 DOMAIN-SUFFIX,disney-asia.com
 DOMAIN-SUFFIX,disney-discount.com
@@ -66,7 +68,9 @@ DOMAIN-SUFFIX,disney.ro
 DOMAIN-SUFFIX,disney.ru
 DOMAIN-SUFFIX,disney.se
 DOMAIN-SUFFIX,disney.sg
+DOMAIN-SUFFIX,disneyaccount.com
 DOMAIN-SUFFIX,disneyadsales.com
+DOMAIN-SUFFIX,disneyanimation.com
 DOMAIN-SUFFIX,disneyarena.com
 DOMAIN-SUFFIX,disneyaulani.com
 DOMAIN-SUFFIX,disneybaby.com
@@ -130,14 +134,19 @@ DOMAIN-SUFFIX,espncdn.com
 DOMAIN-SUFFIX,espndotcom.tt.omtrdc.net
 DOMAIN-SUFFIX,espnqa.com
 DOMAIN-SUFFIX,execute-api.us-east-1.amazonaws.com
+DOMAIN-SUFFIX,freeform.com
+DOMAIN-SUFFIX,fxnetwork.com
+DOMAIN-SUFFIX,fxnetworks.com
 DOMAIN-SUFFIX,go-disneyworldgo.com
 DOMAIN-SUFFIX,go.com
+DOMAIN-SUFFIX,hongkongdisneyland.com
 DOMAIN-SUFFIX,hotstar-cdn.net
 DOMAIN-SUFFIX,hotstar-labs.com
 DOMAIN-SUFFIX,hotstar.com
 DOMAIN-SUFFIX,hotstarext.com
 DOMAIN-SUFFIX,hsprepack.akamaized.net
 DOMAIN-SUFFIX,js-agent.newrelic.com
+DOMAIN-SUFFIX,lucasfilm.com
 DOMAIN-SUFFIX,marvel.com
 DOMAIN-SUFFIX,marvel10thanniversary.com
 DOMAIN-SUFFIX,marveldimensionofheroes.com
@@ -154,7 +163,9 @@ DOMAIN-SUFFIX,nationalgeographic.com
 DOMAIN-SUFFIX,nationalgeographicpartners.com
 DOMAIN-SUFFIX,ngeo.com
 DOMAIN-SUFFIX,nomadlandmovie.ch
+DOMAIN-SUFFIX,pixar.com
 DOMAIN-SUFFIX,playmation.com
+DOMAIN-SUFFIX,searchlightpictures.com
 DOMAIN-SUFFIX,shopdisney.com
 DOMAIN-SUFFIX,shops-disney.com
 DOMAIN-SUFFIX,sorcerersarena.com
@@ -171,6 +182,8 @@ DOMAIN-SUFFIX,themarvelexperiencetour.com
 DOMAIN-SUFFIX,thestationbymaker.com
 DOMAIN-SUFFIX,thewaltdisneycompany.com
 DOMAIN-SUFFIX,thisispolaris.com
+DOMAIN-SUFFIX,tokyodisneyresort.jp
+DOMAIN-SUFFIX,waltdisneystudios.com
 DOMAIN-SUFFIX,watchdisneyfe.com
 DOMAIN-SUFFIX,watchespn.com
 USER-AGENT,Disney+*
