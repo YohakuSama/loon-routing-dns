@@ -13,9 +13,9 @@ OUT.mkdir(parents=True,exist_ok=True)
 for name in NAMES:
     markup=(SVG/f"{name}.svg").read_bytes()
     rgba=Image.open(BytesIO(cairosvg.svg2png(bytestring=markup,
-                                             output_width=1024,
-                                             output_height=1024))).convert("RGBA")
-    rgba=rgba.resize((256,256),Image.Resampling.LANCZOS)
+                                             output_width=2048,
+                                             output_height=2048))).convert("RGBA")
+    rgba=rgba.resize((512,512),Image.Resampling.LANCZOS)
     assert rgba.getbbox(),name+" is empty"
     assert rgba.getpixel((0,0))[3]==0,name+" has opaque background"
     rgba.save(OUT/f"{name}.png",optimize=True)
@@ -44,4 +44,4 @@ for j,(bg,title) in enumerate((("#24253A","Dark mode"),("#F3F4F7","Light mode"))
         icon=Image.open(OUT/f"{name}.png").convert("RGBA").resize((34,34),Image.Resampling.LANCZOS)
         canvas.paste(icon,(x+17+i*85,852),icon)
 canvas.save(OUT/"review-preview.png",optimize=True)
-print("Rendered 5 transparent PNGs at 256x256 with 4x supersampling")
+print("Rendered 5 transparent PNGs at 512x512 with 4x supersampling")
