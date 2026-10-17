@@ -25,9 +25,14 @@ ALLOWED_TYPES = {
 DOMAIN_RE = re.compile(r"^[a-z0-9*._-]+$", re.I)
 GROUP_NAMES = {"動畫瘋": "AnimeCrazy"}
 MAX_FILE_BYTES = 35_000_000
+SOURCE_URL_PREFIXES = (
+    "/blackmatrix7/ios_rule_script/",
+    "/v2fly/domain-list-community/",
+    "/felixonmars/dnsmasq-china-list/",
+)
 
 
-def normalize(text, source_format="loon"):
+def normalize(text, source_format="loon", source=None):
     """Return (canonical rule, reason). Unknown types are quarantined."""
     line = text.strip().lstrip("\ufeff")
     if not line or line.startswith(("#", "//", ";")):
@@ -45,6 +50,49 @@ def normalize(text, source_format="loon"):
         if not value or not DOMAIN_RE.fullmatch(value):
             return None, "invalid domain-set item"
         return kind + "," + value, None
+
+    if source_format == "v2fly":
+        # Domain-list-community: plain=domain suffix, full:=DOMAIN,
+        # keyword:=DOMAIN-KEYWORD. Includes must be explicitly registered
+        # rather than expanding a large unrelated parent category.
+        parts = line.split()
+        if not parts:
+            return None, None
+        token, attrs = parts[0], parts[1:]
+        if token.startswith("include:"):
+            return None, "v2fly include not expanded (explicit sources only)"
+        if token.startswith("regexp:"):
+            return None, "v2fly regexp excluded (manual review)"
+        if any(not attr.startswith("@") for attr in attrs):
+            return None, "v2fly unrecognized annotation"
+        skip = set(source.get("skip_attrs", [])) if source else set()
+        tags = {a[1:] for a in attrs}
+        if skip.intersection(tags):
+            return None, None
+        # Never silently route explicit CN content through international
+        # proxy policy, even if an upstream source changes its annotations.
+        if "cn" in tags and source and source.get("policy") != "DIRECT":
+            return None, None
+        if token.startswith("full:"):
+            kind, value = "DOMAIN", token[5:]
+        elif token.startswith("keyword:"):
+            kind, value = "DOMAIN-KEYWORD", token[8:]
+        elif ":" in token:
+            return None, "v2fly unsupported token"
+        else:
+            kind, value = "DOMAIN-SUFFIX", token
+        if not value or not DOMAIN_RE.fullmatch(value):
+            return None, "v2fly invalid domain"
+        return kind + "," + value.lower().rstrip("."), None
+
+    if source_format == "dnsmasq":
+        m = re.fullmatch(r"server=/([^/]+)/[^/]+", line)
+        if not m:
+            return None, "dnsmasq unsupported syntax"
+        value = m.group(1).lower().rstrip(".")
+        if not DOMAIN_RE.fullmatch(value):
+            return None, "dnsmasq invalid domain"
+        return "DOMAIN-SUFFIX," + value, None
 
     chunks = [p.strip() for p in line.split(",")]
     if len(chunks) < 2:
@@ -94,11 +142,11 @@ def read_catalog(path=CATALOG):
         else:
             url = urlparse(s["url"])
             if (url.scheme != "https" or url.netloc != "raw.githubusercontent.com"
-                    or not url.path.startswith("/blackmatrix7/ios_rule_script/")):
+                    or not url.path.startswith(SOURCE_URL_PREFIXES)) :
                 raise ValueError("unreviewed source URL: " + s["url"])
         if not re.fullmatch(r"[\w\u4e00-\u9fff-]+", s["group"]):
             raise ValueError("unsafe output group: " + s["group"])
-        if s["format"] not in {"loon", "domainset"}:
+        if s["format"] not in {"loon", "domainset", "v2fly", "dnsmasq"}:
             raise ValueError("unknown source format")
     return sources
 
@@ -126,7 +174,7 @@ def generate(sources, fetch=fetch_text):
         deduped = 0
         source_rules = set()
         for number, raw in enumerate(body.splitlines(), 1):
-            rule, reason = normalize(raw, s["format"])
+            rule, reason = normalize(raw, s["format"], source=s)
             if reason:
                 quarantined[reason] += 1
                 if len(quarantined_examples) < 50:
