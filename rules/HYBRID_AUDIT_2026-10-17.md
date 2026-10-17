@@ -2,7 +2,9 @@
 
 > 本报告来自 GitHub Actions 实际访问并转换已登记的源，数据是审计版本而非 iPhone 真机分流正确性的声明。自动化输出在 `rules/generated/audit.json`。
 
-## 整合汇总
+> 说明：本报告记录首次 34 组构建的历史审计结果。2026-10-17 随后的设计精简已将哈啰规则并入 `DomesticCore`，因此当前配置为 **33 组**。旧统计中的跨组冲突计数不可直接视为当前数值，请以 `rules/generated/audit.json` 的最新自动构建结果为准。
+
+## 整合汇总（历史首轮快照）
 
 | 项目 | 构建结果 |
 |---|---:|
@@ -26,7 +28,7 @@
 - `Bilibili.list`：132 项，优先于国内直连总表供用户自主选择策略；
 - `AI.list`：129 项，补充 OpenAI、Anthropic、Gemini、Copilot、Perplexity、Cursor 和 xAI 相关域名；
 - `Netflix.list`：1,157 项；
-- `HelloBike.list`：3 个官方主域名（并非应用全部网络端点）；
+- 哈啰 3 个官方主域名已在后续修订中合并到 `DomesticCore.list`，不另设策略组；
 - `DomesticCore.list`：4 项地图和支付通用直连域名。
 
 ## 冲突不等于故障
@@ -37,7 +39,7 @@
 
 ## 仍需人工审核
 
-1. 在 Loon 中确认 34 个 `rules/generated` 远程规则源能成功下载，无格式错误；
+1. 在 Loon 中确认现行 33 个 `rules/generated` 远程规则源能成功下载，无格式错误；
 2. 保证自托管规则资源能到达设备网络，尤其是初次从 GitHub Raw 拉取阶段；
 3. 复核哈啰 首页 / 位置 / 地图 / 登录 / 行程 / 费用详情页；
 4. 检查切换 `AdBlock=REJECT`/ `DIRECT` 是否引起故障差异，获取失败的精确域名；
