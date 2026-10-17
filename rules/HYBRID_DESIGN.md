@@ -18,12 +18,12 @@
 ## 数据组织和发布方式
 
 - 完整候选文件：[reviews/Loon_Routing_DNS_Hybrid_Review.lcf](../reviews/Loon_Routing_DNS_Hybrid_Review.lcf)
-- 来源登记：[sources.json](./sources.json)，当前 **76 个启用源**，含 10 个项目自身规则文件。
-- 生成器：[scripts/build_composite_rules.py](../scripts/build_composite_rules.py)，统一将来源映射到 **34 个策略目标**。
-- 输出目录：[`rules/generated/`](./generated/)，在本功能分支自动构建提交。完整配置的 34 条规则订阅全部指向自己的 `rules/generated`。
+- 来源登记：[sources.json](./sources.json)，当前 **76 个启用源**，含 10 个项目自身规则文件，哈啰规则文件并入国内 `DomesticCore`。
+- 生成器：[scripts/build_composite_rules.py](../scripts/build_composite_rules.py)，统一将来源映射到 **33 个策略目标**。
+- 输出目录：[`rules/generated/`](./generated/)，在本功能分支自动构建提交。完整配置的 33 条规则订阅全部指向自己的 `rules/generated`。
 - 新版默认使用 blackmatrix7 的 **AdvertisingLite**（约 3.8 万条来源记录），而不是 29 万条的完整广告列表；保留在来源候选库中以便比较。
 - 原本属于 `[Rule]` 的第一方域名迁移到 `rules/custom/` 参与构建，不再与远程规则重复维护。`[Rule]` 仅保留必要资源出口、`GEOIP` 和 `FINAL`。
-- `HelloBike` 独立策略默认 DIRECT，关键国内地图/支付域名优先 DIRECT。**这些域名不是整个哈啰 App 的完整网络足迹**，仍需看真机日志。
+- 哈啰已核验的 3 个官方域名已并入 `DomesticCore → DIRECT`，与高德地图、支付宝等国内关键服务一起维护；**不单独创建 HelloBike 策略组**。这些域名不是整个哈啰 App 的完整网络足迹，仍需看真机日志。
 
 ## 去重和安全
 
@@ -37,7 +37,7 @@
 
 ## 哈啰回归与最低发布门槛
 
-备份原配置、确保节点订阅已添加。在 Loon 中检查 `HelloBike = DIRECT`、`AdBlock = REJECT`、`Final = Proxy`，分别验证：
+备份原配置、确保节点订阅已添加。在 Loon 中检查 `DomesticCore = DIRECT`（无需单独策略组）、`AdBlock = REJECT`、`Final = Proxy`，分别验证：
 - 哈啰登录 / 首页 / 定位 / 地图 / 行程 / 支付页面加载（不需要实际支付）；
 - 切换广告拦截 `REJECT` 与 `DIRECT` 后的差异；查看请求日志中的精确失败域名；
 - 中国大陆银行、地图、常用 App，Apple 更新、Steam 中国下载、Bilibili；
