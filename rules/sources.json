@@ -829,13 +829,14 @@
     },
     {
       "id": "local-hellobike",
-      "group": "HelloBike",
-      "policy": "HelloBike",
+      "group": "DomesticCore",
+      "policy": "DIRECT",
       "path": "rules/custom/HelloBike.list",
       "format": "loon",
       "role": "local",
       "enabled": true,
-      "min_rules": 3
+      "min_rules": 3,
+      "reason": "HelloBike domains belong to mainland DIRECT policy; no app-specific strategy group."
     },
     {
       "id": "local-domestic-core",
