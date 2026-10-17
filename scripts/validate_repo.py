@@ -41,7 +41,7 @@ def section(content, name):
 
 def check_config():
     data = CONF.read_text(encoding="utf-8")
-    require(data.startswith("# Loon Routing DNS v4.4.7"), "expected v4.4.7 header")
+    require(data.startswith("# Loon Routing DNS v4.4.8"), "expected v4.4.8 header")
     require("dns-server = 223.5.5.5,223.6.6.6" in data, "public DNS changed")
     require("doh-server = https://dns.alidns.com/dns-query" in data, "AliDNS DoH changed")
     require("ssid-trigger" not in data, "Wi-Fi automation must not be enabled in public config")
@@ -81,6 +81,17 @@ def check_config():
     require(local_count > 40, "unexpectedly small local routing section")
     require("GEOIP,CN,DIRECT,no-resolve" in rule_text, "CN GEOIP route missing")
     require("FINAL,Final" in rule_text, "FINAL policy missing")
+
+    # Full configuration must discover the control console automatically.
+    plugin_text = section(data, "Plugin")
+    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin"
+    entries = [line.strip() for line in plugin_text.splitlines()
+               if line.strip() and not line.lstrip().startswith("#")]
+    require(len(entries) == 1, "expected one auto-bundled Console plugin")
+    require(len(entries) == 1 and entries[0].startswith(expected_plugin + ",")
+            and "enabled=true" in entries[0], "Console plugin must load enabled=true")
+    require("FINAL,Final" in rule_text and "Final = select,Proxy,Auto,Fallback,DIRECT" in groups_text,
+            "the existing Proxy-first Final policy must remain unchanged")
 
     icon_urls = re.findall(r"\bimg-url\s*=\s*(https://\S+)", groups_text)
     require(len(icon_urls) == 33, "expected one icon per proxy group")
@@ -132,7 +143,7 @@ def check_readme():
     for label, text in [("README", data), ("plugin guide", guide)]:
         require("Network_Diagnostics.plugin" in text, label + " missing installation URL")
         require("DIRECT" in text and "DoH" in text, label + " missing DNS guidance")
-    require("v4.4.7" in data, "README config version out of sync")
+    require("v4.4.8" in data, "README config version out of sync")
     require("默认关闭" in data or "默认不开启" in data, "README missing DIRECT IP privacy default")
 
 
