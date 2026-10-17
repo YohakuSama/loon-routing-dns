@@ -1,0 +1,34 @@
+name: Build Console Plugin Icon
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/generate-console-icon.mjs
+      - .github/workflows/console-icon.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  render-console-icon:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --no-audit --no-fund sharp@0.34.4
+      - run: node scripts/generate-console-icon.mjs
+      - name: Commit independent Console PNG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons/Console.png
+          if git diff --cached --quiet; then
+            echo "Already up to date"
+          else
+            git commit -m "assets: add custom Loon Routing DNS console icon"
+            git push origin HEAD:main
+          fi
