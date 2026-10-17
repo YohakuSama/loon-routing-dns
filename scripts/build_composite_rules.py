@@ -25,6 +25,19 @@ ALLOWED_TYPES = {
 DOMAIN_RE = re.compile(r"^[a-z0-9*._-]+$", re.I)
 GROUP_NAMES = {"動畫瘋": "AnimeCrazy"}
 MAX_FILE_BYTES = 35_000_000
+# Subscription order in the release profile. Exact cross-policy duplicates
+# are owned by the earlier group; lower-priority copies cannot win at runtime.
+PUBLISH_ORDER = (
+    "DomesticCore", "AppleOTA", "SteamCN", "AI", "Bilibili",
+    "YouTube", "Netflix", "Disney", "PrimeVideo", "Spotify", "TikTok",
+    "Twitch", "HBO", "Abema", "BBC", "動畫瘋", "Dazn",
+    "Telegram", "Whatsapp", "Instagram", "Facebook", "Twitter",
+    "Discord", "Line", "Reddit", "Linkedin", "Google", "Microsoft",
+    "Apple", "Steam", "Paypal", "AdBlock", "ChinaDirect",
+)
+# Advert/privacy safety: these selectors are excessively broad for an
+# always-on blocker; precise domains/suffixes remain enabled.
+ADBLOCK_ALLOWED = {"DOMAIN", "DOMAIN-SUFFIX"}
 SOURCE_URL_PREFIXES = (
     "/blackmatrix7/ios_rule_script/",
     "/v2fly/domain-list-community/",
@@ -164,6 +177,45 @@ def fetch_text(url):
     return blob.decode("utf-8-sig")
 
 
+def prune_suffix_redundancy(rules):
+    """Prune only a DOMAIN/DOMAIN-SUFFIX covered by a same-group suffix."""
+    suffixes = {r[14:] for r in rules if r.startswith("DOMAIN-SUFFIX,")}
+    result = set()
+    dropped = 0
+    for rule in rules:
+        kind, _, val = rule.partition(",")
+        if kind not in {"DOMAIN", "DOMAIN-SUFFIX"}:
+            result.add(rule)
+            continue
+        labels = val.split(".")
+        if kind == "DOMAIN" and val in suffixes:
+            dropped += 1
+            continue
+        if any(".".join(labels[i:]) in suffixes for i in range(1, len(labels))):
+            dropped += 1
+            continue
+        result.add(rule)
+    return result, dropped
+
+
+def own_cross_group_duplicates(by_group):
+    """Keep exact matches in only the first ordered policy group."""
+    order = list(PUBLISH_ORDER)
+    if set(order) != set(by_group):
+        raise ValueError("catalog groups diverge from release order: " +
+                         repr(set(order).symmetric_difference(by_group)))
+    seen = {}
+    removed = []
+    for group in order:
+        for rule in list(by_group[group]):
+            if rule in seen:
+                removed.append({"rule": rule, "kept_in": seen[rule], "removed_from": group})
+                del by_group[group][rule]
+            else:
+                seen[rule] = group
+    return removed
+
+
 def generate(sources, fetch=fetch_text):
     by_group = defaultdict(dict)
     owners = defaultdict(set)
@@ -191,6 +243,12 @@ def generate(sources, fetch=fetch_text):
                 continue
             parsed += 1
             source_rules.add(rule)
+            kind = rule.split(",", 1)[0]
+            # Block precise ad/tracker domains, not all IPs sharing a CDN or
+            # generic keyword like "analytics." (frequent login failures).
+            if s["group"] == "AdBlock" and kind not in ADBLOCK_ALLOWED:
+                quarantined["adblock broad matcher omitted: " + kind] += 1
+                continue
             key = s["group"]
             if rule in by_group[key]:
                 intra_dupes += 1
@@ -253,6 +311,14 @@ def generate(sources, fetch=fetch_text):
                     })
                 break
 
+    # Canonicalize output after gathering full provenance and conflict samples.
+    suffix_pruned = {}
+    for group, rules in by_group.items():
+        clean, count = prune_suffix_redundancy(rules)
+        suffix_pruned[group] = count
+        by_group[group] = {k: rules[k] for k in clean}
+    cross_pruned = own_cross_group_duplicates(by_group)
+
     output = {}
     for group, rules in sorted(by_group.items()):
         name = GROUP_NAMES.get(group, group)
@@ -270,6 +336,9 @@ def generate(sources, fetch=fetch_text):
         "sources": source_stats,
         "group_sizes": {k: len(v) for k, v in sorted(by_group.items())},
         "duplicates_removed_within_group": intra_dupes,
+        "same_group_suffix_shadow_pruned": suffix_pruned,
+        "cross_group_exact_pruned_count": len(cross_pruned),
+        "cross_group_exact_pruned_samples": cross_pruned[:100],
         "cross_group_same_policy_repeated": same_policy_reused,
         "cross_group_different_policy_exact": exact_different_policy_count,
         "cross_group_different_policy_samples": exact_conflicts,
@@ -278,7 +347,9 @@ def generate(sources, fetch=fetch_text):
         "quarantined_by_reason": dict(sorted(quarantined.items())),
         "quarantined_examples": quarantined_examples,
         "notes": [
-            "Cross-group duplicates are not deleted: groups may be independently enabled.",
+            "Exact cross-group duplicates retained only in the first published group.",
+            "Per-group suffix shadows removed only when same routing policy covers them.",
+            "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
             "Different-policy and ancestor conflicts require a routing priority review.",
             "Local [Rule] in Loon takes precedence over remote lists.",
             "No generated list is installed in the active configuration.",
