@@ -5,13 +5,13 @@ from pathlib import Path
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from build_composite_rules import normalize, generate, read_catalog
+from build_composite_rules import normalize, generate, read_catalog, prune_suffix_redundancy, own_cross_group_duplicates, PUBLISH_ORDER
 
 
 class CompositeRulesTests(unittest.TestCase):
     def test_reviewed_sources_catalog_is_valid(self):
         sources = read_catalog()
-        self.assertEqual(len(sources), 76)
+        self.assertEqual(len(sources), 86)
         self.assertEqual(len([s for s in sources if s.get("role") == "local"]), 10)
 
     def test_v2fly_annotations_and_dnsmasq(self):
@@ -30,6 +30,25 @@ class CompositeRulesTests(unittest.TestCase):
                       "dnsmasq")[0],
             "DOMAIN-SUFFIX,app-site-association.cdn-apple.com"
         )
+
+    def test_same_group_shadow_removal(self):
+        remaining, dropped = prune_suffix_redundancy({
+            "DOMAIN-SUFFIX,example.com", "DOMAIN-SUFFIX,a.example.com",
+            "DOMAIN,login.example.com", "DOMAIN-SUFFIX,example.net"})
+        self.assertEqual(dropped, 2)
+        self.assertIn("DOMAIN-SUFFIX,example.com", remaining)
+        self.assertNotIn("DOMAIN,login.example.com", remaining)
+
+    def test_exact_cross_group_dedup_is_first_wins(self):
+        from collections import defaultdict
+        groups = {name: {} for name in PUBLISH_ORDER}
+        groups["AI"]["DOMAIN-SUFFIX,example.com"] = "AI"
+        groups["AdBlock"]["DOMAIN-SUFFIX,example.com"] = "AdBlock"
+        groups["ChinaDirect"]["DOMAIN-SUFFIX,example.com"] = "ChinaDirect"
+        report = own_cross_group_duplicates(groups)
+        self.assertEqual(len(report), 2)
+        self.assertIn("DOMAIN-SUFFIX,example.com", groups["AI"])
+        self.assertNotIn("DOMAIN-SUFFIX,example.com", groups["AdBlock"])
 
     def test_normalizes_domainset_and_lowers_domain(self):
         self.assertEqual(normalize(".EXAMPLE.COM", "domainset")[0],
@@ -75,6 +94,7 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertEqual(out["Alpha.list"].count("DOMAIN-SUFFIX,example.com"), 1)
         self.assertEqual(audit["duplicates_removed_within_group"], 2)
         self.assertEqual(audit["cross_group_different_policy_exact"], 1)
+        self.assertEqual(audit["cross_group_exact_pruned_count"], 1)
         self.assertGreaterEqual(audit["domain_suffix_ancestor_conflict_count"], 1)
 
     def test_refuses_truncated_inputs(self):
