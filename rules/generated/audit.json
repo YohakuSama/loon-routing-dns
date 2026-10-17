@@ -419,9 +419,9 @@
       "id": "v2-openai",
       "group": "AI",
       "policy": "AI",
-      "normalized_sha256": "8b4e7a4c38c9a06606166d893628e23434bb9c8d0e39e7dfcee0b494a5a185b0",
+      "normalized_sha256": "3d4d4fd5661a3d80ed85ca72c5fa487f1f6b8c74648f4f06530f54e8fe848494",
       "upstream_updated": null,
-      "parsed": 19,
+      "parsed": 20,
       "duplicate_within_group": 12
     },
     {
@@ -464,9 +464,9 @@
       "id": "v2-cursor",
       "group": "AI",
       "policy": "AI",
-      "normalized_sha256": "bc37c340cc7db1cfa97dc3f2758a70099e3d63767d6d61df7d38aa66303a4f8f",
+      "normalized_sha256": "163435ec43226a0b8a9322048cd132fc65ae20dc4de7a0bcb3b43d87f32e393c",
       "upstream_updated": null,
-      "parsed": 4,
+      "parsed": 5,
       "duplicate_within_group": 3
     },
     {
@@ -669,8 +669,8 @@
     },
     {
       "id": "local-hellobike",
-      "group": "HelloBike",
-      "policy": "HelloBike",
+      "group": "DomesticCore",
+      "policy": "DIRECT",
       "normalized_sha256": "d9f85f277e7e37b3e35a6a18dd014bc8ecc621294dcc6fe59a8ddcefe1304274",
       "upstream_updated": null,
       "parsed": 3,
@@ -687,7 +687,7 @@
     }
   ],
   "group_sizes": {
-    "AI": 129,
+    "AI": 131,
     "Abema": 24,
     "AdBlock": 38066,
     "Apple": 1767,
@@ -698,11 +698,10 @@
     "Dazn": 22,
     "Discord": 31,
     "Disney": 173,
-    "DomesticCore": 4,
+    "DomesticCore": 7,
     "Facebook": 575,
     "Google": 698,
     "HBO": 92,
-    "HelloBike": 3,
     "Instagram": 74,
     "Line": 37,
     "Linkedin": 12,
@@ -723,8 +722,8 @@
     "動畫瘋": 8
   },
   "duplicates_removed_within_group": 1120,
-  "cross_group_same_policy_repeated": 2,
-  "cross_group_different_policy_exact": 151,
+  "cross_group_same_policy_repeated": 5,
+  "cross_group_different_policy_exact": 148,
   "cross_group_different_policy_samples": [
     {
       "rule": "DOMAIN-SUFFIX,admob.com",
@@ -1437,45 +1436,6 @@
       ]
     },
     {
-      "rule": "DOMAIN-SUFFIX,hello-inc.com",
-      "targets": [
-        [
-          "ChinaDirect",
-          "DIRECT"
-        ],
-        [
-          "HelloBike",
-          "HelloBike"
-        ]
-      ]
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,hellobike.com",
-      "targets": [
-        [
-          "ChinaDirect",
-          "DIRECT"
-        ],
-        [
-          "HelloBike",
-          "HelloBike"
-        ]
-      ]
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,helloglobal.com",
-      "targets": [
-        [
-          "ChinaDirect",
-          "DIRECT"
-        ],
-        [
-          "HelloBike",
-          "HelloBike"
-        ]
-      ]
-    },
-    {
       "rule": "DOMAIN-SUFFIX,missevan.com",
       "targets": [
         [
@@ -2023,6 +1983,45 @@
     },
     {
       "rule": "DOMAIN-SUFFIX,instagramkusu.com",
+      "targets": [
+        [
+          "Facebook",
+          "Facebook"
+        ],
+        [
+          "Instagram",
+          "Instagram"
+        ]
+      ]
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramlogin.com",
+      "targets": [
+        [
+          "Facebook",
+          "Facebook"
+        ],
+        [
+          "Instagram",
+          "Instagram"
+        ]
+      ]
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramm.com",
+      "targets": [
+        [
+          "Facebook",
+          "Facebook"
+        ],
+        [
+          "Instagram",
+          "Instagram"
+        ]
+      ]
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramn.com",
       "targets": [
         [
           "Facebook",
@@ -2858,7 +2857,7 @@
     },
     {
       "source": "v2-openai",
-      "line": 20,
+      "line": 21,
       "reason": "v2fly regexp excluded (manual review)",
       "value": "regexp:^chatgpt-async-webps-prod-\\S+-\\d+\\.webpubsub\\.azure\\.com$"
     },
