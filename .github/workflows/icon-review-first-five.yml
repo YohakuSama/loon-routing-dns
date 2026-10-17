@@ -1,0 +1,55 @@
+name: Render first five flat icons for visual review
+on:
+  push:
+    branches: [design/flat-icons-first-five-v2]
+    paths:
+      - 'icons/svg/**'
+      - 'scripts/render_review_icons.py'
+      - '.github/workflows/icon-review-first-five.yml'
+  pull_request:
+    paths:
+      - 'icons/svg/**'
+      - 'scripts/render_review_icons.py'
+      - '.github/workflows/icon-review-first-five.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install vector rasterizer
+        run: python3 -m pip install --disable-pip-version-check "CairoSVG==2.7.1" "Pillow==11.3.0"
+      - name: Render production-resolution icon candidates
+        run: python3 scripts/render_review_icons.py
+      - name: Verify no production icons replaced
+        run: |
+          test -s icons/review/review-preview.png
+          for name in Proxy Apple HBO Dazn Twitter; do test -s "icons/review/$name.png"; done
+          ! git diff --name-only | grep -E '^icons/(Proxy|Apple|HBO|Dazn|Twitter)\.png$'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flat-icon-first-five-review
+          path: icons/review/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Commit candidates only on design branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/design/flat-icons-first-five-v2'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons/review/
+          if ! git diff --cached --quiet; then
+            git commit -m "design(icons): publish first five flat icon review PNGs"
+            git push origin HEAD:refs/heads/design/flat-icons-first-five-v2
+          fi
