@@ -37,7 +37,7 @@
   {
     "name": "Microsoft",
     "file": "Microsoft.png",
-    "source": "lettermark fallback"
+    "source": "custom project mark"
   },
   {
     "name": "Apple",
@@ -57,7 +57,7 @@
   {
     "name": "Disney",
     "file": "Disney.png",
-    "source": "lettermark fallback"
+    "source": "custom project mark"
   },
   {
     "name": "PrimeVideo",
@@ -152,7 +152,7 @@
   {
     "name": "Linkedin",
     "file": "Linkedin.png",
-    "source": "lettermark fallback"
+    "source": "custom project mark"
   },
   {
     "name": "Steam",
