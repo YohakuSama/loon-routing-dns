@@ -1,0 +1,6 @@
+# Loon staged composite rules: HelloBike
+# Sources: local-hellobike
+# Review rules/README.md before enabling; upstream licensing applies.
+DOMAIN-SUFFIX,hello-inc.com
+DOMAIN-SUFFIX,hellobike.com
+DOMAIN-SUFFIX,helloglobal.com
