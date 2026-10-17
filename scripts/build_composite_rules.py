@@ -87,7 +87,7 @@ def read_catalog(path=CATALOG):
     for s in sources:
         if s.get("role") == "local":
             path = s.get("path", "")
-            if not re.fullmatch(r"rules/custom/[A-Za-z0-9_-]+\\.list", path):
+            if not re.fullmatch(r"rules/custom/[A-Za-z0-9_-]+\.list", path):
                 raise ValueError("invalid custom rule file path: " + path)
             if not (ROOT / path).is_file():
                 raise ValueError("missing original custom rules: " + path)
