@@ -210,4 +210,4 @@ FINAL,Final
 # Loon Routing DNS Console — automatically loaded with this full configuration.
 # No MITM or rewrite. Settings and feature toggles remain editable in Loon > Plugins.
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin, tag=Loon Routing DNS Console, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin, enabled=true
