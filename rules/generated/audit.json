@@ -1,5 +1,5 @@
 {
-  "status": "STAGING_ONLY",
+  "status": "SELF_HOSTED_RELEASE",
   "sources": [
     {
       "id": "bm-advertising-lite",
@@ -3592,6 +3592,6 @@
     "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
     "Different-policy and ancestor conflicts require a routing priority review.",
     "Local [Rule] in Loon takes precedence over remote lists.",
-    "No generated list is installed in the active configuration."
+    "Generated lists are published in main and referenced by the active Loon config; changes require PR review."
   ]
 }
