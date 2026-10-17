@@ -1,0 +1,167 @@
+[
+  {
+    "name": "Proxy",
+    "file": "Proxy.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Auto",
+    "file": "Auto.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Fallback",
+    "file": "Fallback.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "AdBlock",
+    "file": "AdBlock.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Final",
+    "file": "Final.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "AI",
+    "file": "AI.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Google",
+    "file": "Google.png",
+    "source": "Simple Icons: Google"
+  },
+  {
+    "name": "Microsoft",
+    "file": "Microsoft.png",
+    "source": "lettermark fallback"
+  },
+  {
+    "name": "Apple",
+    "file": "Apple.png",
+    "source": "Simple Icons: Apple"
+  },
+  {
+    "name": "YouTube",
+    "file": "YouTube.png",
+    "source": "Simple Icons: YouTube"
+  },
+  {
+    "name": "Netflix",
+    "file": "Netflix.png",
+    "source": "Simple Icons: Netflix"
+  },
+  {
+    "name": "Disney",
+    "file": "Disney.png",
+    "source": "lettermark fallback"
+  },
+  {
+    "name": "PrimeVideo",
+    "file": "PrimeVideo.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Spotify",
+    "file": "Spotify.png",
+    "source": "Simple Icons: Spotify"
+  },
+  {
+    "name": "TikTok",
+    "file": "TikTok.png",
+    "source": "Simple Icons: TikTok"
+  },
+  {
+    "name": "Twitch",
+    "file": "Twitch.png",
+    "source": "Simple Icons: Twitch"
+  },
+  {
+    "name": "HBO",
+    "file": "HBO.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Abema",
+    "file": "Abema.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "動畫瘋",
+    "file": "AnimeCrazy.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Dazn",
+    "file": "Dazn.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "BBC",
+    "file": "BBC.png",
+    "source": "custom project mark"
+  },
+  {
+    "name": "Bilibili",
+    "file": "Bilibili.png",
+    "source": "Simple Icons: Bilibili"
+  },
+  {
+    "name": "Telegram",
+    "file": "Telegram.png",
+    "source": "Simple Icons: Telegram"
+  },
+  {
+    "name": "Whatsapp",
+    "file": "Whatsapp.png",
+    "source": "Simple Icons: WhatsApp"
+  },
+  {
+    "name": "Instagram",
+    "file": "Instagram.png",
+    "source": "Simple Icons: Instagram"
+  },
+  {
+    "name": "Facebook",
+    "file": "Facebook.png",
+    "source": "Simple Icons: Facebook"
+  },
+  {
+    "name": "Twitter",
+    "file": "Twitter.png",
+    "source": "Simple Icons: X"
+  },
+  {
+    "name": "Discord",
+    "file": "Discord.png",
+    "source": "Simple Icons: Discord"
+  },
+  {
+    "name": "Line",
+    "file": "Line.png",
+    "source": "Simple Icons: LINE"
+  },
+  {
+    "name": "Reddit",
+    "file": "Reddit.png",
+    "source": "Simple Icons: Reddit"
+  },
+  {
+    "name": "Linkedin",
+    "file": "Linkedin.png",
+    "source": "lettermark fallback"
+  },
+  {
+    "name": "Steam",
+    "file": "Steam.png",
+    "source": "Simple Icons: Steam"
+  },
+  {
+    "name": "Paypal",
+    "file": "Paypal.png",
+    "source": "Simple Icons: PayPal"
+  }
+]
