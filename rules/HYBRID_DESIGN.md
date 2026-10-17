@@ -18,7 +18,7 @@
 ## 数据组织和发布方式
 
 - 完整候选文件：[reviews/Loon_Routing_DNS_Hybrid_Review.lcf](../reviews/Loon_Routing_DNS_Hybrid_Review.lcf)
-- 来源登记：[sources.json](./sources.json)，当前 **86 个启用源**，含 10 个项目自身规则文件，哈啰规则文件并入国内 `DomesticCore`。
+- 来源登记：[sources.json](./sources.json)，当前 **87 个启用源**，含 10 个项目自身规则文件，哈啰规则文件并入国内 `DomesticCore`。
 - 生成器：[scripts/build_composite_rules.py](../scripts/build_composite_rules.py)，统一将来源映射到 **33 个策略目标**。
 - 输出目录：[`rules/generated/`](./generated/)，在主分支仓库自托管，更新先经自动化构建再由人工审查 PR 合并。完整配置的 33 条规则订阅全部指向自己的 `rules/generated`。
 - 新版默认使用 blackmatrix7 的 **AdvertisingLite + Privacy + Hijacking**（约 3.8 万条来源记录），而不是 29 万条的完整广告列表；保留在来源候选库中以便比较。
