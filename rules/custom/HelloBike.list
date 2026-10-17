@@ -1,0 +1,6 @@
+# HelloBike / 哈啰 official domain registry (2026-10-17)
+# SOURCES: https://www.hello-inc.com/ , https://hellobike.com/ , https://hellobike.com/en/
+# Review profile keeps these explicit local rules above remote lists.
+DOMAIN-SUFFIX,hello-inc.com
+DOMAIN-SUFFIX,hellobike.com
+DOMAIN-SUFFIX,helloglobal.com
