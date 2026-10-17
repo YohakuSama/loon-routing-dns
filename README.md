@@ -53,7 +53,7 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 
 - [复合规则库设计与审计](./rules/HYBRID_DESIGN.md)
 - [最新生成统计和冲突列表](./rules/generated/audit.json)
-- [控制台插件与手动 DNS 诊断](./docs/NETWORK_DIAGNOSTICS.md)
+- [控制台插件与手动 DNS 诊断](./docs/NETWORK_DIAGNOSTICS.md) · [Network_Diagnostics.plugin](./plugins/Network_Diagnostics.plugin)
 - [上一稳定版 v4.4.8（可回滚）](./releases/v4.4.8/Loon_Routing_DNS.lcf)
 
 **发布说明：** 静态测试不是 Loon 真机认证。遇到 App 不能联网，按节点 → DNS → 命中规则 → 广告开关 → UDP/IPv6 顺序排查；报告问题时请提交脱敏的 Loon/iOS 版本、错误域名、命中策略和网络情况，勿公开任何节点凭据。
