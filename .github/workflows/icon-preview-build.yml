@@ -1,0 +1,61 @@
+name: Build Preview Policy Icons
+
+on:
+  push:
+    branches:
+      - icon-pretest
+    paths:
+      - scripts/generate-policy-icons.mjs
+      - .github/workflows/icon-preview-build.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: icon-pretest-assets
+  cancel-in-progress: false
+
+jobs:
+  build-icons:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+        with:
+          ref: icon-pretest
+          persist-credentials: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install vector and PNG dependencies
+        run: npm install --no-save --no-audit --no-fund sharp simple-icons
+      - name: Generate policy icons
+        run: node scripts/generate-policy-icons.mjs
+      - name: Verify all images are PNG and correct size
+        run: |
+          python3 - <<'PY'
+          import pathlib,struct
+          pngs=list(pathlib.Path('icons').glob('*.png'))
+          assert len(pngs)==33, f'Expected 33 PNG files, found {len(pngs)}'
+          for p in pngs:
+              data=p.read_bytes()
+              assert data[:8]==bytes.fromhex('89504e470d0a1a0a'), p
+              w,h=struct.unpack('>II',data[16:24])
+              assert (w,h)==(512,512), (p,w,h)
+              assert data[25]==6, f'Expected RGBA transparent PNG: {p}'
+              assert len(data)>200, p
+          print('All 33 images: 512x512 RGBA PNG')
+          PY
+      - name: Commit test images only
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons
+          if git diff --cached --quiet; then
+            echo "All icons already up-to-date"
+          else
+            git commit -m "test: publish 33 self-hosted 512px policy PNGs"
+            git push origin HEAD:icon-pretest
+          fi
