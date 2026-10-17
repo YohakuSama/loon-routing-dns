@@ -1,0 +1,6 @@
+# Mainland shared critical services used by many mobile apps (not just HelloBike).
+# Reviewed 2026-10-17; only exact business-owned suffixes, never wide CDN domains.
+DOMAIN-SUFFIX,amap.com
+DOMAIN-SUFFIX,autonavi.com
+DOMAIN-SUFFIX,alipay.com
+DOMAIN-SUFFIX,alipayobjects.com
