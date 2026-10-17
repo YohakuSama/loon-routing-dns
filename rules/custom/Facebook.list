@@ -1,0 +1,8 @@
+# Original project-maintained policy additions, extracted from Loon_Routing_DNS.lcf v4.4.8.
+# Keep these rules reviewed and synchronized during active-config migration.
+DOMAIN-SUFFIX,facebook.com
+DOMAIN-SUFFIX,facebook.net
+DOMAIN-SUFFIX,fb.com
+DOMAIN-SUFFIX,fb.me
+DOMAIN-SUFFIX,messenger.com
+DOMAIN-SUFFIX,m.me
