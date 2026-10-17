@@ -89,7 +89,7 @@ def check_config():
 
     # Full configuration must discover the control console automatically.
     plugin_text = section(data, "Plugin")
-    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin"
+    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018/Network_Diagnostics.plugin"
     entries = [line.strip() for line in plugin_text.splitlines()
                if line.strip() and not line.lstrip().startswith("#")]
     require(len(entries) == 1, "expected one auto-bundled Console plugin")
@@ -119,6 +119,10 @@ def check_plugin():
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
     require("notify_every_change = switch,false" in data, "normal notification must default off")
+    pinned_plugin=ROOT / "plugins" / "v20261018" / "Network_Diagnostics.plugin"
+    require(pinned_plugin.is_file(), "missing versioned Console plugin")
+    require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
+            "versioned Console plugin differs from checked source")
     require("/main/icons/v20261018/Console.png" in data, "console icon must reference versioned release")
     require((ROOT / "icons/v20261018/Console.png").read_bytes() == (ROOT / "icons/Console.png").read_bytes(), "versioned Console icon does not match validated source PNG")
     require("ssid-trigger" not in data and "wifi-cellular-mode" not in data,

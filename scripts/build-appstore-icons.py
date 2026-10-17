@@ -130,6 +130,9 @@ def check_config():
         if link.rstrip(",")!="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018/"+filename:
             raise RuntimeError(f"unexpected strategy icon link: {group} {link}")
     plugin=(ROOT/"plugins/Network_Diagnostics.plugin").read_text()
+    pinned=(ROOT/"plugins/v20261018/Network_Diagnostics.plugin").read_text()
+    if pinned!=plugin:
+        raise RuntimeError("Pinned Console plugin differs from current Console plugin")
     if "#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018/Console.png" not in plugin:
         raise RuntimeError("Console plugin icon link changed unexpectedly")
 

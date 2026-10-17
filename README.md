@@ -21,6 +21,10 @@
 
 原始来源及许可证保留在 `rules/sources.json` 与 `rules/LICENSE.*`。**主配置里的 33 条远程订阅全部指向自己的 `main/rules/generated/*.list`，不是第三方规则地址。**
 
+## 图标更新（v20261018）
+
+为处理 Loon 对旧图标地址的缓存，**33 个策略组**与 Console 插件图标现使用全新的版本化链接 `main/icons/v20261018/`，控制台插件本身也改为 `main/plugins/v20261018/Network_Diagnostics.plugin`。已经导入 Loon 的本地配置不会因仓库更改而必然自动替换内含的 `img-url`；需先备份含节点订阅与私人改动的配置，再更新本地配置中的图标 URL，或按 Loon 的配置更新流程重新获取完整配置。只更新规则列表不足以更新策略组图标。
+
 ## 快速安装
 
 完整配置永久地址：
