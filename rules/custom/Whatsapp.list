@@ -1,0 +1,6 @@
+# Original project-maintained policy additions, extracted from Loon_Routing_DNS.lcf v4.4.8.
+# Keep these rules reviewed and synchronized during active-config migration.
+DOMAIN-SUFFIX,whatsapp.com
+DOMAIN-SUFFIX,whatsapp.net
+DOMAIN-SUFFIX,whatsapp.biz
+DOMAIN-SUFFIX,wa.me

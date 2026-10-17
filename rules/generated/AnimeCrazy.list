@@ -1,0 +1,10 @@
+# Loon staged composite rules: 動畫瘋
+# Sources: bm-bahamut, local-animecrazy, v2-bahamut
+# Review rules/README.md before enabling; upstream licensing applies.
+DOMAIN-SUFFIX,bahamut.akamaized.net
+DOMAIN-SUFFIX,bahamut.com.tw
+DOMAIN-SUFFIX,digicert.com
+DOMAIN-SUFFIX,gamer.com.tw
+DOMAIN-SUFFIX,hinet.net
+DOMAIN-SUFFIX,viblast.com
+USER-AGENT,Anime*

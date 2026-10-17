@@ -1,0 +1,6 @@
+# First-party HelloBike / 哈啰 direct route domains; official website domains verified 2026-10-17.
+# These are policy-less source records; see the review config for routing policy.
+# Source evidence: https://www.hello-inc.com/ , https://hellobike.com/ , https://hellobike.com/en/
+DOMAIN-SUFFIX,hello-inc.com
+DOMAIN-SUFFIX,hellobike.com
+DOMAIN-SUFFIX,helloglobal.com
