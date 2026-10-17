@@ -45,7 +45,7 @@ APPS = [
     ("Facebook",284882215,"us","meta"),
     ("Twitter",333903271,"gb","twitter"),
     ("Discord",985746746,"us","discord"),
-    ("Line",443904275,"gb","line"),
+    ("Line",443904275,"gb","ly corporation"),
     ("Reddit",1064216828,"gb","reddit"),
     ("Linkedin",288429040,"gb","linkedin"),
 ]
