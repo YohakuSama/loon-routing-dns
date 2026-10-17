@@ -1,5 +1,5 @@
 /*
- * Loon Network Diagnostics v1.2
+ * Loon Routing DNS Console — Network Diagnostics v1.3
  * One script for Generic (manual) and Network Changed (automatic).
  * No MITM, rewrites, policy changes, or modifications to DNS settings.
  * Requirements: Loon >= 3.5.1 (983).
@@ -10,24 +10,41 @@
   var TAG_AUTO = "网络切换诊断";
   var tag = typeof $script !== "undefined" && $script && $script.name || "";
   var auto = tag === TAG_AUTO;
+  var simulated = tag === "模拟网络切换诊断";
   var args = typeof $argument !== "undefined" && $argument && typeof $argument === "object" ? $argument : {};
-  var dohURL = typeof args.doh_url === "string" ? args.doh_url.trim() : "https://dns.alidns.com/dns-query";
-  var DIRECT_URL = "http://wifi.vivo.com.cn/generate_204";
-  var PROXY_URL = "http://cp.cloudflare.com/generate_204";
+  function endpoint(value, fallback, secureOnly) {
+    var url = typeof value === "string" ? value.trim() : "";
+    if (url.length > 2048 || url.indexOf("#") !== -1 ||
+       !(secureOnly ? /^https:\/\/[^\s]+$/i : /^https?:\/\/[^\s]+$/i).test(url)) return fallback;
+    return url;
+  }
+  function milliseconds(value) {
+    var n = Number(value);
+    return isFinite(n) && n >= 2000 && n <= 12000 ? Math.floor(n) : 6500;
+  }
+  var dohURL = endpoint(args.doh_url,"https://dns.alidns.com/dns-query",true);
+  var DIRECT_URL = endpoint(args.direct_probe_url,"http://wifi.vivo.com.cn/generate_204",false);
+  var PROXY_URL = endpoint(args.proxy_probe_url,"http://cp.cloudflare.com/generate_204",false);
   var STORE_KEY = "loon-routing-dns:diagnostics:auto-alert:v1";
+  var LAST_AUTO = "loon-routing-dns:diag:last-auto:v1";
+  var LAST_MANUAL = "loon-routing-dns:diag:last-manual:v1";
   var COOLDOWN_MS = 30 * 60 * 1000;
-  var HTTP_TIMEOUT = 6500;
+  var HTTP_TIMEOUT = milliseconds(args.probe_timeout);
   var finished = false;
 
   function finish(report) {
     if (finished) return;
     finished = true;
     console.log("[Network Diagnostics] " + report);
-    if (auto) {
-      $done();
-    } else {
-      $done({ title: "Loon 网络诊断", content: report });
-    }
+    if (auto) $done();
+    else $done({ title: simulated ? "模拟网络变化诊断" : "Loon 网络与 DNS 诊断", content: report });
+  }
+  function keepLast(group,results,kind) {
+    var status = (!results.direct.ok || !results.doh.ok || (results.proxy && !results.proxy.ok)) ?
+      "有检测项目异常" : "全部检测正常";
+    var compact = { time: Date.now(), status: status, kind: kind };
+    try { $persistentStore.write(JSON.stringify(compact), group === "auto" ? LAST_AUTO : LAST_MANUAL); }
+    catch (e) {}
   }
 
   function classifyError(error) {
@@ -114,7 +131,7 @@
         var ms = Date.now() - start;
         if (error) return done(result(false, "直连网络", ms, classifyError(error)));
         var status = response && response.status;
-        done(result(status === 204, "直连网络", ms, status === 204 ? "HTTP 204" : "探测站点返回 HTTP " + String(status || "未知")));
+        done(result((status === 204 || status === 200), "直连网络", ms, (status === 204 || status === 200) ? "HTTP " + status : "探测站点返回 HTTP " + String(status || "未知")));
       });
     } catch (error) {
       done(result(false, "直连网络", Date.now() - start, classifyError(error)));
@@ -158,8 +175,8 @@
         var ms = Date.now() - start;
         if (error) return done(result(false, "代理策略 Proxy", ms, classifyError(error) + "（检查节点订阅与 Proxy 选择）"));
         var status = response && response.status;
-        done(result(status === 204, "代理策略 Proxy", ms,
-          status === 204 ? "HTTP 204" : "探测站点返回 HTTP " + String(status || "未知")));
+        done(result((status === 204 || status === 200), "代理策略 Proxy", ms,
+          (status === 204 || status === 200) ? "HTTP " + status : "探测站点返回 HTTP " + String(status || "未知")));
       });
     } catch (error) {
       done(result(false, "代理策略 Proxy", Date.now() - start, classifyError(error)));
@@ -245,6 +262,7 @@
   }
 
   function notifyIfNeeded(results) {
+    if (simulated) return; // Manual simulation never posts a background failure alert.
     var directFailed = !results.direct.ok;
     var dohFailed = !results.doh.ok;
     if (!dohFailed && !directFailed) {
@@ -264,8 +282,9 @@
     } catch (error) {}
   }
 
-  if (!auto) {
+  if (!auto && !simulated) {
     runBatch(["direct", "doh", "proxy"], function (results) {
+      keepLast("manual",results,"手动");
       probeNativeDNS(function (native) {
         finish(fullReport(results, false) + "\n" + native.text);
       });
@@ -277,13 +296,21 @@
   setTimeout(function () {
     runBatch(["direct", "doh"], function (first) {
       if (first.direct.ok && first.doh.ok) {
+        keepLast("auto",first,simulated?"手动模拟":"自动网络变化");
         notifyIfNeeded(first);
+        if (auto && args.notify_every_change === true) {
+          try { $notification.post("Loon 网络诊断","网络变化检测已触发","直连和 DoH 探测均正常"); } catch(e) {}
+        }
         finish(fullReport(first, false));
         return;
       }
       setTimeout(function () {
         runBatch(["direct", "doh"], function (second) {
+          keepLast("auto",second,simulated?"手动模拟":"自动网络变化");
           notifyIfNeeded(second);
+          if (auto && args.notify_every_change === true && second.direct.ok && second.doh.ok) {
+            try { $notification.post("Loon 网络诊断","网络变化已触发","第二次检测恢复正常"); } catch(e) {}
+          }
           finish(fullReport(second, true));
         });
       }, 2500);

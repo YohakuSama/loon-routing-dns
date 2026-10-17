@@ -19,6 +19,7 @@ PLUGIN = ROOT / "plugins" / "Network_Diagnostics.plugin"
 JS = [
     ROOT / "scripts" / "network-diagnostics.js",
     ROOT / "scripts" / "node-intelligence.js",
+    ROOT / "scripts" / "console.js",
 ]
 ISSUES = []
 
@@ -94,21 +95,26 @@ def check_plugin():
     data = PLUGIN.read_text(encoding="utf-8")
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
+    require("notify_every_change = switch,false" in data, "normal notification must default off")
+    require("/main/icons/Console.png" in data, "console icon must be self-hosted")
     require("ssid-trigger" not in data and "wifi-cellular-mode" not in data,
             "unexpected Wi-Fi automation in plugin")
     arg_text = section(data, "Argument")
     names = set(re.findall(r"^([a-z_]+)\s*=", arg_text, re.M))
-    expected = {"doh_url", "auto_check", "target_policy", "compare_direct"}
+    expected = {"doh_url", "auto_check", "target_policy", "compare_direct",
+                "notify_every_change", "direct_probe_url", "proxy_probe_url",
+                "probe_timeout", "primary_ip_url", "backup_ip_url",
+                "enable_ip_backup", "cache_seconds"}
     require(expected <= names, "plugin arguments missing: " + str(expected - names))
     scripts = section(data, "Script")
     lines = [s.strip() for s in scripts.splitlines() if s.strip() and not s.lstrip().startswith("#")]
-    require(len(lines) == 3, "expected 3 script entries (got %d)" % len(lines))
-    require(sum(s.startswith("generic then script(") for s in lines) == 2, "missing manual scripts")
+    require(len(lines) == 5, "expected 5 console script entries (got %d)" % len(lines))
+    require(sum(s.startswith("generic then script(") for s in lines) == 4, "missing 4 manual console scripts")
     require(sum(s.startswith("network-changed then script(") for s in lines) == 1, "missing network-change script")
     for name in re.findall(r"\$\{([a-z_]+)\}", scripts):
         require(name in names, "undeclared plugin argument " + name)
     src_urls = re.findall(r'script\("(https://[^"]+)"', scripts)
-    require(len(src_urls) == 3, "expected 3 script source URLs")
+    require(len(src_urls) == 5, "expected 5 script source URLs")
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/main/"
         require(marker in url and (ROOT / url.split(marker)[1]).is_file(),
