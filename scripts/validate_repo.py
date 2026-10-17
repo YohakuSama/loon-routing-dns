@@ -41,7 +41,7 @@ def section(content, name):
 
 def check_config():
     data = CONF.read_text(encoding="utf-8")
-    require(data.startswith("# Loon Routing DNS v4.4.8"), "expected v4.4.8 header")
+    require(data.startswith("# Loon Routing DNS v5.1.0"), "expected v5.1.0 release header")
     require("dns-server = 223.5.5.5,223.6.6.6" in data, "public DNS changed")
     require("doh-server = https://dns.alidns.com/dns-query" in data, "AliDNS DoH changed")
     require("ssid-trigger" not in data, "Wi-Fi automation must not be enabled in public config")
@@ -65,7 +65,12 @@ def check_config():
         if match:
             remote.append(match.group(1))
             require(match.group(2) in known, "undefined remote rule policy: " + match.group(2))
-    require(len(remote) == 28, "expected 28 remote rules (got %s)" % len(remote))
+    require(len(remote) == 33, "expected 33 self-hosted lists (got %s)" % len(remote))
+    for url in remote:
+        require(url.startswith("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/"),
+                "remote URL must be a self-hosted main branch rule: " + url)
+        require((ROOT / "rules" / "generated" / url.rsplit("/", 1)[-1]).is_file(),
+                "missing built rule: " + url)
     require(len(remote) == len(set(remote)), "duplicate remote rule URLs")
 
     rule_text = section(data, "Rule")
@@ -78,7 +83,7 @@ def check_config():
         local_count += 1
         policy = parts[1] if parts[0] == "FINAL" else (parts[2] if len(parts) >= 3 else "")
         require(policy in known, "undefined local rule policy: " + line)
-    require(local_count > 40, "unexpectedly small local routing section")
+    require(local_count == 3, "expected only three fallback local rules (got %s)" % local_count)
     require("GEOIP,CN,DIRECT,no-resolve" in rule_text, "CN GEOIP route missing")
     require("FINAL,Final" in rule_text, "FINAL policy missing")
 
@@ -143,7 +148,7 @@ def check_readme():
     for label, text in [("README", data), ("plugin guide", guide)]:
         require("Network_Diagnostics.plugin" in text, label + " missing installation URL")
         require("DIRECT" in text and "DoH" in text, label + " missing DNS guidance")
-    require("v4.4.8" in data, "README config version out of sync")
+    require("v5.1.0" in data, "README config version out of sync")
     require("默认关闭" in data or "默认不开启" in data, "README missing DIRECT IP privacy default")
 
 
