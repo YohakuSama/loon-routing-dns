@@ -11,8 +11,24 @@ from build_composite_rules import normalize, generate, read_catalog
 class CompositeRulesTests(unittest.TestCase):
     def test_reviewed_sources_catalog_is_valid(self):
         sources = read_catalog()
-        self.assertEqual(len(sources), 46)
-        self.assertEqual(len([s for s in sources if s.get("role") == "local"]), 8)
+        self.assertEqual(len(sources), 75)
+        self.assertEqual(len([s for s in sources if s.get("role") == "local"]), 9)
+
+    def test_v2fly_annotations_and_dnsmasq(self):
+        meta = {"policy": "AI", "skip_attrs": ["ads", "!cn"]}
+        self.assertEqual(normalize("chatgpt.com", "v2fly", meta)[0],
+                         "DOMAIN-SUFFIX,chatgpt.com")
+        self.assertEqual(normalize("full:aistudio.google.com", "v2fly", meta)[0],
+                         "DOMAIN,aistudio.google.com")
+        self.assertIsNone(normalize("api.example.com @ads", "v2fly", meta)[0])
+        self.assertIsNone(normalize("bilibili.tv @!cn", "v2fly", meta)[0])
+        self.assertIsNotNone(normalize("include:google", "v2fly", meta)[1])
+        self.assertIsNotNone(normalize("regexp:foo.*", "v2fly", meta)[1])
+        self.assertEqual(
+            normalize("server=/app-site-association.cdn-apple.com/114.114.114.114",
+                      "dnsmasq")[0],
+            "DOMAIN-SUFFIX,app-site-association.cdn-apple.com"
+        )
 
     def test_normalizes_domainset_and_lowers_domain(self):
         self.assertEqual(normalize(".EXAMPLE.COM", "domainset")[0],
