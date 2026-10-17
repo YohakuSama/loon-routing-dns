@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect x="0" y="0" width="512" height="512" rx="113" fill="#153E4E"/>
+<!-- LR monogram, Loon Routing project name. -->
+<path d="M106 138H170V313H241V376H106V138Z" fill="#F3F8F9"/>
+<path fill="#6CE1D3" fill-rule="evenodd" d="M249 138H341C398 138 425 170 425 215C425 249 412 272 380 283L432 376H356L313 294H312V376H249V138ZM312 192V249H338C357 249 363 238 363 220C363 201 355 192 338 192H312Z"/>
+</svg>

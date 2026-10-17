@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect x="0" y="0" width="512" height="512" rx="113" fill="#322754"/>
+<!-- Geometric typographic design; no generic loading rings or sparkle. -->
+<path fill="#F7F1FF" fill-rule="evenodd" d="M170 119C175 107 188 98 201 98C214 98 227 107 232 119L318 392H243L227 335H173L157 392H83L170 119ZM199 213L181 274H218L199 213Z"/>
+<path fill="#70DBD3" d="M353 120H421V180H353V120ZM363 180H411V333H363V180ZM353 333H421V393H353V333Z"/>
+</svg>

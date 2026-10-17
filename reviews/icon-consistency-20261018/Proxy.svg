@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect x="0" y="0" width="512" height="512" rx="113" fill="#164FAD"/>
+<!-- Deliberately simplified icon used only as a candidate, not an app trademark. -->
+<path fill="#F9FCFF" fill-rule="evenodd" d="M140 118H264C355 118 399 170 399 239C399 308 352 353 268 353H216V394H140V118ZM216 185V288H266C304 288 322 268 322 237C322 207 304 185 266 185H216Z"/>
+<path d="M266 225L293 242L266 260Z" fill="#4FE3DC"/>
+</svg>
