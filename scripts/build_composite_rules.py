@@ -116,6 +116,7 @@ def generate(sources, fetch=fetch_text):
         body = fetch(s["url"])
         parsed = 0
         deduped = 0
+        source_rules = set()
         for number, raw in enumerate(body.splitlines(), 1):
             rule, reason = normalize(raw, s["format"])
             if reason:
@@ -129,6 +130,7 @@ def generate(sources, fetch=fetch_text):
             if rule is None:
                 continue
             parsed += 1
+            source_rules.add(rule)
             key = s["group"]
             if rule in by_group[key]:
                 intra_dupes += 1
@@ -141,9 +143,13 @@ def generate(sources, fetch=fetch_text):
                 f'{s["id"]}: {parsed} parsed rules below min_rules={s["min_rules"]}; '
                 "refusing partial upstream update"
             )
+        update_match = re.search(r"(?m)^# UPDATED:\s*(\d{4}-\d{2}-\d{2})", body)
         source_stats.append({
             "id": s["id"], "group": s["group"], "policy": s["policy"],
-            "raw_sha256": hashlib.sha256(body.encode("utf-8")).hexdigest(),
+            "normalized_sha256": hashlib.sha256(
+                "\n".join(sorted(source_rules)).encode("utf-8")
+            ).hexdigest(),
+            "upstream_updated": update_match.group(1) if update_match else None,
             "parsed": parsed, "duplicate_within_group": deduped,
         })
 
@@ -228,6 +234,17 @@ def main():
     args = parser.parse_args()
     outputs, report = generate(read_catalog(args.catalog))
     dest = Path(args.out)
+    old_report = dest / "audit.json"
+    if old_report.exists():
+        previous = json.loads(old_report.read_text(encoding="utf-8"))
+        old_counts = {x["id"]: x["parsed"] for x in previous.get("sources", [])}
+        for source in report["sources"]:
+            prior = old_counts.get(source["id"])
+            if prior and source["parsed"] < int(prior * 0.6):
+                raise ValueError(
+                    f'{source["id"]}: {source["parsed"]} vs previous {prior}; '
+                    "more than 40% of rules disappeared; manual review required"
+                )
     dest.mkdir(parents=True, exist_ok=True)
     for fname, content in outputs.items():
         (dest / fname).write_text(content, encoding="utf-8")
