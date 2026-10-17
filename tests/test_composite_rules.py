@@ -22,6 +22,7 @@ class CompositeRulesTests(unittest.TestCase):
                          "DOMAIN,aistudio.google.com")
         self.assertIsNone(normalize("api.example.com @ads", "v2fly", meta)[0])
         self.assertIsNone(normalize("bilibili.tv @!cn", "v2fly", meta)[0])
+        self.assertIsNone(normalize("xn--bnq297cix3a.cn @cn # 易付通.cn", "v2fly", meta)[0])
         self.assertIsNotNone(normalize("include:google", "v2fly", meta)[1])
         self.assertIsNotNone(normalize("regexp:foo.*", "v2fly", meta)[1])
         self.assertEqual(
