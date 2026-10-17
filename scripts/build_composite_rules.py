@@ -86,7 +86,11 @@ def read_catalog(path=CATALOG):
     sources = [s for s in data["sources"] if s.get("enabled")]
     if len({s["id"] for s in sources}) != len(sources):
         raise ValueError("duplicate source ids")
+    group_policies = {}
     for s in sources:
+        if s["group"] in group_policies and group_policies[s["group"]] != s["policy"]:
+            raise ValueError("conflicting policies within group: " + s["group"])
+        group_policies[s["group"]] = s["policy"]
         if s.get("role") == "local":
             path = s.get("path", "")
             if not re.fullmatch(r"rules/custom/[A-Za-z0-9_-]+\.list", path):
@@ -212,6 +216,16 @@ def generate(sources, fetch=fetch_text):
                         "policies": sorted(own_policies | suffixes[ancestor])
                     })
                 break
+
+    # Any newly introduced unsupported grammar needs review; silently
+    # discarding it could change routing decisions in the staged outputs.
+    unexpected = {
+        kind: count for kind, count in quarantined.items()
+        if not kind.startswith("URL-REGEX excluded")
+    }
+    if unexpected:
+        raise ValueError("unsupported/invalid upstream rules need manual review: "
+                         + json.dumps(unexpected, ensure_ascii=False))
 
     output = {}
     for group, rules in sorted(by_group.items()):
