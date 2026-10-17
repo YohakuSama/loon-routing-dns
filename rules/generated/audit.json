@@ -2841,8 +2841,7 @@
   "quarantined_by_reason": {
     "URL-REGEX excluded (may require MITM; separate review)": 2,
     "v2fly include not expanded (explicit sources only)": 2,
-    "v2fly regexp excluded (manual review)": 5,
-    "v2fly unrecognized annotation": 1
+    "v2fly regexp excluded (manual review)": 5
   },
   "quarantined_examples": [
     {
@@ -2898,12 +2897,6 @@
       "line": 2,
       "reason": "v2fly include not expanded (explicit sources only)",
       "value": "include:bilibili-game"
-    },
-    {
-      "source": "v2-paypal",
-      "line": 205,
-      "reason": "v2fly unrecognized annotation",
-      "value": "xn--bnq297cix3a.cn @cn # 易付通.cn"
     }
   ],
   "notes": [
