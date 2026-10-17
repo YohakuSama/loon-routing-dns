@@ -2,9 +2,11 @@
 
 一份面向 **Loon iOS** 的第三方完整配置：国内直连、国外按策略代理、AliDNS 加密解析、广告拦截，以及常用服务与 CDN 分流。
 
-**版本：v4.4.6 · AliDNS**　·　[获取配置](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf)　·　[查看源码](./Loon_Routing_DNS.lcf)　·　[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)
+**版本：v4.4.7 · AliDNS**　·　[获取配置](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf)　·　[查看源码](./Loon_Routing_DNS.lcf)　·　[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)
 
 > **这是完整配置，不是插件，也不包含节点。** 导入后必须添加自己的节点订阅。请先备份原配置和订阅地址。本项目与 Loon 官方无关联。
+
+**图标：** 33 枚策略组图标已由本项目自行托管，参见 [icons](./icons/README.md)。
 
 ## 一、首次使用：先完成这 4 步
 

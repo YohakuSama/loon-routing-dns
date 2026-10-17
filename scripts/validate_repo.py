@@ -40,7 +40,7 @@ def section(content, name):
 
 def check_config():
     data = CONF.read_text(encoding="utf-8")
-    require(data.startswith("# Loon Routing DNS v4.4.6"), "expected v4.4.6 header")
+    require(data.startswith("# Loon Routing DNS v4.4.7"), "expected v4.4.7 header")
     require("dns-server = 223.5.5.5,223.6.6.6" in data, "public DNS changed")
     require("doh-server = https://dns.alidns.com/dns-query" in data, "AliDNS DoH changed")
     require("ssid-trigger" not in data, "Wi-Fi automation must not be enabled in public config")
@@ -126,7 +126,7 @@ def check_readme():
     for label, text in [("README", data), ("plugin guide", guide)]:
         require("Network_Diagnostics.plugin" in text, label + " missing installation URL")
         require("DIRECT" in text and "DoH" in text, label + " missing DNS guidance")
-    require("v4.4.6" in data, "README config version out of sync")
+    require("v4.4.7" in data, "README config version out of sync")
     require("默认关闭" in data or "默认不开启" in data, "README missing DIRECT IP privacy default")
 
 
