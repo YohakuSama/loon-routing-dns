@@ -1,23 +1,23 @@
 {
   "version": 1,
-  "description": "Composite staged inputs from blackmatrix7 (GPL-2.0), v2fly/domain-list-community (MIT), felixonmars/dnsmasq-china-list (WTFPL-2.0), and reviewed first-party additions. The published outputs are generated, never handwritten.",
+  "description": "Self-hosted conservative hybrid: blackmatrix7 Loon native broad categories, v2fly domain-list-community for domain completions, felixonmars Apple China, first-party local rules. AdvertisingLite instead of large Advertising; full source stays opt-in.",
   "licensing": "Source materials inherit their original licenses. Consult rules/README.md before publishing generated outputs.",
   "sources": [
     {
-      "id": "bm-advertising",
+      "id": "bm-advertising-lite",
       "group": "AdBlock",
       "policy": "AdBlock",
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising.list",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AdvertisingLite/AdvertisingLite.list",
       "format": "loon",
       "enabled": true,
-      "min_rules": 1,
+      "min_rules": 100,
       "role": "baseline"
     },
     {
-      "id": "bm-advertising-domain",
+      "id": "bm-advertising-lite-domain",
       "group": "AdBlock",
       "policy": "AdBlock",
-      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising_Domain.list",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AdvertisingLite/AdvertisingLite_Domain.list",
       "format": "domainset",
       "enabled": true,
       "min_rules": 100,
@@ -859,6 +859,12 @@
       "enabled": false,
       "reason": "Likely overlaps with upstream Proxy/GFW; defer pending conflict and license audit",
       "url": "https://github.com/ACL4SSR/ACL4SSR"
+    },
+    {
+      "id": "bm-advertising-full",
+      "enabled": false,
+      "reason": "~290k entries; large and higher chance of collateral blocks; Lite variant selected as user-experience default",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising.list"
     }
   ]
 }
