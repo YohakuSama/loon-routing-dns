@@ -1,0 +1,231 @@
+# Loon Routing DNS v4.5.0-hello-review
+# Maintainer: @YohakuSama
+# GitHub: https://github.com/YohakuSama/loon-routing-dns
+# X: https://x.com/yohakusama
+# Community configuration; not affiliated with Loon.
+
+[General]
+dns-server = 223.5.5.5,223.6.6.6
+doh-server = https://dns.alidns.com/dns-query
+hijack-dns = *:53
+ip-mode = dual
+ipv6-vif = auto
+interface-mode = auto
+skip-proxy = 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,localhost,*.local,captive.apple.com
+bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
+real-ip = *.apple.com,*.icloud.com,dns.msftncsi.com,*.srv.nintendo.net,*.xboxlive.com
+disable-stun = true
+udp-fallback-mode = REJECT
+domain-reject-mode = DNS
+dns-reject-mode = NOANSWER
+proxy-test-url = http://cp.cloudflare.com/generate_204
+internet-test-url = http://wifi.vivo.com.cn/generate_204
+test-timeout = 5
+allow-wifi-access = false
+
+[Proxy]
+
+[Remote Proxy]
+# Add your own subscription definitions here. Never publish private URLs.
+
+[Remote Filter]
+ALL_Filter = NameRegex, FilterKey = ".*"
+
+[Proxy Group]
+# Core
+# REVIEW: AdBlock defaults to DIRECT temporarily to distinguish ad-filtering faults.
+# Set AdBlock back to REJECT after HelloBike connectivity verification.
+Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Proxy.png
+Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Auto.png
+Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Fallback.png
+AdBlock = select,DIRECT,REJECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AdBlock.png
+Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Final.png
+
+# Mainland compatibility: no per-app process routing on iOS; HelloBike official domains only.
+HelloBike = select,DIRECT,Proxy,Auto,ALL_Filter
+
+# AI and Platforms
+AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AI.png
+Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Google.png
+Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Microsoft.png
+Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Apple.png
+
+# Streaming
+YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/YouTube.png
+Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Netflix.png
+Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Disney.png
+PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/PrimeVideo.png
+Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Spotify.png
+TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/TikTok.png
+Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Twitch.png
+HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/HBO.png
+Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Abema.png
+動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AnimeCrazy.png
+Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Dazn.png
+BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/BBC.png
+Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Bilibili.png
+
+# Social — flat-color brand icons
+Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Telegram.png
+Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Whatsapp.png
+Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Instagram.png
+Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Facebook.png
+Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Twitter.png
+Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Discord.png
+Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Line.png
+Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Reddit.png
+Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Linkedin.png
+
+# Games and Payments
+Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Steam.png
+Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Paypal.png
+
+[Remote Rule]
+# Advertising
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising.list, policy=AdBlock, tag=Advertising, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising_Domain.list, policy=AdBlock, tag=AdvertisingDomain, enabled=true
+
+# CDN
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SystemOTA/SystemOTA.list, policy=DIRECT, tag=AppleOTA, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SteamCN/SteamCN.list, policy=DIRECT, tag=SteamCN, enabled=true
+
+# Streaming
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list, policy=YouTube, tag=YouTube, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list, policy=Netflix, tag=Netflix, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Disney/Disney.list, policy=Disney, tag=Disney, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PrimeVideo/PrimeVideo.list, policy=PrimeVideo, tag=PrimeVideo, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list, policy=Spotify, tag=Spotify, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list, policy=TikTok, tag=TikTok, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitch/Twitch.list, policy=Twitch, tag=Twitch, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AbemaTV/AbemaTV.list, policy=Abema, tag=AbemaTV, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BBC/BBC.list, policy=BBC, tag=BBC, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list, policy=Bilibili, tag=BiliBili, enabled=true
+
+# Social
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list, policy=Telegram, tag=Telegram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list, policy=Instagram, tag=Instagram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list, policy=Twitter, tag=Twitter, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Discord/Discord.list, policy=Discord, tag=Discord, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Line/Line.list, policy=Line, tag=Line, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/LinkedIn/LinkedIn.list, policy=Linkedin, tag=LinkedIn, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Reddit/Reddit.list, policy=Reddit, tag=Reddit, enabled=true
+
+# Platforms
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list, policy=Google, tag=Google, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple_Domain.list, policy=Apple, tag=AppleDomain, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list, policy=Apple, tag=Apple, enabled=true
+
+# Games and Payments
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list, policy=Steam, tag=Steam, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list, policy=Paypal, tag=PayPal, enabled=true
+
+# China Direct
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia.list, policy=DIRECT, tag=ChinaDirect, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list, policy=DIRECT, tag=ChinaDomain, enabled=true
+
+[Rule]
+
+# HelloBike / 哈啰 — explicit policy before generic platform/CDN/advertising subscriptions.
+# Verified first-party domains: 2026-10-17; independent HelloBike group for audit/override.
+DOMAIN-SUFFIX,hello-inc.com,HelloBike
+DOMAIN-SUFFIX,hellobike.com,HelloBike
+DOMAIN-SUFFIX,helloglobal.com,HelloBike
+
+# Mainland map and payment dependencies: compatibility-first direct routes.
+# Global direct rules, not app-specific; revert precisely if logs show a conflict.
+DOMAIN-SUFFIX,amap.com,DIRECT
+DOMAIN-SUFFIX,autonavi.com,DIRECT
+DOMAIN-SUFFIX,alipay.com,DIRECT
+DOMAIN-SUFFIX,alipayobjects.com,DIRECT
+
+# Remote Resources
+DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
+
+# AI
+DOMAIN-SUFFIX,openai.com,AI
+DOMAIN-SUFFIX,chatgpt.com,AI
+DOMAIN-SUFFIX,oaistatic.com,AI
+DOMAIN-SUFFIX,oaiusercontent.com,AI
+DOMAIN-SUFFIX,anthropic.com,AI
+DOMAIN-SUFFIX,claude.ai,AI
+DOMAIN-SUFFIX,claude.com,AI
+DOMAIN-SUFFIX,perplexity.ai,AI
+DOMAIN-SUFFIX,perplexity.com,AI
+DOMAIN-SUFFIX,cursor.com,AI
+DOMAIN-SUFFIX,cursor.sh,AI
+DOMAIN-SUFFIX,grok.com,AI
+DOMAIN,gemini.google.com,AI
+DOMAIN,aistudio.google.com,AI
+DOMAIN,copilot.microsoft.com,AI
+DOMAIN-SUFFIX,chat.com,AI
+DOMAIN-SUFFIX,sora.com,AI
+DOMAIN-SUFFIX,cursorapi.com,AI
+DOMAIN-SUFFIX,x.ai,AI
+DOMAIN-SUFFIX,notebooklm.google,AI
+DOMAIN-SUFFIX,ai.google.dev,AI
+DOMAIN-SUFFIX,generativeai.googleapis.com,AI
+
+# WhatsApp
+DOMAIN-SUFFIX,whatsapp.com,Whatsapp
+DOMAIN-SUFFIX,whatsapp.net,Whatsapp
+DOMAIN-SUFFIX,whatsapp.biz,Whatsapp
+DOMAIN-SUFFIX,wa.me,Whatsapp
+
+# Facebook
+DOMAIN-SUFFIX,facebook.com,Facebook
+DOMAIN-SUFFIX,facebook.net,Facebook
+DOMAIN-SUFFIX,fb.com,Facebook
+DOMAIN-SUFFIX,fb.me,Facebook
+DOMAIN-SUFFIX,messenger.com,Facebook
+DOMAIN-SUFFIX,m.me,Facebook
+
+# DAZN
+DOMAIN-SUFFIX,dazn.com,Dazn
+DOMAIN-SUFFIX,dazn-api.com,Dazn
+DOMAIN-SUFFIX,dazndn.com,Dazn
+DOMAIN-SUFFIX,indazn.com,Dazn
+DOMAIN-SUFFIX,indaznlab.com,Dazn
+
+# HBO
+DOMAIN-SUFFIX,hbo.com,HBO
+DOMAIN-SUFFIX,hbomax.com,HBO
+DOMAIN-SUFFIX,hbomaxcdn.com,HBO
+DOMAIN-SUFFIX,hbogo.com,HBO
+DOMAIN-SUFFIX,hboasia.com,HBO
+DOMAIN-SUFFIX,max.com,HBO
+
+# Bahamut
+DOMAIN-SUFFIX,gamer.com.tw,動畫瘋
+DOMAIN-SUFFIX,bahamut.com.tw,動畫瘋
+
+# Microsoft
+DOMAIN-SUFFIX,microsoft.com,Microsoft
+DOMAIN-SUFFIX,microsoftonline.com,Microsoft
+DOMAIN-SUFFIX,microsoft365.com,Microsoft
+DOMAIN-SUFFIX,office.com,Microsoft
+DOMAIN-SUFFIX,office365.com,Microsoft
+DOMAIN-SUFFIX,office.net,Microsoft
+DOMAIN-SUFFIX,outlook.com,Microsoft
+DOMAIN-SUFFIX,onedrive.com,Microsoft
+DOMAIN-SUFFIX,1drv.ms,Microsoft
+DOMAIN-SUFFIX,live.com,Microsoft
+DOMAIN-SUFFIX,windows.com,Microsoft
+DOMAIN-SUFFIX,windowsupdate.com,Microsoft
+DOMAIN-SUFFIX,xboxlive.com,Microsoft
+
+# Domestic Services
+DOMAIN-SUFFIX,ccb.com,DIRECT
+DOMAIN-SUFFIX,abchina.com,DIRECT
+DOMAIN-SUFFIX,abchina.com.cn,DIRECT
+DOMAIN-SUFFIX,t3go.cn,DIRECT
+DOMAIN-SUFFIX,wo.cn,DIRECT
+
+# Default Routing
+# Avoid pre-resolution solely for GEOIP matching; may affect some China-direct matches.
+GEOIP,CN,DIRECT,no-resolve
+FINAL,Final
+
+# Loon Routing DNS Console — automatically loaded with this full configuration.
+# No MITM or rewrite. Settings and feature toggles remain editable in Loon > Plugins.
+[Plugin]
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin, enabled=true
