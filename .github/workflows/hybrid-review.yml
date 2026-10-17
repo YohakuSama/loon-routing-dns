@@ -1,0 +1,59 @@
+name: Publish self-hosted hybrid review snapshot
+
+on:
+  push:
+    branches: [feat/self-hosted-hybrid-rules-v1]
+    paths:
+      - 'rules/**'
+      - 'scripts/build_composite_rules.py'
+      - 'tests/test_composite_rules.py'
+      - 'tests/test_hybrid_profile.py'
+      - 'reviews/Loon_Routing_DNS_Hybrid_Review.lcf'
+      - '.github/workflows/hybrid-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  self-hosted-review-snapshot:
+    if: github.ref == 'refs/heads/feat/self-hosted-hybrid-rules-v1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          ref: feat/self-hosted-hybrid-rules-v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test normalization and source metadata
+        run: python3 -m unittest discover -s tests -p test_composite_rules.py -v
+      - name: Validate complete Loon profile without modifying original
+        run: python3 tests/test_hybrid_profile.py
+      - name: Build all reviewed sources
+        run: python3 scripts/build_composite_rules.py
+      - name: Check generated files for every subscription
+        run: |
+          python3 tests/test_hybrid_profile.py --generated
+          python3 -m json.tool rules/generated/audit.json >/dev/null
+      - name: Commit staging snapshot ONLY on feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rules/generated
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(rules): publish reviewed hybrid snapshot"
+            git push origin HEAD:refs/heads/feat/self-hosted-hybrid-rules-v1
+          else
+            echo "Rule snapshot unchanged."
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hybrid-review-snapshot
+          path: rules/generated/
+          if-no-files-found: error
+          retention-days: 14
