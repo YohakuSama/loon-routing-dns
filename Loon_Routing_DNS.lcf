@@ -1,4 +1,4 @@
-# Loon Routing DNS v4.4.7
+# Loon Routing DNS v4.4.8
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loon-routing-dns
 # X: https://x.com/yohakusama
@@ -206,3 +206,8 @@ DOMAIN-SUFFIX,wo.cn,DIRECT
 # Avoid pre-resolution solely for GEOIP matching; may affect some China-direct matches.
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
+
+# Loon Routing DNS Console — automatically loaded with this full configuration.
+# No MITM or rewrite. Settings and feature toggles remain editable in Loon > Plugins.
+[Plugin]
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin, tag=Loon Routing DNS Console, enabled=true

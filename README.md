@@ -2,9 +2,9 @@
 
 一份面向 **Loon iOS** 的第三方完整配置：国内直连、国外按策略代理、AliDNS 加密解析、广告拦截，以及常用服务与 CDN 分流。
 
-**版本：v4.4.7 · AliDNS**　·　[获取配置](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf)　·　[查看源码](./Loon_Routing_DNS.lcf)　·　[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)
+**版本：v4.4.8 · AliDNS**　·　[获取配置](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf)　·　[查看源码](./Loon_Routing_DNS.lcf)　·　[报告问题](https://github.com/YohakuSama/loon-routing-dns/issues)
 
-> **这是完整配置，不是插件，也不包含节点。** 导入后必须添加自己的节点订阅。请先备份原配置和订阅地址。本项目与 Loon 官方无关联。
+> **这是完整配置（已内置项目控制台插件），但不包含代理节点。** 导入后仍需添加自己的节点订阅。请先备份原配置、私人订阅地址和个人修改；本项目与 Loon 官方无关联。
 
 **图标：** 33 枚策略组图标已由本项目自行托管，参见 [icons](./icons/README.md)。
 
@@ -21,6 +21,8 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 ```
 
 在 **Loon → 配置文件 →「＋」→ 从链接导入** 粘贴并导入，再切换到此配置。菜单名称可能因 App 版本略有差异。
+
+**控制台自动包含在配置内：** 导入后进入 **Loon → 配置 → 插件**，确认能看到「Loon Routing DNS · 控制台」。无需额外订阅插件。若以前已经单独导入过相同 URL，请在插件列表检查是否重复，保留一个有效条目即可；如果加载失败，先手动更新远程资源并查看 Loon 日志。
 
 ### 2. 添加自己的节点订阅
 
@@ -56,7 +58,7 @@ MySubscription = https://example.com/subscription.txt,enabled=true
 |---|---|---|
 | `Proxy` | 可用节点或 `Auto` | 主要代理出口 |
 | `Auto` / `Fallback` | 默认 | 自动测速 / 故障转移 |
-| `Final` | `Proxy` | 未匹配到其他规则时走代理 |
+| `Final` | `Proxy`（当前默认） | 未匹配到其他规则时走代理；可手动改为 `DIRECT`，但海外冷门域名可能直连失败 |
 | `AdBlock` | `REJECT` | 启用广告过滤 |
 | `Apple` / `Microsoft` / `Bilibili` | `DIRECT` | 常见可直连服务 |
 | `AI`、流媒体、社交平台 | 默认 `Proxy` | 可分别指定不同地区节点 |
@@ -64,17 +66,17 @@ MySubscription = https://example.com/subscription.txt,enabled=true
 
 **验证完成：** 节点列表非空、远程规则正常加载、国内网站可用、国外网站按所选策略访问。
 
-### 可选项目控制台 v1.3（推荐，但不是必需）
+### 已内置：Loon Routing DNS 控制台 v1.3
 
-**[安装或更新控制台插件](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin)** · **[查看 12 项参数和操作说明](./docs/NETWORK_DIAGNOSTICS.md)**
+完整配置的 `[Plugin]` 段已经引用并启用本项目控制台。**无需另外复制订阅地址、无需手动添加插件。** 导入完整配置并更新资源后，在 **Loon → 配置 → 插件** 查找「Loon Routing DNS · 控制台」，进入参数页面即可调整项目的检测设置。
 
-控制台有自己的图标，通过 Loon 官方插件 **[Argument] 参数页**调整项目专属检测设置；提供「控制台状态」「手动网络与 DNS 诊断」「模拟网络切换诊断」「节点详情查询」四项手动工具，以及网络变化时的可选轻量监测。
+**[查看控制台 12 项参数、工具和触发检查方法](./docs/NETWORK_DIAGNOSTICS.md)** · [查看插件源码](./plugins/Network_Diagnostics.plugin)
 
-支持填写 **DIRECT / Proxy 健康探测网址、DoH 测试地址、探测超时、主要和备用 IP 情报 JSON API、节点情报缓存时长**。这些选项只影响控制台自己的请求，**不会修改 Loon 原生节点测速服务器、实际 DNS、策略组或 VPN 开关**，以避免与 Loon 已有功能重复。
+控制台使用独立图标，提供「状态与参数摘要」「手动网络和 DNS 诊断」「模拟网络变化诊断」「节点详情查询」四个手动功能，以及仅在网络变化时运行的轻量诊断。**正常时默认静默**，需要确认是否真正触发时，可以暂时打开「每次网络变化都通知」，在 Wi-Fi 和蜂窝网络之间切换，并查看最新检测时间。
 
-**网络变化监测平时不会提示正常结果：** 如想验证是否触发，短时间开启「每次网络变化都通知」，切换一次 Wi-Fi ↔ 蜂窝数据，再在「控制台 · 状态与设置摘要」查看最近运行时间；「模拟网络切换诊断」可以验证代码，却不能单独证明系统事件触发成功。
+控制台参数能调整 **探测网址、DoH 测试地址、超时、IP 情报来源与备用源、情报缓存时长**，但**不会修改 Loon 原生测速、DNS、代理模式、策略组选择或 VPN 状态**。**DIRECT 公网 IP 对照默认关闭**，避免普通节点查询时额外向情报服务暴露真实出口。
 
-**隐私默认：DIRECT IP 对照默认关闭。** 节点情报从第三方服务取得，API 会看到所查节点的出口 IP；需要额外查询直连公网 IP 时才手动开启对照。安装仅需 Loon 3.5.1 Build 983+，部分原生 DNS 功能需要 Build 988+。**主配置即使不安装插件也能正常使用。**
+如不需要诊断功能，可直接在 Loon 的插件页面关闭本控制台；**主配置的 DNS 与分流规则不依赖它**。更新旧版个人配置时请备份自己的插件参数及私人订阅信息。
 
 ## 二、DNS：默认值与自行替换
 
@@ -142,6 +144,8 @@ IPv4 / IPv6 默认使用 `ip-mode = dual` 和 `ipv6-vif = auto`，允许自动�
 | 导入后没有节点、`Proxy` 为空 | **先加自己的节点订阅并更新**；检查 `ALL_Filter` 和订阅是否解析成功 |
 | 国内能访问，国外不能访问 | 检查 `Proxy`、`Final` 和实际节点是否可用；核对命中规则 |
 | 规则或配置更新失败 | 确认 `raw.githubusercontent.com` 可达；先切回可用配置/节点再更新 |
+| 导入后看不到内置控制台 | 在 **配置 → 插件** 检查是否启用，更新插件资源；若之前手动安装过，清理重复条目 |
+| 某个国内应用异常走代理 | 查看是否命中国内直连规则；未命中的流量由默认 `Final → Proxy` 处理，可针对具体域名补精准 DIRECT |
 | 网站全部无法解析 | 检查 AliDNS DoH 的 DIRECT 连接；关闭 DNS 回退后，DoH 故障会更明显 |
 | 只有传统 DNS，看不到 DoH | 核对 `doh-server`、**DoH 流量模式 DIRECT** 和 DNS 错误记录 |
 | DNS 检测出现不同 ASN | 对照 Loon DNS 记录；单看 ASN 不足以判断泄漏 |
@@ -155,7 +159,7 @@ IPv4 / IPv6 默认使用 `ip-mode = dual` 和 `ipv6-vif = auto`，允许自动�
 
 ## 六、托管更新和个人配置
 
-配置直链指向 `main` 分支最新版 `Loon_Routing_DNS.lcf`。更新前先备份自己的订阅和手动规则。
+配置直链指向 `main` 分支最新版 `Loon_Routing_DNS.lcf`，同时包含一个启用的控制台插件引用。更新前先备份自己的订阅、插件参数和手动规则。
 
 Loon 的「全覆盖更新」可能影响本地修改；不确定时不要开启。**主配置、节点订阅和远程规则是不同的更新项目**。即使关闭全覆盖，也不能保证所有个人改动会在每次主配置更新后保留。
 
@@ -173,8 +177,7 @@ Loon 的「全覆盖更新」可能影响本地修改；不确定时不要开启
 |---|---|
 | Loon 语法与 DNS 机制 | [Loon General](https://nsloon.app/docs/General/) · [Loon DNS](https://nsloon.app/docs/DNS/) |
 | 广告、国内分流、平台与 CDN 规则 | [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) |
-| 常规策略组图标 | [Hawaiine/Oasisic-Icons](https://github.com/Hawaiine/Oasisic-Icons) |
-| Fallback 图标 | [lige47/lige_icon](https://github.com/lige47/lige_icon) |
+| 策略组和控制台图标 | [本仓库 icons](./icons/README.md)（已自托管；部分品牌造型以 Simple Icons 为基础） |
 | 公共解析服务 | [AliDNS](https://alidns.com/) |
 
 配置默认 `disable-stun = true`、`udp-fallback-mode = REJECT`，用于减少部分 STUN/WebRTC 地址暴露及不支持 UDP 时的意外直连，但可能影响实时语音视频，不保证绝对防泄漏。

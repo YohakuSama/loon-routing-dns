@@ -1,29 +1,27 @@
 # Loon Routing DNS 控制台插件 v1.3
 
-这是 **Loon Routing DNS 的可选插件**，使用 Loon 官方 `[Argument]` 参数页面作为控制台设置，配合四个可以手动点击的 `generic` 脚本入口；**不是单独的网页或内嵌可视化 App 页面**。
+这是随完整配置自动加载、可在 Loon 内关闭的 **Loon Routing DNS 控制台插件**，使用 Loon 官方 `[Argument]` 参数页面作为控制台设置，配合四个可以手动点击的 `generic` 脚本入口；**不是单独的网页或内嵌可视化 App 页面**。
 
 > 不接管 Loon 自带的策略组选择、全局代理、原生节点测速、DNS 服务器、网络自动开关、系统 VPN、Rewrite 或 MitM。
 > 更改控制台参数不会修改 `Loon_Routing_DNS.lcf`；只影响本插件发出的探测请求。
 
-## 安装或升级
+## 随主配置自动加载（v4.4.8 起）
 
-配置本体与可选控制台位于同一个 GitHub `main` 分支，仍采用两个独立 URL：
-
-**正式配置（完整导入，包含 33 策略组）：**
+**完整配置已内置这个控制台，无需手动订阅插件。** 使用下方正式配置地址导入并更新资源后，控制台会列在 **Loon → 配置 → 插件** 中。进入它的参数页面调整检测服务器、IP 数据源等选项。
 
 ```text
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf
 ```
 
-**控制台插件（可选，使用原有插件链接升级）：**
+旧配置、单独使用者仍可使用原插件地址：
 
 ```text
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Network_Diagnostics.plugin
 ```
 
-Loon → 插件 → ＋ → 从 URL 导入，或更新已经安装的同一个插件。最低版本 **Loon 3.5.1 Build 983**；原生 DNS 查询另需 **Build 988+**。安装后进入 **插件 → Loon Routing DNS · 控制台 → 参数** 配置检测功能。
+**以前手动安装过的用户：** 切换到内置控制台的新主配置后，检查插件列表里有无重复条目；保持一份即可。个人参数在更新前应先备份。若没出现控制台，在 Loon 更新插件资源并查看错误日志。
 
-脚本通过此仓库 `main/scripts/*.js` 的固定远程路径载入；以后修改检测逻辑，不必更换插件地址。不过实际何时取得最新脚本仍取决于 Loon 的资源缓存和更新动作；若发现旧逻辑，手动更新插件/远程脚本。
+控制台为可关闭的可选诊断功能，即使关闭，完整配置仍能正常分流。需 **Loon 3.5.1 Build 983+**；原生 DNS 查询需 **Build 988+**。脚本固定引用仓库 `main/scripts/*.js`，远程更新是否立即生效取决于 Loon 缓存与资源更新操作。
 
 ## 四个手动入口
 
