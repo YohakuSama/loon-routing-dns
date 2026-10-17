@@ -6,8 +6,8 @@ import json
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf"
-BASE = ROOT / "Loon_Routing_DNS.lcf"
+CONFIG = ROOT / "Loon_Routing_DNS.lcf"
+BASE = ROOT / "releases" / "v4.4.8" / "Loon_Routing_DNS.lcf"
 CATALOG = ROOT / "rules" / "sources.json"
 GENERATED = ROOT / "rules" / "generated"
 
@@ -25,7 +25,7 @@ def active(body):
 def validate(check_generated=False):
     original = BASE.read_text(encoding="utf-8")
     conf = CONFIG.read_text(encoding="utf-8")
-    assert conf.startswith("# Loon Routing DNS v5.0.1-hybrid-review")
+    assert conf.startswith("# Loon Routing DNS v5.1.0")
     assert section(conf, "General") == section(original, "General"), "DNS/general changed unexpectedly"
     assert section(conf, "Plugin") == section(original, "Plugin"), "diagnostic plugin changed unexpectedly"
     assert section(conf, "Remote Proxy") == section(original, "Remote Proxy"), "personal proxies not preserved"
@@ -45,7 +45,7 @@ def validate(check_generated=False):
         assert policy in policies
         assert urlparse(u).netloc == "raw.githubusercontent.com"
         assert urlparse(u).path.startswith(
-            "/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/"
+            "/YohakuSama/loon-routing-dns/main/rules/generated/"
         )
         assert u not in urls, "duplicate rule source: " + u
         urls.add(u)
@@ -61,7 +61,7 @@ def validate(check_generated=False):
     ], "duplicate local service rules or lost final routing"
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     sources = [x for x in catalog["sources"] if x.get("enabled")]
-    assert len(sources) == 76
+    assert len(sources) == 86
     assert len({x["id"] for x in sources}) == len(sources)
     assert any(x["id"] == "local-hellobike" and x["group"] == "DomesticCore"
                and x["policy"] == "DIRECT" for x in sources)
@@ -71,7 +71,10 @@ def validate(check_generated=False):
     if check_generated:
         actual = {p.name for p in GENERATED.glob("*.list")}
         assert actual == names, "orphaned generated rule files"
-    print("PASS: 76 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
+    # Verify mutable release configuration equals the copy provided to reviewers.
+    reviewer = (ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf").read_text(encoding="utf-8")
+    assert conf == reviewer, "release and review copy diverged"
+    print("PASS: 86 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
 
 if __name__ == "__main__":
     import sys
