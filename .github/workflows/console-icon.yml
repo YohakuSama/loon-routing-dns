@@ -21,11 +21,25 @@ jobs:
           node-version: '22'
       - run: npm install --no-save --no-audit --no-fund sharp@0.34.4
       - run: node scripts/generate-console-icon.mjs
+      - name: Sync verified Console artwork hash in source manifest
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          path=Path("icons/ICON_SOURCE_REPORT.json")
+          items=json.loads(path.read_text(encoding="utf-8"))
+          entry=next(x for x in items if x["name"]=="Console" and x["file"]=="Console.png")
+          assert entry["sourceSvg"]=="icons/source/Console.svg"
+          entry["sha256"]=hashlib.sha256(Path("icons/Console.png").read_bytes()).hexdigest()
+          path.write_text(json.dumps(items,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("Console png hash synchronized:",entry["sha256"])
+          PY
       - name: Commit independent Console PNG
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add icons/Console.png
+          git add icons/Console.png icons/ICON_SOURCE_REPORT.json
           if git diff --cached --quiet; then
             echo "Already up to date"
           else
