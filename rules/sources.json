@@ -836,6 +836,16 @@
       "role": "local",
       "enabled": true,
       "min_rules": 3
+    },
+    {
+      "id": "local-domestic-core",
+      "group": "DomesticCore",
+      "policy": "DIRECT",
+      "path": "rules/custom/DomesticCore.list",
+      "format": "loon",
+      "role": "local",
+      "enabled": true,
+      "min_rules": 4
     }
   ],
   "candidates": [
