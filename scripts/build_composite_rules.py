@@ -306,6 +306,11 @@ def main():
                     "more than 40% of rules disappeared; manual review required"
                 )
     dest.mkdir(parents=True, exist_ok=True)
+    # Prune obsolete generated groups (e.g. a dedicated per-app rule group
+    # folded into a shared domestic DIRECT list). Never touch custom sources.
+    for old_list in dest.glob("*.list"):
+        if old_list.name not in outputs:
+            old_list.unlink()
     for fname, content in outputs.items():
         (dest / fname).write_text(content, encoding="utf-8")
     (dest / "audit.json").write_text(
