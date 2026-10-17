@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Staging catalog: existing 28 remote rules + 10 optional-platform additions + 8 original project-local additions; active configuration is unchanged.",
+  "description": "Composite staged inputs from blackmatrix7 (GPL-2.0), v2fly/domain-list-community (MIT), felixonmars/dnsmasq-china-list (WTFPL-2.0), and reviewed first-party additions. The published outputs are generated, never handwritten.",
   "licensing": "Source materials inherit their original licenses. Consult rules/README.md before publishing generated outputs.",
   "sources": [
     {
@@ -462,6 +462,380 @@
       "enabled": true,
       "min_rules": 1,
       "role": "local"
+    },
+    {
+      "id": "v2-openai",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/openai",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-anthropic",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-google-deepmind",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/google-deepmind",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-github-copilot",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/github-copilot",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-perplexity",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/perplexity",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-cursor",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/cursor",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-xai",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/xai",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-netflix",
+      "group": "Netflix",
+      "policy": "Netflix",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/netflix",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-spotify",
+      "group": "Spotify",
+      "policy": "Spotify",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/spotify",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-youtube",
+      "group": "YouTube",
+      "policy": "YouTube",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/youtube",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-whatsapp",
+      "group": "Whatsapp",
+      "policy": "Whatsapp",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/whatsapp",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-telegram",
+      "group": "Telegram",
+      "policy": "Telegram",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/telegram",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-facebook",
+      "group": "Facebook",
+      "policy": "Facebook",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/facebook",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-tiktok",
+      "group": "TikTok",
+      "policy": "TikTok",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/tiktok",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-bilibili",
+      "group": "Bilibili",
+      "policy": "Bilibili",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bilibili",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads",
+        "!cn"
+      ]
+    },
+    {
+      "id": "v2-bilibili-cdn",
+      "group": "Bilibili",
+      "policy": "Bilibili",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bilibili-cdn",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads",
+        "!cn"
+      ]
+    },
+    {
+      "id": "v2-steam",
+      "group": "Steam",
+      "policy": "Steam",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/steam",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-paypal",
+      "group": "Paypal",
+      "policy": "Paypal",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/paypal",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-twitch",
+      "group": "Twitch",
+      "policy": "Twitch",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/twitch",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-discord",
+      "group": "Discord",
+      "policy": "Discord",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/discord",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-line",
+      "group": "Line",
+      "policy": "Line",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/line",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-reddit",
+      "group": "Reddit",
+      "policy": "Reddit",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/reddit",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-instagram",
+      "group": "Instagram",
+      "policy": "Instagram",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/instagram",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-twitter",
+      "group": "Twitter",
+      "policy": "Twitter",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/twitter",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-hbo",
+      "group": "HBO",
+      "policy": "HBO",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/hbo",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-dazn",
+      "group": "Dazn",
+      "policy": "Dazn",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/dazn",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-apple-update",
+      "group": "AppleOTA",
+      "policy": "DIRECT",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/apple-update",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads",
+        "!cn"
+      ]
+    },
+    {
+      "id": "felix-apple-china",
+      "group": "Apple",
+      "policy": "Apple",
+      "url": "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf",
+      "format": "dnsmasq",
+      "role": "dnsmasq",
+      "enabled": true,
+      "min_rules": 15
+    },
+    {
+      "id": "local-hellobike",
+      "group": "HelloBike",
+      "policy": "HelloBike",
+      "path": "rules/custom/HelloBike.list",
+      "format": "loon",
+      "role": "local",
+      "enabled": true,
+      "min_rules": 3
     }
   ],
   "candidates": [
