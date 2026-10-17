@@ -5,10 +5,15 @@ from pathlib import Path
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from build_composite_rules import normalize, generate
+from build_composite_rules import normalize, generate, read_catalog
 
 
 class CompositeRulesTests(unittest.TestCase):
+    def test_reviewed_sources_catalog_is_valid(self):
+        sources = read_catalog()
+        self.assertEqual(len(sources), 46)
+        self.assertEqual(len([s for s in sources if s.get("role") == "local"]), 8)
+
     def test_normalizes_domainset_and_lowers_domain(self):
         self.assertEqual(normalize(".EXAMPLE.COM", "domainset")[0],
                          "DOMAIN-SUFFIX,example.com")
