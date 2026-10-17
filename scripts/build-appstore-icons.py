@@ -127,13 +127,13 @@ def check_config():
         raise RuntimeError(f"Expected 33 unique strategy groups, got {len(entries)}: {names ^ GROUPS}")
     for group, link in entries:
         filename=("AnimeCrazy" if group.strip()=="動畫瘋" else group.strip())+".png"
-        if link.rstrip(",")!="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018/"+filename:
+        if link.rstrip(",")!="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/"+filename:
             raise RuntimeError(f"unexpected strategy icon link: {group} {link}")
     plugin=(ROOT/"plugins/Network_Diagnostics.plugin").read_text()
-    pinned=(ROOT/"plugins/v20261018/Network_Diagnostics.plugin").read_text()
+    pinned=(ROOT/"plugins/v20261018r2/Network_Diagnostics.plugin").read_text()
     if pinned!=plugin:
         raise RuntimeError("Pinned Console plugin differs from current Console plugin")
-    if "#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018/Console.png" not in plugin:
+    if "#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Console.png" not in plugin:
         raise RuntimeError("Console plugin icon link changed unexpectedly")
 
 def main():

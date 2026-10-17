@@ -1,0 +1,58 @@
+name: Release Flat Icons v20261018r2
+on:
+  push:
+    branches: [release/flat-icon-refresh-20261018]
+    paths:
+      - icons/source/**
+      - scripts/render-flat-icon-release.py
+      - .github/workflows/release-flat-icons.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: flat-icon-release-r2
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: release/flat-icon-refresh-20261018
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check cairosvg pillow
+      - name: Render and verify all fixed icon assets
+        run: python scripts/render-flat-icon-release.py
+      - name: Validate 33 strategy groups, 34 icon assets and plugin
+        run: python scripts/validate_repo.py
+      - name: Verify icon release independent of renderer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          from PIL import Image
+          data=json.loads(Path("icons/ICON_SOURCE_REPORT.json").read_text())
+          assert len(data)==34
+          assert {p.name for p in Path("icons/v20261018r2").glob("*.png")}=={e["file"] for e in data}
+          for e in data:
+              file=Path("icons/v20261018r2")/e["file"]
+              with Image.open(file) as im:
+                  im.load()
+                  assert im.format=="PNG" and im.size==(512,512) and im.mode=="RGBA"
+                  assert im.getpixel((0,0))[3]==0
+              assert hashlib.sha256(file.read_bytes()).hexdigest()==e["sha256"]
+          print("All 34 versioned icons validated")
+          PY
+      - name: Commit binary release assets to feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons/*.png icons/v20261018r2/*.png icons/ICON_SOURCE_REPORT.json
+          if ! git diff --cached --quiet; then
+            git commit -m "assets: pin validated v20261018r2 flat icons"
+            git push origin HEAD:release/flat-icon-refresh-20261018
+          fi
