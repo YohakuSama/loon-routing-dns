@@ -33,7 +33,7 @@ ALL_Filter = NameRegex, FilterKey = ".*"
 
 [Proxy Group]
 # Core
-# All rules now self-hosted in this feature branch, not the old upstream remote URLs.
+# All strategy icons are self-hosted under icons/, reviewed for light and dark UI.
 Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Proxy.png
 Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Auto.png
 Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Fallback.png
@@ -61,7 +61,7 @@ Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercon
 BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/BBC.png
 Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Bilibili.png
 
-# Social — flat-color brand icons
+# Social — brand App Store artwork
 Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Telegram.png
 Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Whatsapp.png
 Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Instagram.png
