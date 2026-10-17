@@ -879,272 +879,17 @@
       "removed_from": "Dazn"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagram-brand.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramq.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,intagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,whatsapp-plus.net",
-      "kept_in": "Whatsapp",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,cdninstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,imstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,whatsapp.com",
-      "kept_in": "Whatsapp",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,imtagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instgram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagmania.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,igcdn.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,bookstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instangram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instastyle.tv",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,kingstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,whatsapp.biz",
-      "kept_in": "Whatsapp",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instaplayer.net",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,intagrm.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramhashtags.net",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagrampartners.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramtips.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramizlenme.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagram-press.net",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,onlineinstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramphoto.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramsepeti.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramhilesi.org",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,acheterdesfollowersinstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramlogin.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagranm.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,oninstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramci.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramn.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramm.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,acheterfollowersinstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagram-help.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,online-instagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instachecker.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,wwwinstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
       "rule": "DOMAIN-SUFFIX,whatsapp.net",
       "kept_in": "Whatsapp",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagrem.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,intgram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,web-instagram.net",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,whatsapp.tv",
+      "rule": "DOMAIN-SUFFIX,whatsapp.cc",
       "kept_in": "Whatsapp",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagainer.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,igsonar.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagrm.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagify.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramdi.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,achat-followers-instagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,whatsapp.org",
-      "kept_in": "Whatsapp",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instafallow.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagram-press.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instaadder.com",
+      "rule": "DOMAIN-SUFFIX,oninstagram.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
@@ -1154,82 +899,17 @@
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,ig.me",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramium.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instanttelegram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instafollower.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,carstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,whatsapp.info",
+      "rule": "DOMAIN-SUFFIX,whatsapp.biz",
       "kept_in": "Whatsapp",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagy.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,lnstagram-help.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instamgram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramkusu.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,wa.me",
+      "rule": "DOMAIN-SUFFIX,whatsappbrand.com",
       "kept_in": "Whatsapp",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,chickstagram.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramhilecim.com",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramtakipcisatinal.net",
-      "kept_in": "Instagram",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,instagramcn.com",
+      "rule": "DOMAIN-SUFFIX,instagramizlenme.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
@@ -1239,27 +919,32 @@
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagtram.com",
+      "rule": "DOMAIN-SUFFIX,instaadder.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,whatsapp-plus.info",
-      "kept_in": "Whatsapp",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,igtv.com",
+      "rule": "DOMAIN-SUFFIX,acheterdesfollowersinstagram.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagor.com",
+      "rule": "DOMAIN-SUFFIX,instagda.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,theinstagramhack.com",
+      "rule": "DOMAIN-SUFFIX,instagramcn.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagram-brand.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,lnstagram-help.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
@@ -1274,23 +959,123 @@
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagramtr.com",
+      "rule": "DOMAIN-SUFFIX,imstagram.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,whatsappbrand.com",
-      "kept_in": "Whatsapp",
-      "removed_from": "Facebook"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,acheter-followers-instagram.com",
+      "rule": "DOMAIN-SUFFIX,instagrampartners.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,whatsapp.cc",
+      "rule": "DOMAIN-SUFFIX,instagramn.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramsepeti.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,intgram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,cdninstagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instafallow.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instafollower.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramtakipcisatinal.net",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,igtv.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagmania.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagram-press.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,carstagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,igsonar.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramhashtags.net",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,wwwinstagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instgram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,whatsapp-plus.net",
       "kept_in": "Whatsapp",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instachecker.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagram-press.net",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instanttelegram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramdi.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instangram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagranm.com",
+      "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
     {
@@ -1299,7 +1084,222 @@
       "removed_from": "Facebook"
     },
     {
-      "rule": "DOMAIN-SUFFIX,instagda.com",
+      "rule": "DOMAIN-SUFFIX,whatsapp.tv",
+      "kept_in": "Whatsapp",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagainer.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,acheter-followers-instagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramhilesi.org",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagor.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,chickstagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagify.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramphoto.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,acheterfollowersinstagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,achat-followers-instagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagtram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,theinstagramhack.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,imtagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,intagrm.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instamgram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramm.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramium.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramtips.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,bookstagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instaplayer.net",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramq.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagram-help.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramkusu.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,igcdn.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,wa.me",
+      "kept_in": "Whatsapp",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramlogin.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagrm.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,ig.me",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,whatsapp.com",
+      "kept_in": "Whatsapp",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramhilecim.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramci.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,kingstagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagy.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,whatsapp.org",
+      "kept_in": "Whatsapp",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,online-instagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,intagram.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,whatsapp.info",
+      "kept_in": "Whatsapp",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagramtr.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,whatsapp-plus.info",
+      "kept_in": "Whatsapp",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instastyle.tv",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,web-instagram.net",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,instagrem.com",
+      "kept_in": "Instagram",
+      "removed_from": "Facebook"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,onlineinstagram.com",
       "kept_in": "Instagram",
       "removed_from": "Facebook"
     },
@@ -1324,14 +1324,19 @@
       "removed_from": "Google"
     },
     {
+      "rule": "IP-CIDR,216.73.80.0/20,no-resolve",
+      "kept_in": "YouTube",
+      "removed_from": "Google"
+    },
+    {
       "rule": "IP-CIDR6,2620:120:e000::/40,no-resolve",
       "kept_in": "YouTube",
       "removed_from": "Google"
     },
     {
-      "rule": "IP-CIDR,216.73.80.0/20,no-resolve",
-      "kept_in": "YouTube",
-      "removed_from": "Google"
+      "rule": "DOMAIN-SUFFIX,crashlytics.com",
+      "kept_in": "Google",
+      "removed_from": "Apple"
     },
     {
       "rule": "DOMAIN-SUFFIX,akadns.net",
@@ -1344,17 +1349,12 @@
       "removed_from": "Apple"
     },
     {
-      "rule": "DOMAIN-SUFFIX,crashlytics.com",
-      "kept_in": "Google",
-      "removed_from": "Apple"
-    },
-    {
-      "rule": "DOMAIN-SUFFIX,steamcontent.com",
+      "rule": "DOMAIN-SUFFIX,steamusercontent.com",
       "kept_in": "SteamCN",
       "removed_from": "Steam"
     },
     {
-      "rule": "DOMAIN-SUFFIX,steamusercontent.com",
+      "rule": "DOMAIN-SUFFIX,steamcontent.com",
       "kept_in": "SteamCN",
       "removed_from": "Steam"
     }
