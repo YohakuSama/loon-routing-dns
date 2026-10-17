@@ -46,8 +46,13 @@ jobs:
         run: python3 scripts/build_composite_rules.py
       - uses: actions/upload-artifact@v4
         with:
-          name: composite-rule-staging-audit
-          path: rules/generated/
+          name: loon-hybrid-config-and-rules
+          path: |
+            reviews/Loon_Routing_DNS_Hybrid_Review.lcf
+            rules/generated/
+            rules/sources.json
+            rules/HYBRID_DESIGN.md
+            rules/LICENSE.*
           if-no-files-found: error
           retention-days: 14
 
