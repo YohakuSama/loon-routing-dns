@@ -1,4 +1,4 @@
-# Loon Routing DNS v5.0.0-hybrid-review
+# Loon Routing DNS v5.0.1-hybrid-review
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loon-routing-dns
 # X: https://x.com/yohakusama
@@ -40,8 +40,6 @@ Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,inter
 AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AdBlock.png
 Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Final.png
 
-HelloBike = select,DIRECT,Proxy,Auto,ALL_Filter
-
 # AI and Platforms
 AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AI.png
 Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Google.png
@@ -81,7 +79,6 @@ Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.gith
 [Remote Rule]
 # Self-hosted, policy-scoped reviewed hybrid rules. Order is intentional.
 # First-party critical routes, specific services, advertising, mainland fallback.
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/HelloBike.list, policy=HelloBike, tag=Our-HelloBike, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/AI.list, policy=AI, tag=Our-AI, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/self-hosted-hybrid-rules-v1/rules/generated/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
