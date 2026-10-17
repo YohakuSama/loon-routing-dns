@@ -1,0 +1,410 @@
+{
+  "version": 1,
+  "description": "Reviewed inputs for staging a self-hosted Loon rule library; generated rules are not yet active in the main config.",
+  "licensing": "Source materials inherit their original licenses. Consult rules/README.md before publishing generated outputs.",
+  "sources": [
+    {
+      "id": "bm-advertising",
+      "group": "AdBlock",
+      "policy": "AdBlock",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-advertising-domain",
+      "group": "AdBlock",
+      "policy": "AdBlock",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising_Domain.list",
+      "format": "domainset",
+      "enabled": true,
+      "min_rules": 100,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-systemota",
+      "group": "AppleOTA",
+      "policy": "DIRECT",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SystemOTA/SystemOTA.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-steamcn",
+      "group": "SteamCN",
+      "policy": "DIRECT",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SteamCN/SteamCN.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-youtube",
+      "group": "YouTube",
+      "policy": "YouTube",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-netflix",
+      "group": "Netflix",
+      "policy": "Netflix",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-disney",
+      "group": "Disney",
+      "policy": "Disney",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Disney/Disney.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-primevideo",
+      "group": "PrimeVideo",
+      "policy": "PrimeVideo",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PrimeVideo/PrimeVideo.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-spotify",
+      "group": "Spotify",
+      "policy": "Spotify",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-tiktok",
+      "group": "TikTok",
+      "policy": "TikTok",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-twitch",
+      "group": "Twitch",
+      "policy": "Twitch",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitch/Twitch.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-abematv",
+      "group": "Abema",
+      "policy": "Abema",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AbemaTV/AbemaTV.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-bbc",
+      "group": "BBC",
+      "policy": "BBC",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BBC/BBC.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-bilibili",
+      "group": "Bilibili",
+      "policy": "Bilibili",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-telegram",
+      "group": "Telegram",
+      "policy": "Telegram",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-instagram",
+      "group": "Instagram",
+      "policy": "Instagram",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-twitter",
+      "group": "Twitter",
+      "policy": "Twitter",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-discord",
+      "group": "Discord",
+      "policy": "Discord",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Discord/Discord.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-line",
+      "group": "Line",
+      "policy": "Line",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Line/Line.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-linkedin",
+      "group": "Linkedin",
+      "policy": "Linkedin",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/LinkedIn/LinkedIn.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-reddit",
+      "group": "Reddit",
+      "policy": "Reddit",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Reddit/Reddit.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-google",
+      "group": "Google",
+      "policy": "Google",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-apple-domain",
+      "group": "Apple",
+      "policy": "Apple",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple_Domain.list",
+      "format": "domainset",
+      "enabled": true,
+      "min_rules": 100,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-apple",
+      "group": "Apple",
+      "policy": "Apple",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-steam",
+      "group": "Steam",
+      "policy": "Steam",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-paypal",
+      "group": "Paypal",
+      "policy": "Paypal",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-chinamaxnomedia",
+      "group": "ChinaDirect",
+      "policy": "DIRECT",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 500,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-chinamaxnomedia-domain",
+      "group": "ChinaDirect",
+      "policy": "DIRECT",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list",
+      "format": "domainset",
+      "enabled": true,
+      "min_rules": 100,
+      "role": "baseline"
+    },
+    {
+      "id": "bm-openai",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/OpenAI/OpenAI.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-claude",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Claude/Claude.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-gemini",
+      "group": "AI",
+      "policy": "AI",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Gemini/Gemini.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-whatsapp",
+      "group": "Whatsapp",
+      "policy": "Whatsapp",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Whatsapp/Whatsapp.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-facebook",
+      "group": "Facebook",
+      "policy": "Facebook",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Facebook/Facebook.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-dazn",
+      "group": "Dazn",
+      "policy": "Dazn",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/DAZN/DAZN.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-hbo",
+      "group": "HBO",
+      "policy": "HBO",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/HBO/HBO.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-bahamut",
+      "group": "動畫瘋",
+      "policy": "動畫瘋",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Bahamut/Bahamut.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-microsoft",
+      "group": "Microsoft",
+      "policy": "Microsoft",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Microsoft/Microsoft.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    },
+    {
+      "id": "bm-amazonprimevideo",
+      "group": "PrimeVideo",
+      "policy": "PrimeVideo",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AmazonPrimeVideo/AmazonPrimeVideo.list",
+      "format": "loon",
+      "enabled": true,
+      "min_rules": 1,
+      "role": "extension"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "loyalsoldier-gfw",
+      "enabled": false,
+      "reason": "GPL-3.0 vs upstream GPL-2.0 combination requires license review; keep isolated until approved",
+      "format": "loon",
+      "group": "ProxyGFW",
+      "policy": "Proxy",
+      "url": "https://raw.githubusercontent.com/Loyalsoldier/surge-rules/release/ruleset/gfw.txt"
+    },
+    {
+      "id": "sukkaw",
+      "enabled": false,
+      "reason": "Platform-specific format and licensing need review before import",
+      "url": "https://github.com/SukkaW/Surge"
+    },
+    {
+      "id": "acl4ssr",
+      "enabled": false,
+      "reason": "Likely overlaps with upstream Proxy/GFW; defer pending conflict and license audit",
+      "url": "https://github.com/ACL4SSR/ACL4SSR"
+    }
+  ]
+}
