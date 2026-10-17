@@ -1,0 +1,66 @@
+name: Pin Official App Store Icon Release
+on:
+  push:
+    branches:
+      - design/official-app-icons-20261018
+    paths:
+      - scripts/build-appstore-icons.py
+      - .github/workflows/release-official-icons.yml
+      - icons/source/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: official-appstore-icon-release
+  cancel-in-progress: false
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: design/official-app-icons-20261018
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install imaging dependencies
+        run: python -m pip install --disable-pip-version-check requests pillow cairosvg
+      - name: Fetch 24 verified Apple App Store sources and render 10 SVG masters
+        run: python scripts/build-appstore-icons.py --refresh-app-store
+      - name: Validate Loon links, plugins, generated icons and file count
+        run: |
+          python scripts/validate_repo.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from PIL import Image
+          root=Path('icons')
+          icons=list(root.glob('*.png'))
+          report=json.loads((root/'ICON_SOURCE_REPORT.json').read_text())
+          assert len(icons)==34 and len(report)==34,(len(icons),len(report))
+          assert len([x for x in report if x['source']=='Apple App Store official app artwork'])==24
+          intl=next(x for x in report if x['file']=='Bilibili.png')
+          assert intl['appId']==1517062289 and intl['storeFront']=='sg'
+          assert 'BILIBILI SINGAPORE' in intl['developer'].upper()
+          for f in icons:
+              p=Image.open(f)
+              assert p.size==(512,512) and p.mode=='RGBA',(f,p.size,p.mode)
+              assert p.getpixel((0,0))[3]==0,f
+          print('All official images validated, international Bilibili confirmed')
+          PY
+      - name: Commit replacement icons only to the feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons/*.png icons/ICON_SOURCE_REPORT.json
+          if git diff --cached --quiet; then
+            echo "No icon updates"
+          else
+            git commit -m "assets: pin 24 official App Store icons and 10 custom designs"
+            git push origin HEAD:design/official-app-icons-20261018
+          fi
