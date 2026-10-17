@@ -25,18 +25,17 @@ def active(body):
 def validate(check_generated=False):
     original = BASE.read_text(encoding="utf-8")
     conf = CONFIG.read_text(encoding="utf-8")
-    assert conf.startswith("# Loon Routing DNS v5.0.0-hybrid-review")
+    assert conf.startswith("# Loon Routing DNS v5.0.1-hybrid-review")
     assert section(conf, "General") == section(original, "General"), "DNS/general changed unexpectedly"
     assert section(conf, "Plugin") == section(original, "Plugin"), "diagnostic plugin changed unexpectedly"
     assert section(conf, "Remote Proxy") == section(original, "Remote Proxy"), "personal proxies not preserved"
     groups = [line.split("=",1)[0].strip() for line in active(section(conf, "Proxy Group"))
               if " = " in line]
-    assert len(groups) == len(set(groups)) == 34, f"strategy group count {len(groups)}"
-    assert "HelloBike" in groups
-    assert any(s.startswith("HelloBike = select,DIRECT,") for s in active(section(conf, "Proxy Group")))
+    assert len(groups) == len(set(groups)) == 33, f"strategy group count {len(groups)}"
+    assert "HelloBike" not in groups
     assert any(s.startswith("AdBlock = select,REJECT,") for s in active(section(conf, "Proxy Group")))
     remote = active(section(conf, "Remote Rule"))
-    assert len(remote) == 34
+    assert len(remote) == 33
     urls = set()
     policies = set(groups) | {"DIRECT", "REJECT"}
     for line in remote:
@@ -64,9 +63,15 @@ def validate(check_generated=False):
     sources = [x for x in catalog["sources"] if x.get("enabled")]
     assert len(sources) == 76
     assert len({x["id"] for x in sources}) == len(sources)
+    assert any(x["id"] == "local-hellobike" and x["group"] == "DomesticCore"
+               and x["policy"] == "DIRECT" for x in sources)
     names = {x["group"].replace("動畫瘋", "AnimeCrazy") + ".list" for x in sources}
+    assert "HelloBike.list" not in names
     assert names == {u.rsplit("/", 1)[-1] for u in urls}, "staged output group not referenced"
-    print("PASS: 76 sources, 34 generated service groups, all self-hosted, General/DNS unchanged")
+    if check_generated:
+        actual = {p.name for p in GENERATED.glob("*.list")}
+        assert actual == names, "orphaned generated rule files"
+    print("PASS: 76 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
 
 if __name__ == "__main__":
     import sys
