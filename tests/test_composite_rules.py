@@ -17,12 +17,19 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertEqual(normalize("DOMAIN-SUFFIX,EXAMPLE.COM")[0],
                          "DOMAIN-SUFFIX,example.com")
 
-    def test_ip_networks_are_canonical_and_no_resolve(self):
+    def test_ip_networks_preserve_no_resolve_and_normalize(self):
         self.assertEqual(normalize("IP-CIDR,10.0.0.1/24")[0],
+                         "IP-CIDR,10.0.0.0/24")
+        self.assertEqual(normalize("IP-CIDR,10.0.0.1/24,no-resolve")[0],
                          "IP-CIDR,10.0.0.0/24,no-resolve")
         self.assertEqual(normalize("IP-CIDR6,2001:db8::1/64")[0],
+                         "IP-CIDR6,2001:db8::/64")
+        self.assertEqual(normalize("IP-CIDR6,2001:db8::1/64,no-resolve")[0],
                          "IP-CIDR6,2001:db8::/64,no-resolve")
+        self.assertEqual(normalize("IP-ASN,AS1234,no-resolve")[0],
+                         "IP-ASN,1234,no-resolve")
         self.assertIsNotNone(normalize("IP-CIDR,2001:db8::/64")[1])
+        self.assertIsNotNone(normalize("IP-CIDR,10.0.0.1/24,what")[1])
 
     def test_unsupported_rules_are_quarantined(self):
         self.assertIn("URL-REGEX", normalize("URL-REGEX,^https://ad\\.site")[1])
@@ -54,6 +61,21 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertEqual(audit["duplicates_removed_within_group"], 2)
         self.assertEqual(audit["cross_group_different_policy_exact"], 1)
         self.assertGreaterEqual(audit["domain_suffix_ancestor_conflict_count"], 1)
+
+    def test_flag_variants_are_not_silently_merged(self):
+        sources = [
+            {"id": "a", "group": "Alpha", "policy": "Proxy",
+             "url": "https://rules.invalid/a", "format": "loon", "min_rules": 1},
+            {"id": "b", "group": "Alpha", "policy": "Proxy",
+             "url": "https://rules.invalid/b", "format": "loon", "min_rules": 1},
+        ]
+        docs = {"https://rules.invalid/a": "IP-CIDR,10.0.0.0/8\n",
+                "https://rules.invalid/b": "IP-CIDR,10.0.0.0/8,no-resolve\n"}
+        out, audit = generate(sources, lambda u: docs[u])
+        self.assertIn("IP-CIDR,10.0.0.0/8\n", out["Alpha.list"])
+        self.assertIn("IP-CIDR,10.0.0.0/8,no-resolve\n", out["Alpha.list"])
+        self.assertEqual(audit["ip_flag_variant_conflict_count"], 1)
+        self.assertEqual(audit["duplicates_removed_within_group"], 0)
 
     def test_refuses_truncated_inputs(self):
         sources = [{"id": "small", "group": "Foo", "policy": "Proxy",
