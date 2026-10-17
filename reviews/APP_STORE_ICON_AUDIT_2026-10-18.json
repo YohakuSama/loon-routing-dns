@@ -1,0 +1,677 @@
+{
+  "date": "2026-10-17T16:50:48.070715+00:00",
+  "entries": [
+    {
+      "policy": "YouTube",
+      "app_id": 544007664,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/youtube/id544007664?uo=4",
+      "app_name": "YouTube",
+      "developer": "Google LLC",
+      "current_version": "21.41.5",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9d/cc/4d/9dcc4d29-3199-cfdb-da1e-64ec30a4046b/logo_youtube_2024_q4_color-0-0-1x_U007emarketing-0-0-0-7-0-0-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 13860,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 17.24,
+        "edge_contrast_light_min": 1.05,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Netflix",
+      "app_id": 363590051,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/netflix/id363590051?uo=4",
+      "app_name": "Netflix",
+      "developer": "Netflix, Inc.",
+      "current_version": "26.1.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f6/ed/5f/f6ed5f40-2e41-30c1-d6ff-8d12f8c67c3e/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 23300,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.14,
+        "edge_contrast_light_min": 18.67,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Disney",
+      "app_id": 1446075923,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/disney/id1446075923?uo=4",
+      "app_name": "Disney+",
+      "developer": "Disney Electronic Content, Inc.",
+      "current_version": "5.19.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/27/5c/3c/275c3cd1-638d-f7e6-160d-a047221f7672/AppIcon-0-0-1x_U007emarketing-0-8-0-0-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 32894,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.08,
+        "edge_contrast_light_min": 2.78,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "PrimeVideo",
+      "app_id": 545519333,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/amazon-prime-video/id545519333?uo=4",
+      "app_name": "Amazon Prime Video",
+      "developer": "AMZN Mobile LLC",
+      "current_version": "10.153.1",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d0/20/e3/d020e39c-3fe0-4ee8-c40d-8c4313588040/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 32352,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 4.22,
+        "edge_contrast_light_min": 3.88,
+        "visually_inspect": false
+      },
+      "status": "METADATA_OK"
+    },
+    {
+      "policy": "Spotify",
+      "app_id": 324684580,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/spotify-music-and-podcasts/id324684580?uo=4",
+      "app_name": "Spotify: Music and Podcasts",
+      "developer": "Spotify",
+      "current_version": "9.1.90",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b2/af/e8/b2afe87d-2d6a-8e4b-01bf-73b5752996dc/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 36954,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.22,
+        "edge_contrast_light_min": 19.92,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "TikTok",
+      "app_id": 835599320,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/tiktok-videos-shop-live/id835599320?uo=4",
+      "app_name": "TikTok - Videos, Shop & LIVE",
+      "developer": "TIKTOK PTE. LTD.",
+      "current_version": "47.1.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d8/f0/b2/d8f0b203-3968-dd77-07ff-70134b89f7c1/TikTok_AppIcon26-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 27757,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.22,
+        "edge_contrast_light_min": 19.92,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Twitch",
+      "app_id": 460177396,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/twitch-live-streaming/id460177396?uo=4",
+      "app_name": "Twitch: Live Streaming",
+      "developer": "Twitch Interactive, Inc.",
+      "current_version": "31.6.2",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0e/60/f2/0e60f2cb-a96f-a951-2242-2b51f42aa26b/TwitchAppIcon-0-0-1x_U007epad-0-1-0-0-sRGB-0-0-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 14594,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 3.73,
+        "edge_contrast_light_min": 4.39,
+        "visually_inspect": false
+      },
+      "status": "METADATA_OK"
+    },
+    {
+      "policy": "HBO",
+      "app_id": 1666653815,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/hbo-max-stream-movies-tv/id1666653815?uo=4",
+      "app_name": "HBO Max: Stream Movies & TV",
+      "developer": "WarnerMedia Global Digital Services, LLC",
+      "current_version": "7.13.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/67/c2/dd/67c2dd9f-e3b0-379c-80d6-36ba2c6d6043/AppIcon-0-0-1x_U007epad-0-1-sRGB-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 33885,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.02,
+        "edge_contrast_light_min": 16.68,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Abema",
+      "app_id": 1074866833,
+      "country": "jp",
+      "store": "https://apps.apple.com/jp/app/abema-%E3%82%A2%E3%83%99%E3%83%9E-%E6%96%B0%E3%81%97%E3%81%84%E6%9C%AA%E6%9D%A5%E3%81%AEtv/id1074866833?uo=4",
+      "app_name": "ABEMA(アベマ) 新しい未来のTV",
+      "developer": "ABEMATV, INC.",
+      "current_version": "19.193.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f5/90/27/f59027c3-4be8-7156-3b5e-610fc48d3499/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 33373,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.22,
+        "edge_contrast_light_min": 19.92,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Dazn",
+      "app_id": 1129523589,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/dazn-stream-live-sports/id1129523589?uo=4",
+      "app_name": "DAZN: Stream Live Sports",
+      "developer": "DAZN Limited",
+      "current_version": "2.45.88",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/42/c0/45/42c0453c-5cbd-dcc6-a97b-16e67e001cab/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 20362,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.12,
+        "edge_contrast_light_min": 18.39,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "BBC",
+      "app_id": 364147881,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/bbc-world-news-stories/id364147881?uo=4",
+      "app_name": "BBC: World News & Stories",
+      "developer": "BBC Studios Distribution Ltd.",
+      "current_version": "2026.9.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1f/eb/ba/1febbad6-76cd-cda4-aea8-88990922e9d9/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 12666,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.22,
+        "edge_contrast_light_min": 19.92,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "AnimeCrazy",
+      "app_id": 1102650114,
+      "country": "tw",
+      "store": "https://apps.apple.com/tw/app/%E5%B7%B4%E5%93%88%E5%A7%86%E7%89%B9%E5%8B%95%E7%95%AB%E7%98%8B/id1102650114?uo=4",
+      "app_name": "巴哈姆特動畫瘋",
+      "developer": "ONEUP NETWORK CORPORATION",
+      "current_version": "2.37.2",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/74/62/32/74623298-a230-223a-189b-aafe3e0c71b4/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 25152,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 17.24,
+        "edge_contrast_light_min": 1.05,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Bilibili",
+      "app_id": 736536022,
+      "country": "cn",
+      "store": "https://apps.apple.com/cn/app/%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9-%E5%BC%B9%E5%B9%95%E7%95%AA%E5%89%A7%E7%9B%B4%E6%92%AD%E9%AB%98%E6%B8%85%E8%A7%86%E9%A2%91/id736536022?uo=4",
+      "app_name": "哔哩哔哩-弹幕番剧直播高清视频",
+      "developer": "Shanghai Bilibili Animation Co.,Ltd",
+      "current_version": "9.15.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/46/57/e1/4657e10d-63b5-dee3-07a0-20788d00f07a/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 52726,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.01,
+        "edge_contrast_light_min": 2.5,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Steam",
+      "app_id": 495369748,
+      "country": "gb",
+      "store": "https://apps.apple.com/gb/app/steam-mobile/id495369748?uo=4",
+      "app_name": "Steam Mobile",
+      "developer": "Valve Corporation",
+      "current_version": "3.10.11",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/1d/e1/8d/1de18df0-9f13-4bdb-728a-ddc7ecaf9849/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 27697,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.02,
+        "edge_contrast_light_min": 1.05,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Paypal",
+      "app_id": 283646709,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/paypal-pay-send-save/id283646709?uo=4",
+      "app_name": "PayPal - Pay, Send, Save",
+      "developer": "PayPal, Inc.",
+      "current_version": "10.5.2",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c2/fc/18/c2fc1880-f7e6-25f1-98b7-3a92454f55d0/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 12486,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.42,
+        "edge_contrast_light_min": 11.5,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Telegram",
+      "app_id": 686449807,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/telegram-messenger/id686449807?uo=4",
+      "app_name": "Telegram Messenger",
+      "developer": "Telegram FZ-LLC",
+      "current_version": "13.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/52/47/26/5247269d-36db-c530-6d22-1918a5d6e357/Telegram-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 28411,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 14.6,
+        "edge_contrast_light_min": 1.03,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Whatsapp",
+      "app_id": 310633997,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/whatsapp-messenger/id310633997?uo=4",
+      "app_name": "WhatsApp Messenger",
+      "developer": "WhatsApp Inc.",
+      "current_version": "26.40.77",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/06/7d/17/067d170f-6f76-ab80-0356-39ac02ccd63c/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 25921,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 9.29,
+        "edge_contrast_light_min": 1.51,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Instagram",
+      "app_id": 389801252,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/instagram/id389801252?uo=4",
+      "app_name": "Instagram",
+      "developer": "Instagram, Inc.",
+      "current_version": "451.0.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/41/41/0a/41410ad0-b22e-c93c-d4b1-7f14f8494e06/Prod-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 46217,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 3.45,
+        "edge_contrast_light_min": 1.38,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Facebook",
+      "app_id": 284882215,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/facebook/id284882215?uo=4",
+      "app_name": "Facebook",
+      "developer": "Meta Platforms, Inc.",
+      "current_version": "583.0.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/38/04/23/38042309-1e34-7b09-70c3-ec5733769459/Icon-Production-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 11563,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 3.53,
+        "edge_contrast_light_min": 1.05,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Twitter",
+      "app_id": 333903271,
+      "country": "gb",
+      "store": "https://apps.apple.com/gb/app/x/id333903271?uo=4",
+      "app_name": "X",
+      "developer": "TWITTER INTERNATIONAL UNLIMITED COMPANY",
+      "current_version": "12.35",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c4/41/93/c441932f-2acf-3ad1-1d2e-fb84d82afed1/ProductionAppIcon-0-0-1x_U007emarketing-0-8-0-0-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 19401,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 1.22,
+        "edge_contrast_light_min": 19.92,
+        "visually_inspect": true
+      },
+      "status": "CHECK_VISUAL"
+    },
+    {
+      "policy": "Discord",
+      "app_id": 985746746,
+      "country": "us",
+      "store": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
+      "app_name": "Discord - Talk, Play, Hang Out",
+      "developer": "Discord Inc.",
+      "current_version": "349.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/2b/c1/68/2bc1682e-91a1-8d2f-539c-bfda04dc16a3/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 25836,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 3.67,
+        "edge_contrast_light_min": 3.28,
+        "visually_inspect": false
+      },
+      "status": "METADATA_OK"
+    },
+    {
+      "policy": "Line",
+      "app_id": 443904275,
+      "country": "gb",
+      "store": "https://apps.apple.com/gb/app/line/id443904275?uo=4",
+      "app_name": "LINE",
+      "developer": "LY Corporation",
+      "current_version": "26.16.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a2/97/5b/a2975bc8-e0e9-eb68-30c1-4d12741ed065/basic_default-0-0-1x_U007epad-0-6-0-0-sRGB-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 17935,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 7.64,
+        "edge_contrast_light_min": 2.14,
+        "visually_inspect": false
+      },
+      "status": "METADATA_OK"
+    },
+    {
+      "policy": "Reddit",
+      "app_id": 1064216828,
+      "country": "gb",
+      "store": "https://apps.apple.com/gb/app/reddit/id1064216828?uo=4",
+      "app_name": "Reddit",
+      "developer": "REDDIT, INC.",
+      "current_version": "2026.41.0",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/74/fd/74/74fd7490-afa3-510b-ea17-bfc25f4ecff3/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 23909,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 5.01,
+        "edge_contrast_light_min": 3.26,
+        "visually_inspect": false
+      },
+      "status": "METADATA_OK"
+    },
+    {
+      "policy": "Linkedin",
+      "app_id": 288429040,
+      "country": "gb",
+      "store": "https://apps.apple.com/gb/app/linkedin-community-career/id288429040?uo=4",
+      "app_name": "LinkedIn: Community & Career",
+      "developer": "LinkedIn Corporation",
+      "current_version": "9.1.581",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c7/c3/65/c7c365d3-80e4-662a-4fc3-1b8268bdb32a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+      "metrics": {
+        "width": 512,
+        "height": 512,
+        "mode": "RGB",
+        "format": "JPEG",
+        "bytes": 14490,
+        "corner_alpha": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "center_alpha": 255,
+        "edge_contrast_dark_min": 3.04,
+        "edge_contrast_light_min": 5.38,
+        "visually_inspect": false
+      },
+      "status": "METADATA_OK"
+    }
+  ]
+}
