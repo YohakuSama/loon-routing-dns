@@ -85,10 +85,17 @@ def read_catalog(path=CATALOG):
     if len({s["id"] for s in sources}) != len(sources):
         raise ValueError("duplicate source ids")
     for s in sources:
-        url = urlparse(s["url"])
-        if (url.scheme != "https" or url.netloc != "raw.githubusercontent.com"
-                or not url.path.startswith("/blackmatrix7/ios_rule_script/")):
-            raise ValueError("unreviewed source URL: " + s["url"])
+        if s.get("role") == "local":
+            path = s.get("path", "")
+            if not re.fullmatch(r"rules/custom/[A-Za-z0-9_-]+\\.list", path):
+                raise ValueError("invalid custom rule file path: " + path)
+            if not (ROOT / path).is_file():
+                raise ValueError("missing original custom rules: " + path)
+        else:
+            url = urlparse(s["url"])
+            if (url.scheme != "https" or url.netloc != "raw.githubusercontent.com"
+                    or not url.path.startswith("/blackmatrix7/ios_rule_script/")):
+                raise ValueError("unreviewed source URL: " + s["url"])
         if not re.fullmatch(r"[\w\u4e00-\u9fff-]+", s["group"]):
             raise ValueError("unsafe output group: " + s["group"])
         if s["format"] not in {"loon", "domainset"}:
@@ -113,7 +120,8 @@ def generate(sources, fetch=fetch_text):
     quarantined_examples = []
     intra_dupes = 0
     for s in sources:
-        body = fetch(s["url"])
+        body = ((ROOT / s["path"]).read_text(encoding="utf-8")
+                if s.get("role") == "local" else fetch(s["url"]))
         parsed = 0
         deduped = 0
         source_rules = set()
