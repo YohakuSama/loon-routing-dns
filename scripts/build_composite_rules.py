@@ -332,7 +332,7 @@ def generate(sources, fetch=fetch_text):
         ]
         output[name + ".list"] = "\n".join(header + sorted(rules)) + "\n"
     report = {
-        "status": "STAGING_ONLY",
+        "status": "SELF_HOSTED_RELEASE",
         "sources": source_stats,
         "group_sizes": {k: len(v) for k, v in sorted(by_group.items())},
         "duplicates_removed_within_group": intra_dupes,
@@ -352,7 +352,7 @@ def generate(sources, fetch=fetch_text):
             "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
             "Different-policy and ancestor conflicts require a routing priority review.",
             "Local [Rule] in Loon takes precedence over remote lists.",
-            "No generated list is installed in the active configuration.",
+            "Generated lists are published in main and referenced by the active Loon config; changes require PR review.",
         ],
     }
     return output, report
