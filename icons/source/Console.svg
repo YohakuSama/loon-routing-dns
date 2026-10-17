@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#0F4148"/><path d="M146 139h62v168h170v64H146Z" fill="#F2F6F2"/><path d="M239 186c0-11 9-20 20-20h103v49h-78v56h-45Z" fill="#6BD9CF"/><circle cx="359" cy="180" r="25" fill="#F4CB77"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>Console — diagnostic command port</title><rect width="512" height="512" rx="111" fill="#143C3F"/>
+<!-- Deliberately specific: command prompt integrated with monitoring trace. Single silhouette, not an LR monogram. -->
+<path d="M135 155 H377 Q399 155 399 177 V335 Q399 357 377 357 H135 Q113 357 113 335 V177 Q113 155 135 155Z" fill="#F0F4ED"/>
+<path d="M145 190 H367 V323 H145Z" fill="#143C3F"/>
+<!-- A routed diagnostic 'pulse' incorporating terminal action; one optical center. -->
+<path d="M183 232 L227 266 L183 300" fill="none" stroke="#F0F4ED" stroke-width="30" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M267 293 H344" fill="none" stroke="#E7B970" stroke-width="26" stroke-linecap="round"/>
+</svg>
