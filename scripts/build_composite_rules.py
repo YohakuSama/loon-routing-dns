@@ -52,6 +52,10 @@ def normalize(text, source_format="loon", source=None):
         return kind + "," + value, None
 
     if source_format == "v2fly":
+        # Inline domain annotations may contain human-readable # comments.
+        line = line.split("#", 1)[0].strip()
+        if not line:
+            return None, None
         # Domain-list-community: plain=domain suffix, full:=DOMAIN,
         # keyword:=DOMAIN-KEYWORD. Includes must be explicitly registered
         # rather than expanding a large unrelated parent category.
