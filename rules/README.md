@@ -21,6 +21,7 @@
 
 - **基础**：当前 28 条远程订阅，逐一登记在 [sources.json](./sources.json)。该数量是“订阅项”而非有效规则行数。
 - **已核验目录、拟加入的补全来源（10 条）**：blackmatrix7 的 OpenAI、Claude、Gemini、Whatsapp、Facebook、DAZN、HBO、Bahamut、Microsoft、AmazonPrimeVideo。
+- **自主维护补充（8 组）**：从本项目现有 `[Rule]` 提取并独立存放 AI、WhatsApp、Facebook、DAZN、HBO、动画疯、Microsoft、ChinaDirect 补充规则，纳入统一去重和冲突审查。此阶段与当前 `[Rule]` 并存仅用于比对，正式迁移时需避免重复维护。
 - **第二阶段候选**：Loyalsoldier、SukkaW、ACL4SSR 等仅作为候选记录，默认关闭，不能直接混合发布。需先核对具体文件、格式、许可、更新频率和交叉覆盖。
 
 来源由 `rules/sources.json` 锁定；不要在脚本中任意添加不可信 URL。
