@@ -1,6 +1,6 @@
-# 自维护复合型 Loon 规则库（审查阶段）
+# 自维护复合型 Loon 规则库 v5.1.0
 
-> **状态：STAGING / 尚未启用。** 当前稳定配置 `Loon_Routing_DNS.lcf` 保持原样，手机仍沿用已有 28 条远程规则。任何自动生成的列表都需要在独立分支检查、实际设备验证、手动合并后，才能考虑替换原订阅。
+> **状态：正式发布规则目录。** `Loon_Routing_DNS.lcf` 使用本仓库 `main/rules/generated/` 中经过检查的规则文件；定期更新仍必须经过 PR 审核，CI 不替代 iPhone 实测。
 
 ## 为什么采用“复合型规则库”？
 
@@ -17,14 +17,13 @@
 
 **为什么不直接合并所有规则？** 因为通配域名、共享 CDN、平台 IP、广告列表、国内直连和流媒体解锁规则可能互相覆盖。规则越多不一定越好。项目遵循“明确来源、有限引入、冲突可见、随时回退”的原则。
 
-## 第一阶段规则来源
+## 正式规则来源
 
-- **基础**：当前 28 条远程订阅，逐一登记在 [sources.json](./sources.json)。该数量是“订阅项”而非有效规则行数。
-- **已核验目录、拟加入的补全来源（10 条）**：blackmatrix7 的 OpenAI、Claude、Gemini、Whatsapp、Facebook、DAZN、HBO、Bahamut、Microsoft、AmazonPrimeVideo。
-- **自主维护补充（8 组）**：从本项目现有 `[Rule]` 提取并独立存放 AI、WhatsApp、Facebook、DAZN、HBO、动画疯、Microsoft、ChinaDirect 补充规则，纳入统一去重和冲突审查。此阶段与当前 `[Rule]` 并存仅用于比对，正式迁移时需避免重复维护。
-- **第二阶段候选**：Loyalsoldier、SukkaW、ACL4SSR 等仅作为候选记录，默认关闭，不能直接混合发布。需先核对具体文件、格式、许可、更新频率和交叉覆盖。
+规则来源见 [sources.json](./sources.json)，目前 86 个启用输入，生成 33 个策略规则组。基础分类来自 blackmatrix7，服务域名补全来自 v2fly，Apple 中国相关优化域名来自 felixonmars，常用国内业务例外由项目自行维护。对应 GPL-2.0、MIT、WTFPL 原始许可正文位于本目录 `LICENSE.*`。
 
-来源由 `rules/sources.json` 锁定；不要在脚本中任意添加不可信 URL。
+广告、隐私和劫持防护统一生成到 `AdBlock.list`；为降低误杀，广告保护仅保留精确域名和域名后缀，不引入模糊关键词、IP 共享网段封禁和需要 MITM 的 URL 正则。相同策略去重，同组父域覆盖的子规则裁剪；不同策略间精确相同匹配按订阅优先级保留第一条并记入 `audit.json`。不要对不同策略间的父子域名交叉直接推断为错误。
+
+其他候选项目需完成格式、维护状况和许可审查才能加入；不能为了增加数量无条件导入。
 
 ## 构建、去重与安全约束
 
@@ -35,7 +34,7 @@ python3 -m unittest discover -s tests -p 'test_composite_rules.py'
 python3 scripts/build_composite_rules.py
 ```
 
-输出到 `rules/generated/` 下（**仅供审核，主配置不会自动引用**）：
+输出到 `rules/generated/` 下（**用于正式配置与审计；更新仍需审查**）：
 
 - 每个策略组生成单独的 Loon 原生 `.list`，保留来源标识。
 - `audit.json` 记录每个来源的内容指纹、成功解析数、组内去重数、跨组同策略重复数、跨策略冲突、域名后缀祖先冲突及被隔离的未知格式样本。
