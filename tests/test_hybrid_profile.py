@@ -61,7 +61,7 @@ def validate(check_generated=False):
     ], "duplicate local service rules or lost final routing"
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     sources = [x for x in catalog["sources"] if x.get("enabled")]
-    assert len(sources) == 86
+    assert len(sources) == 87
     assert len({x["id"] for x in sources}) == len(sources)
     assert any(x["id"] == "local-hellobike" and x["group"] == "DomesticCore"
                and x["policy"] == "DIRECT" for x in sources)
@@ -74,7 +74,7 @@ def validate(check_generated=False):
     # Verify mutable release configuration equals the copy provided to reviewers.
     reviewer = (ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf").read_text(encoding="utf-8")
     assert conf == reviewer, "release and review copy diverged"
-    print("PASS: 86 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
+    print("PASS: 87 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
 
 if __name__ == "__main__":
     import sys
