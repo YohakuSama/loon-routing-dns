@@ -60,6 +60,10 @@ def normalize(text, source_format="loon"):
         value = value.lower().rstrip(".")
         if not DOMAIN_RE.fullmatch(value):
             return None, "invalid domain value"
+    flags = [flag.lower() for flag in chunks[2:] if flag]
+    if flags and (kind not in {"IP-CIDR", "IP-CIDR6", "IP-ASN"}
+                  or len(flags) != 1 or flags[0] != "no-resolve"):
+        return None, "unexpected trailing fields"
     if kind.startswith("IP-CIDR"):
         try:
             network = ipaddress.ip_network(value, strict=False)
@@ -68,15 +72,13 @@ def normalize(text, source_format="loon"):
         if (network.version == 6) != (kind == "IP-CIDR6"):
             return None, "IP family mismatch"
         value = str(network)
-        return kind + "," + value + ",no-resolve", None
     if kind == "IP-ASN":
         value = value.upper()
         if not re.fullmatch(r"(AS)?\d+", value):
             return None, "invalid ASN"
-    # Non-IP match types should not carry a target policy from upstream.
-    if len(chunks) > 2 and any(p and p.lower() != "no-resolve" for p in chunks[2:]):
-        return None, "unexpected trailing fields"
-    return kind + "," + value, None
+        value = value.removeprefix("AS")
+    # Keep no-resolve exactly as supplied: inserting it changes Loon behavior.
+    return kind + "," + value + (",no-resolve" if flags else ""), None
 
 
 def read_catalog(path=CATALOG):
@@ -116,6 +118,7 @@ def generate(sources, fetch=fetch_text):
     by_group = defaultdict(dict)
     owners = defaultdict(set)
     source_stats = []
+    ip_flag_variants = defaultdict(set)
     quarantined = defaultdict(int)
     quarantined_examples = []
     intra_dupes = 0
@@ -138,6 +141,10 @@ def generate(sources, fetch=fetch_text):
             if rule is None:
                 continue
             parsed += 1
+            if rule.startswith(("IP-CIDR,", "IP-CIDR6,", "IP-ASN,")):
+                ip_flag_variants[(s["group"], rule.removesuffix(",no-resolve"))].add(
+                    "no-resolve" if rule.endswith(",no-resolve") else "resolve"
+                )
             source_rules.add(rule)
             key = s["group"]
             if rule in by_group[key]:
@@ -161,6 +168,11 @@ def generate(sources, fetch=fetch_text):
             "parsed": parsed, "duplicate_within_group": deduped,
         })
 
+    flag_variant_conflicts = [
+        {"group": group, "match": match, "variants": sorted(variants)}
+        for (group, match), variants in sorted(ip_flag_variants.items())
+        if len(variants) > 1
+    ]
     exact_conflicts = []
     same_policy_reused = 0
     exact_different_policy_count = 0
@@ -218,6 +230,8 @@ def generate(sources, fetch=fetch_text):
         "sources": source_stats,
         "group_sizes": {k: len(v) for k, v in sorted(by_group.items())},
         "duplicates_removed_within_group": intra_dupes,
+        "ip_flag_variant_conflict_count": len(flag_variant_conflicts),
+        "ip_flag_variant_conflict_samples": flag_variant_conflicts[:100],
         "cross_group_same_policy_repeated": same_policy_reused,
         "cross_group_different_policy_exact": exact_different_policy_count,
         "cross_group_different_policy_samples": exact_conflicts,
@@ -226,6 +240,7 @@ def generate(sources, fetch=fetch_text):
         "quarantined_by_reason": dict(sorted(quarantined.items())),
         "quarantined_examples": quarantined_examples,
         "notes": [
+            "The IP no-resolve flag is preserved from upstream; it changes matching.",
             "Cross-group duplicates are not deleted: groups may be independently enabled.",
             "Different-policy and ancestor conflicts require a routing priority review.",
             "Local [Rule] in Loon takes precedence over remote lists.",
@@ -262,6 +277,7 @@ def main():
     print(f'Staged {len(outputs)} groups from {len(report["sources"])} sources.')
     print(f'Duplicates removed within groups: {report["duplicates_removed_within_group"]}')
     print(f'Different-policy exact conflicts: {report["cross_group_different_policy_exact"]}')
+    print(f'IP resolve-flag variants: {report["ip_flag_variant_conflict_count"]}')
     print(f'Quarantined unsupported/ambiguous lines: {sum(report["quarantined_by_reason"].values())}')
 
 
