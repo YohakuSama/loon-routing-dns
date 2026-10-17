@@ -11,7 +11,7 @@ from build_composite_rules import normalize, generate, read_catalog, prune_suffi
 class CompositeRulesTests(unittest.TestCase):
     def test_reviewed_sources_catalog_is_valid(self):
         sources = read_catalog()
-        self.assertEqual(len(sources), 86)
+        self.assertEqual(len(sources), 87)
         self.assertEqual(len([s for s in sources if s.get("role") == "local"]), 10)
 
     def test_v2fly_annotations_and_dnsmasq(self):
