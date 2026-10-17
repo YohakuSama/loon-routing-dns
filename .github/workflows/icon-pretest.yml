@@ -1,0 +1,53 @@
+name: Build Pretest Policy Icons
+on:
+  push:
+    branches:
+      - icon-pretest
+    paths:
+      - scripts/generate-policy-icons.mjs
+      - .github/workflows/icon-pretest.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-icons:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+        with:
+          ref: icon-pretest
+          persist-credentials: true
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install icon build dependencies
+        run: npm install --no-save --ignore-scripts=false sharp@0.34.4 simple-icons@15
+      - name: Render 33 icons
+        run: node scripts/generate-policy-icons.mjs
+      - name: Validate generated PNG dimensions and transparency
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          import sharp from "sharp";
+          const png=fs.readdirSync("icons").filter(n=>n.endsWith(".png"));
+          if(png.length!==33)throw Error("Need 33 icons, got "+png.length);
+          for(const file of png){
+            const meta=await sharp("icons/"+file).metadata();
+            if(meta.width!==512||meta.height!==512||meta.channels!==4)
+              throw Error(file+": expected transparent 512x512 RGBA, got "+JSON.stringify(meta));
+          }
+          console.log("Validated",png.length,"transparent RGBA PNGs");
+          NODE
+      - name: Commit test icons (not main)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons
+          if git diff --cached --quiet; then
+            echo "No changes to generated icons."
+          else
+            git commit -m "test: render 33 self-hosted policy icons"
+            git push origin HEAD:icon-pretest
+          fi
