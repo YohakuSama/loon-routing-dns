@@ -1,0 +1,5 @@
+# First-party HelloBike/哈啰 domains; verified against official HelloBike web properties.
+# Loon source format without policy. The review config currently mirrors these locally.
+# Last reviewed: 2026-10-17
+DOMAIN-SUFFIX,hellobike.com
+DOMAIN-SUFFIX,helloglobal.com
