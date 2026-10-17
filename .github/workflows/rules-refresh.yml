@@ -1,0 +1,90 @@
+name: Composite Rule Refresh (review only)
+
+on:
+  schedule:
+    # Every Monday, 03:40 UTC (11:40 China Standard Time)
+    - cron: '40 3 * * 1'
+  workflow_dispatch:
+
+# This workflow is restricted to schedule/manual runs on the default branch.
+# It never changes the active Loon_Routing_DNS.lcf or auto-merges a PR.
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: composite-rules-refresh
+  cancel-in-progress: false
+
+jobs:
+  review-only-refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout stable branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Regression tests
+        run: python3 -m unittest discover -s tests -p 'test_composite_rules.py' -v
+
+      - name: Build staged composite rules and conflict audit
+        run: python3 scripts/build_composite_rules.py
+
+      - name: Export audit summary
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          a = json.loads(Path("rules/generated/audit.json").read_text(encoding="utf-8"))
+          print("Sources:", len(a["sources"]))
+          print("Groups:", len(a["group_sizes"]))
+          print("Rules by group:", a["group_sizes"])
+          print("Duplicates removed within groups:", a["duplicates_removed_within_group"])
+          print("Different-policy exact conflicts:", a["cross_group_different_policy_exact"])
+          print("Domain-suffix ancestry conflicts:", a["domain_suffix_ancestor_conflict_count"])
+          print("IP flag variant conflicts:", a["ip_flag_variant_conflict_count"])
+          print("Quarantine counts:", a["quarantined_by_reason"])
+          PY
+
+      - name: Upload reviewable candidate and audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: composite-rules-candidate
+          path: rules/generated/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Open or update review-only pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          branch: bot/composite-rules-refresh
+          base: main
+          add-paths: |
+            rules/generated/**
+          commit-message: "chore(rules): refresh staged upstream rules and audit"
+          title: "chore(rules): review updated composite rule candidates"
+          draft: always-true
+          delete-branch: true
+          body: |
+            ## Automated rule-refresh candidate — review required
+            - These generated files are **NOT active** in Loon.
+            - No changes to `Loon_Routing_DNS.lcf` or personal subscriptions.
+            - The job ran offline regression tests and built the audit against reviewed upstream sources.
+            - Check `rules/generated/audit.json`: duplicates, changed counts, policy conflicts,
+              domain ancestry conflicts, IP flag variants, and excluded URL-REGEX records.
+            - Investigate abnormal source counts, new providers or new syntaxes before publishing.
+            - Test any future Loon config migration on a real iPhone, with a rollback plan.
+
+            **Note:** PRs made using the default GITHUB_TOKEN may not trigger other
+            pull_request CI workflows. Mark Ready for review only after a human check,
+            or arrange separate CI with a dedicated GitHub App token.
+
+            Upstream attribution and licenses: `rules/README.md` and `rules/LICENSE.GPL-2.0`.
