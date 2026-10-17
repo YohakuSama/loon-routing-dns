@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Self-hosted conservative hybrid: blackmatrix7 Loon native broad categories, v2fly domain-list-community for domain completions, felixonmars Apple China, first-party local rules. AdvertisingLite instead of large Advertising; full source stays opt-in.",
+  "description": "Production v5.1: maintained blackmatrix7 Loon base, Privacy and Hijacking; V2Fly MIT platform supplements; FelixYan Apple China DNS; self-maintained domestic data. Conservative advertisement+privacy merged in AdBlock, intra- and cross-policy exact deduplication, no broad keyword/IP blocking in AdBlock.",
   "licensing": "Source materials inherit their original licenses. Consult rules/README.md before publishing generated outputs.",
   "sources": [
     {
@@ -847,6 +847,131 @@
       "role": "local",
       "enabled": true,
       "min_rules": 4
+    },
+    {
+      "id": "bm-privacy",
+      "group": "AdBlock",
+      "policy": "AdBlock",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Privacy/Privacy.list",
+      "format": "loon",
+      "role": "privacy",
+      "enabled": true,
+      "min_rules": 100
+    },
+    {
+      "id": "bm-hijacking",
+      "group": "AdBlock",
+      "policy": "AdBlock",
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Hijacking/Hijacking.list",
+      "format": "loon",
+      "role": "privacy",
+      "enabled": true,
+      "min_rules": 50
+    },
+    {
+      "id": "v2-primevideo",
+      "group": "PrimeVideo",
+      "policy": "PrimeVideo",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/primevideo",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-abema",
+      "group": "Abema",
+      "policy": "Abema",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/abema",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-bbc",
+      "group": "BBC",
+      "policy": "BBC",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bbc",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-linkedin",
+      "group": "Linkedin",
+      "policy": "Linkedin",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/linkedin",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-threads",
+      "group": "Facebook",
+      "policy": "Facebook",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/threads",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-disney",
+      "group": "Disney",
+      "policy": "Disney",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/disney",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
+    },
+    {
+      "id": "v2-bilibili-game",
+      "group": "Bilibili",
+      "policy": "Bilibili",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bilibili-game",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads",
+        "!cn"
+      ]
+    },
+    {
+      "id": "v2-bahamut",
+      "group": "動畫瘋",
+      "policy": "動畫瘋",
+      "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bahamut",
+      "format": "v2fly",
+      "role": "v2fly",
+      "enabled": true,
+      "min_rules": 1,
+      "skip_attrs": [
+        "ads"
+      ]
     }
   ],
   "candidates": [
