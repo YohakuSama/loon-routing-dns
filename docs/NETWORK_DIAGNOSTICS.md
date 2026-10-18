@@ -1,4 +1,4 @@
-# Loon Routing DNS · 网络辅助插件 v2.3
+# Loon Routing DNS · 网络辅助插件 v2.4
 
 随完整配置自动加载的轻量插件。提供 **三个手动入口**与 **一个可选的网络切换提醒**，不修改 Loon 的 DNS、规则、节点、VPN 或代理策略。
 
@@ -25,7 +25,7 @@ IP 情报固定采用主源 ipquery.io、备用 ipwho.is；网络诊断探测默
 
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf
 
-**正式配置只有在合并本次 PR 后才指向新插件。** 旧版插件保留在 `plugins/v20261018r2/Network_Diagnostics.plugin`，旧版脚本仍为历史订阅保留，不再作为新版用户菜单入口。新版插件位于 `plugins/v20261018r7/`，详细节点情报脚本位于 `scripts/v20261018r5/`，网络诊断继续使用未修改的 `scripts/v20261018r4/`。旧版插件目录保留，方便回滚。
+**正式配置只有在合并本次 PR 后才指向新插件。** 旧版插件保留在 `plugins/v20261018r2/Network_Diagnostics.plugin`，旧版脚本仍为历史订阅保留，不再作为新版用户菜单入口。新版插件位于 `plugins/v20261018r8/`，详细节点情报脚本位于 `scripts/v20261018r5/`，网络诊断继续使用未修改的 `scripts/v20261018r4/`。旧版插件目录保留，方便回滚。
 
 若曾单独订阅旧插件，请避免同时启用新旧两个插件；更新前备份个人参数。旧参数不再有对应功能，需重新开启需要的可选开关。
 
@@ -53,10 +53,10 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 
 ## 维护与回退
 
-- [新版插件](../plugins/v20261018r7/Network_Diagnostics.plugin)
+- [新版插件](../plugins/v20261018r8/Network_Diagnostics.plugin)
 - [节点出口脚本](../scripts/v20261018r5/node-intelligence.js)
 - [诊断脚本](../scripts/v20261018r4/network-diagnostics.js)
-- [DNS 解析器测试脚本](../scripts/v20261018r7/dns-leak-check.js)
+- [DNS 解析器测试脚本](../scripts/v20261018r8/dns-leak-check.js)
 - [DNS 解析器测试回归](../tests/test_dns_leak_check.js) · [v2.3 可靠性回归](../tests/test_dns_probe_reliability.js)
 - [新版模拟测试](../tests/test_plugin_v2.js)
 - [旧版插件（历史兼容）](../plugins/v20261018r2/Network_Diagnostics.plugin)
@@ -70,3 +70,7 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 v2.3 使用 10 个一次性 DNS 测试域名，结果轮询最多六次，不依赖所有 $dns.query 回调都成功返回。仍不能证明全系统无泄漏；如果最后没有观测数据，会列出 **失败阶段、DNS 发起与回调数量、轮询次数**，不会误报“安全”。
 
 在正式合并前可通过分支内独立 [预览插件](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/fix/dns-leak-probe-reliability-20261018/plugins/preview/DNS_Leak_Check_v2_3.plugin) 手动进行 iPhone 测试。预览仅包含一个检测按钮，无后台监测，不修改配置，测试结束请停用预览插件以避免菜单重复。注意这份预览依赖临时分支，非长期稳定订阅。
+
+### v2.4：bash.ws 测试 ID 校验兼容性修复
+
+使用真实 HTTPS 接口与一次独立 DNS 查询核对后，确认 bash.ws `/id` 返回的是纯文本 **16 位字母数字混合 ID**，不是旧版 v2.3 校验器要求的纯数字。旧版会在「创建会话」阶段停止，显示「DNS 查询 0/0」和「结果检查 0 次」；此时根本没有进行泄漏检查。v2.4 将 ID 验证更改为严格合法的 DNS 标签字符和长度校验（8–63 位），禁止点号、路径、空格、HTML 和 URL 注入，同时支持旧的纯数字测试会话。已补充 Loon 模拟回归测试；手机真实网络运行仍须验证。
