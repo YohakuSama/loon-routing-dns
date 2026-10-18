@@ -56,13 +56,14 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 - 上游刷新由 GitHub Actions 生成候选更新 PR，审核后才会进入正式订阅，不直接下载上游原始规则。
 - **需要真机复测：** DNS 查询、Apple 更新、国内银行与支付、Steam、AI 登录、广告拦截、国内 CDN、IPv6。静态 CI 无法证明所有域名分类完全正确或不存在 DNS 泄漏。
 
-## 可选隐私 DNS 配置（必须结合 Loon 设置验证）
+## 中国大陆可用的可选加密 DNS 配置（须在 Loon 验证）
 
-除主配置外，仓库提供 [**LoonKit.PrivacyDNS.lcf**](./LoonKit.PrivacyDNS.lcf)，它仅替换 DNS 服务器，并保持 34 条自托管规则、66 条本地规则、策略组、插件与 IPv6 设置不变。
+除主配置外，仓库提供 [**LoonKit.PrivacyDNS.lcf**](./LoonKit.PrivacyDNS.lcf)（历史文件名保留，已改用腾讯 DNSPod），它仅替换 DNS 服务器，并保持 34 条自托管规则、66 条本地规则、策略组、插件与 IPv6 设置不变。
 
 - 原始 `LoonKit.lcf` 继续使用 AliDNS，面向大陆兼容性，**不是零 DNS 泄漏保证**。
-- 隐私配置使用 Cloudflare 的 `https://cloudflare-dns.com/dns-query`（官方 DoH），因此 Loon 自身的解析不再默认使用 AliDNS；但 **DoH 加密不代表请求随代理节点出口发出，也不能控制浏览器自带 DoH**。
-- 在 Loon 的「DNS 服务器」页面**手动关闭加密 DNS 失败回退到普通 DNS**。配置中 `dns-server=1.1.1.1,1.0.0.1` 是兼容项；如果忘记关闭回退，仍可能发生明文 DNS 查询。
+- **大陆网络优先：不依赖 Cloudflare / Google 等境外 DoH。** 主配置使用阿里云 AliDNS：`https://dns.alidns.com/dns-query`；可选配置改用腾讯 DNSPod 官方 `https://doh.pub/dns-query`。两者通常可在中国大陆使用，但无法保证所有运营商、线路均可用。
+- `LoonKit.PrivacyDNS.lcf` 文件名为兼容历史订阅而保留；它现在是**腾讯 DNSPod 加密 DNS 备用/排查配置**，并不是“保证 DNS 经海外代理出口”的配置。**DoH 加密不代表请求随代理节点出口发出，也不能控制浏览器自带 DoH**。
+- 在 Loon 的「DNS 服务器」页面**手动关闭加密 DNS 失败回退到普通 DNS**。可选配置中 `dns-server=119.29.29.29` 是兼容项；忘记关闭回退仍可能发生明文 DNS 查询。
 - 大陆网络可能无法访问境外 DoH，关闭回退后可能出现无法解析。遇到这种情况不要静默启用明文回退，应先排查当前网络与 DNS 连通性，必要时回到原配置。
 - 参照 [DNS 实测与泄漏定位](./docs/DNS_PRIVACY.md) 核对 Loon DNS 日志的 `protocol`、`server`、`fromCache`，并区分网页出口 IP、DNS 递归解析器和运营商出口。仅靠 BrowserLeaks 显示的 DNS 地理位置无法证明明文泄漏。
 

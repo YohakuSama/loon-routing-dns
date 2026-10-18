@@ -1,20 +1,20 @@
-# LoonKit v5.10.0 / Privacy DNS (optional)
+# LoonKit v5.10.0 / Mainland DNSPod DoH (optional; PrivacyDNS URL retained)
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loonkit
 # X: https://x.com/yohakusama
 # Community configuration; not affiliated with Loon.
 
 [General]
-# OPTIONAL privacy DNS profile, not the mainland-compatible default.
-# Uses Cloudflare encrypted DoH for Loon's own lookups, not AliDNS.
-# The DoH resolver is NOT guaranteed to use a proxy-node exit.
-# The only known way to disable plaintext fallback is the Loon DNS Servers UI:
-# switch OFF "fallback to standard DNS if encrypted DNS fails".
-# Plain UDP addresses below are transport compatibility targets ONLY;
-# when the UI toggle is on, plaintext DNS leaks are still possible.
-# If encrypted DoH is unreachable, disable fallback -> DNS resolution fails.
-dns-server = 1.1.1.1,1.0.0.1
-doh-server = https://cloudflare-dns.com/dns-query
+# OPTIONAL mainland-accessible encrypted DNS profile using Tencent DNSPod.
+# DoH: https://doh.pub/dns-query (Tencent's official Public DNS endpoint).
+# Plain DNS 119.29.29.29 is only an emergency compatibility entry.
+# IMPORTANT: in Loon > DNS Servers switch OFF encrypted DNS failure fallback
+# to standard DNS, otherwise an encrypted DNS failure may expose UDP queries.
+# Encrypted DoH does NOT mean the query follows the proxy exit. Seeing a CN
+# DNS resolver on a leak-test page is NOT automatically plaintext DNS leakage.
+# Network/ISP differences can still make this endpoint fail or rate-limit.
+dns-server = 119.29.29.29
+doh-server = https://doh.pub/dns-query
 hijack-dns = *:53
 # UDP/53 interception does not capture third-party DoH/DoT.
 ip-mode = dual
