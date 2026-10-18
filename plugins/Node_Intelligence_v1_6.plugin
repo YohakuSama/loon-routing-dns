@@ -1,0 +1,25 @@
+#!name = Loon Routing DNS · 节点情报 v1.6 · 独立测试版
+#!desc = 仅保留节点出口情报和网络切换异常监测；不修改 Loon 配置
+#!author = YohakuSama
+#!homepage = https://github.com/YohakuSama/loon-routing-dns
+#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Console.png
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = 节点,异常监测,可选
+#!type = normal
+
+[Argument]
+auto_check = switch,false,tag=网络变化异常监测（可选）,desc=仅执行网络/DoH 健康检查；不会自动切换代理或 VPN
+notify_every_change = switch,false,tag=每次网络变化都通知,desc=调试开关；正常也通知。建议测试后关闭，默认仅异常通知
+direct_probe_url = input,"http://wifi.vivo.com.cn/generate_204",tag=直连检测网址,desc=本插件诊断用 URL，不会改变 Loon 自带测速服务器
+probe_timeout = input,"6500",tag=诊断超时毫秒,desc=本插件请求超时；支持 2000–12000 毫秒
+target_policy = input,"Proxy",tag=节点信息查询策略,desc=默认查询 Proxy 出口；从具体节点入口调用时优先使用节点上下文
+compare_direct = switch,false,tag=对照直连公网 IP,desc=开启会向 IP 情报服务暴露你的真实直连公网 IP，默认关闭
+primary_ip_url = input,"https://api.ipquery.io/?format=json",tag=主要 IP 情报 API,desc=默认 ipquery.io；可替换为兼容 ipquery/ipwho JSON 格式的 HTTPS URL
+backup_ip_url = input,"https://ipwho.is/",tag=备用 IP 情报 API,desc=默认 ipwho.is；只在主服务异常且启用备用源时访问
+enable_ip_backup = switch,true,tag=IP 情报查询失败自动备用,desc=主要来源错误或返回无效数据时才请求备用 URL
+cache_seconds = input,"120",tag=节点情报缓存秒数,desc=0 表示关闭，仅明确节点入口缓存；支持 0–600 秒
+
+[Script]
+generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/0596154f27b474fe515cfbcbb878375bf87f7554/scripts/node-intelligence.js", {${target_policy}, ${compare_direct}, ${primary_ip_url}, ${backup_ip_url}, ${enable_ip_backup}, ${cache_seconds}}) with tag="节点详情查询 v1.6 · 出口状态", img_url="location.fill.viewfinder.system", timeout=45
+network-changed then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/network-diagnostics.js", {https://dns.alidns.com/dns-query, ${direct_probe_url}, http://cp.cloudflare.com/generate_204, ${probe_timeout}, ${notify_every_change}}) with enable=${auto_check}, tag="网络切换诊断", timeout=40
