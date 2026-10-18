@@ -1,0 +1,49 @@
+name: Temporary bash.ws session contract probe
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/dns-session-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  api-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Inspect bash.ws session responses without recording IDs
+        shell: bash
+        run: |
+          set +e
+          for variant in default json; do
+            case "$variant" in
+              default) accept='*/*' ;;
+              json) accept='application/json, text/plain' ;;
+            esac
+            curl -sSL --max-time 12 --header "Accept: $accept" --output "/tmp/response_$variant" --dump-header "/tmp/headers_$variant" --write-out '%{http_code}' https://bash.ws/id > "/tmp/status_$variant"
+          done
+          python3 - <<'PY'
+          import json, pathlib, re
+          for variant in ("default", "json"):
+              body=pathlib.Path("/tmp/response_"+variant)
+              headers=pathlib.Path("/tmp/headers_"+variant)
+              status=pathlib.Path("/tmp/status_"+variant)
+              raw=body.read_bytes() if body.exists() else b""
+              text=raw.decode("utf-8","replace").strip()
+              kind="numeric" if re.fullmatch(r"[0-9]+",text) else "empty" if not text else "other"
+              if text.startswith("{") or text.startswith("["):
+                  try:
+                      obj=json.loads(text)
+                      kind="json-"+type(obj).__name__
+                      if isinstance(obj,dict): print("keys",variant,sorted(obj.keys())[:15])
+                  except Exception:kind="invalid-json"
+              elif text.startswith("<"): kind="html-or-xml"
+              hdr=headers.read_text(errors="replace") if headers.exists() else ""
+              mime=re.findall(r"(?im)^content-type:\s*([^\r\n]+)",hdr)
+              http=status.read_text().strip() if status.exists() else "no-status"
+              print(variant,"http="+http,"mime="+(mime[-1] if mime else "unknown"),
+                    "body_bytes="+str(len(raw)),"body_kind="+kind,"trimmed_length="+str(len(text)),
+                    "numeric_pattern="+str(bool(re.fullmatch(r"[0-9]{1,18}",text))))
+          PY
