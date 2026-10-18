@@ -254,23 +254,18 @@
     arr.push("VPN：" + signal(info.vpn));
     arr.push("Proxy：" + signal(info.proxy));
     arr.push("Tor：" + signal(info.tor));
-    arr.push("", "【本地核验】");
-    var localData = localIntel(info.ip);
-    if (localData) {
-      if (localData.geo !== "无数据") arr.push("Loon GeoIP：" + localData.geo);
-      if (localData.asn !== "无数据") arr.push("Loon ASN：" + localData.asn);
-      if (localData.geo !== "无数据" && info.countryCode !== "未知" &&
-          localData.geo.toUpperCase() !== info.countryCode.toUpperCase())
-        arr.push("注意：本地 GeoIP 与第三方数据不一致");
-    }
+    arr.push("", "【出口状态】");
     var change = egressChange(info);
-    if (change.indexOf("出口变化：动态") !== 0)
+    if (change.indexOf("出口变化：动态") === 0)
+      arr.push("出口变化：动态策略组不跟踪");
+    else
       arr.push(change.indexOf("出口变化：首次") === 0 ? "出口变化：已记录首次基线" : change);
     if (local && local.ip) {
       arr.push("直连出口：" + local.ip);
       if (route !== "DIRECT" && info.ip === local.ip)
         arr.push("注意：代理与直连出口相同，请核对所选策略");
     } else if (compare) arr.push("直连对照：查询失败");
+    arr.push("数据状态：" + (info.cached ? "缓存" : "实时查询"));
     arr.push("", "情报来源：" + info.provider + (info.cached ? "（缓存）" : ""));
     return arr.join("\n");
   }
