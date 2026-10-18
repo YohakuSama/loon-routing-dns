@@ -82,53 +82,139 @@ Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githu
 Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Paypal.png
 
 [Remote Rule]
-# Self-hosted, policy-scoped reviewed hybrid rules. Order is intentional.
-# First-party critical routes, specific services, advertising, mainland fallback.
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AI.list, policy=AI, tag=Our-AI, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/SteamCN.list, policy=DIRECT, tag=Our-SteamCN, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/YouTube.list, policy=YouTube, tag=Our-YouTube, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Netflix.list, policy=Netflix, tag=Our-Netflix, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Disney.list, policy=Disney, tag=Our-Disney, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/PrimeVideo.list, policy=PrimeVideo, tag=Our-PrimeVideo, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Spotify.list, policy=Spotify, tag=Our-Spotify, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/TikTok.list, policy=TikTok, tag=Our-TikTok, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Twitch.list, policy=Twitch, tag=Our-Twitch, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/HBO.list, policy=HBO, tag=Our-HBO, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Abema.list, policy=Abema, tag=Our-Abema, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/BBC.list, policy=BBC, tag=Our-BBC, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Bilibili.list, policy=Bilibili, tag=Our-Bilibili, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AnimeCrazy.list, policy=動畫瘋, tag=Our-AnimeCrazy, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Dazn.list, policy=Dazn, tag=Our-Dazn, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Telegram.list, policy=Telegram, tag=Our-Telegram, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Whatsapp.list, policy=Whatsapp, tag=Our-Whatsapp, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Instagram.list, policy=Instagram, tag=Our-Instagram, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Facebook.list, policy=Facebook, tag=Our-Facebook, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Twitter.list, policy=Twitter, tag=Our-Twitter, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Discord.list, policy=Discord, tag=Our-Discord, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Line.list, policy=Line, tag=Our-Line, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Reddit.list, policy=Reddit, tag=Our-Reddit, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Linkedin.list, policy=Linkedin, tag=Our-Linkedin, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Google.list, policy=Google, tag=Our-Google, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Microsoft.list, policy=Microsoft, tag=Our-Microsoft, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Apple.list, policy=Apple, tag=Our-Apple, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Steam.list, policy=Steam, tag=Our-Steam, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Paypal.list, policy=Paypal, tag=Our-Paypal, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
+# Stable pre-migration rules from the version the maintainer verified on device.
+# 28 reviewed upstream subscriptions; composite rules remain staged, not enabled.
+# Advertising
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising.list, policy=AdBlock, tag=Advertising, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising_Domain.list, policy=AdBlock, tag=AdvertisingDomain, enabled=true
+
+# CDN
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SystemOTA/SystemOTA.list, policy=DIRECT, tag=AppleOTA, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SteamCN/SteamCN.list, policy=DIRECT, tag=SteamCN, enabled=true
+
+# Streaming
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list, policy=YouTube, tag=YouTube, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list, policy=Netflix, tag=Netflix, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Disney/Disney.list, policy=Disney, tag=Disney, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PrimeVideo/PrimeVideo.list, policy=PrimeVideo, tag=PrimeVideo, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list, policy=Spotify, tag=Spotify, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list, policy=TikTok, tag=TikTok, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitch/Twitch.list, policy=Twitch, tag=Twitch, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AbemaTV/AbemaTV.list, policy=Abema, tag=AbemaTV, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BBC/BBC.list, policy=BBC, tag=BBC, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list, policy=Bilibili, tag=BiliBili, enabled=true
+
+# Social
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list, policy=Telegram, tag=Telegram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list, policy=Instagram, tag=Instagram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list, policy=Twitter, tag=Twitter, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Discord/Discord.list, policy=Discord, tag=Discord, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Line/Line.list, policy=Line, tag=Line, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/LinkedIn/LinkedIn.list, policy=Linkedin, tag=LinkedIn, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Reddit/Reddit.list, policy=Reddit, tag=Reddit, enabled=true
+
+# Platforms
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list, policy=Google, tag=Google, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple_Domain.list, policy=Apple, tag=AppleDomain, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list, policy=Apple, tag=Apple, enabled=true
+
+# Games and Payments
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list, policy=Steam, tag=Steam, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list, policy=Paypal, tag=PayPal, enabled=true
+
+# China Direct
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia.list, policy=DIRECT, tag=ChinaDirect, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list, policy=DIRECT, tag=ChinaDomain, enabled=true
 
 [Rule]
-# Emergency resource routing and final fallbacks only.
-# All service domains are source-controlled under rules/custom and rules/generated.
-# GitHub Raw often needs an already-working proxy in mainland China.
-# Restore a node locally before fetching remote rules; this cannot bootstrap
-# an otherwise blocked GitHub Raw URL without a functioning proxy.
+# Restore the pre-migration local routing priorities.
+# No private proxy subscription is included in this public profile.
+# Remote Resources
 DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
-# Retain no-resolve: avoid triggering local DNS merely to classify unmatched proxy domains.
+
+# AI
+DOMAIN-SUFFIX,openai.com,AI
+DOMAIN-SUFFIX,chatgpt.com,AI
+DOMAIN-SUFFIX,oaistatic.com,AI
+DOMAIN-SUFFIX,oaiusercontent.com,AI
+DOMAIN-SUFFIX,anthropic.com,AI
+DOMAIN-SUFFIX,claude.ai,AI
+DOMAIN-SUFFIX,claude.com,AI
+DOMAIN-SUFFIX,perplexity.ai,AI
+DOMAIN-SUFFIX,perplexity.com,AI
+DOMAIN-SUFFIX,cursor.com,AI
+DOMAIN-SUFFIX,cursor.sh,AI
+DOMAIN-SUFFIX,grok.com,AI
+DOMAIN,gemini.google.com,AI
+DOMAIN,aistudio.google.com,AI
+DOMAIN,copilot.microsoft.com,AI
+DOMAIN-SUFFIX,chat.com,AI
+DOMAIN-SUFFIX,sora.com,AI
+DOMAIN-SUFFIX,cursorapi.com,AI
+DOMAIN-SUFFIX,x.ai,AI
+DOMAIN-SUFFIX,notebooklm.google,AI
+DOMAIN-SUFFIX,ai.google.dev,AI
+DOMAIN-SUFFIX,generativeai.googleapis.com,AI
+
+# WhatsApp
+DOMAIN-SUFFIX,whatsapp.com,Whatsapp
+DOMAIN-SUFFIX,whatsapp.net,Whatsapp
+DOMAIN-SUFFIX,whatsapp.biz,Whatsapp
+DOMAIN-SUFFIX,wa.me,Whatsapp
+
+# Facebook
+DOMAIN-SUFFIX,facebook.com,Facebook
+DOMAIN-SUFFIX,facebook.net,Facebook
+DOMAIN-SUFFIX,fb.com,Facebook
+DOMAIN-SUFFIX,fb.me,Facebook
+DOMAIN-SUFFIX,messenger.com,Facebook
+DOMAIN-SUFFIX,m.me,Facebook
+
+# DAZN
+DOMAIN-SUFFIX,dazn.com,Dazn
+DOMAIN-SUFFIX,dazn-api.com,Dazn
+DOMAIN-SUFFIX,dazndn.com,Dazn
+DOMAIN-SUFFIX,indazn.com,Dazn
+DOMAIN-SUFFIX,indaznlab.com,Dazn
+
+# HBO
+DOMAIN-SUFFIX,hbo.com,HBO
+DOMAIN-SUFFIX,hbomax.com,HBO
+DOMAIN-SUFFIX,hbomaxcdn.com,HBO
+DOMAIN-SUFFIX,hbogo.com,HBO
+DOMAIN-SUFFIX,hboasia.com,HBO
+DOMAIN-SUFFIX,max.com,HBO
+
+# Bahamut
+DOMAIN-SUFFIX,gamer.com.tw,動畫瘋
+DOMAIN-SUFFIX,bahamut.com.tw,動畫瘋
+
+# Microsoft
+DOMAIN-SUFFIX,microsoft.com,Microsoft
+DOMAIN-SUFFIX,microsoftonline.com,Microsoft
+DOMAIN-SUFFIX,microsoft365.com,Microsoft
+DOMAIN-SUFFIX,office.com,Microsoft
+DOMAIN-SUFFIX,office365.com,Microsoft
+DOMAIN-SUFFIX,office.net,Microsoft
+DOMAIN-SUFFIX,outlook.com,Microsoft
+DOMAIN-SUFFIX,onedrive.com,Microsoft
+DOMAIN-SUFFIX,1drv.ms,Microsoft
+DOMAIN-SUFFIX,live.com,Microsoft
+DOMAIN-SUFFIX,windows.com,Microsoft
+DOMAIN-SUFFIX,windowsupdate.com,Microsoft
+DOMAIN-SUFFIX,xboxlive.com,Microsoft
+
+# Domestic Services
+DOMAIN-SUFFIX,ccb.com,DIRECT
+DOMAIN-SUFFIX,abchina.com,DIRECT
+DOMAIN-SUFFIX,abchina.com.cn,DIRECT
+DOMAIN-SUFFIX,t3go.cn,DIRECT
+DOMAIN-SUFFIX,wo.cn,DIRECT
+
+# Default Routing
+# Avoid pre-resolution solely for GEOIP matching; may affect some China-direct matches.
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
-# Node information and basic network diagnostics.
 [Plugin]
 https://raw.githubusercontent.com/YohakuSama/loonkit/main/plugins/v20261018r11/Network_Diagnostics.plugin, enabled=true

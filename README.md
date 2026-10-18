@@ -1,6 +1,6 @@
 # LoonKit
 
-适用于 **Loon** 的分流配置，包含常用服务策略、广告拦截、DNS 设置和网络辅助工具。
+适用于 **Loon** 的分流配置，包含常用服务策略、广告拦截、DNS 设置和网络辅助工具。**正式规则已恢复迁移前使用过的分流基线，复合规则库暂不启用。**
 
 [完整配置](./LoonKit.lcf) · [网络辅助插件](./plugins/Network_Diagnostics.plugin) · [插件使用说明](./docs/NETWORK_DIAGNOSTICS.md) · [问题反馈](https://github.com/YohakuSama/loonkit/issues)
 
@@ -29,7 +29,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 5. 更新远程规则和插件资源，确认下载成功。
 6. 运行网络与 DNS 诊断，在 DNS 日志中检查实际查询所用协议与解析器，并检查各 App 分流。
 
-**首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 配置中的 GitHub 资源默认经 `Proxy` 策略访问。无节点时无法通过规则解决 GitHub 直连故障。
+**首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 正式远程规则已恢复为上游 blackmatrix7 的 28 条原始订阅；复合生成规则不再默认加载。配置仍将 GitHub Raw 交给 `Proxy` 策略。无节点时无法通过规则解决 GitHub 直连故障。
 
 如果只需要辅助工具，可以[单独订阅网络辅助插件](./plugins/Network_Diagnostics.plugin)，不必导入整套配置。
 
@@ -48,7 +48,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 
 ## 更新与排查
 
-更新规则时刷新远程规则资源；更新完整配置时请先备份个人设置，以免覆盖节点或自定义规则。
+更新规则时刷新远程规则资源；**从启用 33 个生成规则的旧 LoonKit 配置升级时，请确认旧的 `Our-*` 生成规则订阅没有作为额外列表继续启用**。更新完整配置前请备份个人设置和节点。
 
 遇到网页无法打开，可依次检查：节点是否可用、当前策略、远程规则是否成功更新，以及 Loon 请求记录。登录、支付、图片加载异常时，也可暂时将 `AdBlock` 切换为 `DIRECT` 进行排查。
 
@@ -56,7 +56,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 
 ## 规则来源
 
-规则整理自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script)、[v2fly](https://github.com/v2fly/domain-list-community)、[dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) 和本项目补充的规则。具体来源与许可信息见[规则说明](./rules/README.md)。
+**正式启用的远程规则来自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script) 的旧版 28 个规则文件，辅以 66 条本地规则；**[v2fly](https://github.com/v2fly/domain-list-community) 等复合规则仍在 [候选规则库](./rules/README.md) 保留供审计与后续真机灰度验证，默认不加载。历史配置的节点订阅和访问凭证不会纳入仓库。
 
 ---
 

@@ -100,13 +100,21 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertIsNotNone(normalize("IP-CIDR,2001:db8::/64")[1])
         self.assertIsNotNone(normalize("IP-CIDR,10.0.0.1/24,no-resolve,no-resolve")[1])
 
-    def test_publish_order_matches_live_remote_rule_order(self):
-        import re
-        profile = (Path(__file__).resolve().parents[1] / "LoonKit.lcf").read_text(encoding="utf-8")
+    def test_composite_publish_order_stays_staged_until_device_validation(self):
+        import json
+        root = Path(__file__).resolve().parents[1]
+        profile = (root / "LoonKit.lcf").read_text(encoding="utf-8")
+        baseline = json.loads((root / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
         section = profile.split("[Remote Rule]", 1)[1].split("[Rule]", 1)[0]
-        actual = [re.search(r"/generated/([^/,]+)\.list,", line).group(1)
-                  for line in section.splitlines() if line.strip().startswith("https://")]
-        self.assertEqual([name.replace("動畫瘋", "AnimeCrazy") for name in PUBLISH_ORDER], actual)
+        active_remote = [row.strip() for row in section.splitlines()
+                         if row.strip().startswith("https://")]
+        self.assertEqual(active_remote,baseline["remote_rules"])
+        self.assertEqual(len(active_remote),28)
+        self.assertNotIn("/rules/generated/",section)
+        self.assertEqual(len(PUBLISH_ORDER),33)
+        for group in PUBLISH_ORDER:
+            name = group.replace("動畫瘋","AnimeCrazy")
+            self.assertTrue((root / "rules/generated" / (name + ".list")).is_file(),name)
 
     def test_cidr_flag_variants_canonicalize_to_one_rule(self):
         sources = [
