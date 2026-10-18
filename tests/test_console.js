@@ -131,10 +131,38 @@ check("ad/privacy diagnostic uses default routing and never claims REJECT",()=>{
 });
 check("plugin exposes only node detail as manual action",()=>{
  const p=load("plugins/v20261018r2/Network_Diagnostics.plugin");
- const lines=p.split("\\n").filter(x=>x.startsWith("generic then script("));
+ const lines=p.split("\n").filter(x=>x.startsWith("generic then script("));
  assert.equal(lines.length,1);
  assert(lines[0].includes("节点详情查询"));
  assert(p.includes("auto_check = switch,false"));
  assert(!lines.some(x=>x.includes("模拟网络切换诊断")||x.includes("国内外分流辅助诊断")));
+});
+check("explicit node egress changes are tracked locally without DIRECT requests",()=>{
+ const store={},reports=[],calls=[];
+ let ip="18.144.88.66";
+ function run(){
+  const ctx={$argument:{target_policy:"Proxy",cache_seconds:"0",compare_direct:false},
+   $environment:{params:{node:"My-Node"}},
+   $persistentStore:{read:k=>store[k]||null,write:(v,k)=>(store[k]=v,true)},
+   $httpClient:{get(o,cb){calls.push(o);cb(null,{status:200},JSON.stringify({
+     ip,location:{country:"United States",country_code:"US"},
+     isp:{asn:"AS16509",isp:"Amazon",org:"Amazon"},risk:{is_datacenter:true}
+   }))}},$done:r=>reports.push(r.content),console:{log(){}}};
+  vm.runInNewContext(intel,ctx,{timeout:3000});
+ }
+ run();assert.match(reports[0],/首次记录基线/);
+ ip="18.144.88.67";run();assert.match(reports[1],/出口变化：IP/);
+ assert(calls.every(x=>x.node==="My-Node"));
+ assert(Object.keys(store).some(k=>k.startsWith("loon:node-egress:v1:")));
+});
+check("dynamic Proxy selector does not store egress history",()=>{
+ const store={},done=[];
+ vm.runInNewContext(intel,{$argument:{cache_seconds:"0"},
+  $environment:{params:{}},$persistentStore:{read:k=>store[k]||null,write:(v,k)=>(store[k]=v,true)},
+  $httpClient:{get(o,cb){cb(null,{status:200},JSON.stringify({
+    ip:"18.144.88.66",location:{country:"US"},isp:{asn:"AS1",isp:"ISP"}
+  }))}},$done:r=>done.push(r.content),console:{log(){}}},{timeout:3000});
+ assert.match(done[0],/动态策略组或缓存结果不进行对比/);
+ assert(!Object.keys(store).some(k=>k.startsWith("loon:node-egress:v1:")));
 });
 console.log("Console regression tests passed:",passed);
