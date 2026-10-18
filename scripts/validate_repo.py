@@ -147,7 +147,11 @@ def check_plugin():
     require(len(src_urls) == 2, "expected 2 script source URLs")
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/"
-        require(marker in url and (ROOT / url.split(marker, 1)[1].split("/", 1)[1]).is_file(),
+        suffix = url.split(marker, 1)[1] if marker in url else ""
+        branch_prefixes = ("main/", "feat/console-rule-health-20261018/")
+        local_path = next((suffix[len(prefix):] for prefix in branch_prefixes
+                           if suffix.startswith(prefix)), None)
+        require(local_path is not None and (ROOT / local_path).is_file(),
                 "plugin script URL missing local file: " + url)
 
     for file in JS:
