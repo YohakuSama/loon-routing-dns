@@ -48,6 +48,7 @@ jobs:
           node tests/test_console.js
           python3 scripts/audit_rule_overlaps.py
           python3 scripts/audit_dns_config.py
+          python3 -m unittest discover -s tests -p 'test_dns_audit.py'
 
   upstream-resource-check:
     name: Check upstream rules, scripts, and icons
