@@ -24,6 +24,7 @@ JS = [
     ROOT / "scripts" / "v20261018r4" / "node-intelligence.js",
     ROOT / "scripts" / "v20261018r5" / "node-intelligence.js",
     ROOT / "scripts" / "v20261018r6" / "dns-leak-check.js",
+    ROOT / "scripts" / "v20261018r7" / "dns-leak-check.js",
 ]
 ISSUES = []
 
@@ -93,7 +94,7 @@ def check_config():
 
     # Full configuration must discover the control console automatically.
     plugin_text = section(data, "Plugin")
-    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r6/Network_Diagnostics.plugin"
+    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r7/Network_Diagnostics.plugin"
     entries = [line.strip() for line in plugin_text.splitlines()
                if line.strip() and not line.lstrip().startswith("#")]
     require(len(entries) == 1, "expected one auto-bundled Console plugin")
@@ -124,7 +125,7 @@ def check_plugin():
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
     require("auto_check = switch,false" in data, "automatic checks must default off")
-    pinned_plugin=ROOT / "plugins" / "v20261018r6" / "Network_Diagnostics.plugin"
+    pinned_plugin=ROOT / "plugins" / "v20261018r7" / "Network_Diagnostics.plugin"
     require(pinned_plugin.is_file(), "missing versioned Console plugin")
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
             "versioned Console plugin differs from checked source")
@@ -157,7 +158,8 @@ def check_plugin():
         marker = "/YohakuSama/loon-routing-dns/main/"
         require(marker in url and ("/scripts/v20261018r4/" in url
                                    or "/scripts/v20261018r5/" in url
-                                   or "/scripts/v20261018r6/" in url)
+                                   or "/scripts/v20261018r6/" in url
+                                   or "/scripts/v20261018r7/" in url)
                 and (ROOT / url.split(marker)[1]).is_file(),
                 "plugin must use versioned scripts: " + url)
 

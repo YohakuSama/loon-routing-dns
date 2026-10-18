@@ -123,4 +123,4 @@ FINAL,Final
 # Optional lightweight network helper — three manual tools; network monitoring off by default.
 # No MITM or rewrite. Settings and feature toggles remain editable in Loon > Plugins.
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r6/Network_Diagnostics.plugin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r7/Network_Diagnostics.plugin, enabled=true
