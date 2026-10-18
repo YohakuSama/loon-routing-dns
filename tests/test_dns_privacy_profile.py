@@ -49,7 +49,7 @@ class DnsPrivacyProfileTests(unittest.TestCase):
         for text in (guide, readme):
             self.assertIn("LoonKit.PrivacyDNS.lcf", text)
             self.assertIn("回退", text)
-            self.assertIn("不能", text if text is guide else text + "不能")
+            self.assertTrue("不能" in text or "无法" in text)
 
 
 if __name__ == "__main__":
