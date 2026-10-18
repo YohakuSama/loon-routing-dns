@@ -1,6 +1,12 @@
 name: App Store icon candidate audit
 on:
   workflow_dispatch:
+  push:
+    branches: [work/appstore-glass-icons-20261018]
+    paths:
+      - 'scripts/download_appstore_candidates.py'
+      - 'scripts/audit_appstore_icons.py'
+      - '.github/workflows/appstore-icon-audit.yml'
 permissions:
   contents: read
 jobs:
@@ -28,8 +34,14 @@ jobs:
               assert set(markets)=={"us","cn","jp","tw","gb"}, name
               print(name, sum(len(v) for v in markets.values() if isinstance(v,list)), "candidates")
           PY
+      - name: Install image processing dependency
+        run: python -m pip install 'Pillow>=10,<12'
+      - name: Download actual App Store artwork candidates and create contact sheets
+        run: python scripts/download_appstore_candidates.py
       - uses: actions/upload-artifact@v4
         with:
           name: appstore-icon-audit
-          path: appstore-icon-audit.json
+          path: |
+            appstore-icon-audit.json
+            appstore-preview/
           retention-days: 14
