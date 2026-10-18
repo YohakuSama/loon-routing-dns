@@ -42,8 +42,8 @@ def check_config():
     data = CONF.read_text(encoding="utf-8")
     require(data.startswith("# LoonKit v5.1.0"), "expected v5.1.0 release header")
     require("dns-server = 223.5.5.5" in data, "public fallback DNS changed")
-    require("doh-server = https://cloudflare-dns.com/dns-query" in data, "encrypted DNS changed")
-    require("cloudflare-dns.com = 1.1.1.1" in data, "encrypted DNS bootstrap Host missing")
+    require("doh-server = https://dns.alidns.com/dns-query" in data, "encrypted DNS changed")
+    require("dns.alidns.com = 223.5.5.5" in data, "encrypted DNS bootstrap Host missing")
     require("ssid-trigger" not in data, "Wi-Fi automation must not be enabled in public config")
 
     groups_text = section(data, "Proxy Group")

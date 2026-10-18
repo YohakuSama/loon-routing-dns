@@ -7,7 +7,7 @@
   var name = (typeof $script === "object" && $script && $script.name) || "";
   var automatic = name === "网络切换异常监测";
   var DIRECT_URL = "http://wifi.vivo.com.cn/generate_204";
-  var PROXY_URL = "http://cp.cloudflare.com/generate_204";
+  var PROXY_URL = "http://bing.com/generate_204";
   var ALERT_KEY = "loonkit:v4:network-alert";
   var COOLDOWN = 30 * 60 * 1000;
   var finished = false;
@@ -72,7 +72,7 @@
         var detail=protocol+" / "+server+cache;
         if (protocol==="udp" || protocol==="system") {
           cb({label:label,ok:false,detail:"发现明文 DNS 查询/回退："+detail});
-        } else if (protocol==="doh" && server.indexOf("https://cloudflare-dns.com/dns-query")===0) {
+        } else if (protocol==="doh" && server.indexOf("https://dns.alidns.com/dns-query")===0) {
           cb({label:label,ok:reply.fromCache===true?null:true,
             detail:"已使用配置中的 DoH："+detail});
         } else if (protocol==="doh" || protocol==="doh3" || protocol==="quic") {

@@ -5,12 +5,14 @@
 # Community configuration; not affiliated with Loon.
 
 [General]
-# DNS privacy baseline: single predictable encrypted resolver, no competing DoH results.
-# IMPORTANT: Loon's encrypted-DNS failure fallback to plain DNS defaults ON.
-# For strict no-plaintext fallback, disable this in Loon > DNS Servers (app setting).
-# dns-server is an emergency/compatibility resolver, never a privacy guarantee.
+# Mainland China baseline: AliDNS DoH avoids inaccessible overseas DNS services.
+# Only one DoH is configured to prevent competing resolver answers.
+# IMPORTANT: Disable "encrypted DNS fallback to standard DNS" in Loon's DNS
+# Servers UI to enforce fail-closed privacy when the DoH endpoint fails.
+# dns-server is AliDNS UDP for emergency/compatibility use only; the UI
+# toggle above, not this field alone, controls whether fallback may occur.
 dns-server = 223.5.5.5
-doh-server = https://cloudflare-dns.com/dns-query
+doh-server = https://dns.alidns.com/dns-query
 hijack-dns = *:53
 # UDP/53 interception does not capture third-party DoH/DoT.
 ip-mode = dual
@@ -23,7 +25,7 @@ disable-stun = true
 udp-fallback-mode = REJECT
 domain-reject-mode = DNS
 dns-reject-mode = NOANSWER
-proxy-test-url = http://cp.cloudflare.com/generate_204
+proxy-test-url = http://bing.com/generate_204
 internet-test-url = http://wifi.vivo.com.cn/generate_204
 test-timeout = 5
 allow-wifi-access = false
@@ -40,8 +42,8 @@ ALL_Filter = NameRegex, FilterKey = ".*"
 # Core
 # All strategy icons are self-hosted under icons/, reviewed for light and dark UI.
 Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Proxy.png
-Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Auto.png
-Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Fallback.png
+Auto = url-test,ALL_Filter,url = http://bing.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Auto.png
+Fallback = fallback,ALL_Filter,url = http://bing.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Fallback.png
 AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/AdBlock.png
 Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Final.png
 
@@ -121,14 +123,18 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/ChinaD
 [Rule]
 # Emergency resource routing and final fallbacks only.
 # All service domains are source-controlled under rules/custom and rules/generated.
+# GitHub Raw often needs an already-working proxy in mainland China.
+# Restore a node locally before fetching remote rules; this cannot bootstrap
+# an otherwise blocked GitHub Raw URL without a functioning proxy.
 DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
 # Retain no-resolve: avoid triggering local DNS merely to classify unmatched proxy domains.
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
-# Pin bootstrap lookup for the encrypted DNS hostname; HTTPS still verifies hostname.
+# Avoid a plaintext bootstrap lookup for the AliDNS DoH hostname.
+# 223.5.5.5 is the official AliDNS service IP; TLS still verifies dns.alidns.com.
 [Host]
-cloudflare-dns.com = 1.1.1.1
+dns.alidns.com = 223.5.5.5
 
 # Node information and basic network diagnostics.
 [Plugin]

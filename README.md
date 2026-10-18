@@ -29,7 +29,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 5. 更新远程规则和插件资源，确认下载成功。
 6. 运行网络与 DNS 诊断，在 DNS 日志中检查实际查询所用协议与解析器，并检查各 App 分流。
 
-**首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 配置中的 GitHub 资源默认经 `Proxy` 策略访问；若没有可用节点，下载可能失败。
+**首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 配置中的 GitHub 资源默认经 `Proxy` 策略访问。无节点时无法通过规则解决 GitHub 直连故障。
 
 如果只需要辅助工具，可以[单独订阅网络辅助插件](./plugins/Network_Diagnostics.plugin)，不必导入整套配置。
 
@@ -40,7 +40,9 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 | 节点出口信息 | 查看公网 IP、地区、运营商、ASN 和网络类型 |
 | 网络与 DNS 诊断 | 检查直连、代理、DoH 和 Loon 原生 DNS |
 
-**重要：** 默认配置使用 Cloudflare 加密 DoH（`https://cloudflare-dns.com/dns-query`）；保留的普通 UDP DNS 仅用于兼容/应急。Loon **默认允许加密 DNS 故障回退到普通 DNS**，若要求严格避免明文回退，必须在 App 中手动关闭。Cloudflare DoH 与代理出口不同不一定代表明文泄漏；用户应用内置 DoH/DoT 及节点远端解析无法由本配置完全控制。详见 [DNS 隐私排查](./docs/DNS_PRIVACY.md)。
+**中国大陆 DNS 配置：** 默认使用阿里加密 DoH（`https://dns.alidns.com/dns-query`），保留阿里普通 DNS `223.5.5.5` 作为兼容/应急选项。普通 DNS 位于大陆且查询不加密。Loon **默认允许加密 DNS 失败回退到普通 DNS**；若要求禁止明文查询，请在 App 的 DNS 设置中关闭此回退开关。加密 DoH 与代理节点出口不同不必然是明文泄漏。详见 [DNS 隐私排查](./docs/DNS_PRIVACY.md)。
+
+**首次导入与更新：** `raw.githubusercontent.com` 在部分大陆网络不可直连。本项目不提供节点，DNS 修复不能让 GitHub 下载自动突破网络限制。可以先将 `.lcf` 保存到设备、在 Loon 本地导入，恢复可用节点后再更新远程规则和插件。
 
 网络切换提醒、直连 IP 对照默认关闭，可在插件设置中按需开启。详见[插件使用说明](./docs/NETWORK_DIAGNOSTICS.md)。
 
