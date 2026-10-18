@@ -66,8 +66,9 @@ def validate(check_generated=False):
         urls.add(url)
 
     local = active(section(conf, "Rule"))
-    assert local == baseline["local_rules"], "local routing diverges from working baseline"
-    assert len(local) == 66
+    assert local == ["DOMAIN-SUFFIX,browserleaks.com,Proxy"] + baseline["local_rules"], (
+        "DNS test site must override remote ChinaDirect before unchanged historical local rules")
+    assert len(local) == 67
     assert local[-2:] == ["GEOIP,CN,DIRECT,no-resolve", "FINAL,Final"]
     assert any(x.startswith("DOMAIN-SUFFIX,openai.com,AI") for x in local)
     assert any(x.startswith("DOMAIN-SUFFIX,whatsapp.com,Whatsapp") for x in local)
@@ -89,7 +90,7 @@ def validate(check_generated=False):
         for name in names:
             assert (GENERATED / name).stat().st_size > 50, name
     assert not (ROOT / "reviews/LoonKit_Hybrid_Review.lcf").exists()
-    print("PASS: active pre-migration routing 28/66, staged composite 33 lists, AliDNS baseline")
+    print("PASS: active pre-migration routing 28/66 + BrowserLeaks proxy override, staged composite 33 lists, AliDNS baseline")
 
 
 if __name__ == "__main__":
