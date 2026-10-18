@@ -48,7 +48,6 @@ jobs:
         with:
           name: loonkit-rules-preview
           path: |
-            reviews/LoonKit_Hybrid_Review.lcf
             rules/generated/
             rules/sources.json
             rules/HYBRID_DESIGN.md
