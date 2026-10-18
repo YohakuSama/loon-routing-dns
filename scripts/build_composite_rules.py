@@ -18,6 +18,37 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "rules" / "sources.json"
 OUT = ROOT / "rules" / "generated"
+GUARDRAILS = ROOT / "rules" / "routing_guardrails.json"
+
+
+def protected_domains(config_path=GUARDRAILS):
+    """Load explicit keep-out domains, shared by generator and regression tests."""
+    data = json.loads(Path(config_path).read_text(encoding="utf-8"))
+    domains = data["protected_proxy_domains"]
+    if not isinstance(domains, list) or len(domains) < 5:
+        raise ValueError("routing guardrails must protect at least five diagnostic domains")
+    for d in domains:
+        if not isinstance(d, str) or not re.fullmatch(r"[a-z0-9.-]+", d) or "." not in d:
+            raise ValueError("invalid protected domain in routing guardrails: " + str(d))
+    if len(domains) != len(set(domains)):
+        raise ValueError("duplicate protected proxy domain in guardrails")
+    return tuple(domains)
+
+
+def direct_rule_matches_protected_domain(rule, domains=None):
+    """Return a domain accidentally covered by a DIRECT rule, or None."""
+    if domains is None:
+        domains = protected_domains()
+    kind, _, value = rule.partition(",")
+    for domain in domains:
+        if kind == "DOMAIN" and value == domain:
+            return domain
+        if kind == "DOMAIN-SUFFIX" and (domain == value or domain.endswith("." + value)):
+            return domain
+        if kind == "DOMAIN-KEYWORD" and value and value in domain:
+            return domain
+    return None
+
 ALLOWED_TYPES = {
     "DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD", "IP-CIDR",
     "IP-CIDR6", "IP-ASN", "USER-AGENT",
@@ -252,6 +283,8 @@ def generate(sources, fetch=fetch_text):
     quarantined = defaultdict(int)
     quarantined_examples = []
     intra_dupes = 0
+    protected = protected_domains()
+    guarded_direct = []
     for s in sources:
         body = ((ROOT / s["path"]).read_text(encoding="utf-8")
                 if s.get("role") == "local" else fetch(s["url"]))
@@ -278,6 +311,15 @@ def generate(sources, fetch=fetch_text):
             if s["group"] == "AdBlock" and kind not in ADBLOCK_ALLOWED:
                 quarantined["adblock broad matcher omitted: " + kind] += 1
                 continue
+            if s["policy"] == "DIRECT":
+                protected_hit = direct_rule_matches_protected_domain(rule, protected)
+                if protected_hit:
+                    quarantined["protected diagnostic domain would route DIRECT"] += 1
+                    guarded_direct.append({
+                        "source": s["id"], "group": s["group"], "line": number,
+                        "rule": rule, "protected_domain": protected_hit,
+                    })
+                    continue
             if s["group"] == "AI":
                 reason = excluded_ai_rule(rule)
                 if reason:
@@ -312,6 +354,7 @@ def generate(sources, fetch=fetch_text):
         "v2fly regexp excluded (manual review)",
         "AI broad ASN omitted",
         "AI shared-provider root omitted",
+        "protected diagnostic domain would route DIRECT",
     }
     unexpected = {reason: count for reason, count in quarantined.items()
                   if reason not in allowed_quarantine
@@ -359,6 +402,16 @@ def generate(sources, fetch=fetch_text):
                     })
                 break
 
+    # If upstream introduces a new coverage form, do not silently publish it.
+    # Domain and suffix variants are blocked before grouping; checked again below.
+    for group, rules in by_group.items():
+        policies = {s["policy"] for s in sources if s["group"] == group}
+        if "DIRECT" in policies:
+            for rule in rules:
+                covered = direct_rule_matches_protected_domain(rule, protected)
+                if covered:
+                    raise ValueError(f"{group} would direct-route protected {covered}: {rule}")
+
     # Canonicalize output after gathering full provenance and conflict samples.
     suffix_pruned = {}
     for group, rules in by_group.items():
@@ -380,7 +433,7 @@ def generate(sources, fetch=fetch_text):
         ]
         output[name + ".list"] = "\n".join(header + sorted(rules)) + "\n"
     report = {
-        "status": "SELF_HOSTED_RELEASE",
+        "status": "STAGED_CANDIDATE",
         "sources": source_stats,
         "group_sizes": {k: len(v) for k, v in sorted(by_group.items())},
         "duplicates_removed_within_group": intra_dupes,
@@ -393,6 +446,11 @@ def generate(sources, fetch=fetch_text):
         "domain_suffix_ancestor_conflict_count": ancestor_conflict_count,
         "domain_suffix_ancestor_conflict_samples": ancestor_conflicts,
         "quarantined_by_reason": dict(sorted(quarantined.items())),
+        "routing_guardrails": {
+            "protected_proxy_domains": list(protected),
+            "direct_rules_removed": guarded_direct,
+            "active_profile": "NOT_ENABLED_BY_DEFAULT",
+        },
         "quarantined_examples": quarantined_examples,
         "notes": [
             "Exact cross-group duplicates retained only in the first published group.",
@@ -401,7 +459,9 @@ def generate(sources, fetch=fetch_text):
             "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
             "Different-policy and ancestor conflicts require a routing priority review.",
             "Local [Rule] in Loon takes precedence over remote lists.",
-            "Generated lists are published in main and referenced by the active Loon config; changes require PR review.",
+            "Generated lists are staged and NOT enabled by the active Loon config.",
+            "Protected diagnostic domains cannot be direct-routed by any staged DIRECT group.",
+            "Audit conflict counts are visibility metrics, not proof that all routing conflicts are resolved.",
         ],
     }
     return output, report
