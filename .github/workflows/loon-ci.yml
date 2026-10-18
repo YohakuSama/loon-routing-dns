@@ -44,8 +44,8 @@ jobs:
 
       - name: Check JavaScript syntax
         run: |
-          node --check scripts/v20261018r4/network-diagnostics.js
-          node --check scripts/v20261018r10/node-intelligence.js
+          node --check scripts/v20261018r11/network-diagnostics.js
+          node --check scripts/v20261018r11/node-intelligence.js
           node --check tests/test_node_copy.js
           node --check tests/test_network_diagnostics.js
           node --check tests/test_current_plugin.js
