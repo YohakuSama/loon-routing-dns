@@ -37,7 +37,7 @@ jobs:
 
       - name: Check real LoonKit CDN resource URLs after GitHub rename
         if: github.repository == 'YohakuSama/loonkit'
-        run: python3 scripts/validate_repo.py --check-remote
+        run: python3 scripts/validate_repo.py --check-remote --remote-ref "${{ github.event.pull_request.head.sha || github.sha }}"
 
       - name: Run rule generator and release-profile regression tests
         run: |
