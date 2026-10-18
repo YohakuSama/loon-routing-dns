@@ -30,7 +30,7 @@ def validate(check_generated=False):
     plugin = active(section(conf, "Plugin"))
     assert len(plugin) == 1
     assert plugin[0].startswith(
-        "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r2/Network_Diagnostics.plugin,")
+        "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r4/Network_Diagnostics.plugin,")
     assert section(conf, "Remote Proxy") == section(original, "Remote Proxy"), "personal proxies not preserved"
     groups = [line.split("=",1)[0].strip() for line in active(section(conf, "Proxy Group"))
               if " = " in line]
