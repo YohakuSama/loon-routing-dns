@@ -58,14 +58,16 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertEqual(normalize("DOMAIN-SUFFIX,EXAMPLE.COM")[0],
                          "DOMAIN-SUFFIX,example.com")
 
-    def test_ip_networks_preserve_original_no_resolve_semantics(self):
-        self.assertEqual(normalize("IP-CIDR,10.0.0.1/24")[0], "IP-CIDR,10.0.0.0/24")
+    def test_ip_networks_enforce_no_resolve_for_dns_stability(self):
+        self.assertEqual(normalize("IP-CIDR,10.0.0.1/24")[0], "IP-CIDR,10.0.0.0/24,no-resolve")
         self.assertEqual(normalize("IP-CIDR,10.0.0.1/24,no-resolve")[0],
                          "IP-CIDR,10.0.0.0/24,no-resolve")
-        self.assertEqual(normalize("IP-CIDR6,2001:db8::1/64")[0], "IP-CIDR6,2001:db8::/64")
+        self.assertEqual(normalize("IP-CIDR6,2001:db8::1/64")[0], "IP-CIDR6,2001:db8::/64,no-resolve")
         self.assertEqual(normalize("IP-CIDR6,2001:db8::1/64,no-resolve")[0],
                          "IP-CIDR6,2001:db8::/64,no-resolve")
         self.assertEqual(normalize("IP-ASN,AS1234,no-resolve")[0], "IP-ASN,1234,no-resolve")
+        self.assertEqual(normalize("IP-ASN,AS1234")[0], "IP-ASN,1234")
+        self.assertEqual(normalize("DOMAIN-SUFFIX,example.com")[0], "DOMAIN-SUFFIX,example.com")
         self.assertIsNotNone(normalize("IP-CIDR,2001:db8::/64")[1])
         self.assertIsNotNone(normalize("IP-CIDR,10.0.0.1/24,no-resolve,no-resolve")[1])
 
@@ -77,7 +79,7 @@ class CompositeRulesTests(unittest.TestCase):
                   for line in section.splitlines() if line.strip().startswith("https://")]
         self.assertEqual([name.replace("動畫瘋", "AnimeCrazy") for name in PUBLISH_ORDER], actual)
 
-    def test_flag_variants_remain_separate(self):
+    def test_cidr_flag_variants_canonicalize_to_one_rule(self):
         sources = [
             {"id": "a", "group": "Alpha", "policy": "Proxy",
              "url": "https://rules.invalid/a", "format": "loon", "min_rules": 1},
@@ -87,9 +89,9 @@ class CompositeRulesTests(unittest.TestCase):
         docs = {"https://rules.invalid/a": "IP-CIDR,10.0.0.1/8\n",
                 "https://rules.invalid/b": "IP-CIDR,10.0.0.1/8,no-resolve\n"}
         out, report = generate(sources, lambda url: docs[url])
-        self.assertIn("IP-CIDR,10.0.0.0/8\n", out["Alpha.list"])
-        self.assertIn("IP-CIDR,10.0.0.0/8,no-resolve\n", out["Alpha.list"])
-        self.assertEqual(report["ip_flag_variant_conflict_count"], 1)
+        self.assertNotIn("IP-CIDR,10.0.0.0/8\n", out["Alpha.list"])
+        self.assertEqual(out["Alpha.list"].count("IP-CIDR,10.0.0.0/8,no-resolve\n"), 1)
+        self.assertEqual(report["duplicates_removed_within_group"], 1)
 
     def test_unknown_grammar_fails_candidate_build(self):
         source = {"id": "a", "group": "Alpha", "policy": "Proxy",
