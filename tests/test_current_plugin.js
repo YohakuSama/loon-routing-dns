@@ -6,14 +6,14 @@ const path = require("node:path");
 const root = path.resolve(__dirname,"..");
 const read = file => fs.readFileSync(path.join(root,file),"utf8");
 const plugin = read("plugins/Network_Diagnostics.plugin");
-const profile = read("Loon_Routing_DNS.lcf");
+const profile = read("LoonKit.lcf");
 let passed=0;
 function check(name,fn){
   try {fn();passed++;console.log("PASS",name);}
   catch(err){process.exitCode=1;console.error("FAIL",name,err);}
 }
 check("standalone and versioned plugin match",()=>{
-  assert.equal(plugin,read("plugins/v20261018r10/Network_Diagnostics.plugin"));
+  assert.equal(plugin,read("plugins/v20261018r11/Network_Diagnostics.plugin"));
 });
 check("exactly two manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
@@ -36,13 +36,13 @@ check("exactly three settings and private comparison off",()=>{
 check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
   assert.equal(s.length,3);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261018r10/node-intelligence.js")).length,1);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261018r4/network-diagnostics.js")).length,2);
-  assert(fs.existsSync(path.join(root,"scripts/v20261018r10/node-intelligence.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261018r4/network-diagnostics.js")));
+  assert.equal(s.filter(x=>x.includes("scripts/v20261018r11/node-intelligence.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261018r11/network-diagnostics.js")).length,2);
+  assert(fs.existsSync(path.join(root,"scripts/v20261018r11/node-intelligence.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261018r11/network-diagnostics.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
-  assert(profile.includes("/main/plugins/v20261018r10/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/main/plugins/v20261018r11/Network_Diagnostics.plugin, enabled=true"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));
   assert(profile.includes("doh-server = https://dns.alidns.com/dns-query"));
   assert(profile.includes("GEOIP,CN,DIRECT,no-resolve"));
