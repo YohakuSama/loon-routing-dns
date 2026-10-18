@@ -23,6 +23,7 @@ JS = [
     ROOT / "scripts" / "v20261018r4" / "network-diagnostics.js",
     ROOT / "scripts" / "v20261018r4" / "node-intelligence.js",
     ROOT / "scripts" / "v20261018r5" / "node-intelligence.js",
+    ROOT / "scripts" / "v20261018r6" / "dns-leak-check.js",
 ]
 ISSUES = []
 
@@ -92,7 +93,7 @@ def check_config():
 
     # Full configuration must discover the control console automatically.
     plugin_text = section(data, "Plugin")
-    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r5/Network_Diagnostics.plugin"
+    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r6/Network_Diagnostics.plugin"
     entries = [line.strip() for line in plugin_text.splitlines()
                if line.strip() and not line.lstrip().startswith("#")]
     require(len(entries) == 1, "expected one auto-bundled Console plugin")
@@ -123,7 +124,7 @@ def check_plugin():
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
     require("auto_check = switch,false" in data, "automatic checks must default off")
-    pinned_plugin=ROOT / "plugins" / "v20261018r5" / "Network_Diagnostics.plugin"
+    pinned_plugin=ROOT / "plugins" / "v20261018r6" / "Network_Diagnostics.plugin"
     require(pinned_plugin.is_file(), "missing versioned Console plugin")
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
             "versioned Console plugin differs from checked source")
@@ -140,20 +141,23 @@ def check_plugin():
             "automatic network monitoring must default off")
     scripts = section(data, "Script")
     lines = [s.strip() for s in scripts.splitlines() if s.strip() and not s.lstrip().startswith("#")]
-    require(len(lines) == 3, "expected 3 lean-plugin script entries (got %d)" % len(lines))
-    require(sum(s.startswith("generic then script(") for s in lines) == 2, "expected 2 manual actions")
+    require(len(lines) == 4, "expected 4 plugin script entries (got %d)" % len(lines))
+    require(sum(s.startswith("generic then script(") for s in lines) == 3, "expected 3 manual actions")
     require(sum(s.startswith("network-changed then script(") for s in lines) == 1, "missing optional network-change hook")
     require("with enable=${auto_check}" in scripts, "network-change hook must be controlled by auto_check")
+    require("DNS 解析器泄漏检测" in scripts and "dns-leak-check.js" in scripts,
+            "missing manual DNS resolver leakage test")
     require("模拟网络切换" not in scripts and "状态与设置摘要" not in scripts,
             "obsolete developer tools must not appear in the user plugin")
     for name in re.findall(r"\$\{([a-z_]+)\}", scripts):
         require(name in names, "undeclared plugin argument " + name)
     src_urls = re.findall(r'script\("(https://[^"]+)"', scripts)
-    require(len(src_urls) == 3, "expected 3 script source URLs")
+    require(len(src_urls) == 4, "expected 4 script source URLs")
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/main/"
         require(marker in url and ("/scripts/v20261018r4/" in url
-                                   or "/scripts/v20261018r5/" in url)
+                                   or "/scripts/v20261018r5/" in url
+                                   or "/scripts/v20261018r6/" in url)
                 and (ROOT / url.split(marker)[1]).is_file(),
                 "plugin must use versioned scripts: " + url)
 
