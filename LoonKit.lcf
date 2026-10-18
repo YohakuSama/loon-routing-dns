@@ -5,9 +5,14 @@
 # Community configuration; not affiliated with Loon.
 
 [General]
-dns-server = 223.5.5.5,223.6.6.6
-doh-server = https://dns.alidns.com/dns-query
+# DNS privacy baseline: single predictable encrypted resolver, no competing DoH results.
+# IMPORTANT: Loon's encrypted-DNS failure fallback to plain DNS defaults ON.
+# For strict no-plaintext fallback, disable this in Loon > DNS Servers (app setting).
+# dns-server is an emergency/compatibility resolver, never a privacy guarantee.
+dns-server = 223.5.5.5
+doh-server = https://cloudflare-dns.com/dns-query
 hijack-dns = *:53
+# UDP/53 interception does not capture third-party DoH/DoT.
 ip-mode = dual
 ipv6-vif = auto
 interface-mode = auto
@@ -117,8 +122,13 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/ChinaD
 # Emergency resource routing and final fallbacks only.
 # All service domains are source-controlled under rules/custom and rules/generated.
 DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
+# Retain no-resolve: avoid triggering local DNS merely to classify unmatched proxy domains.
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
+
+# Pin bootstrap lookup for the encrypted DNS hostname; HTTPS still verifies hostname.
+[Host]
+cloudflare-dns.com = 1.1.1.1
 
 # Node information and basic network diagnostics.
 [Plugin]
