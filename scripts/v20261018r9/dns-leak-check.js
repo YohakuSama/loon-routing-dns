@@ -231,10 +231,10 @@
     get(API+"/dnsleak/test/"+id+"?json",function(err,body,kind){
       var data=err ? null : parseResult(body);
       if (err) stats.lastError = err;
+      else if (!data) stats.lastError = "检测结果 JSON 格式与预期不符";
       if (kind==="tls-both") return unknown(
         "结果服务 HTTPS 使用 HTTP/1.1 和 HTTP/2 均发生 TLS 握手错误，"+
         "继续重试不能证明 DNS 泄漏。详情："+err);
-      else if (!data) stats.lastError = "检测结果 JSON 格式与预期不符";
       else if (!data.dns.length) stats.lastError = "服务暂未观察到 DNS 解析器";
       if (data && data.dns.length>0) return render(data,id,queries);
       if (attempt<6 && !finished) {
