@@ -1,5 +1,5 @@
 {
-  "status": "SELF_HOSTED_RELEASE",
+  "status": "STAGED_CANDIDATE",
   "sources": [
     {
       "id": "bm-advertising-lite",
@@ -793,7 +793,7 @@
     "AppleOTA": 82,
     "BBC": 37,
     "Bilibili": 132,
-    "ChinaDirect": 123011,
+    "ChinaDirect": 123010,
     "Dazn": 20,
     "Discord": 29,
     "Disney": 186,
@@ -3482,7 +3482,8 @@
     "v2fly include not expanded (explicit sources only)": 10,
     "v2fly regexp excluded (manual review)": 5,
     "AI broad ASN omitted": 1,
-    "AI shared-provider root omitted": 11
+    "AI shared-provider root omitted": 11,
+    "protected diagnostic domain would route DIRECT": 1
   },
   "quarantined_examples": [
     {
@@ -3594,8 +3595,9 @@
     "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
     "Different-policy and ancestor conflicts require a routing priority review.",
     "Local [Rule] in Loon takes precedence over remote lists.",
-    "Generated lists are published in main and referenced by the active Loon config; changes require PR review.",
-    "Post-release hardening removed 12 overbroad AI matchers; their upstream input hashes remain available for reproducibility."
+    "Generated lists are staged and NOT enabled by the current LoonKit main profile.",
+    "Post-release hardening removed 12 overbroad AI matchers; their upstream input hashes remain available for reproducibility.",
+    "Published candidate was re-reviewed for 10 protected diagnostic domains; one ChinaDirect misclassification was removed on 2026-10-18."
   ],
   "release_hardening": {
     "date": "2026-10-18",
@@ -3607,5 +3609,29 @@
     ],
     "output_rule_count_after": 112,
     "note": "Source provenance and pre-publication cross-policy conflict samples remain unchanged. Subsequent upstream regeneration should refresh all derived metrics."
+  },
+  "routing_guardrails": {
+    "protected_proxy_domains": [
+      "browserleaks.com",
+      "dnsleaktest.com",
+      "ipleak.net",
+      "test-ipv6.com",
+      "ipinfo.io",
+      "ifconfig.co",
+      "ipify.org",
+      "whoer.net",
+      "whatismyipaddress.com",
+      "ip.sb"
+    ],
+    "direct_rules_removed": [
+      {
+        "source": "bm-chinamaxnomedia-domain",
+        "group": "ChinaDirect",
+        "rule": "DOMAIN-SUFFIX,browserleaks.com",
+        "protected_domain": "browserleaks.com",
+        "note": "Confirmed in published self-hosted list and upstream domain-set; quarantined until upstream fixed."
+      }
+    ],
+    "active_profile": "NOT_ENABLED_BY_DEFAULT"
   }
 }
