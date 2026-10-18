@@ -32,4 +32,3 @@ python3 scripts/build-appstore-icons.py --refresh-app-store
 
 预览输出为 `icons/*.png`，已加入 `.gitignore`，不会作为正式版自动发布。需人工审核并复制到新版本目录后再更新配置。此工具不会修改 DNS 或分流规则。
 
-历史已发布的版本化图标继续保留，以免仍在使用旧配置的用户遇到资源失效。
