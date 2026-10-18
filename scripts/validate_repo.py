@@ -210,6 +210,18 @@ def check_url(url):
     return url + " -> request failed"
 
 
+def cdn_urls_at_ref(urls, ref):
+    """Use an immutable commit SHA to check PR assets before publishing to main."""
+    if not re.fullmatch(r"[a-f0-9]{40}|main", ref):
+        raise ValueError("--remote-ref must be main or a full commit SHA")
+    prefix = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/"
+    for url in urls:
+        if not url.startswith(prefix):
+            raise ValueError("Unexpected CDN URL: " + url)
+    return sorted({u.replace(prefix, prefix.replace("/main/", "/" + ref + "/"), 1)
+                   for u in urls})
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check-remote", action="store_true",
@@ -220,10 +232,11 @@ def main():
     urls = check_config() + check_plugin()
     check_readme()
     if args.check_remote:
-        require(bool(re.fullmatch(r"[a-f0-9]{40}|main", args.remote_ref)),
-                "--remote-ref must be main or a full commit SHA")
+        try:
+            urls = cdn_urls_at_ref(urls, args.remote_ref)
+        except ValueError as error:
+            ISSUES.append(str(error))
         if not ISSUES:
-            urls = sorted({u.replace("/main/", "/" + args.remote_ref + "/", 1) for u in urls})
             print("Checking %s CDN URLs (HEAD) at %s..." % (len(urls), args.remote_ref))
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
             for failure in executor.map(check_url, urls):
