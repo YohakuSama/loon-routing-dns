@@ -168,7 +168,7 @@ check("no DNS callbacks and no DNS records are inconclusive with diagnostics",()
   assert.match(r.text,/DNS 查询 0\/10/);
 });
 check("session identification failures include failure phase",()=>{
-  const r=run({invalidID:"not-an-id"});
+  const r=run({invalidID:"not.an.id"});
   assert.match(r.text,/失败阶段：创建 bash.ws 会话/);
 });
 check("script API only uses GET + $dns.query; no settings mutations",()=>{
