@@ -91,6 +91,7 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertEqual(audit["status"],"STAGED_CANDIDATE")
         self.assertEqual(audit["routing_guardrails"]["active_profile"],
                          "NOT_ENABLED_BY_DEFAULT")
+        protected=protected_domains()
         sources=read_catalog()
         direct_groups={s["group"] for s in sources if s["policy"]=="DIRECT"}
         for group in direct_groups:
@@ -99,7 +100,7 @@ class CompositeRulesTests(unittest.TestCase):
             for line in lines:
                 if not line or line.startswith("#"):
                     continue
-                self.assertIsNone(direct_rule_matches_protected_domain(line),
+                self.assertIsNone(direct_rule_matches_protected_domain(line,protected),
                                   f"{filename}: {line}")
         self.assertEqual(audit["group_sizes"]["ChinaDirect"],123010)
         self.assertEqual(audit["routing_guardrails"]["direct_rules_removed"][0]
