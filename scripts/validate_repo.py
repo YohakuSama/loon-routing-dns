@@ -105,7 +105,7 @@ def check_config():
     for icon_url in icon_urls:
         require(icon_url.startswith(icon_root), "policy icon outside self-hosted icons: " + icon_url)
         rel = icon_url[len(icon_root):]
-        require(re.fullmatch(r"v[0-9]{8}r[0-9]+/[A-Za-z0-9_-]+\\.png", rel) is not None,
+        require(re.fullmatch(r"v[0-9]{8}r[0-9]+/[A-Za-z0-9_-]+[.]png", rel) is not None,
                 "invalid pinned icon path: " + rel)
         require((ROOT / "icons" / rel).is_file(), "missing pinned icon: " + rel)
 
