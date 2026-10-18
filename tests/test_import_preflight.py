@@ -11,7 +11,7 @@ from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 ACTIVE = ROOT / "LoonKit.lcf"
-REVIEW = ROOT / "reviews/LoonKit_Hybrid_Review.lcf"
+REVIEW = ROOT / "Loon_Routing_DNS.lcf"
 HOST = "raw.githubusercontent.com"
 
 
