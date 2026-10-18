@@ -1,0 +1,10 @@
+#!name = Loon Routing DNS · bash.ws TLS 链路诊断
+#!desc = 手动对比当前分流与 Proxy 策略的 HTTPS 结果读取，不进行 DNS 泄漏安全判定
+#!author = YohakuSama
+#!homepage = https://github.com/YohakuSama/loon-routing-dns
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(988)
+#!type = normal
+
+[Script]
+generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/fix/dns-leak-https-alpn-fallback-20261018/scripts/preview/dns-readback-route-probe.js") with tag="bash.ws TLS 链路诊断", img_url="network.system", timeout=45
