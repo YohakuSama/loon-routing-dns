@@ -1,0 +1,31 @@
+name: Glass icon preview
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow
+        run: python -m pip install 'Pillow>=10,<12'
+      - name: Render non-destructive preview icons
+        run: python scripts/render_glass_icons.py --source icons/v20261018r2 --output glass-preview
+      - name: Check preview count
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files=list(Path("glass-preview").glob("*.png"))
+          assert len(files)==33, f"Expected 33 strategy icons, got {len(files)}"
+          print("Rendered", len(files), "icons")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: glass-icon-preview
+          path: glass-preview/
+          retention-days: 14
