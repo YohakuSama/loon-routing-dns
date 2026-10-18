@@ -149,7 +149,7 @@ check("plugin has three manual actions, monitoring still opt-in",()=>{
   const lines=p.split("\n").filter(x=>x.startsWith("generic then script("));
   assert.equal(lines.length,3);
   assert.equal(p.split("\n").filter(x=>x.startsWith("network-changed then script(")).length,1);
-  assert(lines.some(x=>x.includes("dns-leak-check.js")&&x.includes("DNS 解析器检测（改进版）")));
+  assert(lines.some(x=>x.includes("dns-leak-check.js")&&x.includes("DNS 解析器泄漏检测")));
   assert(p.includes("auto_check = switch,false"));
   assert(p.includes("compare_direct = switch,false"));
   assert(!p.includes('dns-leak-check.js", {}'));
