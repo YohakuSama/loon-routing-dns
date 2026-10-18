@@ -1,5 +1,5 @@
-#!name = Loon Routing DNS · 网络辅助 v2.0
-#!desc = 节点出口信息、一键网络/DNS 诊断；网络变化异常提醒默认关闭，不修改 Loon 配置
+#!name = Loon Routing DNS · 网络辅助 v2.1
+#!desc = 完整节点出口情报、一键网络/DNS 诊断；网络变化异常提醒默认关闭，不修改 Loon 配置
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loon-routing-dns
 #!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Console.png
@@ -14,6 +14,6 @@ target_policy = input,"Proxy",tag=节点查询目标,desc=默认查询 Proxy；�
 compare_direct = switch,false,tag=对照直连出口 IP,desc=默认关闭；开启后真实公网 IP 会提供给第三方情报服务
 
 [Script]
-generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r4/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点出口信息", img_url="location.fill.viewfinder.system", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r5/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点出口信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r4/network-diagnostics.js", {${auto_check}}) with tag="网络与 DNS 诊断", img_url="network.system", timeout=40
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r4/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
