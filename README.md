@@ -1,75 +1,76 @@
 # Loon Routing DNS
 
-面向 **Loon iOS** 的独立复合型分流与 DNS 配置。使用自托管 Loon 规则集，统一管理国内直连、海外平台、广告过滤和隐私追踪拦截。
+**正式配置：v5.1.0**。适用于 **Loon iOS** 的分流与 DNS 配置。按服务分类管理代理策略，国内服务直连，海外服务按策略组选择节点，提供基础广告拦截和网络诊断。
 
-**正式版：v5.1.0（2026-10-17）** · [完整配置](./Loon_Routing_DNS.lcf) · [规则目录](./rules/generated/) · [规则来源](./rules/sources.json) · [提交问题](https://github.com/YohakuSama/loon-routing-dns/issues)
+[完整配置](./Loon_Routing_DNS.lcf) · [网络辅助插件](./plugins/Network_Diagnostics.plugin) · [规则列表](./rules/generated/) · [问题反馈](https://github.com/YohakuSama/loon-routing-dns/issues)
 
-> 社区项目，不属于 Loon 官方。**配置不包含节点订阅**；导入前备份现有配置、节点 URL 和自定义插件。此版本经过自动化静态校验，不代表所有 App / 网络环境均经过 iPhone 实测。
+## 主要功能
 
-## 为什么采用复合型规则
+- **服务分流**：33 个策略组，覆盖 AI、视频、社交、游戏、常用国内服务等。
+- **国内直连**：中国 IP 和常见国内服务优先 DIRECT。
+- **广告拦截**：可通过 `AdBlock` 策略组切换拦截或放行。
+- **网络辅助**：查询节点出口和网络/DNS 连通情况；网络切换提醒可选择开启。
 
-单一上游大型规则很难同时覆盖国内移动服务、境外 AI / 社交 / 视频平台、广告和隐私保护；直接堆叠多份订阅又会产生重复匹配和分流冲突。实际使用中出现过哈啰 App 开启代理后无法联网的反馈，说明需要对国内关键业务、广告误拦截以及 DNS 等问题进行可追溯诊断。**这不是对原上游项目的整体否定，也不表示已确认哈啰故障的根因。**
+## 安装
 
-因此项目选择不同来源各自合适的部分，转换、去重、审计后发布在本仓库：
-
-| 来源 | 角色 | 许可 |
-|---|---|---|
-| [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) | Loon 原生国内/境外分类，AdvertisingLite、Privacy、Hijacking | GPL-2.0 |
-| [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) | AI、社交、流媒体、游戏平台域名补全 | MIT |
-| [felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) | 经筛选的 Apple 中国相关域名 | WTFPL-2.0 |
-| [项目自维护规则](./rules/custom/) | 国内地图/支付、哈啰及精确服务例外 | 随仓库源文件管理 |
-
-原始来源及许可证保留在 `rules/sources.json` 与 `rules/LICENSE.*`。**主配置里的 33 条远程订阅全部指向自己的 `main/rules/generated/*.list`，不是第三方规则地址。**
-
-## 图标更新（v20261018r2；HBO 单独更新至 v20261018r3）
-
-为处理 Loon 对旧图标地址的缓存，**除 HBO 外的 32 个策略组**与 Console 插件图标使用版本化链接 `main/icons/v20261018r2/`；**HBO 单独使用 `main/icons/v20261018r3/HBO.png`**，网络辅助插件使用 `main/plugins/v20261018r9/Network_Diagnostics.plugin`（旧版仍保留在 `v20261018r2`）。已经导入 Loon 的本地配置不会因仓库更改而必然自动替换内含的 `img-url`；需先备份含节点订阅与私人改动的配置，再更新本地配置中的图标 URL，或按 Loon 的配置更新流程重新获取完整配置。只更新规则列表不足以更新策略组图标。
-
-### 图标材质一致性调整
-
-本次图标修订将 Spotify、Netflix、Telegram、Discord、Instagram、TikTok 的玻璃边缘替换为品牌标准矢量轮廓加完整底板，并将 Proxy、AI、Console 替换为经审核的原创符号。HBO 图标在 v20261018r3 中单独裁去外围装饰圈，其余图标仍采用 `icons/v20261018r2/`，插件采用 `plugins/v20261018r9/`，保留相同控制台图标。请备份已有配置后更新**完整配置**才能看到变化；仅更新远程规则不改变策略组图标。
-
-## 快速安装
-
-完整配置永久地址：
+完整配置地址：
 
 ```text
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf
 ```
 
-在 Loon 的配置文件页面从链接导入，将私人订阅添加到远程节点，切换至 `RULE` 模式，更新规则和节点后确认每条来源正常。不要把含 token 的私人订阅上传 GitHub。
+1. 备份现有 Loon 配置、节点订阅和个人规则。
+2. 在 Loon 中通过上面的链接导入配置。
+3. 添加自己的节点订阅，更新远程资源，使用 `RULE` 模式。
+4. 在「策略」中选择 `Proxy`、`Auto`、`Fallback` 等策略组的节点。
 
-初始建议：`Final=Proxy`，`Apple/Microsoft/Bilibili` 默认直连，其他海外平台走独立策略组；`AdBlock=REJECT` 可临时切换为 `DIRECT` 排查登录、支付、图片或定位误拦截。
+**本仓库不提供代理节点或订阅。** 如果配置已在手机中保存为本地副本，仓库更新不会自动替换其中的插件、图标或策略设置。
 
-国内移动服务统一走 `DIRECT`：哈啰不另设策略组，主域名由 `rules/custom/HelloBike.list` 导入 `DomesticCore.list`，并在国内直连基础集合之前加载。但这不能代表已覆盖哈啰全部实际请求域名，定位故障仍需 Loon 的请求记录。
+## 网络辅助插件
 
-## 广告与隐私保护
+随完整配置加载，也可以 [单独添加插件](./plugins/Network_Diagnostics.plugin)。
 
-`AdBlock.list` 合并轻量广告、追踪隐私和劫持防护，并剔除同组重复、父域已覆盖的子规则及跨分组完全重复匹配；为降低误伤，默认仅把 `DOMAIN` 与 `DOMAIN-SUFFIX` 加入广告拒绝列表，**不自动启用笼统 `DOMAIN-KEYWORD`、IP 封禁、`URL-REGEX` 或 HTTPS MITM**。某些广告因此可能无法拦截，这是兼容性与覆盖率之间的取舍。
+| 工具 | 用途 |
+|---|---|
+| 节点出口信息 | 公网 IP、位置、ASN、ISP、网络类型及本地数据库对照 |
+| 网络与 DNS 诊断 | 检查直连、代理、DoH 服务和 Loon 原生 DNS 是否响应 |
 
-某个平台同时命中服务和广告规则时，生成器按配置列表优先顺序保留一份精确匹配项，审计报告记录去除的归属；不能仅凭规则数量多就声称效果更好。
+插件设置包含网络切换提醒、查询策略及直连 IP 对照。**网络切换提醒与直连 IP 对照默认关闭。** 节点位置信息和网络类型来自第三方查询，仅供参考。
 
-## DNS 与隐私边界
+使用说明：[网络辅助插件](./docs/NETWORK_DIAGNOSTICS.md)。
 
-配置默认继续使用 `223.5.5.5,223.6.6.6` 和 `https://dns.alidns.com/dns-query`。Loon 的 DoH 流量模式建议选择 `DIRECT`；是否禁用加密 DNS 查询失败时回退到普通 DNS，需在 Loon App 手动设置。**控制台的真实直连出口 IP 对照默认关闭，以减少诊断时意外暴露真实 IP。DoH 不等于零泄漏或匿名**；浏览器检测所展示的 DNS 机房与代理出口不一致，不能单凭此判定 DNS 泄漏。
+## 分流与 DNS
 
-`disable-stun = true` 与 `udp-fallback-mode = REJECT` 延续原隐私优先设置；可能影响部分语音、游戏或实时通信，需要按真实业务测试。
+正式配置使用 AliDNS：
 
-## 更新、审核与回滚
+- 普通 DNS：`223.5.5.5`、`223.6.6.6`
+- DoH：`https://dns.alidns.com/dns-query`
 
-每次改动通过 CI 进行配置语法、策略组与远程引用、脚本回归、规则构建及冲突检查；定期自动检查上游并为变更创建 **Draft PR**，不自动覆盖正式版。被隔离的格式、来源数据突然减少以及异常冲突必须人工审查。
+保留的本地兜底规则：
 
-- [复合规则库设计与审计](./rules/HYBRID_DESIGN.md)
-- [最新生成统计和冲突列表](./rules/generated/audit.json)
-- [网络辅助插件 v2.5：完整节点情报 + 网络与 DNS 基础诊断](./docs/NETWORK_DIAGNOSTICS.md) · [Network_Diagnostics.plugin](./plugins/Network_Diagnostics.plugin)
-- [历史配置 v4.4.8（回滚参考）](./releases/v4.4.8/Loon_Routing_DNS.lcf)：旧图标与插件入口已固定至清理前 Commit；第三方订阅和插件内部脚本仍可能随上游变化，不能视为完全离线、不可变的历史快照。
+```ini
+GEOIP,CN,DIRECT,no-resolve
+FINAL,Final
+```
 
-**插件 v2.5：** 保留「节点出口信息」与「网络与 DNS 诊断」两个手动入口，节点报告包含公网出口、地区、ASN/ISP/组织、机房与代理标签、可用的风险情报和本地 GeoIP/ASN/ASO 对照。自动网络变化提醒默认关闭，设置项维持 3 项。此前不稳定的独立 DNS 解析器泄漏检测已移除，同时清理其插件、脚本、测试和预览残留；基础 DNS 诊断继续保留，但不能据此证明没有 DNS 泄漏。
+`IP-CIDR` 和 `IP-CIDR6` 规则继续使用 `no-resolve`，避免改变现有 DNS 解析与规则匹配顺序。
 
-**发布前验证：** `ChinaDirect` 与 `AdBlock` 体积较大，需在 iPhone 上记录规则加载和更新时间、内存、常用国内 App、登录支付、Apple OTA、流媒体、UDP、IPv6 及 Wi-Fi/蜂窝网络切换表现。规则生成器对 `IP-CIDR` / `IP-CIDR6` **继续强制使用 `no-resolve`**，维持实测过的 DNS 解析与规则命中顺序；不能将其作为普通冗余标志删除。候选规则的其他差异仍须审核并真机验证后才能更新 `rules/generated/*.list`，更新生成器本身不会立即改变线上规则。
+`AdBlock` 可临时改为 `DIRECT` 排查登录、图片或支付问题。基础 DoH 连通测试不等于 DNS 泄漏测试。
 
-**发布说明：** 静态测试不是 Loon 真机认证。遇到 App 不能联网，按节点 → DNS → 命中规则 → 广告开关 → UDP/IPv6 顺序排查；报告问题时请提交脱敏的 Loon/iOS 版本、错误域名、命中策略和网络情况，勿公开任何节点凭据。
+## 规则来源
+
+项目从 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script)、[v2fly](https://github.com/v2fly/domain-list-community)、[dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) 及 [本地补充规则](./rules/custom/) 构建分流列表。
+
+所有来源与许可证见 [规则来源配置](./rules/sources.json) 和 [规则说明](./rules/README.md)。主配置订阅的规则文件托管在本仓库 `rules/generated/`。
+
+## 更新与排查
+
+更新分流规则请刷新远程规则资源；更新插件、图标或配置结构则需更新**完整配置**。如使用过单独安装的旧插件，请停用重复插件。
+
+遇到连接问题，可先检查当前节点和命中策略，再查看 Loon 的请求及 DNS 日志。提交反馈时附上 Loon 版本、问题域名、匹配策略和脱敏后的错误信息，请勿公开订阅链接、令牌或个人 IP。
+
+项目通过 GitHub Actions 检查配置、脚本和生成规则。自动化测试不能替代实际设备验证。
 
 ---
 
-维护者 [YohakuSama](https://x.com/yohakusama) · 第三方社区项目，与 Loon 官方无关联。
+维护者：[YohakuSama](https://github.com/YohakuSama) · 非 Loon 官方项目。
