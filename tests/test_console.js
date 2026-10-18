@@ -172,6 +172,9 @@ check("compact node report omits redundant fields and truncates long names",()=>
  assert.match(report,/出口 IP：/);
  assert.match(report,/网络：/);
  assert.match(report,/类型：/);
+ assert.match(report,/位置：/);
+ assert.match(report,/风险评分：/);
+ assert.match(report,/VPN \/ Proxy \/ Tor：/);
  assert.doesNotMatch(report,/邮编|近似坐标|时区|运营组织|机房\/托管组织|检测路线：/);
 });
 console.log("Console regression tests passed:",passed);
