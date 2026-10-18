@@ -11,8 +11,8 @@ OLD_DNS = (
     "doh-server = https://dns.alidns.com/dns-query",
 )
 NEW_DNS = (
-    "dns-server = 1.1.1.1,1.0.0.1",
-    "doh-server = https://cloudflare-dns.com/dns-query",
+    "dns-server = 119.29.29.29",
+    "doh-server = https://doh.pub/dns-query",
 )
 
 
@@ -42,6 +42,16 @@ class DnsPrivacyProfileTests(unittest.TestCase):
         self.assertEqual(original_lines, privacy_lines)
         self.assertEqual(sum("/main/rules/" in line for line in privacy_lines),
                          34)
+
+    def test_no_overseas_dns_in_shipped_profiles(self):
+        for profile in (BASE, PRIVATE):
+            config = profile.read_text(encoding="utf-8")
+            settings = [line.strip() for line in config.splitlines()
+                        if line.strip().startswith(("dns-server = ", "doh-server = "))]
+            self.assertEqual(len(settings), 2, str(profile))
+            self.assertNotIn("cloudflare-dns.com", "\n".join(settings))
+            self.assertNotIn("1.1.1.1", "\n".join(settings))
+            self.assertNotIn("8.8.8.8", "\n".join(settings))
 
     def test_docs_explicitly_require_app_toggle(self):
         guide = (ROOT / "docs/DNS_PRIVACY.md").read_text(encoding="utf-8")
