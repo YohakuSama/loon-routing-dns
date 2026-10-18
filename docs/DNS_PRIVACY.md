@@ -12,7 +12,7 @@
 ## BrowserLeaks 真实 IP 显示（已定位）
 
 - 上游 `blackmatrix7/ios_rule_script` 的 `ChinaMaxNoMedia_Domain.list` 将 `.browserleaks.com` 放入中国直连域名集。如果未添加本地覆盖规则，Loon 会把 BrowserLeaks 网页直连，因此检测页会显示设备的中国移动公网 IP；**网页直连与 DNS 查询是否明文是两个不同问题**。
-- 当前正式配置在 `[Rule]` 开头新增 `DOMAIN-SUFFIX,browserleaks.com,Proxy`，优先于远程中国直连规则。此规则只纠正该站点误分流，不隐藏其他应用的 DNS 问题，也不保证设备所有流量经代理。
+- v5.10.0 正式配置在 `[Rule]` 开头按 `rules/routing_guardrails.json` 同步了 17 条受保护域名的 `DOMAIN-SUFFIX,...,Proxy` 规则（含 `browserleaks.com`、`whatismyip.com` 和 Stripe），优先于远程中国直连规则。它们只纠正这些网站的误分流，不隐藏其他应用的 DNS 问题，也不保证设备所有流量经代理。
 - 更新后重连 Loon，清理 BrowserLeaks 已打开的标签页与连接缓存，再刷新网页，在 Loon 请求记录中检查命中的 `browserleaks.com` 规则是否为 `Proxy`。若没有记录，再确认新配置确实导入成功。
 
 ## DNS 解析并不等于代理出口

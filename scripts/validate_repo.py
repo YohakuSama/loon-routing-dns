@@ -42,7 +42,7 @@ def section(content, name):
 
 def check_config():
     data = CONF.read_text(encoding="utf-8")
-    require(data.startswith("# LoonKit v5.1.0"), "expected v5.1.0 release header")
+    require(data.startswith("# LoonKit v5.10.0"), "expected v5.10.0 release header")
     require("dns-server = 223.5.5.5,223.6.6.6" in data, "pre-migration mainland DNS server list changed")
     require("doh-server = https://dns.alidns.com/dns-query" in data, "encrypted DNS changed")
     require("[Host]" not in data, "unexpected static DNS Host overrides pre-migration resolver behavior")
@@ -92,11 +92,15 @@ def check_config():
         local_count += 1
         policy = parts[1] if parts[0] == "FINAL" else (parts[2] if len(parts) >= 3 else "")
         require(policy in known, "undefined local rule policy: " + line)
-    require(local_count == 69, "expected 69 local rules including three proxy overrides (got %s)" % local_count)
-    require(local_rows == ["DOMAIN-SUFFIX,browserleaks.com,Proxy",
-             "DOMAIN-SUFFIX,whatismyip.com,Proxy",
-             "DOMAIN-SUFFIX,stripe.com,Proxy"] + baseline["local_rules"],
-            "proxy-only service overrides must precede unchanged pre-migration rules")
+    protected_domains = json.loads(
+        (ROOT / "rules/routing_guardrails.json").read_text(encoding="utf-8")
+    )["protected_proxy_domains"]
+    protected_rules = ["DOMAIN-SUFFIX," + domain + ",Proxy" for domain in protected_domains]
+    require(len(protected_rules) == 17, "unexpected protected-domain guardrail count")
+    require(local_count == len(protected_rules) + len(baseline["local_rules"]),
+            "local rule count differs from protection list + 66-rule baseline")
+    require(local_rows == protected_rules + baseline["local_rules"],
+            "protected diagnostic domains must precede unchanged pre-migration rules")
     require("GEOIP,CN,DIRECT,no-resolve" in rule_text, "CN GEOIP route missing")
     require("FINAL,Final" in rule_text, "FINAL policy missing")
 
