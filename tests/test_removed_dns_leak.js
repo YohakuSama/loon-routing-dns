@@ -12,7 +12,7 @@ function test(label,fn){
   catch(e){console.error("FAIL",label,e);process.exitCode=1;}
 }
 const plugin=read("plugins/Network_Diagnostics.plugin");
-const pinned=read("plugins/v20261018r9/Network_Diagnostics.plugin");
+const pinned=read("plugins/v20261018r10/Network_Diagnostics.plugin");
 const profile=read("Loon_Routing_DNS.lcf");
 test("versioned plugin and standalone plugin are identical",()=>assert.equal(plugin,pinned));
 test("only two manual actions remain",()=>{
@@ -34,7 +34,7 @@ test("exactly three settings remain",()=>{
   assert.deepEqual(args,["auto_check","target_policy","compare_direct"]);
 });
 test("formal config links to new clean plugin and preserves DNS final logic",()=>{
-  assert(profile.includes("/main/plugins/v20261018r9/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/main/plugins/v20261018r10/Network_Diagnostics.plugin, enabled=true"));
   assert(profile.includes("GEOIP,CN,DIRECT,no-resolve"));
   assert(profile.includes("FINAL,Final"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));
@@ -42,7 +42,7 @@ test("formal config links to new clean plugin and preserves DNS final logic",()=
 });
 test("remaining script URLs only use node intel and base network diagnostics",()=>{
   const urls=plugin.split("\n").filter(x=>x.startsWith("generic then script(")||x.startsWith("network-changed then script("));
-  assert.equal(urls.filter(x=>x.includes("/v20261018r5/node-intelligence.js")).length,1);
+  assert.equal(urls.filter(x=>x.includes("/v20261018r10/node-intelligence.js")).length,1);
   assert.equal(urls.filter(x=>x.includes("/v20261018r4/network-diagnostics.js")).length,2);
 });
 test("old DNS leak detector scripts, plugins, previews, tests are deleted",()=>{
@@ -58,6 +58,10 @@ test("old DNS leak detector scripts, plugins, previews, tests are deleted",()=>{
     "tests/test_dns_probe_reliability.js"
   ];
   for(const p of removed)assert(!fs.existsSync(path.join(ROOT,p)),p+" must stay removed");
+});
+test("current plugin description is focused on functionality",()=>{
+  assert(!/已移除|旧版|情报源|bash\.ws|DNS 泄漏/.test(plugin));
+  assert(plugin.includes("查看节点出口、网络状态和 DNS 连接情况"));
 });
 test("public plugin and docs do not reference deleted detector endpoints",()=>{
   assert(!/bash\.ws|dns-leak-check\.js|DNS 解析器泄漏检测/.test(plugin));
