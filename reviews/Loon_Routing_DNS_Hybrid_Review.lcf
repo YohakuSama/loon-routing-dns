@@ -34,47 +34,47 @@ ALL_Filter = NameRegex, FilterKey = ".*"
 [Proxy Group]
 # Core
 # All rules now self-hosted in this feature branch, not the old upstream remote URLs.
-Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Proxy.png
-Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Auto.png
-Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Fallback.png
-AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AdBlock.png
-Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Final.png
+Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Proxy.png
+Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Auto.png
+Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Fallback.png
+AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/AdBlock.png
+Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Final.png
 
 # AI and Platforms
-AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AI.png
-Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Google.png
-Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Microsoft.png
-Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Apple.png
+AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/AI.png
+Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Google.png
+Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Microsoft.png
+Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Apple.png
 
 # Streaming
-YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/YouTube.png
-Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Netflix.png
-Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Disney.png
-PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/PrimeVideo.png
-Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Spotify.png
-TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/TikTok.png
-Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Twitch.png
-HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/HBO.png
-Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Abema.png
-動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/AnimeCrazy.png
-Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Dazn.png
-BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/BBC.png
-Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Bilibili.png
+YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/YouTube.png
+Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Netflix.png
+Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Disney.png
+PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/PrimeVideo.png
+Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Spotify.png
+TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/TikTok.png
+Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Twitch.png
+HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r3/HBO.png
+Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Abema.png
+動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/AnimeCrazy.png
+Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Dazn.png
+BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/BBC.png
+Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Bilibili.png
 
 # Social — flat-color brand icons
-Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Telegram.png
-Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Whatsapp.png
-Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Instagram.png
-Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Facebook.png
-Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Twitter.png
-Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Discord.png
-Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Line.png
-Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Reddit.png
-Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Linkedin.png
+Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Telegram.png
+Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Whatsapp.png
+Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Instagram.png
+Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Facebook.png
+Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Twitter.png
+Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Discord.png
+Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Line.png
+Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Reddit.png
+Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Linkedin.png
 
 # Games and Payments
-Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Steam.png
-Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/Paypal.png
+Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Steam.png
+Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Paypal.png
 
 [Remote Rule]
 # Self-hosted, policy-scoped reviewed hybrid rules. Order is intentional.
