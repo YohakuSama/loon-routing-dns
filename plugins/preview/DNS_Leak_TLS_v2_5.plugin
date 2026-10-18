@@ -1,0 +1,10 @@
+#!name = Loon Routing DNS · DNS TLS 检测 v2.5 预览
+#!desc = 对比 HTTPS HTTP/1.1 和 HTTP/2，只有手动运行才发起 DNS 测试；不修改配置
+#!author = YohakuSama
+#!homepage = https://github.com/YohakuSama/loon-routing-dns
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(988)
+#!type = normal
+
+[Script]
+generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/fix/dns-leak-https-alpn-fallback-20261018/scripts/v20261018r9/dns-leak-check.js") with tag="DNS 检测 v2.5 · TLS 预览", img_url="lock.shield.system", timeout=45
