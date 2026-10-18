@@ -12,7 +12,7 @@
 ## BrowserLeaks 真实 IP 显示（已定位）
 
 - 上游 `blackmatrix7/ios_rule_script` 的 `ChinaMaxNoMedia_Domain.list` 将 `.browserleaks.com` 放入中国直连域名集。如果未添加本地覆盖规则，Loon 会把 BrowserLeaks 网页直连，因此检测页会显示设备的中国移动公网 IP；**网页直连与 DNS 查询是否明文是两个不同问题**。
-- v5.10.0 正式配置在 `[Rule]` 开头按 `rules/routing_guardrails.json` 同步了 17 条受保护域名的 `DOMAIN-SUFFIX,...,Proxy` 规则（含 `browserleaks.com`、`whatismyip.com` 和 Stripe），优先于远程中国直连规则。它们只纠正这些网站的误分流，不隐藏其他应用的 DNS 问题，也不保证设备所有流量经代理。
+- 正式版 v5.10.0 通过首位自托管 `rules/ProxyProtect.list`（`policy=Proxy`）集中管理 17 个受保护域名；不再在 `[Rule]` 中维护这些例外。它能纠正这些网站的错误直连，但不能证明整台设备没有 DNS 泄漏。
 - 更新后重连 Loon，清理 BrowserLeaks 已打开的标签页与连接缓存，再刷新网页，在 Loon 请求记录中检查命中的 `browserleaks.com` 规则是否为 `Proxy`。若没有记录，再确认新配置确实导入成功。
 
 ## DNS 解析并不等于代理出口
@@ -26,7 +26,7 @@
 ## 规则层回退与历史验证
 
 - 迁移前的工作配置与当前配置 DNS 基本相同，**规则来源和顺序曾有显著差异**：复合库使用 33 个生成分组、远端源超过 80 个，旧版配置使用 28 个原始远程订阅与 66 条显式本地规则。
-- 正式版已经恢复旧版 28/66 分流基线；`rules/generated/` 保留作候选但不再默认启用。旧配置曾正常不代表复合规则必然导致了 DNS 泄漏，仍须在同一设备及代理节点下复测 BrowserLeaks。
+- 正式版已切换为 33 个自托管分类规则和 1 个保护列表，同时保留历史 66 条本地规则。旧配置曾正常不代表复合规则必然导致了 DNS 泄漏，仍须在同一设备及代理节点下复测 BrowserLeaks。
 - 旧版 `Our-*` 生成规则订阅如果仍单独存在于 App 中，应停用以避免新旧两套同时执行；导入完整配置不一定会自动删除单独添加的订阅。
 - 私人节点的订阅 URL 含身份验证参数，不应提交到公开 GitHub，也不应发到公开问题页面；若已公开，建议到服务商撤换链接。
 

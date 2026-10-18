@@ -1,6 +1,6 @@
 # LoonKit v5.10.0
 
-适用于 **Loon** 的分流配置，包含常用服务策略、广告拦截、DNS 设置和网络辅助工具。**正式规则已恢复迁移前使用过的分流基线，复合规则库暂不启用。** v5.10.0 将正式配置的本地保护范围扩展至 17 个公网 IP/DNS 检测和国际支付域名，避免上游中国直连规则误命中。
+适用于 **Loon** 的分流配置，包含常用服务策略、广告拦截、DNS 设置和网络辅助工具。**正式配置改为 LoonKit 自托管规则：33 个复合策略规则集 + 1 个受保护域名规则集。** 上游仍包括 blackmatrix7、v2fly 和项目自有规则，但设备只订阅本仓库发布的规则快照。
 
 [完整配置](./LoonKit.lcf) · [网络辅助插件](./plugins/Network_Diagnostics.plugin) · [插件使用说明](./docs/NETWORK_DIAGNOSTICS.md) · [问题反馈](https://github.com/YohakuSama/loonkit/issues)
 
@@ -29,7 +29,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 5. 更新远程规则和插件资源，确认下载成功。
 6. 运行网络与 DNS 诊断，在 DNS 日志中检查实际查询所用协议与解析器，并检查各 App 分流。
 
-**首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 正式远程规则已恢复为上游 blackmatrix7 的 28 条原始订阅；复合生成规则不再默认加载。配置仍将 GitHub Raw 交给 `Proxy` 策略。无节点时无法通过规则解决 GitHub 直连故障。
+**首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 正式远程规则已改为 34 条 LoonKit 自托管订阅；17 个受保护域名由第一个 `ProxyProtect.list` 统一管理。配置仍将 GitHub Raw 交给 `Proxy` 策略。无节点时无法通过规则解决 GitHub 直连故障。
 
 如果只需要辅助工具，可以[单独订阅网络辅助插件](./plugins/Network_Diagnostics.plugin)，不必导入整套配置。
 
@@ -46,12 +46,15 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 
 网络切换提醒、直连 IP 对照默认关闭，可在插件设置中按需开启。详见[插件使用说明](./docs/NETWORK_DIAGNOSTICS.md)。
 
-## v5.10.0 分流修复
+## v5.10.0 自维护规则修复
 
-- 将 `rules/routing_guardrails.json` 中全部 17 个受保护域名同步到正式配置的 `[Rule]` 顶部，通过 `Proxy` 策略覆盖上游 `ChinaMaxNoMedia` 的错误直连分类；`browserleaks.com/dns` 包含在内。
-- 保留原有 28 个远程规则订阅、66 条历史本地规则及阿里 DoH 设置，不启用尚未完成真机验证的 33 个候选复合规则集。
-- 新增配置与规则保护名单同步校验，防止保护域名在未来版本中漏配。**这项修复仅保证对应网站选择代理策略，不表示已验证没有 DNS 泄漏。**
-- 更新后请重新导入完整配置、刷新远程规则，并在 Loon 请求日志确认诊断域名命中 `Proxy`；如仍直连，请检查是否正在运行旧配置、使用了直连模式、`Proxy` 策略中选中了 `DIRECT` 或存在旧订阅。
+本次从源头处理误直连，而不是继续在主配置堆叠例外：正式配置只订阅本仓库自己的 34 个规则文件（33 个分类规则集 + 首位 `ProxyProtect.list`）。源头保护名单位于 [routing_guardrails.json](./rules/routing_guardrails.json)，由 CI 保证保护文件的 17 条域名与名单完全一致。
+
+- 正式远程规则顺序由 [active_profile.json](./rules/active_profile.json) 固定，与规则生成器的去重优先级对应。
+- 自维护 `ChinaDirect.list` 已删除目前核实的错误匹配；生成器阻止未来把受保护域名再次归入任何 `DIRECT` 分组。
+- 保留 66 条经历史验证的本地业务分流、原 DNS 设置、策略组和插件，避免迁移时同时改动大量网络行为。
+- 上游刷新由 GitHub Actions 生成候选更新 PR，审核后才会进入正式订阅，不直接下载上游原始规则。
+- **需要真机复测：** DNS 查询、Apple 更新、国内银行与支付、Steam、AI 登录、广告拦截、国内 CDN、IPv6。静态 CI 无法证明所有域名分类完全正确或不存在 DNS 泄漏。
 
 ## 更新与排查
 
@@ -63,11 +66,11 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 
 ## 自维护规则库质量门槛
 
-自有复合规则不是盲目复制上游：已在 [候选库审计报告](./rules/AUDIT_2026-10-18.md) 中核对 `ChinaDirect` 误收录的 `browserleaks.com`、`whatismyip.com` 和 `DOMAIN-KEYWORD,stripe`，并从生成内容移除；未来刷新会通过 [规则保护名单](./rules/routing_guardrails.json) 和 CI 阻止同类误直连。正式配置目前仍采用稳定规则基线，复合库须经设备实测后才会重新默认启用。
+自有复合规则不是盲目复制上游：已在 [候选库审计报告](./rules/AUDIT_2026-10-18.md) 中核对 `ChinaDirect` 误收录的 `browserleaks.com`、`whatismyip.com` 和 `DOMAIN-KEYWORD,stripe`，并从生成内容移除；未来刷新会通过 [规则保护名单](./rules/routing_guardrails.json) 和 CI 阻止同类误直连。正式配置现使用自托管规则库的已审计快照；后续候选更新不会自动发布，仍需真机和业务回归。
 
 ## 规则来源
 
-**正式启用的远程规则来自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script) 的旧版 28 个规则文件，辅以 66 条原有本地规则和 17 条受保护域名代理例外；**[v2fly](https://github.com/v2fly/domain-list-community) 等复合规则仍在 [候选规则库](./rules/README.md) 保留供审计与后续真机灰度验证，默认不加载。历史配置的节点订阅和访问凭证不会纳入仓库。
+**正式启用的远程规则由 LoonKit 自托管**；[blackmatrix7](https://github.com/blackmatrix7/ios_rule_script)、[v2fly](https://github.com/v2fly/domain-list-community) 等仍作为可审核的上游数据源。正式配置保留 66 条本地历史业务规则。详情见 [自维护规则库](./rules/README.md)。历史配置的节点订阅和访问凭证不会纳入仓库。
 
 ---
 
