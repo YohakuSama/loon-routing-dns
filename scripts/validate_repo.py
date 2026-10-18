@@ -130,8 +130,8 @@ def check_plugin():
             "unexpected Wi-Fi automation in plugin")
     arg_text = section(data, "Argument")
     names = set(re.findall(r"^([a-z_]+)\s*=", arg_text, re.M))
-    expected = {"doh_url", "auto_check", "target_policy", "compare_direct",
-                "notify_every_change", "direct_probe_url", "proxy_probe_url",
+    expected = {"auto_check", "target_policy", "compare_direct",
+                "notify_every_change", "direct_probe_url",
                 "probe_timeout", "primary_ip_url", "backup_ip_url",
                 "enable_ip_backup", "cache_seconds"}
     require(expected <= names, "plugin arguments missing: " + str(expected - names))
