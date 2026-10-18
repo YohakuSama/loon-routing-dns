@@ -1,5 +1,19 @@
 # LoonKit DNS 隐私与路由排查（2026-10-18）
 
+## 发现“仍然 DNS 泄漏”时的分类诊断（2026-10-19）
+
+**先区分三个独立现象：**
+
+1. **网页出口真实 IP**：BrowserLeaks 页面的 `Your IP Address` 如果显示本机运营商 IP，检查 `ProxyProtect` 是否下载成功、Loon 是否为分流模式、`Proxy` 是否选择到可用节点。**这属于路由/代理出口问题，不等于 DNS 查询明文泄漏。**
+2. **网站显示 AliDNS 或其他 DNS 解析器**：正式兼容版明确配置 `https://dns.alidns.com/dns-query`；即使 Loon 使用 DoH 加密并代理网页，检测站也可以发现解析器不是代理节点所在地。**这不自动证明运营商能看到明文 DNS**。
+3. **原生 DNS 实际使用 UDP/system**：使用插件「网络与 DNS 诊断」的 `protocol`、`server`、`fromCache` 和 Loon DNS 日志确认。发现 `udp` 时，检查「DNS 服务器 → 加密 DNS 失败回退到普通 DNS」是否关闭、是否有额外订阅/插件 DNS 和浏览器自身 DNS 设置。单次 `fromCache=true` 不能证明发生新的网络请求。
+
+**可选诊断配置：** `LoonKit.PrivacyDNS.lcf` 使用 `https://cloudflare-dns.com/dns-query` + UDP 兼容地址 `1.1.1.1,1.0.0.1`，原本的 `LoonKit.lcf` 保持大陆网络兼容配置不变。导入前备份原配置、节点订阅和策略选择；导入后恢复节点并确认 `Proxy` 组；关闭明文 DNS 回退；彻底退出并重新打开 Loon 以清理其内存 DNS 缓存。Cloudflare DoH 在某些网络下不可达；若失败应回退原配置，不要在隐私测试期间开启明文回退。
+
+**进一步判断：** 在同一网络与代理节点下，比较 `https://browserleaks.com/dns` 的浏览器出口 IP、DNS 服务器归属和 Loon 实际的 DNS 协议。若 Loon 显示 DoH 但网站仍报告其他 DNS 服务器，检查浏览器内置 Secure DNS、其他 DNS/VPN 配置、代理端递归 DNS；没有设备侧抓包不能断定是哪一端发起的查询。Loon 的 `hijack-dns = *:53` 只处理 53 端口传统 DNS，不能通用阻断第三方 DoH/DoT。
+
+**重要局限：** Loon 当前公开文档并未为此配置证实“所有 DoH 查询强制通过 `Proxy` 节点”的全局开关。替换为海外 DoH 仅改变 Loon 解析器和加密方式，不保证 DNS 从代理出口发出、隐匿解析器地区、规避第三方 DoH 或无 IPv6 旁路。参见 [Loon DNS](https://nsloon.app/docs/DNS/)、[通用配置](https://nsloon.app/docs/General/) 和 [Cloudflare DoH 地址](https://developers.cloudflare.com/1.1.1.1/encryption/dns-over-https/make-api-requests/)。
+
 ## 先关闭 Loon 的明文 DNS 回退
 
 1. 备份现有 Loon 配置和节点订阅，导入最新 `LoonKit.lcf`；确保 Loon 工作于规则模式并已配置可用节点。
