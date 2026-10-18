@@ -10,8 +10,8 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-ACTIVE = ROOT / "Loon_Routing_DNS.lcf"
-REVIEW = ROOT / "reviews/Loon_Routing_DNS_Hybrid_Review.lcf"
+ACTIVE = ROOT / "LoonKit.lcf"
+REVIEW = ROOT / "reviews/LoonKit_Hybrid_Review.lcf"
 HOST = "raw.githubusercontent.com"
 
 
