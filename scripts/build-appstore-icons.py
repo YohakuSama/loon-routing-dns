@@ -127,19 +127,26 @@ def check_config():
         raise RuntimeError(f"Expected 33 unique strategy groups, got {len(entries)}: {names ^ GROUPS}")
     for group, link in entries:
         filename=("AnimeCrazy" if group.strip()=="動畫瘋" else group.strip())+".png"
-        if link.rstrip(",")!="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/"+filename:
+        expected_version="v20261018r3" if filename=="HBO.png" else "v20261018r2"
+        expected_icon="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/"+expected_version+"/"+filename
+        if link.rstrip(",")!=expected_icon:
             raise RuntimeError(f"unexpected strategy icon link: {group} {link}")
     plugin=(ROOT/"plugins/Network_Diagnostics.plugin").read_text()
-    pinned=(ROOT/"plugins/v20261018r2/Network_Diagnostics.plugin").read_text()
+    pinned=(ROOT/"plugins/v20261018r10/Network_Diagnostics.plugin").read_text()
     if pinned!=plugin:
-        raise RuntimeError("Pinned Console plugin differs from current Console plugin")
+        raise RuntimeError("Published plugin differs from standalone entry")
     if "#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Console.png" not in plugin:
         raise RuntimeError("Console plugin icon link changed unexpectedly")
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument("--refresh-app-store", action="store_true", help="explicitly overwrite official icon files")
+    parser.add_argument("--refresh-app-store", action="store_true", help="generate local icon previews for review")
+    parser.add_argument("--check-config", action="store_true", help="validate current versioned icon and plugin links without network requests")
     args=parser.parse_args()
+    if args.check_config:
+        check_config()
+        print("Icon and plugin references are consistent")
+        return
     if not args.refresh_app_store:
         parser.error("Requires --refresh-app-store; avoid inadvertently replacing pinned official artwork.")
     check_config()
@@ -169,7 +176,7 @@ def main():
             "sha256":hashlib.sha256(final).hexdigest(),
         })
         print(f"[appstore] {name}: 512x512 PNG ({len(final)} bytes); {metadata.get('trackName')}",flush=True)
-    # Only write to icons after every requested App Store lookup succeeded.
+    # Local unversioned previews are ignored by git; publishing requires a reviewed versioned directory.
     for name,raw in temp.items():
         (DIR/f"{name}.png").write_bytes(raw)
     # Generate vector icons from the checked-in SVG using CairoSVG for 512px.
