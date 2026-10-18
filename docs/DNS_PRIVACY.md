@@ -9,6 +9,12 @@
 5. 运行插件「网络与 DNS 诊断」（Build 988+），检查 `$dns.query` 的 `protocol`、`server`、`fromCache`。预期为 `doh` 及 AliDNS 的 URL。若为 `udp` 则说明此次 Loon DNS 查询使用明文；如果命中缓存，就不能据此断定本次发生网络查询。
 6. 在 Loon 的 DNS 日志及请求日志复查其他域名，核对是否出现以前版本没有的解析器或出口；其他设置可能影响最终行为，但不应仅因 BrowserLeaks 列出多个服务器就断言有明文泄漏。
 
+## BrowserLeaks 真实 IP 显示（已定位）
+
+- 上游 `blackmatrix7/ios_rule_script` 的 `ChinaMaxNoMedia_Domain.list` 将 `.browserleaks.com` 放入中国直连域名集。如果未添加本地覆盖规则，Loon 会把 BrowserLeaks 网页直连，因此检测页会显示设备的中国移动公网 IP；**网页直连与 DNS 查询是否明文是两个不同问题**。
+- 当前正式配置在 `[Rule]` 开头新增 `DOMAIN-SUFFIX,browserleaks.com,Proxy`，优先于远程中国直连规则。此规则只纠正该站点误分流，不隐藏其他应用的 DNS 问题，也不保证设备所有流量经代理。
+- 更新后重连 Loon，清理 BrowserLeaks 已打开的标签页与连接缓存，再刷新网页，在 Loon 请求记录中检查命中的 `browserleaks.com` 规则是否为 `Proxy`。若没有记录，再确认新配置确实导入成功。
+
 ## DNS 解析并不等于代理出口
 
 - `hijack-dns = *:53` 拦截传统 UDP/53，无法拦截所有 App 自带 DoH/DoT，更无法强制第三方解析器通过代理出口。

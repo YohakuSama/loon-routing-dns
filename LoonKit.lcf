@@ -127,6 +127,12 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list, policy=DIRECT, tag=ChinaDomain, enabled=true
 
 [Rule]
+# Ensure the public IP diagnostic site follows the selected Proxy policy.
+# ChinaMaxNoMedia_Domain incorrectly classifies browserleaks.com as China DIRECT.
+# Domain rule is local, so it takes precedence over the remote domain-set.
+# This is a routing exception, NOT proof of zero DNS leakage.
+DOMAIN-SUFFIX,browserleaks.com,Proxy
+
 # Restore the pre-migration local routing priorities.
 # No private proxy subscription is included in this public profile.
 # Remote Resources
