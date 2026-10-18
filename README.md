@@ -62,7 +62,9 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 - [复合规则库设计与审计](./rules/HYBRID_DESIGN.md)
 - [最新生成统计和冲突列表](./rules/generated/audit.json)
 - [控制台插件与手动 DNS 诊断](./docs/NETWORK_DIAGNOSTICS.md) · [Network_Diagnostics.plugin](./plugins/Network_Diagnostics.plugin)
-- [上一稳定版 v4.4.8（可回滚）](./releases/v4.4.8/Loon_Routing_DNS.lcf)
+- [历史配置 v4.4.8（回滚参考）](./releases/v4.4.8/Loon_Routing_DNS.lcf)：旧图标与插件入口已固定至清理前 Commit；第三方订阅和插件内部脚本仍可能随上游变化，不能视为完全离线、不可变的历史快照。
+
+**发布前验证：** `ChinaDirect` 与 `AdBlock` 体积较大，需在 iPhone 上记录规则加载和更新时间、内存、常用国内 App、登录支付、Apple OTA、流媒体、UDP、IPv6 及 Wi-Fi/蜂窝网络切换表现。规则生成器对 IP `no-resolve` 的修复必须重新生成候选规则、审核差异并进行真机验证后才能更新 `rules/generated/*.list`；更新生成器本身不会立即改变线上规则。
 
 **发布说明：** 静态测试不是 Loon 真机认证。遇到 App 不能联网，按节点 → DNS → 命中规则 → 广告开关 → UDP/IPv6 顺序排查；报告问题时请提交脱敏的 Loon/iOS 版本、错误域名、命中策略和网络情况，勿公开任何节点凭据。
 
