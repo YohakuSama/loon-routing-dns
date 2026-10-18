@@ -27,7 +27,7 @@ class RepositoryHygiene(unittest.TestCase):
         self.assertNotIn("rules/generated/", ignore)
 
     def test_public_icons_and_rollback_remain(self):
-        active = (ROOT / "Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
+        active = (ROOT / "LoonKit.lcf").read_text(encoding="utf-8")
         urls = re.findall(r"img-url\s*=\s*(https://\S+?\.png)", active)
         self.assertEqual(len(urls), 33)
         for url in urls:
@@ -35,13 +35,13 @@ class RepositoryHygiene(unittest.TestCase):
             with self.subTest(path=rel):
                 self.assertTrue((ROOT / rel).is_file())
         self.assertTrue((ROOT / "icons/v20261018r2/Console.png").is_file())
-        self.assertTrue((ROOT / "reviews/Loon_Routing_DNS_Hybrid_Review.lcf").is_file())
+        self.assertTrue((ROOT / "reviews/LoonKit_Hybrid_Review.lcf").is_file())
 
     def test_current_plugin_sources_are_available(self):
         data = (ROOT / "plugins/Network_Diagnostics.plugin").read_text(encoding="utf-8")
-        self.assertEqual(data, (ROOT / "plugins/v20261018r10/Network_Diagnostics.plugin").read_text(encoding="utf-8"))
-        for source in ("scripts/v20261018r10/node-intelligence.js",
-                       "scripts/v20261018r4/network-diagnostics.js"):
+        self.assertEqual(data, (ROOT / "plugins/v20261018r11/Network_Diagnostics.plugin").read_text(encoding="utf-8"))
+        for source in ("scripts/v20261018r11/node-intelligence.js",
+                       "scripts/v20261018r11/network-diagnostics.js"):
             with self.subTest(source=source):
                 self.assertIn("/main/" + source, data)
                 self.assertTrue((ROOT / source).is_file())
@@ -57,7 +57,7 @@ class RepositoryHygiene(unittest.TestCase):
             "scripts/node-intelligence.js",
             "scripts/v20261018r4/node-intelligence.js",
             "scripts/v20261018r5/node-intelligence.js",
-            "releases/v4.4.8/Loon_Routing_DNS.lcf",
+            "releases/v4.4.8/LoonKit.lcf",
             "releases/v5.1.0/CHANGELOG.md",
         ):
             with self.subTest(source=source):
