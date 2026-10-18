@@ -6,7 +6,7 @@ import json
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "Loon_Routing_DNS.lcf"
+CONFIG = ROOT / "LoonKit.lcf"
 BASE = ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf"
 CATALOG = ROOT / "rules" / "sources.json"
 GENERATED = ROOT / "rules" / "generated"
@@ -25,12 +25,12 @@ def active(body):
 def validate(check_generated=False):
     original = BASE.read_text(encoding="utf-8")
     conf = CONFIG.read_text(encoding="utf-8")
-    assert conf.startswith("# Loon Routing DNS v5.1.0")
+    assert conf.startswith("# LoonKit v5.1.0")
     assert section(conf, "General") == section(original, "General"), "DNS/general changed unexpectedly"
     plugin = active(section(conf, "Plugin"))
     assert len(plugin) == 1
     assert plugin[0].startswith(
-        "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r10/Network_Diagnostics.plugin,")
+        "https://raw.githubusercontent.com/YohakuSama/loonkit/main/plugins/v20261018r11/Network_Diagnostics.plugin,")
     assert section(conf, "Remote Proxy") == section(original, "Remote Proxy"), "personal proxies not preserved"
     groups = [line.split("=",1)[0].strip() for line in active(section(conf, "Proxy Group"))
               if " = " in line]
@@ -48,7 +48,7 @@ def validate(check_generated=False):
         assert policy in policies
         assert urlparse(u).netloc == "raw.githubusercontent.com"
         assert urlparse(u).path.startswith(
-            "/YohakuSama/loon-routing-dns/main/rules/generated/"
+            "/YohakuSama/loonkit/main/rules/generated/"
         )
         assert u not in urls, "duplicate rule source: " + u
         urls.add(u)
