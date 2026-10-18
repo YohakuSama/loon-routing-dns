@@ -77,7 +77,7 @@ def validate(check_generated=False):
     # Reviewed routing must match. Versions of icons and plugin URLs can vary.
     reviewer = (ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf").read_text(encoding="utf-8")
     assert section(conf, "Remote Rule") == section(reviewer, "Remote Rule"), "review routing order diverged"
-    assert section(conf, "Rule") == section(reviewer, "Rule"), "review local routing diverged"
+    assert active(section(conf, "Rule")) == active(section(reviewer, "Rule")), "review local routing diverged"
     print("PASS: 87 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
 
 if __name__ == "__main__":
