@@ -112,8 +112,8 @@ class ImportPreflight(unittest.TestCase):
     def test_core_rules_and_dns_are_preserved(self):
         for required in (
             "dns-server = 223.5.5.5",
-            "doh-server = https://cloudflare-dns.com/dns-query",
-            "cloudflare-dns.com = 1.1.1.1",
+            "doh-server = https://dns.alidns.com/dns-query",
+            "dns.alidns.com = 223.5.5.5",
             "GEOIP,CN,DIRECT,no-resolve",
             "FINAL,Final",
             "Final = select,Proxy,Auto,Fallback,DIRECT",
