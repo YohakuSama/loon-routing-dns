@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "intent": "Key public-network and DNS diagnostic hosts must NEVER be routed DIRECT by a generated self-hosted rule. This is an explicit routing policy, not a DNS-leak guarantee.",
+  "protected_proxy_domains": [
+    "browserleaks.com",
+    "dnsleaktest.com",
+    "ipleak.net",
+    "test-ipv6.com",
+    "ipinfo.io",
+    "ifconfig.co",
+    "ipify.org",
+    "whoer.net",
+    "whatismyipaddress.com",
+    "ip.sb"
+  ],
+  "source_issue": "blackmatrix7 ChinaMaxNoMedia_Domain included .browserleaks.com, which routed the public IP test to DIRECT",
+  "review": "Review additions/deletions of protected domains and require an on-device comparison before enabling composite lists."
+}
