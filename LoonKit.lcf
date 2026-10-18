@@ -25,7 +25,7 @@ disable-stun = true
 udp-fallback-mode = REJECT
 domain-reject-mode = DNS
 dns-reject-mode = NOANSWER
-proxy-test-url = http://cp.cloudflare.com/generate_204
+proxy-test-url = http://bing.com/generate_204
 internet-test-url = http://wifi.vivo.com.cn/generate_204
 test-timeout = 5
 allow-wifi-access = false
@@ -42,8 +42,8 @@ ALL_Filter = NameRegex, FilterKey = ".*"
 # Core
 # All strategy icons are self-hosted under icons/, reviewed for light and dark UI.
 Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Proxy.png
-Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Auto.png
-Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Fallback.png
+Auto = url-test,ALL_Filter,url = http://bing.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Auto.png
+Fallback = fallback,ALL_Filter,url = http://bing.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Fallback.png
 AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/AdBlock.png
 Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Final.png
 
