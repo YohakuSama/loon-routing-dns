@@ -1,56 +1,57 @@
-# Loon Routing DNS · 网络辅助插件 v2.5
+# 网络辅助插件
 
-完整配置自动加载的轻量插件。**仅两个手动入口、三个设置项，以及默认关闭的网络变化提醒。** 不修改 Loon DNS、规则、VPN、节点或代理策略。先前独立的「DNS 解析器泄漏检测」因真实 iPhone 环境中的 HTTPS/TLS 读取不稳定、不能可靠完成判断，已从正式插件及仓库中移除。
+插件包含两个手动工具。使用时不会修改 Loon 的 DNS、代理模式或分流规则。
 
-## 功能
+## 节点出口信息
 
-| 入口 | 作用 | 限制 |
-|---|---|---|
-| **节点出口信息** | 出口 IP、国家/地区/城市、ASN、ISP、组织、机房/移动/VPN/代理/Tor 特征、第三方风险分数，以及可用时的 Loon 本地 GeoIP/ASN/ASO 对照 | 出口 IP 不一定是节点服务器入口；第三方地区、风险与网络类型信息可能不准确 |
-| **网络与 DNS 诊断** | 检测 DIRECT、Proxy、指定 DoH 服务和可用时的 Loon 原生 DNS 查询 | 检测到 DoH 服务可连接不代表没有 DNS 泄漏，也不保证所有域名都通过 DoH |
-| **网络变化异常提醒** | 可选，网络变化后检查并在异常时提醒 | 默认关闭；只有用户开启才会在网络切换时探测 |
+查看所选节点或策略的公网出口，包括 IP、地区、ASN、ISP、网络类型和 Loon 本地数据库结果。在线查询服务为 ipquery.io，主服务不可用时会尝试 ipwho.is。
 
-**三个设置项：**
+- **查询策略**：默认 `Proxy`。从节点菜单调用时优先使用当前节点。
+- **直连 IP 对照**：默认关闭。开启后会额外查询 DIRECT 公网 IP，并将其发送给第三方 IP 查询服务。
+- **网络类型**：机房、VPN、代理等结果为数据库判断；「否」表示未被该数据库标记，不保证绝对准确。
 
-- `auto_check = false`：网络变化提醒默认关闭，避免无需求时自动探测。
-- `target_policy = Proxy`：手动出口信息查询的默认策略；若有明确节点上下文，优先查询该节点。
-- `compare_direct = false`：真实 DIRECT 公网 IP 对照默认关闭。开启后会向第三方 IP 情报服务发送 DIRECT 查询，可能暴露真实出口 IP。
+报告会自动省略没有必要的重复字段，例如 ISP 和运营组织相同时只显示一次。未提供的资料显示为「未知」或不显示。
 
-IP 情报主源为 ipquery.io，备用为 ipwho.is。基础诊断使用 AliDNS DoH、vivo 直连 HTTP 探测和 Cloudflare 代理 HTTP 探测。不开放自定义 API、探测网址、超时和缓存参数，以减少不必要的设置。
+## 网络与 DNS 诊断
 
-## 安装和升级
+手动点击「网络与 DNS 诊断」，分别检查：
 
-正式完整配置：
+| 项目 | 检查内容 |
+|---|---|
+| 直连 | DIRECT HTTP 请求是否响应 |
+| 代理 | `Proxy` 策略的 HTTP 请求是否响应 |
+| DoH | AliDNS DoH 接口是否返回有效 DNS 应答 |
+| 原生 DNS | Loon 是否能够查询 `example.com`（需支持 `$dns.query`） |
 
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf
+任一已执行的检测失败，总结会标注异常；如果当前版本不支持原生 DNS 查询，则显示「不支持」，不会算作通过。
 
-[独立网络辅助插件 v2.5](../plugins/v20261018r9/Network_Diagnostics.plugin)
+这几项用于检查连接状态，**不能判断是否发生 DNS 泄漏**。诊断失败时先查看 Loon 请求及 DNS 日志，再确认所选策略和检测服务是否可用。
 
-完整配置中的 [Plugin] 已指向 `plugins/v20261018r9/Network_Diagnostics.plugin`。单独订阅插件的用户可以使用 `plugins/Network_Diagnostics.plugin`。当前脚本分别为：
+## 网络切换提醒
 
-- [节点出口情报脚本](../scripts/v20261018r5/node-intelligence.js)
-- [网络与 DNS 基础诊断脚本](../scripts/v20261018r4/network-diagnostics.js)
+「网络切换提醒」默认关闭。开启后，插件在网络变化事件触发时检查直连与 DoH，初次失败会再次检测；同类问题在 30 分钟内不会重复提醒。
 
-如果 Loon 仍然显示第三个「DNS 解析器泄漏检测」入口，说明旧插件订阅或旧的本地配置仍在启用。请先备份当前配置，再确认插件订阅及完整配置中的 URL 已更新到 `v20261018r9`，并停用重复的旧插件。仅更新远程分流规则不会替换已经保存在本地配置中的插件引用。
+此功能不会自动切换节点，也不会修改 DNS。无需后台检测时可保持关闭。
 
-先前包含独立 DNS 泄漏检测的插件版本以及对应脚本、测试和预览资源已清理，**不再提供已移除功能的旧版下载地址**。保留早期无此功能的 `v20261018r2`、`r4`、`r5` 插件供排障和回退。
+## 安装与更新
 
-## 正确理解基础诊断结果
+[完整配置](../Loon_Routing_DNS.lcf) · [独立插件](../plugins/Network_Diagnostics.plugin)
 
-手动诊断分项显示 DIRECT、Proxy、DoH 接口、Loon 原生 DNS 的检测状态。若原生 DNS 查询失败，总结必须显示异常；若当前 Loon 版本不支持 `$dns.query`，则标注「不支持」，不把未检测等同于正常。
+独立订阅地址：
 
-DoH 接口主动探测只能确认某个 DoH 服务是否响应；不说明 Loon 全部域名都经该服务器解析，更不能代替独立 DNS 泄漏测试。探测服务暂时不可达也不一定说明 Loon 的分流配置有问题。若需要核对 DNS 解析行为，可结合 Loon DNS / 请求日志及独立浏览器测试自行验证，插件不再发起第三方权威 DNS 泄漏测试。
+```text
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r10/Network_Diagnostics.plugin
+```
 
-自动提醒在开启后检查 DIRECT 与 DoH，失败则复测；同类提醒在 30 分钟内去重。该流程不会修改代理策略、DNS 或 VPN。
+如果更新后菜单或报告未变化，请确认本地完整配置和插件列表使用了新版链接，并停用重复的旧插件。仅刷新远程分流规则不会更新插件脚本。
 
-## 出口信息和隐私
+## 技术信息
 
-节点情报按照地理位置、网络归属、风险/网络标签及本地数据库对照分组呈现。缺少字段时标注未知；机房、VPN、Tor 等标签来自第三方推断，不等于安全认证或节点质量评分。公网出口查询默认只使用目标节点或策略，DIRECT 公网 IP 对照需要明确开启。
+当前正式插件使用：
 
-## 维护
-
+- [节点出口脚本](../scripts/v20261018r10/node-intelligence.js)
+- [网络/DNS 诊断脚本](../scripts/v20261018r4/network-diagnostics.js)
 - [插件回归测试](../tests/test_plugin_v2.js)
-- [详细节点情报回归测试](../tests/test_node_details.js)
-- [历史精简插件 v2.1](../plugins/v20261018r5/Network_Diagnostics.plugin)
+- [节点报告测试](../tests/test_node_copy.js)
 
-自动化模拟测试不能替代真实 iPhone 上的 Loon 回归测试。本次移除不涉及 `GEOIP,CN,DIRECT,no-resolve`、`FINAL,Final` 或 IP-CIDR/IP-CIDR6 强制 `no-resolve`，也未修改 DNS 服务器与远程规则。
+`GEOIP,CN,DIRECT,no-resolve`、`FINAL,Final` 和所有分流规则不受插件界面更新影响。
