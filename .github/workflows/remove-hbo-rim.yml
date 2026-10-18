@@ -1,0 +1,52 @@
+name: Remove HBO glass rim
+on:
+  push:
+    branches: [work/appstore-glass-icons-20261018]
+    paths:
+      - scripts/remove_hbo_rim.py
+      - .github/workflows/remove-hbo-rim.yml
+permissions:
+  contents: write
+jobs:
+  remove-rim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'Pillow>=10,<12'
+      - name: Render HBO icon without outer rim
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          src=Path("icons/v20261018r2/HBO.png")
+          dst=Path("icons/v20261018r3/HBO.png")
+          im=Image.open(src).convert("RGBA")
+          w,h=im.size
+          inset=round(min(w,h)*.065)
+          im=im.crop((inset,inset,w-inset,h-inset)).resize((w,h),Image.Resampling.LANCZOS)
+          dst.parent.mkdir(parents=True,exist_ok=True)
+          im.save(dst,optimize=True)
+          print(dst, im.size)
+          PY
+      - name: Update HBO only and commit to main
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("Loon_Routing_DNS.lcf")
+          old="icons/v20261018r2/HBO.png"
+          new="icons/v20261018r3/HBO.png"
+          s=p.read_text()
+          assert s.count(old)==1, "Expected exactly one HBO icon reference"
+          p.write_text(s.replace(old,new))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add icons/v20261018r3/HBO.png Loon_Routing_DNS.lcf
+          git commit -m "Remove HBO icon outer glass rim"
+          git push origin HEAD:main
