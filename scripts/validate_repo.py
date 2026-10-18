@@ -148,7 +148,7 @@ def check_plugin():
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/"
         suffix = url.split(marker, 1)[1] if marker in url else ""
-        branch_prefixes = ("main/", "feat/console-rule-health-20261018/", "c8dc05c3e31f668630398aa084a118681cfb7c41/")
+        branch_prefixes = ("main/", "feat/console-rule-health-20261018/", "c8dc05c3e31f668630398aa084a118681cfb7c41/", "990c77d507a8df1fb9e8fb7710739070d4b33d45/")
         local_path = next((suffix[len(prefix):] for prefix in branch_prefixes
                            if suffix.startswith(prefix)), None)
         require(local_path is not None and (ROOT / local_path).is_file(),
