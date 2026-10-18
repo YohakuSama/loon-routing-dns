@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static checks for Loon Routing DNS (stdlib only).
+"""Static checks for LoonKit (stdlib only).
 
 Run locally: python3 scripts/validate_repo.py
 External resources: python3 scripts/validate_repo.py --check-remote
@@ -119,7 +119,7 @@ def check_plugin():
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
     require("auto_check = switch,false" in data, "automatic checks must default off")
-    pinned_plugin=ROOT / "plugins" / "v20261018r10" / "Network_Diagnostics.plugin"
+    pinned_plugin=ROOT / "plugins" / "v20261018r11" / "Network_Diagnostics.plugin"
     require(pinned_plugin.is_file(), "missing current versioned plugin")
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
             "versioned plugin differs from current file")
@@ -170,7 +170,7 @@ def check_readme():
         require("Network_Diagnostics.plugin" in text, label + " missing plugin link")
         require("节点出口信息" in text and "网络与 DNS" in text,
                 label + " must describe the two available tools")
-    require("https://raw.githubusercontent.com/YohakuSama/loonkit/main/Loon_Routing_DNS.lcf" in data,
+    require("https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf" in data,
             "README missing full configuration import URL")
     require("直连 IP 对照" in data and "默认关闭" in data,
             "README must explain direct-IP comparison default")
