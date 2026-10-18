@@ -39,6 +39,7 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p 'test_composite_rules.py' -v
           python3 tests/test_hybrid_profile.py --generated
+          python3 -m unittest discover -s tests -p 'test_import_preflight.py' -v
           python3 -m unittest discover -s tests -p 'test_repository_hygiene.py' -v
 
       - name: Check JavaScript syntax
