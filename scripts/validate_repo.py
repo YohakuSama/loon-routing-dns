@@ -17,12 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CONF = ROOT / "Loon_Routing_DNS.lcf"
 PLUGIN = ROOT / "plugins" / "Network_Diagnostics.plugin"
 JS = [
-    ROOT / "scripts" / "network-diagnostics.js",
-    ROOT / "scripts" / "node-intelligence.js",
-    ROOT / "scripts" / "console.js",  # legacy v1 console, retained for old standalone plugin installs
     ROOT / "scripts" / "v20261018r4" / "network-diagnostics.js",
-    ROOT / "scripts" / "v20261018r4" / "node-intelligence.js",
-    ROOT / "scripts" / "v20261018r5" / "node-intelligence.js",
     ROOT / "scripts" / "v20261018r10" / "node-intelligence.js",
 ]
 ISSUES = []
@@ -91,14 +86,14 @@ def check_config():
     require("GEOIP,CN,DIRECT,no-resolve" in rule_text, "CN GEOIP route missing")
     require("FINAL,Final" in rule_text, "FINAL policy missing")
 
-    # Full configuration must discover the control console automatically.
+    # Ensure the live config enables the current plugin.
     plugin_text = section(data, "Plugin")
     expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r10/Network_Diagnostics.plugin"
     entries = [line.strip() for line in plugin_text.splitlines()
                if line.strip() and not line.lstrip().startswith("#")]
-    require(len(entries) == 1, "expected one auto-bundled Console plugin")
+    require(len(entries) == 1, "expected exactly one configured plugin")
     require(len(entries) == 1 and entries[0].startswith(expected_plugin + ",")
-            and "enabled=true" in entries[0], "Console plugin must load enabled=true")
+            and "enabled=true" in entries[0], "current plugin must be enabled")
     require("FINAL,Final" in rule_text and "Final = select,Proxy,Auto,Fallback,DIRECT" in groups_text,
             "the existing Proxy-first Final policy must remain unchanged")
 
@@ -125,12 +120,12 @@ def check_plugin():
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
     require("auto_check = switch,false" in data, "automatic checks must default off")
     pinned_plugin=ROOT / "plugins" / "v20261018r10" / "Network_Diagnostics.plugin"
-    require(pinned_plugin.is_file(), "missing versioned Console plugin")
+    require(pinned_plugin.is_file(), "missing current versioned plugin")
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
-            "versioned Console plugin differs from checked source")
-    require("/main/icons/v20261018r2/Console.png" in data, "console icon must reference versioned release")
+            "versioned plugin differs from current file")
+    require("/main/icons/v20261018r2/Console.png" in data, "plugin icon must reference a published image")
     require((ROOT / "icons/v20261018r2/Console.png").is_file(),
-            "missing published versioned Console PNG")
+            "missing current plugin image")
     require("已移除" not in data and "情报源" not in data and "安全认证" not in data,
             "public plugin metadata includes release history or unnecessary jargon")
     require("ssid-trigger" not in data and "wifi-cellular-mode" not in data,
@@ -157,9 +152,8 @@ def check_plugin():
     require(len(src_urls) == 3, "expected 3 script source URLs")
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/main/"
-        require(marker in url and ("/scripts/v20261018r4/" in url
-                                   or "/scripts/v20261018r5/" in url
-                                   or "/scripts/v20261018r10/" in url)
+        require(marker in url and ("/scripts/v20261018r4/network-diagnostics.js" in url
+                                   or "/scripts/v20261018r10/node-intelligence.js" in url)
                 and (ROOT / url.split(marker)[1]).is_file(),
                 "plugin must use versioned scripts: " + url)
 
