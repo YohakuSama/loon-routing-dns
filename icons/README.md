@@ -4,11 +4,15 @@
 
 ## 正式版图片 URL 缓存修复
 
-Loon 可能缓存旧 `icons/*.png` URL 的图片，因此 **v20261018r2 正式图标发布目录**固定为 [v20261018r2/](./v20261018r2/)。33 个策略组及 Console 插件改为使用 `https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/<图标文件名>.png`，与原始素材字节完全一致，但 URL 与之前不同。
+Loon 可能缓存旧 `icons/*.png` URL 的图片，因此 **v20261018r2 主图标发布目录**固定为 [v20261018r2/](./v20261018r2/)。除 HBO 外的 32 个策略组及 Console 插件使用 `https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/<图标文件名>.png`，其中多数素材与根目录对应版本一致，但 URL 与之前不同。
 
 本次只解决旧 URL 缓存问题；用户若在 Loon 中使用导入后生成的本地配置，需要重新导入或更新原配置，才能让新的 `img-url` 生效；插件亦需要更新；完整配置同时切换到 `plugins/v20261018r2/Network_Diagnostics.plugin`，避免插件文件也停留在旧缓存。若仍有旧图标，检查当前有效配置的图标 URL，而不是仅更新远程规则列表。
 
 今后内容更新应采用新的版本目录并修改 URL，不能在同一路径反复覆盖文件期待客户端立即刷新。
+
+## HBO 独立更新（v20261018r3）
+
+HBO 当前在主配置中引用 [v20261018r3/HBO.png](./v20261018r3/HBO.png)，由原图裁去外围约 6.5% 后重新缩放生成。其他 32 个策略组和 Console 插件仍使用 v20261018r2。此方法不等同于重新获取未经处理的 App Store 原图，可能改变边缘构图。
 
 ## v20261018r2 平面风格更新（2026-10-18）
 
