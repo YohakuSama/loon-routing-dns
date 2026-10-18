@@ -9,6 +9,7 @@ const load=p=>fs.readFileSync(path.join(root,p),"utf8");
 const diagnostic=load("scripts/network-diagnostics.js");
 const intel=load("scripts/node-intelligence.js");
 const consoleScript=load("scripts/console.js");
+const ruleHealth=load("scripts/rule-health.js");
 const dnsAnswer=new Uint8Array([0,0,129,128,0,1,0,1,0,0,0,0,7,101,120,97,109,112,108,101,3,99,111,109,0,0,1,0,1,192,12,0,1,0,1,0,0,1,0,0,4,93,184,215,14]);
 let passed=0;
 function check(title,run) {try{run();passed++;console.log("PASS",title)}catch(e){console.error("FAIL",title,e);process.exitCode=1}}
@@ -105,5 +106,17 @@ check("console reads last network change record, masks DoH path tokens",()=>{
  vm.runInNewContext(consoleScript,{$argument:{auto_check:true,compare_direct:false,doh_url:"https://private.dns.net/dns-query/SECRET-TOKEN",notify_every_change:false},$persistentStore:{read:k=>store[k]},$done:r=>done.push(r),console:{log(){}}},{timeout:3000});
  assert.equal(done.length,1);assert.match(done[0].content,/全部检测正常/);
  assert.doesNotMatch(done[0].content,/SECRET-TOKEN/);assert.match(done[0].content,/private.dns.net/);
+});
+check("published rule health checks all 33 artifacts without MITM",()=>{
+ const done=[],requests=[];
+ const expected="DomesticCore AI AppleOTA SteamCN YouTube Netflix Disney PrimeVideo Spotify TikTok Twitch HBO Abema BBC Bilibili AnimeCrazy Dazn Telegram Whatsapp Instagram Facebook Twitter Discord Line Reddit Linkedin Google Microsoft Apple Steam Paypal AdBlock ChinaDirect".split(" ");
+ vm.runInNewContext(ruleHealth,{$httpClient:{get(o,cb){requests.push(o);cb(null,{status:200},JSON.stringify({truncated:false,tree:expected.map(n=>({path:"rules/generated/"+n+".list",type:"blob",size:100}))}))}},$done:v=>done.push(v),console:{log(){}}},{timeout:3000});
+ assert.equal(done.length,1);assert.match(done[0].content,/检查通过/);
+ assert.equal(requests[0].node,"DIRECT");assert.match(requests[0].url,/api.github.com/);
+});
+check("published rule health reports missing files",()=>{
+ const done=[];
+ vm.runInNewContext(ruleHealth,{$httpClient:{get(o,cb){cb(null,{status:200},JSON.stringify({truncated:false,tree:[]}))}},$done:v=>done.push(v),console:{log(){}}},{timeout:3000});
+ assert.match(done[0].content,/缺失：DomesticCore/);
 });
 console.log("Console regression tests passed:",passed);
