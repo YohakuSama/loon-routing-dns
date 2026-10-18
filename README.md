@@ -40,7 +40,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 | 节点出口信息 | 查看公网 IP、地区、运营商、ASN 和网络类型 |
 | 网络与 DNS 诊断 | 检查直连、代理、DoH 和 Loon 原生 DNS |
 
-**中国大陆 DNS 配置：** 默认使用阿里加密 DoH（`https://dns.alidns.com/dns-query`），保留阿里普通 DNS `223.5.5.5` 作为兼容/应急选项。普通 DNS 位于大陆且查询不加密。Loon **默认允许加密 DNS 失败回退到普通 DNS**；若要求禁止明文查询，请在 App 的 DNS 设置中关闭此回退开关。加密 DoH 与代理节点出口不同不必然是明文泄漏。详见 [DNS 隐私排查](./docs/DNS_PRIVACY.md)。
+**中国大陆 DNS 配置：** 默认使用阿里加密 DoH（`https://dns.alidns.com/dns-query`），恢复旧版已使用的阿里普通 DNS `223.5.5.5,223.6.6.6` 作为兼容/应急选项。普通 DNS 位于大陆且查询不加密。Loon **默认允许加密 DNS 失败回退到普通 DNS**；若要求禁止明文查询，请在 App 的 DNS 设置中关闭此回退开关。已删除之前额外加入的 DoH 域名固定 IP 映射，恢复旧版解析行为。加密 DoH 与代理节点出口不同不必然是明文泄漏。详见 [DNS 隐私排查](./docs/DNS_PRIVACY.md)。
 
 **首次导入与更新：** `raw.githubusercontent.com` 在部分大陆网络不可直连。本项目不提供节点，DNS 修复不能让 GitHub 下载自动突破网络限制。可以先将 `.lcf` 保存到设备、在 Loon 本地导入，恢复可用节点后再更新远程规则和插件。
 

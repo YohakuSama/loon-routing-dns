@@ -4,10 +4,10 @@
 
 1. 备份现有 Loon 配置和节点订阅，导入最新 `LoonKit.lcf`；确保 Loon 工作于规则模式并已配置可用节点。
 2. **前往 Loon > DNS 服务器，关闭「加密 DNS 失败回退到普通 DNS」**。官方文档明确说明此回退默认开启，目前不能通过已验证的 `[General]` 配置键代替这个 App 开关。
-3. 本项目默认使用单一 AliDNS DoH：`https://dns.alidns.com/dns-query`；`[Host]` 将 `dns.alidns.com` 映射到阿里 DNS 官方 IP `223.5.5.5`，避免引导解析器时再做普通 DNS 查询。固定映射并不意味着 HTTPS 请求必然经过代理。
-4. `dns-server = 223.5.5.5` 是阿里在中国大陆提供的普通 UDP DNS，保留作为兼容性及应急备用；**如果回退开关开启，DoH 故障时仍可产生明文 DNS 查询**。如果所在网络阻断 DoH，关闭回退可能使解析失败，这是明确的安全/可用性取舍。
+3. 本项目恢复迁移前的解析配置：`dns-server = 223.5.5.5,223.6.6.6` 加上 `doh-server = https://dns.alidns.com/dns-query`。此前额外添加的 `[Host] dns.alidns.com = 223.5.5.5` 已删除，避免强制覆盖 DoH 域名的正常解析。加密 DNS 不等于请求一定经过代理节点。
+4. `dns-server = 223.5.5.5,223.6.6.6` 提供两个阿里大陆公共 UDP DNS 作为兼容性及应急备用；**如果回退开关开启，DoH 故障时仍可产生明文 DNS 查询**。如果所在网络阻断 DoH，关闭回退可能使解析失败，这是明确的安全/可用性取舍。
 5. 运行插件「网络与 DNS 诊断」（Build 988+），检查 `$dns.query` 的 `protocol`、`server`、`fromCache`。预期为 `doh` 及 AliDNS 的 URL。若为 `udp` 则说明此次 Loon DNS 查询使用明文；如果命中缓存，就不能据此断定本次发生网络查询。
-6. 在 Loon 的 DNS 日志以及请求日志复查其他域名；排除自定义 `[Host]`、SSID DNS、其他插件、节点配置、Safari/浏览器安全 DNS、其他 VPN 和 iCloud Private Relay 的干扰。
+6. 在 Loon 的 DNS 日志及请求日志复查其他域名，核对是否出现以前版本没有的解析器或出口；其他设置可能影响最终行为，但不应仅因 BrowserLeaks 列出多个服务器就断言有明文泄漏。
 
 ## DNS 解析并不等于代理出口
 
@@ -16,6 +16,13 @@
 - 如果希望远程站点在代理出口处解析域名，需要进一步核实使用的节点协议是否进行远端解析，并结合 Loon 的实际流量、DNS 日志和设备抓包；不能用本配置单独保证。
 - 现有 `GEOIP,CN,DIRECT,no-resolve` 保留 `no-resolve`，是为了不因匹配国内 IP 而强迫原本可能远端解析的域名先在本地解析。未命中的国内域名可能落入最终 Proxy，推荐补充明确、可审计的国内域名规则，而不是无条件移除该标志。
 - `ip-mode = dual` 会允许 IPv4 和 IPv6。DNS 与应用使用的 IPv6 路径都应单独检查；禁止 STUN 只能降低部分 WebRTC IP 暴露风险，不等于阻止 DNS 泄漏。
+
+## 历史基线与真实设备验证
+
+- 迁移前的正式版已使用 `dns-server = 223.5.5.5,223.6.6.6`、`doh-server = https://dns.alidns.com/dns-query`、`ip-mode = dual` 和 `ipv6-vif = auto`。因此不能把原本存在的 IPv6 配置误判为新版本独有错误。
+- 回归补丁仅撤回新增的 DoH 固定 Host 映射并恢复第二个备用 DNS；它能减少相对已知历史版本的变更，但**并不等于已经真机证明 BrowserLeaks 上的多解析器现象被消除**。
+- 若 Loon 请求记录显示某域名的出口已代理，DNS 日志只显示 AliDNS DoH，BrowserLeaks 的 Cloudflare 解析器也可能来自所用代理节点/远端递归链路，而非手机明文 DNS 流量。必须结合设备抓包或实际 DNS 查询日志区分。
+- 要判断浏览器网站显示真实中国移动出口是否直连，应查对应网站的请求记录、缓存/刷新情况及域名可能的其他服务请求，不能使用不同站点的代理命中记录替代。
 
 ## 中国大陆网络及首次下载
 
