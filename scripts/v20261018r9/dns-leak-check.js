@@ -54,6 +54,13 @@
     }
     return clean(String(err||"未知错误"),150);
   }
+  function tlsErrorSummary(err) {
+    var msg=errorMessage(err);
+    var domain=msg.match(/Domain=[A-Za-z0-9]+/);
+    var code=msg.match(/Code=[0-9]+/);
+    if(domain||code)return [domain?domain[0]:"",code?code[0]:""].filter(Boolean).join(" ");
+    return clean(msg,65);
+  }
   function isTLSError(err) {
     var msg=errorMessage(err);
     // Loon can surface TLS failures through LNGCDAsyncSocketTLSError,
@@ -83,9 +90,8 @@
               return request("h2",message);
             }
             if(alpn==="h2" && isTLSError(err)) {
-              return done("HTTPS TLS 握手失败：HTTP/1.1 ("+
-                clean(firstTLS,90)+")；HTTP/2 ("+message+
-                ")。请检查当前 Loon 出站策略、节点 TLS 和请求日志。",null,"tls-both");
+              return done("HTTP/1.1 "+tlsErrorSummary(firstTLS)+
+                "；HTTP/2 "+tlsErrorSummary(err),null,"tls-both");
             }
             return done("请求失败（"+alpn+"）："+message+
               (firstTLS?"；HTTP/1.1 TLS 错误："+clean(firstTLS,70):""),null,"network");
@@ -233,9 +239,9 @@
       if (err) stats.lastError = err;
       else if (!data) stats.lastError = "检测结果 JSON 格式与预期不符";
       if (kind==="tls-both") return unknown(
-        "结果服务 HTTPS 使用 HTTP/1.1 和 HTTP/2 均发生 TLS 握手错误，"+
-        "继续重试不能证明 DNS 泄漏。详情："+err);
-      else if (!data.dns.length) stats.lastError = "服务暂未观察到 DNS 解析器";
+        "结果服务 HTTPS 使用 HTTP/1.1 和 HTTP/2 均发生 TLS 握手错误。"+
+        "详情："+err+"。请核对 Loon 当前出站策略和 TLS 日志。");
+      if (data && !data.dns.length) stats.lastError = "服务暂未观察到 DNS 解析器";
       if (data && data.dns.length>0) return render(data,id,queries);
       if (attempt<6 && !finished) {
         setTimeout(function(){ if(!finished)poll(id,queries,attempt+1); },2300);
