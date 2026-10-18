@@ -1,4 +1,4 @@
-# LoonKit v5.1.0
+# LoonKit v5.10.0
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loonkit
 # X: https://x.com/yohakusama
@@ -127,15 +127,27 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list, policy=DIRECT, tag=ChinaDomain, enabled=true
 
 [Rule]
-# Ensure the public IP diagnostic site follows the selected Proxy policy.
-# ChinaMaxNoMedia_Domain incorrectly classifies browserleaks.com as China DIRECT.
-# Domain rule is local, so it takes precedence over the remote domain-set.
-# This is a routing exception, NOT proof of zero DNS leakage.
+# v5.10.0: protect public IP/DNS diagnostics and international payments.
+# Source of truth: rules/routing_guardrails.json (kept in sync by CI).
+# These local rules override erroneous upstream ChinaMaxNoMedia DIRECT matches.
+# This controls website routing; it is not a test or guarantee of DNS privacy.
 DOMAIN-SUFFIX,browserleaks.com,Proxy
-# Other confirmed upstream ChinaMaxNoMedia mistakes. Preserve their proxy exit.
-DOMAIN-SUFFIX,whatismyip.com,Proxy
-# Stripe is an international payment service; a ChinaDirect keyword rule is overbroad.
+DOMAIN-SUFFIX,dnscheck.tools,Proxy
+DOMAIN-SUFFIX,dnsleaktest.com,Proxy
+DOMAIN-SUFFIX,icanhazip.com,Proxy
+DOMAIN-SUFFIX,ifconfig.co,Proxy
+DOMAIN-SUFFIX,ifconfig.me,Proxy
+DOMAIN-SUFFIX,ip.sb,Proxy
+DOMAIN-SUFFIX,ipify.org,Proxy
+DOMAIN-SUFFIX,ipinfo.io,Proxy
+DOMAIN-SUFFIX,ipleak.net,Proxy
+DOMAIN-SUFFIX,iplocation.net,Proxy
+DOMAIN-SUFFIX,myip.com,Proxy
 DOMAIN-SUFFIX,stripe.com,Proxy
+DOMAIN-SUFFIX,test-ipv6.com,Proxy
+DOMAIN-SUFFIX,whatismyip.com,Proxy
+DOMAIN-SUFFIX,whatismyipaddress.com,Proxy
+DOMAIN-SUFFIX,whoer.net,Proxy
 
 # Restore the pre-migration local routing priorities.
 # No private proxy subscription is included in this public profile.

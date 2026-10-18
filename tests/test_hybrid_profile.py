@@ -28,7 +28,7 @@ def active(body):
 def validate(check_generated=False):
     conf = CONFIG.read_text(encoding="utf-8")
     baseline = json.loads(BASELINE.read_text(encoding="utf-8"))
-    assert conf.startswith("# LoonKit v5.1.0")
+    assert conf.startswith("# LoonKit v5.10.0")
     assert not (ROOT / "Loon_Routing_DNS.lcf").exists(), "deprecated config must be removed"
     assert "dns-server = 223.5.5.5,223.6.6.6" in conf
     assert "doh-server = https://dns.alidns.com/dns-query" in conf
@@ -66,11 +66,12 @@ def validate(check_generated=False):
         urls.add(url)
 
     local = active(section(conf, "Rule"))
-    assert local == ["DOMAIN-SUFFIX,browserleaks.com,Proxy",
-             "DOMAIN-SUFFIX,whatismyip.com,Proxy",
-             "DOMAIN-SUFFIX,stripe.com,Proxy"] + baseline["local_rules"], (
-        "diagnostic and payment domains must proxy before historical remote ChinaDirect")
-    assert len(local) == 69
+    guarded = json.loads((ROOT / "rules/routing_guardrails.json").read_text(encoding="utf-8"))["protected_proxy_domains"]
+    protected = ["DOMAIN-SUFFIX," + domain + ",Proxy" for domain in guarded]
+    assert len(protected) == 17
+    assert local == protected + baseline["local_rules"], (
+        "active local Proxy rules must exactly cover the protected domains before the baseline")
+    assert len(local) == 66 + len(protected)
     assert local[-2:] == ["GEOIP,CN,DIRECT,no-resolve", "FINAL,Final"]
     assert any(x.startswith("DOMAIN-SUFFIX,openai.com,AI") for x in local)
     assert any(x.startswith("DOMAIN-SUFFIX,whatsapp.com,Whatsapp") for x in local)
@@ -92,7 +93,7 @@ def validate(check_generated=False):
         for name in names:
             assert (GENERATED / name).stat().st_size > 50, name
     assert not (ROOT / "reviews/LoonKit_Hybrid_Review.lcf").exists()
-    print("PASS: active pre-migration routing 28/66 + BrowserLeaks proxy override, staged composite 33 lists, AliDNS baseline")
+    print("PASS: v5.10.0 routing 28/66 + 17 protected-domain Proxy overrides, staged composite 33 lists, AliDNS baseline")
 
 
 if __name__ == "__main__":
