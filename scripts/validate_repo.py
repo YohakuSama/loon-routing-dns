@@ -144,8 +144,8 @@ def check_plugin():
     src_urls = re.findall(r'script\("(https://[^"]+)"', scripts)
     require(len(src_urls) == 6, "expected 6 script source URLs")
     for url in src_urls:
-        marker = "/YohakuSama/loon-routing-dns/main/"
-        require(marker in url and (ROOT / url.split(marker)[1]).is_file(),
+        marker = "/YohakuSama/loon-routing-dns/"
+        require(marker in url and (ROOT / url.split(marker, 1)[1].split("/", 1)[1]).is_file(),
                 "plugin script URL missing local file: " + url)
 
     for file in JS:
