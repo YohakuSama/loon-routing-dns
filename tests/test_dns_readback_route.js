@@ -7,7 +7,7 @@ const path=require("node:path");
 const src=fs.readFileSync(path.resolve(__dirname,"../scripts/preview/dns-readback-route-probe.js"),"utf8");
 let cases=0;
 function test(name,run){try{run();cases++;console.log("PASS",name)}catch(e){process.exitCode=1;console.error("FAIL",name,e)}}
-const TLS="HTTPClient request failed with error:Error Domain=LNGCDAsyncSocketTLSError Code=16777";
+const TLS="HTTPClient request failed with error:Error Domain=LNGCDAsyncSocketTLSError Code=167772294 (certificate verify failed)";
 function check(o={}){
  const calls=[],dns=[],results=[],timers=[];
  let clock=0,serial=0;
@@ -44,15 +44,20 @@ test("normal and Proxy paths both observe resolver responses",()=>{
 });
 test("default route TLS error and Proxy success are kept distinct",()=>{
  const r=check({autoTLS:true});
- assert.match(r.content,/当前分流：失败.*16777/);
+ assert.match(r.content,/当前分流：失败.*167772294/);
  assert.match(r.content,/Proxy：HTTP\/TLS 成功/);
  assert.equal(r.dns.length,10);
 });
 test("both routes TLS fail with no DNS safety claim",()=>{
  const r=check({autoTLS:true,proxyTLS:true});
  assert.match(r.content,/当前分流：失败.*16777/);
- assert.match(r.content,/Proxy：失败.*16777/);
+ assert.match(r.content,/Proxy：失败.*167772294/);
  assert.doesNotMatch(r.content,/无 DNS 泄漏|DNS 泄漏已排除/);
+});
+test("actual iPhone 167772294 code is described as potential cert failure",()=>{
+ const r=check({autoTLS:true,proxyTLS:true});
+ assert.match(r.content,/167772294 在 OpenSSL 中对应证书验证失败/);
+ assert.match(r.content,/insecure:false/);
 });
 test("session API error blocks DNS probes and Proxy fallback",()=>{
  const r=check({sessionTLS:true});
@@ -78,7 +83,7 @@ test("HTTP failures are not misclassified as TLS success",()=>{
 });
 test("no forced DIRECT and no certificate bypass anywhere",()=>{
  const r=check({autoTLS:true});
- assert(r.calls.every(x=>!Object.prototype.hasOwnProperty.call(x,"insecure")));
+ assert(r.calls.every(x=>x.insecure===false));
  assert(r.calls.every(x=>x.node===undefined||x.node==="Proxy"));
  assert(r.calls.every(x=>x.alpn==="h1"));
 });
