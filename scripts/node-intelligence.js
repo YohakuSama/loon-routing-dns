@@ -233,48 +233,49 @@
     }), key); } catch(e) {}
     return message;
   }
+  function shortName(value) {
+    var name = safe(value);
+    return name.length > 34 ? name.slice(0, 16) + "…" + name.slice(-14) : name;
+  }
   function render(info, local) {
+    var place = [];
+    if (info.countryCode !== "未知") place.push(info.countryCode);
+    else if (info.country !== "未知") place.push(info.country);
+    if (info.city !== "未知") place.push(info.city);
+    var net = [info.asn, info.isp].filter(function (x) { return x && x !== "未知"; });
+    var type = info.mobile === true ? "移动网络（情报）" :
+      info.datacenter === true ? "机房 / 托管（情报）" :
+      info.datacenter === false && info.mobile === false ? "未标记为机房（非家宽证明）" : "未知";
     var arr = [
-      "检测对象：" + safe(route),
-      "检测路线：" + (route === "DIRECT" ? "DIRECT" : "通过「" + safe(route) + "」指定节点/策略"),
+      "节点：" + shortName(route),
       "出口 IP：" + info.ip,
-      egressChange(info),
-      "归属国家/地区：" + info.country + " (" + info.countryCode + ")",
-      "州/省：" + info.region,
-      "城市：" + info.city,
-      "网络类型：" + classification(info),
-      "ASN：" + info.asn,
-      "ISP：" + info.isp,
-      "运营组织：" + info.org,
-      "机房/托管组织：" + (info.datacenter === true ? info.org + "（ASN 归属线索，并非精确数据中心）" : "无法确定"),
-      "时区：" + info.timezone,
-      "邮编/地区代码：" + info.zip,
-      "近似坐标：" + (info.lat !== null && info.lon !== null ? info.lat.toFixed(3) + ", " + info.lon.toFixed(3) : "无数据"),
-      "风险分数：" + (info.riskScore !== null ? info.riskScore + "/100（服务商自有风控指标，非节点质量评分）" : "无数据"),
-      "VPN 特征：" + signal(info.vpn),
-      "代理特征：" + signal(info.proxy),
-      "Tor 特征：" + signal(info.tor),
-      "情报服务：" + info.provider +
-        (info.cached ? "（本机缓存，最长由插件参数控制；动态出口请从 Proxy 查询）" : "")
+      "地区：" + (place.join(" · ") || "未知"),
+      "网络：" + (net.join(" · ") || "未知"),
+      "类型：" + type
     ];
+    var change = egressChange(info);
+    if (change.indexOf("出口变化：IP ") === 0 || change.indexOf("出口变化：ASN ") === 0 ||
+        change.indexOf("出口变化：ISP ") === 0) arr.push(change);
+    if (info.riskScore !== null)
+      arr.push("情报风险：" + info.riskScore + "/100（非节点质量评分）");
+    if (info.vpn === true || info.proxy === true || info.tor === true) {
+      var flags = [];
+      if (info.vpn === true) flags.push("VPN");
+      if (info.proxy === true) flags.push("Proxy");
+      if (info.tor === true) flags.push("Tor");
+      arr.push("情报标签：" + flags.join(" / "));
+    }
     var localData = localIntel(info.ip);
-    if (localData) {
-      arr.push("Loon 本地 GeoIP：" + localData.geo);
-      arr.push("Loon 本地 ASN / ASO：" + localData.asn + " / " + localData.org);
-      if (localData.geo !== "无数据" && info.countryCode !== "未知" &&
-          localData.geo.toUpperCase() !== info.countryCode.toUpperCase()) {
-        arr.push("位置数据源存在差异：仅供交叉核对，不说明节点异常。");
-      }
-    }
+    if (localData && localData.geo !== "无数据" &&
+        info.countryCode !== "未知" &&
+        localData.geo.toUpperCase() !== info.countryCode.toUpperCase())
+      arr.push("提示：Loon 与情报服务的地区数据不一致");
     if (local && local.ip) {
-      arr.push("直连出口 IP：" + local.ip);
-      if (route !== "DIRECT" && info.ip === local.ip) arr.push("注意：两条路线出口相同，检查 Proxy 是否选了 DIRECT，或代理是否未生效。");
-      if (route !== "DIRECT" && info.ip !== local.ip) arr.push("出口对照：与 DIRECT 不同；仅说明观测出口不同，不能单独证明无泄漏。");
-    } else if (compare) {
-      arr.push("DIRECT 对照：查询失败，不影响以上代理出口情报。");
-    }
-    arr.push("说明：城市是 IP 数据库估计；机房≠确切楼宇；未标记机房≠确认家宽。");
-    arr.push("仅手动查询；自定义源必须返回兼容 ipquery / ipwho 的 JSON。第三方会看到请求出口 IP。");
+      if (route !== "DIRECT" && info.ip === local.ip)
+        arr.push("注意：代理与直连出口相同，请核对所选策略");
+      else arr.push("直连出口：" + local.ip);
+    } else if (compare) arr.push("直连对照：查询失败");
+    arr.push("来源：" + info.provider + (info.cached ? "（缓存）" : ""));
     return arr.join("\n");
   }
   function finish(text) {
