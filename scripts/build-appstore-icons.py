@@ -14,8 +14,6 @@ import re
 import sys
 from pathlib import Path
 from urllib.parse import urlencode
-import requests
-from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
 DIR = ROOT / "icons"
@@ -69,6 +67,7 @@ def download(session: requests.Session, url: str) -> bytes:
     raise RuntimeError("artwork fetch failed") from err
 
 def official_art(session, name, app_id, country, publisher):
+    from PIL import Image
     url="https://itunes.apple.com/lookup?"+urlencode({"id":app_id,"country":country,"entity":"software"})
     result=session.get(url,timeout=35)
     result.raise_for_status()
@@ -95,6 +94,7 @@ def official_art(session, name, app_id, country, publisher):
 
 def mask_app(image):
     """One iOS-like rounded rectangle mask; four-times antialiasing at 512."""
+    from PIL import Image, ImageDraw
     h=4
     large=Image.new("L",(512*h,512*h),0)
     draw=ImageDraw.Draw(large)
@@ -106,7 +106,7 @@ def mask_app(image):
     return rgba
 
 def check_final_icons(expected):
-    from io import BytesIO
+    from PIL import Image
     for policy in expected:
         p=DIR / f"{policy}.png"
         if not p.is_file():
@@ -153,6 +153,7 @@ def main():
     for name in LOCAL:
         if not (SVG_DIR/f"{name}.svg").is_file():
             raise RuntimeError(f"Missing custom vector {name}.svg")
+    import requests
     session=requests.Session()
     session.headers.update({"User-Agent":"LoonRoutingDNSIconRelease/1.0 (design-review; 24 public App Store listings)"})
     done=[]
