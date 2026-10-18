@@ -117,9 +117,13 @@ class ImportPreflight(unittest.TestCase):
 
     def test_local_rule_order_matches_verified_baseline(self):
         baseline=json.loads((ROOT / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
-        self.assertEqual(entries(self.main,"Rule"),["DOMAIN-SUFFIX,browserleaks.com,Proxy"] + baseline["local_rules"])
+        self.assertEqual(entries(self.main,"Rule"),["DOMAIN-SUFFIX,browserleaks.com,Proxy",
+             "DOMAIN-SUFFIX,whatismyip.com,Proxy",
+             "DOMAIN-SUFFIX,stripe.com,Proxy"] + baseline["local_rules"])
         self.assertEqual(len(baseline["local_rules"]),66)
-        self.assertEqual(entries(self.main,"Rule")[0],"DOMAIN-SUFFIX,browserleaks.com,Proxy")
+        self.assertEqual(entries(self.main,"Rule")[:3],["DOMAIN-SUFFIX,browserleaks.com,Proxy",
+             "DOMAIN-SUFFIX,whatismyip.com,Proxy",
+             "DOMAIN-SUFFIX,stripe.com,Proxy"])
         self.assertNotIn("/rules/generated/",section(self.main,"Remote Rule"))
         self.assertNotIn("members/getsub.php",self.main)
 
