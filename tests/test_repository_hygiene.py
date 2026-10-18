@@ -35,6 +35,8 @@ class RepositoryHygiene(unittest.TestCase):
             with self.subTest(path=rel):
                 self.assertTrue((ROOT / rel).is_file())
         self.assertTrue((ROOT / "icons/v20261018r2/Console.png").is_file())
+        self.assertIn("icons/v20261018r3/HBO.png", active)
+        self.assertTrue((ROOT / "icons/v20261018r3/HBO.png").is_file())
         self.assertTrue((ROOT / "reviews/LoonKit_Hybrid_Review.lcf").is_file())
 
     def test_current_plugin_sources_are_available(self):
@@ -52,6 +54,10 @@ class RepositoryHygiene(unittest.TestCase):
             "plugins/v20261018r4/Network_Diagnostics.plugin",
             "plugins/v20261018r5/Network_Diagnostics.plugin",
             "plugins/v20261018r9/Network_Diagnostics.plugin",
+            "plugins/v20261018r10/Network_Diagnostics.plugin",
+            "scripts/v20261018r10/node-intelligence.js",
+            "scripts/v20261018r4/network-diagnostics.js",
+            "icons/v20261018r2/HBO.png",
             "scripts/console.js",
             "scripts/network-diagnostics.js",
             "scripts/node-intelligence.js",
