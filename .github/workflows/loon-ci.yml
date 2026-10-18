@@ -44,11 +44,15 @@ jobs:
           node --check tests/test_scripts.js
           node --check tests/test_console.js
           node --check scripts/console.js
+          node --check scripts/v20261018r4/network-diagnostics.js
+          node --check scripts/v20261018r4/node-intelligence.js
+          node --check tests/test_plugin_v2.js
 
       - name: Run Loon mocked-runtime regression tests
         run: |
           node tests/test_scripts.js
           node tests/test_console.js
+          node tests/test_plugin_v2.js
 
   upstream-resource-check:
     name: Check upstream rules, scripts, and icons
