@@ -84,7 +84,7 @@ check("bad session ID fails closed without sending DNS queries",()=>{
 check("malformed response fails closed, never returns safe",()=>{
   const r=run({malformedJSON:true});
   assert.match(r.text,/无法判定/);
-  assert.match(r.text,/不支持的结果格式/);
+  assert.match(r.text,/检测结果 JSON 格式与预期不符/);
 });
 check("missing resolver observations retry six times then explain failure",()=>{
   const r=run({rows:[SAMPLE[0]]});
