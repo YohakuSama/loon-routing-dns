@@ -24,7 +24,7 @@
     var m = /^https?:\/\/([^\/?#]+)/i.exec(String(url || ""));
     return m ? trim(m[1]) : "未设置";
   }
-  var lines = ["Loon Routing DNS 控制台 v1.3", "━━━━━━━━━━━━━━━━━━"];
+  var lines = ["Loon Routing DNS 控制台 v1.4（开发版）", "━━━━━━━━━━━━━━━━━━"];
   lines.push("诊断模式："+(args.auto_check === false ? "仅手动" : "网络变化自动诊断开启"));
   lines.push("正常时通知："+(args.notify_every_change === true ? "开启（建议测试完关闭）" : "关闭，仅异常通知"));
   lines.push("DoH 测试目标："+domain(args.doh_url));
@@ -43,7 +43,7 @@
   if (manual) lines.push("上次状态："+trim(manual.status || "未知"));
   lines.push("━━━━━━━━━━━━━━━━━━");
   lines.push("修改参数：Loon → 插件 → 本控制台 → 参数");
-  lines.push("运行脚本：「手动网络与 DNS 诊断」「模拟网络切换诊断」「节点详情查询」。");
+  lines.push("运行脚本：「手动网络与 DNS 诊断」「节点详情查询」「已发布规则资源检查」「广告与隐私规则诊断」。");
   lines.push("测速 URL 仅影响控制台自己的检测，不修改 Loon 原生测速与节点选择。");
   lines.push("网络变化检测正常时默认无通知，可临时开启「每次网络变化都通知」。");
   lines.push("本控制台不更改 DNS、代理模式、VPN 状态或远程规则。");
