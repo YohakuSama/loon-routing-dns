@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "LoonKit.lcf"
-BASE = ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf"
+BASE = ROOT / "reviews" / "LoonKit_Hybrid_Review.lcf"
 CATALOG = ROOT / "rules" / "sources.json"
 GENERATED = ROOT / "rules" / "generated"
 
@@ -75,7 +75,7 @@ def validate(check_generated=False):
         actual = {p.name for p in GENERATED.glob("*.list")}
         assert actual == names, "orphaned generated rule files"
     # Match effective routing while allowing independent plugin and icon revisions.
-    reviewer = (ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf").read_text(encoding="utf-8")
+    reviewer = (ROOT / "reviews" / "LoonKit_Hybrid_Review.lcf").read_text(encoding="utf-8")
     assert section(conf, "Remote Rule") == section(reviewer, "Remote Rule"), "review routing order diverged"
     assert active(section(conf, "Rule")) == active(section(reviewer, "Rule")), "review local routing diverged"
     print("PASS: 87 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
