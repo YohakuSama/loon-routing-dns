@@ -10,6 +10,7 @@ const diagnostic=load("scripts/network-diagnostics.js");
 const intel=load("scripts/node-intelligence.js");
 const consoleScript=load("scripts/console.js");
 const ruleHealth=load("scripts/rule-health.js");
+const adPrivacy=load("scripts/comprehensive-diagnostics.js");
 const dnsAnswer=new Uint8Array([0,0,129,128,0,1,0,1,0,0,0,0,7,101,120,97,109,112,108,101,3,99,111,109,0,0,1,0,1,192,12,0,1,0,1,0,0,1,0,0,4,93,184,215,14]);
 let passed=0;
 function check(title,run) {try{run();passed++;console.log("PASS",title)}catch(e){console.error("FAIL",title,e);process.exitCode=1}}
@@ -118,5 +119,20 @@ check("published rule health reports missing files",()=>{
  const done=[];
  vm.runInNewContext(ruleHealth,{$httpClient:{get(o,cb){cb(null,{status:200},JSON.stringify({truncated:false,tree:[]}))}},$done:v=>done.push(v),console:{log(){}}},{timeout:3000});
  assert.match(done[0].content,/缺失：DomesticCore/);
+});
+check("ad/privacy diagnostic uses default routing and never claims REJECT",()=>{
+ const calls=[],done=[];
+ vm.runInNewContext(adPrivacy,{$httpClient:{get(o,cb){calls.push(o);cb("connection failed");}},$done:r=>done.push(r),console:{log(){}}},{timeout:3000});
+ assert.equal(calls.length,4);
+ assert(calls.every(x=>!Object.prototype.hasOwnProperty.call(x,"node")));
+ assert.equal(done.length,1);
+ assert.match(done[0].content,/请求失败 ≠ 证明拦截成功/);
+ assert.doesNotMatch(done[0].content,/拦截成功率/);
+});
+check("plugin exposes five nonduplicate manual entries",()=>{
+ const p=load("plugins/v20261018r2/Network_Diagnostics.plugin");
+ const lines=p.split("\\n").filter(x=>x.startsWith("generic then script("));
+ assert.equal(lines.length,5);
+ assert(!lines.some(x=>x.includes("模拟网络切换诊断")||x.includes("国内外分流辅助诊断")));
 });
 console.log("Console regression tests passed:",passed);
