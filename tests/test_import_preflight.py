@@ -5,6 +5,7 @@ or claim that URLs/network nodes are reachable on a particular device.
 """
 from __future__ import annotations
 import re
+import json
 import unittest
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
@@ -71,13 +72,18 @@ class ImportPreflight(unittest.TestCase):
         policy_names={name for name,_ in icons(self.main)}
         self.assertEqual(len(policy_names),33)
         lines=entries(self.main,"Remote Rule")
-        self.assertEqual(len(lines),33)
+        baseline=json.loads((ROOT / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
+        self.assertEqual(lines,baseline["remote_rules"])
+        self.assertEqual(len(lines),28)
         for row in lines:
             m=re.fullmatch(r"(https://[^,\s]+),\s*policy=([^,]+),\s*tag=([^,]+),\s*enabled=true",row)
             self.assertIsNotNone(m,row)
             url,policy,_=m.groups()
             with self.subTest(rule=url):
-                self.assertTrue(local_path(url).is_file(),url)
+                parsed=urlsplit(url)
+                self.assertEqual(parsed.scheme,"https")
+                self.assertEqual(parsed.netloc,"raw.githubusercontent.com")
+                self.assertTrue(parsed.path.startswith("/blackmatrix7/ios_rule_script/master/rule/Loon/"))
                 self.assertIn(policy,policy_names | {"DIRECT"})
 
     def test_active_plugin_and_its_scripts_exist(self):
@@ -109,6 +115,13 @@ class ImportPreflight(unittest.TestCase):
         self.assertIn("https://github.com/YohakuSama/loonkit", self.main)
         self.assertIn("/main/plugins/v20261018r11/Network_Diagnostics.plugin", self.main)
 
+    def test_local_rule_order_matches_verified_baseline(self):
+        baseline=json.loads((ROOT / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
+        self.assertEqual(entries(self.main,"Rule"),baseline["local_rules"])
+        self.assertEqual(len(baseline["local_rules"]),66)
+        self.assertNotIn("/rules/generated/",section(self.main,"Remote Rule"))
+        self.assertNotIn("members/getsub.php",self.main)
+
     def test_core_rules_and_dns_are_preserved(self):
         for required in (
             "dns-server = 223.5.5.5,223.6.6.6",
@@ -128,6 +141,9 @@ class ImportPreflight(unittest.TestCase):
         result = cdn_urls_at_ref([url, url], sha)
         self.assertEqual(result, [url.replace("/main/", "/" + sha + "/")])
         self.assertEqual(cdn_urls_at_ref([url], "main"), [url])
+        upstream = "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list"
+        self.assertEqual(cdn_urls_at_ref([url,upstream],sha),sorted([
+            url.replace("/main/","/"+sha+"/"),upstream]))
         for bad in ("../main", "refs/heads/main", "main/../../", "123"):
             with self.subTest(ref=bad):
                 with self.assertRaises(ValueError):
