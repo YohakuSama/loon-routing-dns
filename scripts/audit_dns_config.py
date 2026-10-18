@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Conservative static DNS configuration risk audit; not a DNS leak detector."""
 from pathlib import Path
-import ipaddress
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
