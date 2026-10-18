@@ -1,12 +1,28 @@
-/* Console diagnostic bundle: independent, bounded checks. No MITM or rule mutation. */
+/* Loon Routing DNS — focused ad/privacy request diagnostics.
+ * Requests follow configured Loon rules; failures alone do not prove REJECT.
+ */
 (function(){
 "use strict";
-var jobs=[
- {name:"广告域名阻断",url:"http://doubleclick.net/",expect:"reject"},
- {name:"隐私追踪域名阻断",url:"http://google-analytics.com/",expect:"reject"},
- {name:"国内服务连通",url:"https://www.amap.com/",expect:"connect"},
- {name:"海外服务连通",url:"https://www.google.com/generate_204",expect:"connect"}
-],out=[],pending=jobs.length,ended=false;
-function finish(){if(ended)return;ended=true;var lines=["Loon Routing DNS · 综合辅助诊断","检测时间："+new Date().toISOString(),"━━━━━━━━━━━━━━━━━━"];jobs.forEach(function(j,i){lines.push(j.name+"："+(out[i]||"未完成"));});lines.push("注意：广告/隐私域名失败不一定是 REJECT，可能是 DNS、网络或目标站点故障。");lines.push("连通性不证明实际命中预期规则；请结合 Loon 请求记录确认。");lines.push("不读取或上传节点订阅、日志及真实直连公网 IP。");$done({title:"综合辅助诊断",content:lines.join("\n")});}
-jobs.forEach(function(j,i){try{$httpClient.get({url:j.url,timeout:6500,"auto-redirect":false,"auto-cookie":false},function(err,res){var status=res&&res.status;out[i]=err?"请求失败（可能被拦截，需查看请求日志）":"HTTP "+String(status||"未知")+(j.expect==="reject"?"（已响应；请检查 AdBlock 策略）":"");if(!--pending)finish();});}catch(e){out[i]="调用失败";if(!--pending)finish();}});
+var tests=[
+ ["广告：DoubleClick","http://doubleclick.net/"],
+ ["广告：Google Ads","http://googleadservices.com/"],
+ ["隐私：Google Analytics","http://google-analytics.com/"],
+ ["隐私：Google Tag Manager","http://googletagmanager.com/"]
+],result=[],pending=tests.length,completed=false;
+function finish(){
+ if(completed)return;completed=true;
+ var lines=["广告与隐私规则诊断","━━━━━━━━━━━━━━━━━━",
+ "以下请求使用 Loon 默认分流，不强制 DIRECT/Proxy。",
+ "请确认 AdBlock 策略组当前为 REJECT。"];
+ tests.forEach(function(t,i){lines.push(t[0]+"："+(result[i]||"未完成"));});
+ lines.push("━━━━━━━━━━━━━━━━━━","判定方法：在 Loon 请求记录搜索以上域名，确认命中 AdBlock 且策略为 REJECT。",
+ "请求失败 ≠ 证明拦截成功；HTTP 响应 ≠ 证明规则失效。",
+ "本检测不统计拦截率、不上传请求日志、不修改配置。");
+ $done({title:"广告与隐私规则诊断",content:lines.join("\n")});
+}
+tests.forEach(function(t,i){
+ try{$httpClient.get({url:t[1],timeout:6500,"auto-redirect":false,"auto-cookie":false},
+ function(err,response){result[i]=err?"请求未成功（核对 Loon 请求记录）":"HTTP "+String(response&&response.status||"未知")+"（核对 Loon 请求记录）";if(!--pending)finish();});}
+ catch(e){result[i]="请求无法执行";if(!--pending)finish();}
+});
 })();
