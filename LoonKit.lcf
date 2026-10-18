@@ -5,13 +5,11 @@
 # Community configuration; not affiliated with Loon.
 
 [General]
-# Mainland China baseline: AliDNS DoH avoids inaccessible overseas DNS services.
-# Only one DoH is configured to prevent competing resolver answers.
-# IMPORTANT: Disable "encrypted DNS fallback to standard DNS" in Loon's DNS
-# Servers UI to enforce fail-closed privacy when the DoH endpoint fails.
-# dns-server is AliDNS UDP for emergency/compatibility use only; the UI
-# toggle above, not this field alone, controls whether fallback may occur.
-dns-server = 223.5.5.5
+# Restore the pre-migration, device-tested mainland DNS settings (v5.1.0).
+# AliDNS DoH is the configured encrypted resolver; Loon's app-level
+# "encrypted DNS fallback to standard DNS" option must remain OFF for
+# fail-closed operation. The two UDP entries are only compatibility fallback.
+dns-server = 223.5.5.5,223.6.6.6
 doh-server = https://dns.alidns.com/dns-query
 hijack-dns = *:53
 # UDP/53 interception does not capture third-party DoH/DoT.
@@ -130,11 +128,6 @@ DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
 # Retain no-resolve: avoid triggering local DNS merely to classify unmatched proxy domains.
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
-
-# Avoid a plaintext bootstrap lookup for the AliDNS DoH hostname.
-# 223.5.5.5 is the official AliDNS service IP; TLS still verifies dns.alidns.com.
-[Host]
-dns.alidns.com = 223.5.5.5
 
 # Node information and basic network diagnostics.
 [Plugin]
