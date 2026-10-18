@@ -54,7 +54,7 @@ PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubu
 Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Spotify.png
 TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/TikTok.png
 Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Twitch.png
-HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/HBO.png
+HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r3/HBO.png
 Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Abema.png
 動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/AnimeCrazy.png
 Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Dazn.png
