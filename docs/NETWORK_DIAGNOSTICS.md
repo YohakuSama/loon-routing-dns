@@ -1,6 +1,6 @@
 # Loon Routing DNS 控制台插件 v1.3
 
-这是随完整配置自动加载、可在 Loon 内关闭的 **Loon Routing DNS 控制台插件**，使用 Loon 官方 `[Argument]` 参数页面作为控制台设置，配合四个可以手动点击的 `generic` 脚本入口；**不是单独的网页或内嵌可视化 App 页面**。
+这是随完整配置自动加载、可在 Loon 内关闭的 **Loon Routing DNS 控制台插件**，使用 Loon 官方 `[Argument]` 参数页面作为控制台设置，配合五个可以手动点击的 `generic` 脚本入口；**不是单独的网页或内嵌可视化 App 页面**。
 
 > 不接管 Loon 自带的策略组选择、全局代理、原生节点测速、DNS 服务器、网络自动开关、系统 VPN、Rewrite 或 MitM。
 > 更改控制台参数不会修改 `Loon_Routing_DNS.lcf`；只影响本插件发出的探测请求。
@@ -23,13 +23,14 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/Netwo
 
 控制台为可关闭的可选诊断功能，即使关闭，完整配置仍能正常分流。需 **Loon 3.5.1 Build 983+**；原生 DNS 查询需 **Build 988+**。脚本固定引用仓库 `main/scripts/*.js`，远程更新是否立即生效取决于 Loon 缓存与资源更新操作。
 
-## 四个手动入口
+## 五个手动入口
 
 | 通用脚本 | 做什么 |
 |---|---|
 | **控制台 · 状态与设置摘要** | 汇总插件专属检测设置、最近一次自动与手动诊断的时间和状态；敏感 DoH URL 仅展示主机名 |
 | **手动网络与 DNS 诊断** | 分别测试 DIRECT、指定 DoH、Proxy 出口，Build 988+ 再执行 Loon 原生 `$dns.query()` |
 | **模拟网络切换诊断** | 立即运行一次与自动模式相同的轻量探测，并写入“最近诊断”；不会发自动告警，也不能证明 iOS 事件钩子本身工作 |
+| **已发布规则资源检查** | 通过 GitHub API 核对正式分支的 33 份规则文件是否存在、非空及是否异常偏小；不能读取 Loon 实际命中记录，也不能证明远程订阅已更新 | 
 | **节点详情查询** | 查询指定策略/节点的出口 IP、国家、城市、ISP、ASN、数据中心特征等；有需要时开启 DIRECT 对照 |
 
 ## 控制台的 12 个参数
@@ -95,7 +96,11 @@ DIRECT 出口对照**默认关闭**：只有你开启此功能，脚本才主动
 - [控制台脚本](../scripts/console.js)
 - [网络与 DNS 诊断脚本](../scripts/network-diagnostics.js)
 - [节点情报脚本](../scripts/node-intelligence.js)
-- [项目专属控制台图标](../icons/Console.png)
+- [项目专属控制台图标](../icons/v20261018r2/Console.png)
 - [开发与模拟测试](../tests/test_console.js)
 
 **自动模拟检查通过不代表已经在真实 iOS Loon 环境下验证。** 脚本有问题请提供 Loon Build 号和经过脱敏的脚本日志。
+
+## 已发布规则资源检查的边界
+
+该功能只请求公开的 GitHub 仓库树元数据，核对 `rules/generated/*.list` 的文件存在性和大小；不下载规则正文，不读取 Loon 请求日志，不需要 MITM。检查结果不代表 iPhone 上规则已更新、匹配正确或广告拦截有效。GitHub API 无法连接、限流或数据不完整时会显示失败原因。运行时通过 DIRECT 访问 GitHub API，若当前网络无法直连 GitHub，请勿将其误判为规则失效。
