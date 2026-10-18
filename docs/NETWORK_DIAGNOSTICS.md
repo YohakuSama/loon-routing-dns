@@ -4,7 +4,7 @@
 
 ## 功能
 
-- **节点详情查询（唯一手动入口）**：查询指定节点/策略的出口 IP、ISP、ASN、国家地区及第三方网络类型标签。出口 IP 不一定是节点入口 IP；机房、住宅、VPN 等标签均属于启发式信息，不能作为权威证明。
+- **节点详情查询（唯一手动入口）**：查询指定节点/策略的出口 IP、ISP、ASN、国家地区及第三方网络类型标签。明确节点上下文会在本机记录最近一次出口 IP、ASN、ISP，并在下一次非缓存查询时提示变化；动态 Proxy 策略组不进行历史对比，以免节点切换造成误报。记录只存本机，30 天后不用于比较。出口 IP 不一定是节点入口 IP；机房、住宅、VPN 等标签均属于启发式信息，不能作为权威证明。
 - **网络切换异常监测（默认关闭）**：仅在用户主动开启后进行 DIRECT 和指定 DoH 的健康探测；异常二次复测、同类告警 30 分钟冷却。它不能证明 DNS 未泄漏，也不替代 Loon 自带的网络检测。正常情况默认不通知。
 
 ## 安装与使用
@@ -25,6 +25,6 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/console-rule-
 
 - `node tests/test_console.js`：模拟运行时测试，覆盖节点查询、网络切换通知和精简菜单。
 - `python3 scripts/validate_repo.py`：校验主配置和插件引用、默认隐私选项、脚本数量。
-- `python3 scripts/audit_rule_overlaps.py`：离线审计 33 组规则的跨组精确重复和潜在覆盖，属于 CI 工作，不占手机菜单。
+- `python3 scripts/audit_dns_config.py`：静态检查 DNS 配置风险，报告明文 DNS 回退、DoH 和 DNS 劫持配置；**不代表真实 DNS 泄漏检测**。\n- `python3 scripts/audit_rule_overlaps.py`：离线审计 33 组规则的跨组精确重复和潜在覆盖，属于 CI 工作，不占手机菜单。
 
 以上模拟测试不能替代 Loon 真机验证。规则资源完整性、广告隐私 HTTP 探测、控制台参数摘要和重复的手动网络诊断已从轻量插件入口移除。原脚本留在开发分支以便回退，未被插件调用。
