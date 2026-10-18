@@ -54,8 +54,8 @@ jobs:
           node --check scripts/v20261018r7/dns-leak-check.js
           node --check tests/test_dns_probe_reliability.js
           node --check scripts/v20261018r8/dns-leak-check.js
-          node --check scripts/v20261018r9/dns-leak-check.js
-          node --check tests/test_dns_tls_fallback.js
+          node --check scripts/preview/dns-readback-route-probe.js
+          node --check tests/test_dns_readback_route.js
 
       - name: Run Loon mocked-runtime regression tests
         run: |
@@ -65,7 +65,7 @@ jobs:
           node tests/test_node_details.js
           node tests/test_dns_leak_check.js
           node tests/test_dns_probe_reliability.js
-          node tests/test_dns_tls_fallback.js
+          node tests/test_dns_readback_route.js
 
   upstream-resource-check:
     name: Check upstream rules, scripts, and icons
