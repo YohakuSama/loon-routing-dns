@@ -44,7 +44,7 @@
     if(x.connection || (x.country && x.ip)) {
       var c=x.connection||{};
       return {ip:x.ip,country:safe(x.country),region:safe(x.region),city:safe(x.city),
-        asn:c.asn?safe(String(c.asn).replace(/^AS/i,"AS")):"未知",
+        asn:c.asn?"AS"+safe(String(c.asn).replace(/^AS/i,"")):"未知",
         isp:safe(c.isp||c.org),datacenter:null,mobile:null,provider:"ipwho.is"};
     }
     return null;
