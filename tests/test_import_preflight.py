@@ -103,6 +103,21 @@ class ImportPreflight(unittest.TestCase):
         self.assertIsNotNone(image)
         self.assertTrue(local_path(image.group(1)).is_file())
 
+    def test_old_config_filename_is_identical_compatibility_alias(self):
+        alias = (ROOT / "Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
+        self.assertEqual(alias, self.main)
+
+    def test_only_new_repository_paths_are_used_by_active_assets(self):
+        assets = [self.main, self.review, self.plugin]
+        for path in ("scripts/v20261018r11/node-intelligence.js",
+                     "scripts/v20261018r11/network-diagnostics.js"):
+            assets.append((ROOT / path).read_text(encoding="utf-8"))
+        for content in assets:
+            self.assertNotIn("YohakuSama/loon-routing-dns", content)
+            self.assertNotIn("Loon Routing DNS", content)
+        self.assertIn("https://github.com/YohakuSama/loonkit", self.main)
+        self.assertIn("/main/plugins/v20261018r11/Network_Diagnostics.plugin", self.main)
+
     def test_core_rules_and_dns_are_preserved(self):
         for required in (
             "dns-server = 223.5.5.5,223.6.6.6",
