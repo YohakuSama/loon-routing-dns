@@ -63,6 +63,8 @@ class RepositoryHygiene(unittest.TestCase):
             "scripts/node-intelligence.js",
             "scripts/v20261018r4/node-intelligence.js",
             "scripts/v20261018r5/node-intelligence.js",
+            "Loon_Routing_DNS.lcf",
+            "reviews/LoonKit_Hybrid_Review.lcf",
             "releases/v4.4.8/Loon_Routing_DNS.lcf",
             "releases/v5.1.0/CHANGELOG.md",
         ):
