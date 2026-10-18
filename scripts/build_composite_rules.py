@@ -28,9 +28,9 @@ MAX_FILE_BYTES = 35_000_000
 # Subscription order in the release profile. Exact cross-policy duplicates
 # are owned by the earlier group; lower-priority copies cannot win at runtime.
 PUBLISH_ORDER = (
-    "DomesticCore", "AppleOTA", "SteamCN", "AI", "Bilibili",
-    "YouTube", "Netflix", "Disney", "PrimeVideo", "Spotify", "TikTok",
-    "Twitch", "HBO", "Abema", "BBC", "動畫瘋", "Dazn",
+    "DomesticCore", "AI", "AppleOTA", "SteamCN", "YouTube",
+    "Netflix", "Disney", "PrimeVideo", "Spotify", "TikTok",
+    "Twitch", "HBO", "Abema", "BBC", "Bilibili", "動畫瘋", "Dazn",
     "Telegram", "Whatsapp", "Instagram", "Facebook", "Twitter",
     "Discord", "Line", "Reddit", "Linkedin", "Google", "Microsoft",
     "Apple", "Steam", "Paypal", "AdBlock", "ChinaDirect",
@@ -125,6 +125,10 @@ def normalize(text, source_format="loon", source=None):
         value = value.lower().rstrip(".")
         if not DOMAIN_RE.fullmatch(value):
             return None, "invalid domain value"
+    flags = chunks[2:]
+    if flags and (kind not in {"IP-CIDR", "IP-CIDR6", "IP-ASN"}
+                  or len(flags) != 1 or flags[0].lower() != "no-resolve"):
+        return None, "unexpected trailing fields"
     if kind.startswith("IP-CIDR"):
         try:
             network = ipaddress.ip_network(value, strict=False)
@@ -133,15 +137,13 @@ def normalize(text, source_format="loon", source=None):
         if (network.version == 6) != (kind == "IP-CIDR6"):
             return None, "IP family mismatch"
         value = str(network)
-        return kind + "," + value + ",no-resolve", None
     if kind == "IP-ASN":
         value = value.upper()
         if not re.fullmatch(r"(AS)?\d+", value):
             return None, "invalid ASN"
-    # Non-IP match types should not carry a target policy from upstream.
-    if len(chunks) > 2 and any(p and p.lower() != "no-resolve" for p in chunks[2:]):
-        return None, "unexpected trailing fields"
-    return kind + "," + value, None
+        value = value.removeprefix("AS")
+    # Preserve the IP no-resolve flag only when explicitly present upstream.
+    return kind + "," + value + (",no-resolve" if flags else ""), None
 
 
 def read_catalog(path=CATALOG):
@@ -149,7 +151,11 @@ def read_catalog(path=CATALOG):
     sources = [s for s in data["sources"] if s.get("enabled")]
     if len({s["id"] for s in sources}) != len(sources):
         raise ValueError("duplicate source ids")
+    group_policies = {}
     for s in sources:
+        if s["group"] in group_policies and group_policies[s["group"]] != s["policy"]:
+            raise ValueError("conflicting policies within group: " + s["group"])
+        group_policies[s["group"]] = s["policy"]
         if s.get("role") == "local":
             path = s.get("path", "")
             if not re.fullmatch(r"rules/custom/[A-Za-z0-9_-]+\.list", path):
@@ -223,6 +229,7 @@ def generate(sources, fetch=fetch_text):
     quarantined = defaultdict(int)
     quarantined_examples = []
     intra_dupes = 0
+    ip_flag_variants = defaultdict(set)
     for s in sources:
         body = ((ROOT / s["path"]).read_text(encoding="utf-8")
                 if s.get("role") == "local" else fetch(s["url"]))
@@ -244,6 +251,9 @@ def generate(sources, fetch=fetch_text):
             parsed += 1
             source_rules.add(rule)
             kind = rule.split(",", 1)[0]
+            if kind in {"IP-CIDR", "IP-CIDR6", "IP-ASN"}:
+                ip_flag_variants[(s["group"], rule.removesuffix(",no-resolve"))].add(
+                    "no-resolve" if rule.endswith(",no-resolve") else "resolve")
             # Block precise ad/tracker domains, not all IPs sharing a CDN or
             # generic keyword like "analytics." (frequent login failures).
             if s["group"] == "AdBlock" and kind not in ADBLOCK_ALLOWED:
@@ -270,6 +280,18 @@ def generate(sources, fetch=fetch_text):
             "upstream_updated": update_match.group(1) if update_match else None,
             "parsed": parsed, "duplicate_within_group": deduped,
         })
+
+    # Expected safety exclusions are recorded; unexpected grammar blocks release.
+    allowed_quarantine = {
+        "URL-REGEX excluded (may require MITM; separate review)",
+        "v2fly include not expanded (explicit sources only)",
+        "v2fly regexp excluded (manual review)",
+    }
+    unexpected = {reason: count for reason, count in quarantined.items()
+                  if reason not in allowed_quarantine
+                  and not reason.startswith("adblock broad matcher omitted: ")}
+    if unexpected:
+        raise ValueError("unsupported/invalid upstream rules need manual review: " + str(unexpected))
 
     exact_conflicts = []
     same_policy_reused = 0
@@ -336,6 +358,7 @@ def generate(sources, fetch=fetch_text):
         "sources": source_stats,
         "group_sizes": {k: len(v) for k, v in sorted(by_group.items())},
         "duplicates_removed_within_group": intra_dupes,
+        "ip_flag_variant_conflict_count": sum(len(v) > 1 for v in ip_flag_variants.values()),
         "same_group_suffix_shadow_pruned": suffix_pruned,
         "cross_group_exact_pruned_count": len(cross_pruned),
         "cross_group_exact_pruned_samples": cross_pruned[:100],
@@ -348,6 +371,7 @@ def generate(sources, fetch=fetch_text):
         "quarantined_examples": quarantined_examples,
         "notes": [
             "Exact cross-group duplicates retained only in the first published group.",
+            "IP no-resolve flags are preserved from upstream; adding them would alter DNS matching.",
             "Per-group suffix shadows removed only when same routing policy covers them.",
             "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
             "Different-policy and ancestor conflicts require a routing priority review.",
