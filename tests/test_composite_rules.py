@@ -53,16 +53,16 @@ class CompositeRulesTests(unittest.TestCase):
 
     def test_guardrail_blocks_real_misclassification_and_broad_suffix(self):
         protected=protected_domains()
-        self.assertIn("browserleaks.com",protected)
-        self.assertIn("dnsleaktest.com",protected)
+        for domain in ("browserleaks.com","whatismyip.com","stripe.com"):
+            self.assertIn(domain,protected)
         self.assertEqual(direct_rule_matches_protected_domain(
             "DOMAIN-SUFFIX,browserleaks.com"),"browserleaks.com")
         self.assertEqual(direct_rule_matches_protected_domain(
-            "DOMAIN,browserleaks.com"),"browserleaks.com")
+            "DOMAIN-SUFFIX,whatismyip.com"),"whatismyip.com")
+        self.assertEqual(direct_rule_matches_protected_domain(
+            "DOMAIN-KEYWORD,stripe"),"stripe.com")
         self.assertEqual(direct_rule_matches_protected_domain(
             "DOMAIN-SUFFIX,com"),"browserleaks.com")
-        self.assertEqual(direct_rule_matches_protected_domain(
-            "DOMAIN-KEYWORD,browserleaks"),"browserleaks.com")
         self.assertIsNone(direct_rule_matches_protected_domain(
             "DOMAIN-SUFFIX,alipay.com"))
         self.assertIsNone(direct_rule_matches_protected_domain(
@@ -71,18 +71,27 @@ class CompositeRulesTests(unittest.TestCase):
     def test_generator_quarantines_direct_test_domain_and_keeps_ordinary_cn(self):
         source={"id":"test-mainland","group":"ChinaDirect","policy":"DIRECT",
                 "url":"https://rules.invalid/cn","format":"loon","min_rules":1}
-        fixture=("DOMAIN-SUFFIX,browserleaks.com\n"
-                 "DOMAIN-SUFFIX,alipay.com\n"
-                 "DOMAIN-SUFFIX,cn\n")
+        fixture=chr(10).join([
+            "DOMAIN-SUFFIX,browserleaks.com",
+            "DOMAIN-SUFFIX,whatismyip.com",
+            "DOMAIN-KEYWORD,stripe",
+            "DOMAIN-SUFFIX,alipay.com",
+            "DOMAIN-SUFFIX,cn",
+        ]) + chr(10)
         output,audit=generate([source],lambda _:fixture)
         result=output["ChinaDirect.list"]
-        self.assertNotIn("DOMAIN-SUFFIX,browserleaks.com",result)
+        bad={"DOMAIN-SUFFIX,browserleaks.com",
+             "DOMAIN-SUFFIX,whatismyip.com","DOMAIN-KEYWORD,stripe"}
+        for item in bad:
+            self.assertNotIn(item,result)
         self.assertIn("DOMAIN-SUFFIX,alipay.com",result)
         self.assertIn("DOMAIN-SUFFIX,cn",result)
         guarded=audit["routing_guardrails"]["direct_rules_removed"]
-        self.assertEqual(len(guarded),1)
-        self.assertEqual(guarded[0]["source"],"test-mainland")
-        self.assertEqual(guarded[0]["protected_domain"],"browserleaks.com")
+        self.assertEqual(len(guarded),3)
+        self.assertEqual({item["rule"] for item in guarded},bad)
+        self.assertEqual(
+            {item["protected_domain"] for item in guarded},
+            {"browserleaks.com","whatismyip.com","stripe.com"})
         self.assertEqual(audit["status"],"STAGED_CANDIDATE")
 
     def test_active_rule_library_is_staged_and_published_files_obey_guardrails(self):
@@ -102,14 +111,42 @@ class CompositeRulesTests(unittest.TestCase):
                     continue
                 self.assertIsNone(direct_rule_matches_protected_domain(line,protected),
                                   f"{filename}: {line}")
-        self.assertEqual(audit["group_sizes"]["ChinaDirect"],123010)
-        self.assertEqual(audit["routing_guardrails"]["direct_rules_removed"][0]
-                         ["rule"],"DOMAIN-SUFFIX,browserleaks.com")
+        self.assertEqual(audit["group_sizes"]["ChinaDirect"],123008)
         self.assertEqual(
-            sum(bool(s.strip()) and not s.startswith("#")
-                for s in (root/"rules/generated/ChinaDirect.list").read_text(
+            {item["rule"] for item in audit["routing_guardrails"]["direct_rules_removed"]},
+            {"DOMAIN-SUFFIX,browserleaks.com",
+             "DOMAIN-SUFFIX,whatismyip.com","DOMAIN-KEYWORD,stripe"})
+        self.assertEqual(
+            sum(bool(row.strip()) and not row.startswith("#")
+                for row in (root/"rules/generated/ChinaDirect.list").read_text(
                     encoding="utf-8").splitlines()),
             audit["group_sizes"]["ChinaDirect"])
+
+    def test_all_generated_groups_have_valid_grammar_and_match_audit_sizes(self):
+        """Inspect every committed rule group and reject drift in staged output."""
+        root=Path(__file__).resolve().parents[1]
+        audit=json.loads((root/"rules/generated/audit.json").read_text(encoding="utf-8"))
+        sizes=audit["group_sizes"]
+        self.assertEqual(len(sizes),33)
+        valid_types={"DOMAIN","DOMAIN-SUFFIX","DOMAIN-KEYWORD","IP-CIDR",
+                     "IP-CIDR6","IP-ASN","USER-AGENT"}
+        for group,count in sizes.items():
+            name=group.replace("動畫瘋","AnimeCrazy")
+            path=root/"rules/generated"/(name+".list")
+            actual=[row for row in path.read_text(encoding="utf-8").splitlines()
+                    if row and not row.startswith("#")]
+            with self.subTest(group=group):
+                self.assertEqual(len(actual),count)
+                self.assertEqual(len(set(actual)),len(actual))
+                for line in actual:
+                    fields=line.split(",")
+                    self.assertIn(fields[0],valid_types,line)
+                    self.assertGreaterEqual(len(fields),2,line)
+                    self.assertTrue(fields[1],line)
+                    if fields[0] in {"IP-CIDR","IP-CIDR6"}:
+                        self.assertEqual(fields[-1],"no-resolve",line)
+                    if fields[0] in {"DOMAIN","DOMAIN-SUFFIX","DOMAIN-KEYWORD"}:
+                        self.assertEqual(len(fields),2,line)
 
     def test_ai_rule_safety_exclusions_are_repeatable(self):
         self.assertEqual(excluded_ai_rule("IP-ASN,20473"), "AI broad ASN omitted")
