@@ -142,8 +142,12 @@ def normalize(text, source_format="loon", source=None):
         if not re.fullmatch(r"(AS)?\d+", value):
             return None, "invalid ASN"
         value = value.removeprefix("AS")
-    # Preserve the IP no-resolve flag only when explicitly present upstream.
-    return kind + "," + value + (",no-resolve" if flags else ""), None
+    # Loon profile compatibility: CIDR matching must not trigger preliminary
+    # DNS resolution. Always add no-resolve for both IP families, regardless
+    # of whether an upstream rule supplies the flag. This behavior has been
+    # tested by the project maintainer and must not be changed implicitly.
+    no_resolve = kind in {"IP-CIDR", "IP-CIDR6"} or bool(flags)
+    return kind + "," + value + (",no-resolve" if no_resolve else ""), None
 
 
 def read_catalog(path=CATALOG):
@@ -229,7 +233,6 @@ def generate(sources, fetch=fetch_text):
     quarantined = defaultdict(int)
     quarantined_examples = []
     intra_dupes = 0
-    ip_flag_variants = defaultdict(set)
     for s in sources:
         body = ((ROOT / s["path"]).read_text(encoding="utf-8")
                 if s.get("role") == "local" else fetch(s["url"]))
@@ -251,9 +254,6 @@ def generate(sources, fetch=fetch_text):
             parsed += 1
             source_rules.add(rule)
             kind = rule.split(",", 1)[0]
-            if kind in {"IP-CIDR", "IP-CIDR6", "IP-ASN"}:
-                ip_flag_variants[(s["group"], rule.removesuffix(",no-resolve"))].add(
-                    "no-resolve" if rule.endswith(",no-resolve") else "resolve")
             # Block precise ad/tracker domains, not all IPs sharing a CDN or
             # generic keyword like "analytics." (frequent login failures).
             if s["group"] == "AdBlock" and kind not in ADBLOCK_ALLOWED:
@@ -358,7 +358,6 @@ def generate(sources, fetch=fetch_text):
         "sources": source_stats,
         "group_sizes": {k: len(v) for k, v in sorted(by_group.items())},
         "duplicates_removed_within_group": intra_dupes,
-        "ip_flag_variant_conflict_count": sum(len(v) > 1 for v in ip_flag_variants.values()),
         "same_group_suffix_shadow_pruned": suffix_pruned,
         "cross_group_exact_pruned_count": len(cross_pruned),
         "cross_group_exact_pruned_samples": cross_pruned[:100],
@@ -371,7 +370,7 @@ def generate(sources, fetch=fetch_text):
         "quarantined_examples": quarantined_examples,
         "notes": [
             "Exact cross-group duplicates retained only in the first published group.",
-            "IP no-resolve flags are preserved from upstream; adding them would alter DNS matching.",
+            "IP-CIDR and IP-CIDR6 always use no-resolve to preserve the project's tested DNS match ordering.",
             "Per-group suffix shadows removed only when same routing policy covers them.",
             "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
             "Different-policy and ancestor conflicts require a routing priority review.",
