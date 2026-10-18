@@ -1,0 +1,19 @@
+# Self-hosted protections maintained from rules/routing_guardrails.json.
+# Loaded first in Remote Rule with policy=Proxy. Not a DNS leak guarantee.
+DOMAIN-SUFFIX,browserleaks.com
+DOMAIN-SUFFIX,dnscheck.tools
+DOMAIN-SUFFIX,dnsleaktest.com
+DOMAIN-SUFFIX,icanhazip.com
+DOMAIN-SUFFIX,ifconfig.co
+DOMAIN-SUFFIX,ifconfig.me
+DOMAIN-SUFFIX,ip.sb
+DOMAIN-SUFFIX,ipify.org
+DOMAIN-SUFFIX,ipinfo.io
+DOMAIN-SUFFIX,ipleak.net
+DOMAIN-SUFFIX,iplocation.net
+DOMAIN-SUFFIX,myip.com
+DOMAIN-SUFFIX,stripe.com
+DOMAIN-SUFFIX,test-ipv6.com
+DOMAIN-SUFFIX,whatismyip.com
+DOMAIN-SUFFIX,whatismyipaddress.com
+DOMAIN-SUFFIX,whoer.net
