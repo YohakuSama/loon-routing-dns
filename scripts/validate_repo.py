@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static checks for Loon Routing DNS (stdlib only).
+"""Static checks for LoonKit (stdlib only).
 
 Run locally: python3 scripts/validate_repo.py
 External resources: python3 scripts/validate_repo.py --check-remote
@@ -14,11 +14,11 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CONF = ROOT / "Loon_Routing_DNS.lcf"
+CONF = ROOT / "LoonKit.lcf"
 PLUGIN = ROOT / "plugins" / "Network_Diagnostics.plugin"
 JS = [
-    ROOT / "scripts" / "v20261018r4" / "network-diagnostics.js",
-    ROOT / "scripts" / "v20261018r10" / "node-intelligence.js",
+    ROOT / "scripts" / "v20261018r11" / "network-diagnostics.js",
+    ROOT / "scripts" / "v20261018r11" / "node-intelligence.js",
 ]
 ISSUES = []
 
@@ -40,7 +40,7 @@ def section(content, name):
 
 def check_config():
     data = CONF.read_text(encoding="utf-8")
-    require(data.startswith("# Loon Routing DNS v5.1.0"), "expected v5.1.0 release header")
+    require(data.startswith("# LoonKit v5.1.0"), "expected v5.1.0 release header")
     require("dns-server = 223.5.5.5,223.6.6.6" in data, "public DNS changed")
     require("doh-server = https://dns.alidns.com/dns-query" in data, "AliDNS DoH changed")
     require("ssid-trigger" not in data, "Wi-Fi automation must not be enabled in public config")
@@ -66,7 +66,7 @@ def check_config():
             require(match.group(2) in known, "undefined remote rule policy: " + match.group(2))
     require(len(remote) == 33, "expected 33 self-hosted lists (got %s)" % len(remote))
     for url in remote:
-        require(url.startswith("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/rules/generated/"),
+        require(url.startswith("https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/"),
                 "remote URL must be a self-hosted main branch rule: " + url)
         require((ROOT / "rules" / "generated" / url.rsplit("/", 1)[-1]).is_file(),
                 "missing built rule: " + url)
@@ -88,7 +88,7 @@ def check_config():
 
     # Ensure the live config enables the current plugin.
     plugin_text = section(data, "Plugin")
-    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r10/Network_Diagnostics.plugin"
+    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/plugins/v20261018r11/Network_Diagnostics.plugin"
     entries = [line.strip() for line in plugin_text.splitlines()
                if line.strip() and not line.lstrip().startswith("#")]
     require(len(entries) == 1, "expected exactly one configured plugin")
@@ -100,7 +100,7 @@ def check_config():
     icon_urls = re.findall(r"\bimg-url\s*=\s*(https://\S+)", groups_text)
     require(len(icon_urls) == 33, "expected one icon per proxy group")
     require(len(icon_urls) == len(set(icon_urls)), "duplicate group icon URLs")
-    icon_root = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/"
+    icon_root = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/"
     for group, icon_url in zip(groups, icon_urls):
         expected_name = "AnimeCrazy" if group == "動畫瘋" else group
         expected_version = "v20261018r3" if group == "HBO" else "v20261018r2"
@@ -111,7 +111,8 @@ def check_config():
 
     print("Config: %s groups; %s remote lists; %s local rules; %s icon links"
           % (len(groups), len(remote), local_count, len(icon_urls)))
-    return remote + icon_urls + [expected_plugin]
+    config_url = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf"
+    return remote + icon_urls + [expected_plugin, config_url]
 
 
 def check_plugin():
@@ -119,7 +120,7 @@ def check_plugin():
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
     require("auto_check = switch,false" in data, "automatic checks must default off")
-    pinned_plugin=ROOT / "plugins" / "v20261018r10" / "Network_Diagnostics.plugin"
+    pinned_plugin=ROOT / "plugins" / "v20261018r11" / "Network_Diagnostics.plugin"
     require(pinned_plugin.is_file(), "missing current versioned plugin")
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
             "versioned plugin differs from current file")
@@ -151,9 +152,9 @@ def check_plugin():
     src_urls = re.findall(r'script\("(https://[^"]+)"', scripts)
     require(len(src_urls) == 3, "expected 3 script source URLs")
     for url in src_urls:
-        marker = "/YohakuSama/loon-routing-dns/main/"
-        require(marker in url and ("/scripts/v20261018r4/network-diagnostics.js" in url
-                                   or "/scripts/v20261018r10/node-intelligence.js" in url)
+        marker = "/YohakuSama/loonkit/main/"
+        require(marker in url and ("/scripts/v20261018r11/network-diagnostics.js" in url
+                                   or "/scripts/v20261018r11/node-intelligence.js" in url)
                 and (ROOT / url.split(marker)[1]).is_file(),
                 "plugin must use versioned scripts: " + url)
 
@@ -170,7 +171,7 @@ def check_readme():
         require("Network_Diagnostics.plugin" in text, label + " missing plugin link")
         require("节点出口信息" in text and "网络与 DNS" in text,
                 label + " must describe the two available tools")
-    require("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf" in data,
+    require("https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf" in data,
             "README missing full configuration import URL")
     require("直连 IP 对照" in data and "默认关闭" in data,
             "README must explain direct-IP comparison default")
@@ -209,16 +210,34 @@ def check_url(url):
     return url + " -> request failed"
 
 
+def cdn_urls_at_ref(urls, ref):
+    """Use an immutable commit SHA to check PR assets before publishing to main."""
+    if not re.fullmatch(r"[a-f0-9]{40}|main", ref):
+        raise ValueError("--remote-ref must be main or a full commit SHA")
+    prefix = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/"
+    for url in urls:
+        if not url.startswith(prefix):
+            raise ValueError("Unexpected CDN URL: " + url)
+    return sorted({u.replace(prefix, prefix.replace("/main/", "/" + ref + "/"), 1)
+                   for u in urls})
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check-remote", action="store_true",
-                        help="check every rule, icon and plugin script URL; network required")
+                        help="check every rule, icon, plugin and main config URL; network required")
+    parser.add_argument("--remote-ref", default="main",
+                        help="git revision to check on CDN; use a PR head SHA before merging")
     args = parser.parse_args()
     urls = check_config() + check_plugin()
     check_readme()
     if args.check_remote:
-        urls = sorted(set(urls))
-        print("Checking %s upstream URLs (HEAD)..." % len(urls))
+        try:
+            urls = cdn_urls_at_ref(urls, args.remote_ref)
+        except ValueError as error:
+            ISSUES.append(str(error))
+        if not ISSUES:
+            print("Checking %s CDN URLs (HEAD) at %s..." % (len(urls), args.remote_ref))
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
             for failure in executor.map(check_url, urls):
                 if failure:

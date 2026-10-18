@@ -10,8 +10,8 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-ACTIVE = ROOT / "Loon_Routing_DNS.lcf"
-REVIEW = ROOT / "reviews/Loon_Routing_DNS_Hybrid_Review.lcf"
+ACTIVE = ROOT / "LoonKit.lcf"
+REVIEW = ROOT / "reviews/LoonKit_Hybrid_Review.lcf"
 HOST = "raw.githubusercontent.com"
 
 
@@ -103,6 +103,21 @@ class ImportPreflight(unittest.TestCase):
         self.assertIsNotNone(image)
         self.assertTrue(local_path(image.group(1)).is_file())
 
+    def test_old_config_filename_is_identical_compatibility_alias(self):
+        alias = (ROOT / "Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
+        self.assertEqual(alias, self.main)
+
+    def test_only_new_repository_paths_are_used_by_active_assets(self):
+        assets = [self.main, self.review, self.plugin]
+        for path in ("scripts/v20261018r11/node-intelligence.js",
+                     "scripts/v20261018r11/network-diagnostics.js"):
+            assets.append((ROOT / path).read_text(encoding="utf-8"))
+        for content in assets:
+            self.assertNotIn("YohakuSama/loon-routing-dns", content)
+            self.assertNotIn("Loon Routing DNS", content)
+        self.assertIn("https://github.com/YohakuSama/loonkit", self.main)
+        self.assertIn("/main/plugins/v20261018r11/Network_Diagnostics.plugin", self.main)
+
     def test_core_rules_and_dns_are_preserved(self):
         for required in (
             "dns-server = 223.5.5.5,223.6.6.6",
@@ -113,6 +128,18 @@ class ImportPreflight(unittest.TestCase):
         ):
             with self.subTest(value=required):
                 self.assertIn(required,self.main)
+
+    def test_cdn_premerge_checks_use_commit_sha_not_unpublished_main(self):
+        from scripts.validate_repo import cdn_urls_at_ref
+        url = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf"
+        sha = "a" * 40
+        result = cdn_urls_at_ref([url, url], sha)
+        self.assertEqual(result, [url.replace("/main/", "/" + sha + "/")])
+        self.assertEqual(cdn_urls_at_ref([url], "main"), [url])
+        for bad in ("../main", "refs/heads/main", "main/../../", "123"):
+            with self.subTest(ref=bad):
+                with self.assertRaises(ValueError):
+                    cdn_urls_at_ref([url], bad)
 
     def test_no_broken_unversioned_icon_urls_in_review(self):
         self.assertEqual(len(icons(self.review)),33)

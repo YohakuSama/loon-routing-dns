@@ -1,55 +1,58 @@
-# Loon Routing DNS
+# LoonKit
 
-适用于 Loon 的分流配置，包含常用服务策略组、国内直连、广告拦截和网络辅助工具。
+适用于 **Loon** 的分流配置，包含常用服务策略、广告拦截、DNS 设置和网络辅助工具。
 
-[获取完整配置](./Loon_Routing_DNS.lcf) · [网络辅助插件](./plugins/Network_Diagnostics.plugin) · [使用说明](./docs/NETWORK_DIAGNOSTICS.md)
+[完整配置](./LoonKit.lcf) · [网络辅助插件](./plugins/Network_Diagnostics.plugin) · [插件使用说明](./docs/NETWORK_DIAGNOSTICS.md) · [问题反馈](https://github.com/YohakuSama/loonkit/issues)
 
-## 主要功能
+## 功能
 
-- **服务分流**：按应用和服务选择代理策略。
-- **国内直连**：常用国内服务及国内网络走直连。
+- **服务分流**：为视频、社交、AI、游戏平台等选择不同策略。
+- **国内直连**：常用国内网站和服务优先直连。
+- **节点选择**：提供手动选择、自动测速和故障切换策略。
 - **广告拦截**：通过 `AdBlock` 策略控制。
-- **自动选线**：支持 `Auto` 延迟测试和 `Fallback` 故障切换。
-- **网络辅助**：查看节点出口信息、检查网络及 DNS 连通性。
+- **网络辅助**：查看出口 IP、节点网络信息，检查直连、代理和 DNS 连通性。
 
-## 快速开始
+## 安装
 
-1. 备份 Loon 中已有的节点订阅和自定义设置。
-2. 导入以下完整配置：
+使用前请备份已有 Loon 配置和节点订阅。本项目**不提供代理节点**，需要使用自己的有效订阅。
+
+**完整配置地址：**
 
 ```text
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf
+https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 ```
 
-3. 添加自己的节点订阅，并更新远程资源。
-4. 在「策略」中为 `Proxy`、`Auto` 等策略组选择节点。
+1. 在 Loon 中通过链接导入完整配置。
+2. 添加或恢复自己的节点订阅，并更新节点。
+3. 在「策略」中为 `Proxy` 选择一个可用节点，或配置 `Auto`、`Fallback`。
+4. 更新远程规则和插件资源，确认下载成功。
+5. 使用常见国内及海外网站，检查分流是否符合预期。
 
-本项目不提供代理节点或订阅。
+**首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 配置中的 GitHub 资源默认经 `Proxy` 策略访问；若没有可用节点，下载可能失败。
+
+如果只需要辅助工具，可以[单独订阅网络辅助插件](./plugins/Network_Diagnostics.plugin)，不必导入整套配置。
 
 ## 网络辅助
 
-完整配置已包含插件，也可[单独添加](./plugins/Network_Diagnostics.plugin)。
-
-| 功能 | 内容 |
+| 工具 | 用途 |
 |---|---|
-| 节点出口信息 | 公网 IP、位置、运营商、ASN、网络类型及本地数据库信息 |
-| 网络与 DNS 诊断 | 检查直连、代理和 DNS 服务的连接情况 |
+| 节点出口信息 | 查看公网 IP、地区、运营商、ASN 和网络类型 |
+| 网络与 DNS 诊断 | 检查直连、代理、DoH 和 Loon 原生 DNS |
 
-插件可设置查询策略、直连 IP 对照及网络切换提醒。后两项默认关闭。
+网络切换提醒、直连 IP 对照默认关闭，可在插件设置中按需开启。详见[插件使用说明](./docs/NETWORK_DIAGNOSTICS.md)。
 
-## 使用与更新
+## 更新与排查
 
-- 更新分流内容：在 Loon 中刷新远程规则资源。
-- 更新完整配置或插件：重新获取对应配置或插件订阅。
-- 插件显示异常或重复：检查插件列表中是否启用了多个订阅。
-- 网站无法访问：检查选中的节点、策略组和 Loon 请求记录。
+更新规则时刷新远程规则资源；更新完整配置时请先备份个人设置，以免覆盖节点或自定义规则。
 
-遇到问题可在 [Issues](https://github.com/YohakuSama/loon-routing-dns/issues) 反馈，请勿公开订阅链接或个人 IP。
+遇到网页无法打开，可依次检查：节点是否可用、当前策略、远程规则是否成功更新，以及 Loon 请求记录。登录、支付、图片加载异常时，也可暂时将 `AdBlock` 切换为 `DIRECT` 进行排查。
 
-## 开源规则
+如果插件出现重复菜单，请检查是否同时启用了多个插件订阅。
 
-规则来自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script)、[v2fly](https://github.com/v2fly/domain-list-community)、[dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) 和本项目维护的补充列表。许可证及来源详见 [规则说明](./rules/README.md)。
+## 规则来源
+
+规则整理自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script)、[v2fly](https://github.com/v2fly/domain-list-community)、[dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) 和本项目补充的规则。具体来源与许可信息见[规则说明](./rules/README.md)。
 
 ---
 
-维护者：[YohakuSama](https://github.com/YohakuSama) · 非 Loon 官方项目。
+由 [YohakuSama](https://github.com/YohakuSama) 维护，非 Loon 官方项目。

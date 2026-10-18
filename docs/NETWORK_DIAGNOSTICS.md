@@ -1,4 +1,4 @@
-# 网络辅助插件
+# LoonKit · 网络辅助
 
 插件包含两个手动工具。使用时不会修改 Loon 的 DNS、代理模式或分流规则。
 
@@ -35,12 +35,12 @@
 
 ## 安装与更新
 
-[完整配置](../Loon_Routing_DNS.lcf) · [独立插件](../plugins/Network_Diagnostics.plugin)
+[完整配置](../LoonKit.lcf) · [独立插件](../plugins/Network_Diagnostics.plugin)
 
 独立订阅地址：
 
 ```text
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r10/Network_Diagnostics.plugin
+https://raw.githubusercontent.com/YohakuSama/loonkit/main/plugins/v20261018r11/Network_Diagnostics.plugin
 ```
 
 如果更新后菜单或报告未变化，请确认本地完整配置和插件列表使用了新版链接，并停用重复的旧插件。仅刷新远程分流规则不会更新插件脚本。

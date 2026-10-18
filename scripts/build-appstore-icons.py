@@ -119,7 +119,7 @@ def check_final_icons(expected):
             raise RuntimeError(f"bad transparent corner {p}")
 
 def check_config():
-    text=(ROOT/"Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
+    text=(ROOT/"LoonKit.lcf").read_text(encoding="utf-8")
     groups=text.split("[Proxy Group]",1)[1].split("[Remote Rule]",1)[0]
     entries=re.findall(r"(?m)^([^#\s][^=\n]*?)\s*=\s*(?:select|url-test|fallback),[^\n]*img-url\s*=\s*(\S+)",groups)
     names={name.strip() for name,_ in entries}
@@ -128,14 +128,14 @@ def check_config():
     for group, link in entries:
         filename=("AnimeCrazy" if group.strip()=="動畫瘋" else group.strip())+".png"
         expected_version="v20261018r3" if filename=="HBO.png" else "v20261018r2"
-        expected_icon="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/"+expected_version+"/"+filename
+        expected_icon="https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/"+expected_version+"/"+filename
         if link.rstrip(",")!=expected_icon:
             raise RuntimeError(f"unexpected strategy icon link: {group} {link}")
     plugin=(ROOT/"plugins/Network_Diagnostics.plugin").read_text()
-    pinned=(ROOT/"plugins/v20261018r10/Network_Diagnostics.plugin").read_text()
+    pinned=(ROOT/"plugins/v20261018r11/Network_Diagnostics.plugin").read_text()
     if pinned!=plugin:
         raise RuntimeError("Published plugin differs from standalone entry")
-    if "#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Console.png" not in plugin:
+    if "#!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Console.png" not in plugin:
         raise RuntimeError("Console plugin icon link changed unexpectedly")
 
 def main():

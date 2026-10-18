@@ -73,7 +73,7 @@ class CompositeRulesTests(unittest.TestCase):
 
     def test_publish_order_matches_live_remote_rule_order(self):
         import re
-        profile = (Path(__file__).resolve().parents[1] / "Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
+        profile = (Path(__file__).resolve().parents[1] / "LoonKit.lcf").read_text(encoding="utf-8")
         section = profile.split("[Remote Rule]", 1)[1].split("[Rule]", 1)[0]
         actual = [re.search(r"/generated/([^/,]+)\.list,", line).group(1)
                   for line in section.splitlines() if line.strip().startswith("https://")]

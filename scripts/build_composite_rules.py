@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Stage Loon-native rule lists from reviewed sources. Standard library only.
 
-Outputs never modify the active Loon_Routing_DNS.lcf. Publishing/activation
+Outputs never modify the active LoonKit.lcf. Publishing/activation
 requires a separate review of routing, licensing and iPhone behavior.
 """
 import argparse
