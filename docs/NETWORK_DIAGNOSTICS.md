@@ -1,4 +1,4 @@
-# Loon Routing DNS · 网络辅助插件 v2.0
+# Loon Routing DNS · 网络辅助插件 v2.1
 
 随完整配置自动加载的轻量插件。只提供 **两个手动入口**与 **一个可选的网络切换提醒**，不修改 Loon 的 DNS、规则、节点、VPN 或代理策略。
 
@@ -6,7 +6,7 @@
 
 | 入口 | 作用 | 限制 |
 |---|---|---|
-| **节点出口信息** | 显示节点/策略出口 IP、地区、ASN、ISP 和第三方网络类型 | 查询的是公网出口，不一定是节点服务器入口；数据可能不准确 |
+| **节点出口信息** | 显示出口 IP、位置、ASN/ISP/组织、VPN/代理/Tor 标签、可用的风险分数，以及本地 GeoIP/ASN/ASO 对照 | 查询的是公网出口，不一定是节点服务器入口；数据可能不准确 |
 | **网络与 DNS 诊断** | 分项检查 DIRECT、Proxy、指定 DoH 服务，以及支持时的 Loon 原生 DNS 查询 | 服务检查不等于 DNS 泄漏测试，不保证所有网站可达 |
 | **网络变化异常提醒** | 可选：Wi-Fi/蜂窝切换后等待网络稳定并复测，连续失败才提醒 | 默认关闭；只有 Loon/iOS 触发事件时才执行 |
 
@@ -24,7 +24,7 @@ IP 情报固定采用主源 ipquery.io、备用 ipwho.is；网络诊断探测默
 
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf
 
-**正式配置只有在合并本次 PR 后才指向新插件。** 旧版插件保留在 `plugins/v20261018r2/Network_Diagnostics.plugin`，旧版脚本仍为历史订阅保留，不再作为新版用户菜单入口。新版本插件与脚本分别放在 `plugins/v20261018r4/` 和 `scripts/v20261018r4/`。
+**正式配置只有在合并本次 PR 后才指向新插件。** 旧版插件保留在 `plugins/v20261018r2/Network_Diagnostics.plugin`，旧版脚本仍为历史订阅保留，不再作为新版用户菜单入口。新版插件位于 `plugins/v20261018r5/`，详细节点情报脚本位于 `scripts/v20261018r5/`，网络诊断继续使用未修改的 `scripts/v20261018r4/`。旧版插件目录保留，方便回滚。
 
 若曾单独订阅旧插件，请避免同时启用新旧两个插件；更新前备份个人参数。旧参数不再有对应功能，需重新开启需要的可选开关。
 
@@ -38,14 +38,14 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 
 ## 节点信息与隐私
 
-节点查询仅在手动点击时访问第三方接口。首选服务失败可尝试备用服务，备用服务缺少机房判断时明确标识为“未知”。不再展示邮编、经纬度、时区、风险评分和重复的公司字段，避免误读。
+节点查询仅在手动点击时访问第三方接口。首选服务失败可尝试备用服务，备用服务缺少机房判断时明确标识为“未知”。恢复分组展示国家/地区、州/省、城市、有效时区/邮编/近似坐标、ASN、ISP、运营组织、机房/移动/VPN/代理/Tor 标签及有数据时的服务商风险分数；同时读取 Loon 本地 GeoIP、ASN、ASO（API 可用时）交叉对照。未知字段明确显示“无数据”，风险评分不是节点质量评分，不能把“未标记”当作安全证明。
 
 开启“对照直连出口 IP”会让第三方服务获知真实直连公网 IP，默认关闭。出口 IP 不等于订阅节点入口 IP；住宅、VPN、机房等第三方标签不是确切结论，也不是节点质量评分。
 
 ## 维护与回退
 
-- [新版插件](../plugins/v20261018r4/Network_Diagnostics.plugin)
-- [节点出口脚本](../scripts/v20261018r4/node-intelligence.js)
+- [新版插件](../plugins/v20261018r5/Network_Diagnostics.plugin)
+- [节点出口脚本](../scripts/v20261018r5/node-intelligence.js)
 - [诊断脚本](../scripts/v20261018r4/network-diagnostics.js)
 - [新版模拟测试](../tests/test_plugin_v2.js)
 - [旧版插件（历史兼容）](../plugins/v20261018r2/Network_Diagnostics.plugin)
