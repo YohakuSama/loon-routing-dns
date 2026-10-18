@@ -46,9 +46,9 @@ jobs:
         run: python3 scripts/build_composite_rules.py
       - uses: actions/upload-artifact@v4
         with:
-          name: loon-hybrid-config-and-rules
+          name: loonkit-rules-preview
           path: |
-            reviews/Loon_Routing_DNS_Hybrid_Review.lcf
+            reviews/LoonKit_Hybrid_Review.lcf
             rules/generated/
             rules/sources.json
             rules/HYBRID_DESIGN.md
@@ -94,6 +94,6 @@ jobs:
             - Compare `rules/generated/audit.json` and changed .list files.
             - Review different-policy conflicts, domain ancestor conflicts, quarantined syntax and copyright.
             - Perform Loon iPhone tests before enabling any of these lists.
-            - This PR DOES NOT modify the active Loon_Routing_DNS.lcf.
+            - This PR DOES NOT modify the active LoonKit.lcf.
             - No automatic merge is configured.
           draft: true
