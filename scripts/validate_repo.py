@@ -118,6 +118,7 @@ def check_plugin():
     data = PLUGIN.read_text(encoding="utf-8")
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
+    require("auto_check = switch,false" in data, "background monitor must default off")
     require("notify_every_change = switch,false" in data, "normal notification must default off")
     pinned_plugin=ROOT / "plugins" / "v20261018r2" / "Network_Diagnostics.plugin"
     require(pinned_plugin.is_file(), "missing versioned Console plugin")
@@ -136,13 +137,14 @@ def check_plugin():
     require(expected <= names, "plugin arguments missing: " + str(expected - names))
     scripts = section(data, "Script")
     lines = [s.strip() for s in scripts.splitlines() if s.strip() and not s.lstrip().startswith("#")]
-    require(len(lines) == 6, "expected 6 console script entries (got %d)" % len(lines))
-    require(sum(s.startswith("generic then script(") for s in lines) == 5, "missing 5 manual console scripts")
+    require(len(lines) == 2, "expected 2 lightweight plugin entries (got %d)" % len(lines))
+    require(sum(s.startswith("generic then script(") for s in lines) == 1, "expected only node intelligence manual entry")
     require(sum(s.startswith("network-changed then script(") for s in lines) == 1, "missing network-change script")
+    require("tag=\"节点详情查询\"" in scripts, "node detail action missing")
     for name in re.findall(r"\$\{([a-z_]+)\}", scripts):
         require(name in names, "undeclared plugin argument " + name)
     src_urls = re.findall(r'script\("(https://[^"]+)"', scripts)
-    require(len(src_urls) == 6, "expected 6 script source URLs")
+    require(len(src_urls) == 2, "expected 2 script source URLs")
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/"
         require(marker in url and (ROOT / url.split(marker, 1)[1].split("/", 1)[1]).is_file(),
