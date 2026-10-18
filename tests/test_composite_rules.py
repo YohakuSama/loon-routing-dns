@@ -73,7 +73,7 @@ class CompositeRulesTests(unittest.TestCase):
         import re
         profile = (Path(__file__).resolve().parents[1] / "Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
         section = profile.split("[Remote Rule]", 1)[1].split("[Rule]", 1)[0]
-        actual = [re.search(r"/generated/([^/,]+)\\.list,", line).group(1)
+        actual = [re.search(r"/generated/([^/,]+)\.list,", line).group(1)
                   for line in section.splitlines() if line.strip().startswith("https://")]
         self.assertEqual([name.replace("動畫瘋", "AnimeCrazy") for name in PUBLISH_ORDER], actual)
 
@@ -84,18 +84,18 @@ class CompositeRulesTests(unittest.TestCase):
             {"id": "b", "group": "Alpha", "policy": "Proxy",
              "url": "https://rules.invalid/b", "format": "loon", "min_rules": 1},
         ]
-        docs = {"https://rules.invalid/a": "IP-CIDR,10.0.0.1/8\\n",
-                "https://rules.invalid/b": "IP-CIDR,10.0.0.1/8,no-resolve\\n"}
+        docs = {"https://rules.invalid/a": "IP-CIDR,10.0.0.1/8\n",
+                "https://rules.invalid/b": "IP-CIDR,10.0.0.1/8,no-resolve\n"}
         out, report = generate(sources, lambda url: docs[url])
-        self.assertIn("IP-CIDR,10.0.0.0/8\\n", out["Alpha.list"])
-        self.assertIn("IP-CIDR,10.0.0.0/8,no-resolve\\n", out["Alpha.list"])
+        self.assertIn("IP-CIDR,10.0.0.0/8\n", out["Alpha.list"])
+        self.assertIn("IP-CIDR,10.0.0.0/8,no-resolve\n", out["Alpha.list"])
         self.assertEqual(report["ip_flag_variant_conflict_count"], 1)
 
     def test_unknown_grammar_fails_candidate_build(self):
         source = {"id": "a", "group": "Alpha", "policy": "Proxy",
                   "url": "https://rules.invalid/a", "format": "loon", "min_rules": 1}
         with self.assertRaisesRegex(ValueError, "unsupported/invalid upstream"):
-            generate([source], lambda _: "DOMAIN,example.com\\nPROCESS-NAME,example\\n")
+            generate([source], lambda _: "DOMAIN,example.com\nPROCESS-NAME,example\n")
 
     def test_unsupported_rules_are_quarantined(self):
         self.assertIn("URL-REGEX", normalize("URL-REGEX,^https://ad\\.site")[1])
