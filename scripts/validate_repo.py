@@ -167,10 +167,15 @@ def check_readme():
     data = (ROOT / "README.md").read_text(encoding="utf-8")
     guide = (ROOT / "docs" / "NETWORK_DIAGNOSTICS.md").read_text(encoding="utf-8")
     for label, text in [("README", data), ("plugin guide", guide)]:
-        require("Network_Diagnostics.plugin" in text, label + " missing installation URL")
-        require("DIRECT" in text and "DoH" in text, label + " missing DNS guidance")
-    require("v5.1.0" in data, "README config version out of sync")
-    require("默认关闭" in data or "默认不开启" in data, "README missing DIRECT IP privacy default")
+        require("Network_Diagnostics.plugin" in text, label + " missing plugin link")
+        require("节点出口信息" in text and "网络与 DNS" in text,
+                label + " must describe the two available tools")
+    require("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf" in data,
+            "README missing full configuration import URL")
+    require("直连 IP 对照" in data and "默认关闭" in data,
+            "README must explain direct-IP comparison default")
+    require("GEOIP,CN,DIRECT,no-resolve" not in data and "FINAL,Final" not in data,
+            "README should not expose maintainer routing internals")
 
 
 def check_url(url):
