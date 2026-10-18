@@ -1,4 +1,4 @@
-name: Loon Configuration & Plugin CI
+name: LoonKit Configuration & Plugin CI
 
 on:
   push:
@@ -34,6 +34,10 @@ jobs:
 
       - name: Check current icons and public plugin links
         run: python3 scripts/build-appstore-icons.py --check-config
+
+      - name: Check real LoonKit CDN resource URLs after GitHub rename
+        if: github.repository == 'YohakuSama/loonkit'
+        run: python3 scripts/validate_repo.py --check-remote
 
       - name: Run rule generator and release-profile regression tests
         run: |
