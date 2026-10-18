@@ -44,14 +44,3 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v2026
 ```
 
 如果更新后菜单或报告未变化，请确认本地完整配置和插件列表使用了新版链接，并停用重复的旧插件。仅刷新远程分流规则不会更新插件脚本。
-
-## 技术信息
-
-当前正式插件使用：
-
-- [节点出口脚本](../scripts/v20261018r10/node-intelligence.js)
-- [网络/DNS 诊断脚本](../scripts/v20261018r4/network-diagnostics.js)
-- [插件回归测试](../tests/test_plugin_v2.js)
-- [节点报告测试](../tests/test_node_copy.js)
-
-`GEOIP,CN,DIRECT,no-resolve`、`FINAL,Final` 和所有分流规则不受插件界面更新影响。

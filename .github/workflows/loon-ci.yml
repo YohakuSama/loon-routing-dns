@@ -43,28 +43,17 @@ jobs:
 
       - name: Check JavaScript syntax
         run: |
-          node --check scripts/network-diagnostics.js
-          node --check scripts/node-intelligence.js
-          node --check tests/test_scripts.js
-          node --check tests/test_console.js
-          node --check scripts/console.js
           node --check scripts/v20261018r4/network-diagnostics.js
-          node --check scripts/v20261018r4/node-intelligence.js
-          node --check tests/test_plugin_v2.js
-          node --check scripts/v20261018r5/node-intelligence.js
-          node --check tests/test_node_details.js
-          node --check tests/test_removed_dns_leak.js
           node --check scripts/v20261018r10/node-intelligence.js
           node --check tests/test_node_copy.js
+          node --check tests/test_network_diagnostics.js
+          node --check tests/test_current_plugin.js
 
       - name: Run Loon mocked-runtime regression tests
         run: |
-          node tests/test_scripts.js
-          node tests/test_console.js
-          node tests/test_plugin_v2.js
-          node tests/test_node_details.js
-          node tests/test_removed_dns_leak.js
           node tests/test_node_copy.js
+          node tests/test_network_diagnostics.js
+          node tests/test_current_plugin.js
 
   upstream-resource-check:
     name: Check upstream rules, scripts, and icons

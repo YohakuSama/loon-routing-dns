@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline review safety and complete-config lint; independent of old v4.4.8 validator."""
+"""Offline configuration, DNS and generated rule checks."""
 from pathlib import Path
 import re
 import json
@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "Loon_Routing_DNS.lcf"
-BASE = ROOT / "releases" / "v4.4.8" / "Loon_Routing_DNS.lcf"
+BASE = ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf"
 CATALOG = ROOT / "rules" / "sources.json"
 GENERATED = ROOT / "rules" / "generated"
 
@@ -74,7 +74,7 @@ def validate(check_generated=False):
     if check_generated:
         actual = {p.name for p in GENERATED.glob("*.list")}
         assert actual == names, "orphaned generated rule files"
-    # Reviewed routing must match. Versions of icons and plugin URLs can vary.
+    # Match effective routing while allowing independent plugin and icon revisions.
     reviewer = (ROOT / "reviews" / "Loon_Routing_DNS_Hybrid_Review.lcf").read_text(encoding="utf-8")
     assert section(conf, "Remote Rule") == section(reviewer, "Remote Rule"), "review routing order diverged"
     assert active(section(conf, "Rule")) == active(section(reviewer, "Rule")), "review local routing diverged"

@@ -35,7 +35,7 @@ class RepositoryHygiene(unittest.TestCase):
             with self.subTest(path=rel):
                 self.assertTrue((ROOT / rel).is_file())
         self.assertTrue((ROOT / "icons/v20261018r2/Console.png").is_file())
-        self.assertTrue((ROOT / "releases/v4.4.8/Loon_Routing_DNS.lcf").is_file())
+        self.assertTrue((ROOT / "reviews/Loon_Routing_DNS_Hybrid_Review.lcf").is_file())
 
     def test_current_plugin_sources_are_available(self):
         data = (ROOT / "plugins/Network_Diagnostics.plugin").read_text(encoding="utf-8")
@@ -45,6 +45,23 @@ class RepositoryHygiene(unittest.TestCase):
             with self.subTest(source=source):
                 self.assertIn("/main/" + source, data)
                 self.assertTrue((ROOT / source).is_file())
+
+    def test_legacy_plugins_and_release_archives_are_gone(self):
+        for source in (
+            "plugins/v20261018r2/Network_Diagnostics.plugin",
+            "plugins/v20261018r4/Network_Diagnostics.plugin",
+            "plugins/v20261018r5/Network_Diagnostics.plugin",
+            "plugins/v20261018r9/Network_Diagnostics.plugin",
+            "scripts/console.js",
+            "scripts/network-diagnostics.js",
+            "scripts/node-intelligence.js",
+            "scripts/v20261018r4/node-intelligence.js",
+            "scripts/v20261018r5/node-intelligence.js",
+            "releases/v4.4.8/Loon_Routing_DNS.lcf",
+            "releases/v5.1.0/CHANGELOG.md",
+        ):
+            with self.subTest(source=source):
+                self.assertFalse((ROOT / source).exists())
 
     def test_no_obsolete_generator_references_in_icon_guide(self):
         guide = (ROOT / "icons/README.md").read_text(encoding="utf-8")
