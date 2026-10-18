@@ -18,8 +18,8 @@ const query=[0,0,1,0,0,1,0,0,0,0,0,0,7,101,120,97,109,112,108,101,3,99,111,109,0
 const answer=new Uint8Array([0,0,129,128,0,1,0,1,0,0,0,0,...query.slice(12),192,12,0,1,0,1,0,0,1,0,0,4,93,184,215,14]);
 function harnessDiag(options={}) {
   const requests=[],done=[],notice=[],store=options.store||{};
-  const jobs=[],cancelled=new Set();
-  function setT(fn,ms){jobs.push({fn,ms,id:jobs.length+1});return jobs.length;}
+  const jobs=[],cancelled=new Set();let timerId=0;
+  function setT(fn,ms){var id=++timerId;jobs.push({fn,ms,id});return id;}
   const ctx={
     Uint8Array,console:{log(){}},$argument:{},$script:{name:options.auto?"网络切换异常监测":"网络与 DNS 诊断"},
     setTimeout:setT,clearTimeout:id=>cancelled.add(id),
@@ -38,7 +38,7 @@ function harnessDiag(options={}) {
       answers:[{type:"A",value:"93.184.215.14"}]});}};
   vm.runInNewContext(code.diag,ctx,{timeout:3000});
   // Process only scheduled callbacks still pending. First automatic delay then retry.
-  while(jobs.length){const t=jobs.shift();if(!cancelled.has(t.id))t.fn();}
+  while(jobs.length){jobs.sort((a,b)=>a.ms-b.ms);const t=jobs.shift();if(!cancelled.has(t.id))t.fn();}
   return {done,notice,requests,store};
 }
 function harnessNode(options={}) {
