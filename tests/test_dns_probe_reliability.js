@@ -1,11 +1,11 @@
-/* DNS resolver observation v2.3: mocked Loon runtime, no live network calls. */
+/* DNS resolver observation v2.4: mocked Loon runtime, no live network calls. */
 "use strict";
 const assert=require("node:assert/strict");
 const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const src=fs.readFileSync(path.join(root,"scripts/v20261018r7/dns-leak-check.js"),"utf8");
+const src=fs.readFileSync(path.join(root,"scripts/v20261018r8/dns-leak-check.js"),"utf8");
 let count=0;
 function check(label,fn) {
   try {fn();count++;console.log("PASS",label);}
@@ -67,6 +67,37 @@ check("normal sample reports observed resolvers without claiming absolute securi
   assert.equal(a.dnsCalls.length,10);
   assert(a.dnsCalls.every(x=>x.protocol==="auto"&&x.timeout===6500&&/^\d+\.12345678\.bash\.ws$/.test(x.domain)));
   assert(a.requests.every(x=>!Object.prototype.hasOwnProperty.call(x,"node")));
+});
+check("live bash.ws 16-char alphanumeric session ID is accepted",()=>{
+  const id="aB12Cd34Ef56Gh78";
+  const r=run({invalidID:id});
+  assert.match(r.text,/已获取解析器观测信息/);
+  assert.equal(r.dnsCalls.length,10);
+  assert(r.dnsCalls.every(x=>x.domain.endsWith("."+id+".bash.ws")));
+  assert(r.requests.some(x=>x.url.includes("/dnsleak/test/"+id+"?json")));
+});
+check("valid internal hyphen remains a safe DNS label",()=>{
+  const id="ab12-CD34-ef56";
+  const r=run({invalidID:id});
+  assert.match(r.text,/已获取解析器观测信息/);
+  assert.equal(r.dnsCalls.length,10);
+});
+check("unsafe session ID forms reject before DNS queries or result URL",()=>{
+  for(const id of ["<html>Error</html>",'{"id":"abcXYZ1234"}',
+                   "abc.def.1234","../../etc/passwd","ABC_1234",
+                   "-abCDef1234","abcDEF1234-","short","X".repeat(64)]) {
+    const r=run({invalidID:id});
+    assert.match(r.text,/无法判定/);
+    assert.match(r.text,/安全的 DNS 标签/);
+    assert.equal(r.dnsCalls.length,0,"unexpected DNS query for invalid ID");
+    assert.equal(r.requests.length,1,"unexpected result request for invalid ID");
+    assert(!r.text.includes(id),"raw invalid session value echoed");
+  }
+});
+check("legacy numeric session IDs remain accepted",()=>{
+  const r=run({invalidID:"1234567890123456"});
+  assert.match(r.text,/已获取解析器观测信息/);
+  assert.equal(r.dnsCalls.length,10);
 });
 check("older Loon: unavailable DNS API yields inconclusive with no HTTP requests",()=>{
   const r=run({missingAPI:true});
@@ -145,7 +176,7 @@ check("script API only uses GET + $dns.query; no settings mutations",()=>{
   assert(!/node\s*:\s*["']DIRECT["']/.test(src));
 });
 check("plugin has three manual actions, monitoring still opt-in",()=>{
-  const p=fs.readFileSync(path.join(root,"plugins/v20261018r7/Network_Diagnostics.plugin"),"utf8");
+  const p=fs.readFileSync(path.join(root,"plugins/v20261018r8/Network_Diagnostics.plugin"),"utf8");
   const lines=p.split("\n").filter(x=>x.startsWith("generic then script("));
   assert.equal(lines.length,3);
   assert.equal(p.split("\n").filter(x=>x.startsWith("network-changed then script(")).length,1);
@@ -154,4 +185,4 @@ check("plugin has three manual actions, monitoring still opt-in",()=>{
   assert(p.includes("compare_direct = switch,false"));
   assert(!p.includes('dns-leak-check.js", {}'));
 });
-console.log("DNS resolver check v2.3 tests:",count);
+console.log("DNS resolver check v2.4 tests:",count);
