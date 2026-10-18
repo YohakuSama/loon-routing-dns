@@ -132,6 +132,10 @@ https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/
 # Domain rule is local, so it takes precedence over the remote domain-set.
 # This is a routing exception, NOT proof of zero DNS leakage.
 DOMAIN-SUFFIX,browserleaks.com,Proxy
+# Other confirmed upstream ChinaMaxNoMedia mistakes. Preserve their proxy exit.
+DOMAIN-SUFFIX,whatismyip.com,Proxy
+# Stripe is an international payment service; a ChinaDirect keyword rule is overbroad.
+DOMAIN-SUFFIX,stripe.com,Proxy
 
 # Restore the pre-migration local routing priorities.
 # No private proxy subscription is included in this public profile.
