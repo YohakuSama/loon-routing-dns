@@ -26,8 +26,8 @@ def validate(check_generated=False):
     assert conf.startswith("# LoonKit v5.1.0")
     assert not (ROOT / "Loon_Routing_DNS.lcf").exists(), "deprecated config file must be removed"
     assert "doh-server = https://dns.alidns.com/dns-query" in conf
-    assert "dns-server = 223.5.5.5" in conf
-    assert "dns.alidns.com = 223.5.5.5" in conf
+    assert "dns-server = 223.5.5.5,223.6.6.6" in conf
+    assert "[Host]" not in conf, "DoH hostname must use original resolver behavior, not a forced address"
     plugin = active(section(conf, "Plugin"))
     assert len(plugin) == 1
     assert plugin[0].startswith(
