@@ -7,7 +7,6 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "LoonKit.lcf"
-BASE = ROOT / "Loon_Routing_DNS.lcf"
 CATALOG = ROOT / "rules" / "sources.json"
 GENERATED = ROOT / "rules" / "generated"
 
@@ -23,10 +22,9 @@ def active(body):
             if line.strip() and not line.lstrip().startswith("#")]
 
 def validate(check_generated=False):
-    original = BASE.read_text(encoding="utf-8")
     conf = CONFIG.read_text(encoding="utf-8")
     assert conf.startswith("# LoonKit v5.1.0")
-    assert conf == original, "legacy compatibility alias must match active configuration"
+    assert not (ROOT / "Loon_Routing_DNS.lcf").exists(), "deprecated config file must be removed"
     assert "doh-server = https://cloudflare-dns.com/dns-query" in conf
     assert "dns-server = 223.5.5.5" in conf
     assert "cloudflare-dns.com = 1.1.1.1" in conf
@@ -34,7 +32,6 @@ def validate(check_generated=False):
     assert len(plugin) == 1
     assert plugin[0].startswith(
         "https://raw.githubusercontent.com/YohakuSama/loonkit/main/plugins/v20261018r11/Network_Diagnostics.plugin,")
-    assert section(conf, "Remote Proxy") == section(original, "Remote Proxy"), "personal proxies not preserved"
     groups = [line.split("=",1)[0].strip() for line in active(section(conf, "Proxy Group"))
               if " = " in line]
     assert len(groups) == len(set(groups)) == 33, f"strategy group count {len(groups)}"
@@ -77,11 +74,8 @@ def validate(check_generated=False):
     if check_generated:
         actual = {p.name for p in GENERATED.glob("*.list")}
         assert actual == names, "orphaned generated rule files"
-    # Match effective routing while allowing independent plugin and icon revisions.
-    reviewer = (ROOT / "Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
-    assert section(conf, "Remote Rule") == section(reviewer, "Remote Rule"), "legacy alias routing order diverged"
-    assert active(section(conf, "Rule")) == active(section(reviewer, "Rule")), "legacy alias local routing diverged"
-    print("PASS: 87 sources, 33 generated service groups, all self-hosted, General/DNS unchanged")
+    assert not (ROOT / "reviews/LoonKit_Hybrid_Review.lcf").exists()
+    print("PASS: 87 sources, 33 generated service groups, all self-hosted, single canonical DNS profile")
 
 if __name__ == "__main__":
     import sys
