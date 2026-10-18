@@ -1,0 +1,35 @@
+name: App Store icon candidate audit
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Query Apple iTunes Search API for icon candidates
+        run: python scripts/audit_appstore_icons.py
+      - name: Validate audit coverage and URLs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("appstore-icon-audit.json")
+          data=json.loads(p.read_text())
+          assert len(data["brand_candidates"]) == 27
+          assert len(data["custom_icons_keep_original"]) == 6
+          print("Brand groups:", len(data["brand_candidates"]))
+          for name, markets in data["brand_candidates"].items():
+              assert set(markets)=={"us","cn","jp","tw","gb"}, name
+              print(name, sum(len(v) for v in markets.values() if isinstance(v,list)), "candidates")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: appstore-icon-audit
+          path: appstore-icon-audit.json
+          retention-days: 14
