@@ -14,8 +14,6 @@ import re
 import sys
 from pathlib import Path
 from urllib.parse import urlencode
-import requests
-from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
 DIR = ROOT / "icons"
@@ -69,6 +67,7 @@ def download(session: requests.Session, url: str) -> bytes:
     raise RuntimeError("artwork fetch failed") from err
 
 def official_art(session, name, app_id, country, publisher):
+    from PIL import Image
     url="https://itunes.apple.com/lookup?"+urlencode({"id":app_id,"country":country,"entity":"software"})
     result=session.get(url,timeout=35)
     result.raise_for_status()
@@ -95,6 +94,7 @@ def official_art(session, name, app_id, country, publisher):
 
 def mask_app(image):
     """One iOS-like rounded rectangle mask; four-times antialiasing at 512."""
+    from PIL import Image, ImageDraw
     h=4
     large=Image.new("L",(512*h,512*h),0)
     draw=ImageDraw.Draw(large)
@@ -106,7 +106,7 @@ def mask_app(image):
     return rgba
 
 def check_final_icons(expected):
-    from io import BytesIO
+    from PIL import Image
     for policy in expected:
         p=DIR / f"{policy}.png"
         if not p.is_file():
@@ -127,25 +127,33 @@ def check_config():
         raise RuntimeError(f"Expected 33 unique strategy groups, got {len(entries)}: {names ^ GROUPS}")
     for group, link in entries:
         filename=("AnimeCrazy" if group.strip()=="動畫瘋" else group.strip())+".png"
-        if link.rstrip(",")!="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/"+filename:
+        expected_version="v20261018r3" if filename=="HBO.png" else "v20261018r2"
+        expected_icon="https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/"+expected_version+"/"+filename
+        if link.rstrip(",")!=expected_icon:
             raise RuntimeError(f"unexpected strategy icon link: {group} {link}")
     plugin=(ROOT/"plugins/Network_Diagnostics.plugin").read_text()
-    pinned=(ROOT/"plugins/v20261018r2/Network_Diagnostics.plugin").read_text()
+    pinned=(ROOT/"plugins/v20261018r10/Network_Diagnostics.plugin").read_text()
     if pinned!=plugin:
-        raise RuntimeError("Pinned Console plugin differs from current Console plugin")
+        raise RuntimeError("Published plugin differs from standalone entry")
     if "#!icon = https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/Console.png" not in plugin:
         raise RuntimeError("Console plugin icon link changed unexpectedly")
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument("--refresh-app-store", action="store_true", help="explicitly overwrite official icon files")
+    parser.add_argument("--refresh-app-store", action="store_true", help="generate local icon previews for review")
+    parser.add_argument("--check-config", action="store_true", help="validate current versioned icon and plugin links without network requests")
     args=parser.parse_args()
+    if args.check_config:
+        check_config()
+        print("Icon and plugin references are consistent")
+        return
     if not args.refresh_app_store:
         parser.error("Requires --refresh-app-store; avoid inadvertently replacing pinned official artwork.")
     check_config()
     for name in LOCAL:
         if not (SVG_DIR/f"{name}.svg").is_file():
             raise RuntimeError(f"Missing custom vector {name}.svg")
+    import requests
     session=requests.Session()
     session.headers.update({"User-Agent":"LoonRoutingDNSIconRelease/1.0 (design-review; 24 public App Store listings)"})
     done=[]
@@ -169,7 +177,7 @@ def main():
             "sha256":hashlib.sha256(final).hexdigest(),
         })
         print(f"[appstore] {name}: 512x512 PNG ({len(final)} bytes); {metadata.get('trackName')}",flush=True)
-    # Only write to icons after every requested App Store lookup succeeded.
+    # Local unversioned previews are ignored by git; publishing requires a reviewed versioned directory.
     for name,raw in temp.items():
         (DIR/f"{name}.png").write_bytes(raw)
     # Generate vector icons from the checked-in SVG using CairoSVG for 512px.
