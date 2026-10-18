@@ -16,5 +16,5 @@ compare_direct = switch,false,tag=对照直连出口 IP,desc=默认关闭；开�
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r5/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点出口信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r4/network-diagnostics.js", {${auto_check}}) with tag="网络与 DNS 诊断", img_url="network.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r7/dns-leak-check.js") with tag="DNS 解析器检测（改进版）", img_url="lock.shield.system", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r7/dns-leak-check.js") with tag="DNS 解析器泄漏检测", img_url="lock.shield.system", timeout=45
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/v20261018r4/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
