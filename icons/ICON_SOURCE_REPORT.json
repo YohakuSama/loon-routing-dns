@@ -266,7 +266,7 @@
   {
     "name": "Proxy",
     "file": "Proxy.png",
-    "source": "Loon Routing DNS original vector design",
+    "source": "LoonKit original vector design",
     "sourceSvg": "icons/source/Proxy.svg",
     "sha256": "8daf49e0a5c89cc3c8d19e9f8b97688482472c18fb561a86d033098521a92540"
   },
@@ -301,7 +301,7 @@
   {
     "name": "AI",
     "file": "AI.png",
-    "source": "Loon Routing DNS original vector design",
+    "source": "LoonKit original vector design",
     "sourceSvg": "icons/source/AI.svg",
     "sha256": "9054398bd45c0ebd7affc925c1cf6984908db67c9a5089b3f2f5a87fc82f9a79"
   },
@@ -329,7 +329,7 @@
   {
     "name": "Console",
     "file": "Console.png",
-    "source": "Loon Routing DNS original vector design",
+    "source": "LoonKit original vector design",
     "sourceSvg": "icons/source/Console.svg",
     "sha256": "689e4680d92e436bfa14214b814eaba4baf842d2759a7ef7354ad274d35238fc"
   }
