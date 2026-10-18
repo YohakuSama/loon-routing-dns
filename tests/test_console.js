@@ -112,7 +112,7 @@ check("published rule health checks all 33 artifacts without MITM",()=>{
  const expected="DomesticCore AI AppleOTA SteamCN YouTube Netflix Disney PrimeVideo Spotify TikTok Twitch HBO Abema BBC Bilibili AnimeCrazy Dazn Telegram Whatsapp Instagram Facebook Twitter Discord Line Reddit Linkedin Google Microsoft Apple Steam Paypal AdBlock ChinaDirect".split(" ");
  vm.runInNewContext(ruleHealth,{$httpClient:{get(o,cb){requests.push(o);cb(null,{status:200},JSON.stringify({truncated:false,tree:expected.map(n=>({path:"rules/generated/"+n+".list",type:"blob",size:100}))}))}},$done:v=>done.push(v),console:{log(){}}},{timeout:3000});
  assert.equal(done.length,1);assert.match(done[0].content,/检查通过/);
- assert.equal(requests[0].node,"DIRECT");assert.match(requests[0].url,/api.github.com/);
+ assert.equal(requests[0].node,undefined);assert.match(requests[0].url,/api.github.com/);
 });
 check("published rule health reports missing files",()=>{
  const done=[];
