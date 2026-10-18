@@ -101,13 +101,13 @@ def check_config():
     icon_urls = re.findall(r"\bimg-url\s*=\s*(https://\S+)", groups_text)
     require(len(icon_urls) == 33, "expected one icon per proxy group")
     require(len(icon_urls) == len(set(icon_urls)), "duplicate group icon URLs")
-    icon_root = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/"
+    icon_root = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/"
     for icon_url in icon_urls:
-        require(icon_url.startswith(icon_root), "policy icon does not use the versioned release: " + icon_url)
-        name = icon_url[len(icon_root):]
-        require("/" not in name and name.endswith(".png"), "invalid versioned icon name: " + name)
-        require((ROOT / "icons" / "v20261018r2" / name).is_file(), "missing versioned PNG: " + name)
-        require((ROOT / "icons" / "v20261018r2" / name).is_file(), "pinned icon file missing: " + name)
+        require(icon_url.startswith(icon_root), "policy icon outside self-hosted icons: " + icon_url)
+        rel = icon_url[len(icon_root):]
+        require(re.fullmatch(r"v[0-9]{8}r[0-9]+/[A-Za-z0-9_-]+\\.png", rel) is not None,
+                "invalid pinned icon path: " + rel)
+        require((ROOT / "icons" / rel).is_file(), "missing pinned icon: " + rel)
 
     print("Config: %s groups; %s remote lists; %s local rules; %s icon links"
           % (len(groups), len(remote), local_count, len(icon_urls)))
