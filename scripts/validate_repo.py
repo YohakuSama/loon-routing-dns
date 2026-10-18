@@ -70,14 +70,28 @@ def check_config():
             remote_rows.append(line)
             remote.append(match.group(1))
             require(match.group(2) in known, "undefined remote rule policy: " + match.group(2))
-    require(len(remote) == 28, "expected 28 historically verified rule subscriptions (got %s)" % len(remote))
-    require(remote_rows == baseline["remote_rules"],
-            "active remote rules/order differ from pre-migration verified baseline")
+    from build_composite_rules import PUBLISH_ORDER
+    manifest = json.loads((ROOT / "rules/active_profile.json").read_text(encoding="utf-8"))
+    order = manifest["group_order"]
+    require(order == ["ProxyProtect"] + list(PUBLISH_ORDER),
+            "remote manifest differs from generator PUBLISH_ORDER")
+    direct = {"DomesticCore", "AppleOTA", "SteamCN", "ChinaDirect"}
+    expected_rows = []
+    for group in order:
+        name = "AnimeCrazy" if group == "動畫瘋" else group
+        path = "rules/ProxyProtect.list" if group == "ProxyProtect" else "rules/generated/" + name + ".list"
+        policy = "Proxy" if group == "ProxyProtect" else "DIRECT" if group in direct else group
+        expected_rows.append(
+            "https://raw.githubusercontent.com/YohakuSama/loonkit/main/" + path +
+            ", policy=" + policy + ", tag=Our-" + name + ", enabled=true")
+        require((ROOT / path).is_file(), "missing self-hosted rule file: " + path)
+    require(remote_rows == expected_rows, "active remote subscriptions differ from own manifest")
+    require(len(remote) == 34, "expected 34 LoonKit self-hosted rule lists")
     for url in remote:
         parsed = urlsplit(url)
         require(parsed.scheme == "https" and parsed.netloc == "raw.githubusercontent.com"
-                and parsed.path.startswith("/blackmatrix7/ios_rule_script/master/rule/Loon/"),
-                "remote URL must use known upstream rule catalog: " + url)
+                and parsed.path.startswith("/YohakuSama/loonkit/main/rules/"),
+                "remote URL must be hosted by LoonKit: " + url)
     require(len(remote) == len(set(remote)), "duplicate remote rule URLs")
 
     rule_text = section(data, "Rule")
@@ -95,12 +109,14 @@ def check_config():
     protected_domains = json.loads(
         (ROOT / "rules/routing_guardrails.json").read_text(encoding="utf-8")
     )["protected_proxy_domains"]
-    protected_rules = ["DOMAIN-SUFFIX," + domain + ",Proxy" for domain in protected_domains]
-    require(len(protected_rules) == 17, "unexpected protected-domain guardrail count")
-    require(local_count == len(protected_rules) + len(baseline["local_rules"]),
-            "local rule count differs from protection list + 66-rule baseline")
-    require(local_rows == protected_rules + baseline["local_rules"],
-            "protected diagnostic domains must precede unchanged pre-migration rules")
+    protect_rows = [row.strip() for row in
+                    (ROOT / "rules/ProxyProtect.list").read_text(encoding="utf-8").splitlines()
+                    if row.strip() and not row.startswith("#")]
+    require(len(protected_domains) == 17, "unexpected protected domain count")
+    require(protect_rows == ["DOMAIN-SUFFIX," + domain for domain in protected_domains],
+            "self-hosted protection list differs from routing_guardrails.json")
+    require(local_count == 66 and local_rows == baseline["local_rules"],
+            "local rules must equal 66 historical service rules; do not duplicate protections here")
     require("GEOIP,CN,DIRECT,no-resolve" in rule_text, "CN GEOIP route missing")
     require("FINAL,Final" in rule_text, "FINAL policy missing")
 

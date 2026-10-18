@@ -69,22 +69,23 @@ class ImportPreflight(unittest.TestCase):
                 self.assertTrue(local_path(url).is_file(),url)
 
     def test_all_remote_rules_exist_and_use_defined_policy(self):
-        policy_names={name for name,_ in icons(self.main)}
-        self.assertEqual(len(policy_names),33)
-        lines=entries(self.main,"Remote Rule")
-        baseline=json.loads((ROOT / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
-        self.assertEqual(lines,baseline["remote_rules"])
-        self.assertEqual(len(lines),28)
-        for row in lines:
-            m=re.fullmatch(r"(https://[^,\s]+),\s*policy=([^,]+),\s*tag=([^,]+),\s*enabled=true",row)
-            self.assertIsNotNone(m,row)
-            url,policy,_=m.groups()
-            with self.subTest(rule=url):
-                parsed=urlsplit(url)
-                self.assertEqual(parsed.scheme,"https")
-                self.assertEqual(parsed.netloc,"raw.githubusercontent.com")
-                self.assertTrue(parsed.path.startswith("/blackmatrix7/ios_rule_script/master/rule/Loon/"))
-                self.assertIn(policy,policy_names | {"DIRECT"})
+        policy_names = {name for name, _ in icons(self.main)}
+        self.assertEqual(len(policy_names), 33)
+        lines = entries(self.main, "Remote Rule")
+        manifest = json.loads((ROOT / "rules/active_profile.json").read_text(encoding="utf-8"))
+        direct = {"DomesticCore", "AppleOTA", "SteamCN", "ChinaDirect"}
+        expected = []
+        for group in manifest["group_order"]:
+            name = "AnimeCrazy" if group == "動畫瘋" else group
+            path = "rules/ProxyProtect.list" if group == "ProxyProtect" else "rules/generated/" + name + ".list"
+            policy = "Proxy" if group == "ProxyProtect" else "DIRECT" if group in direct else group
+            url = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/" + path
+            expected.append(url + ", policy=" + policy + ", tag=Our-" + name + ", enabled=true")
+            with self.subTest(group=group):
+                self.assertTrue(local_path(url).is_file(), url)
+                self.assertIn(policy, policy_names | {"DIRECT"})
+        self.assertEqual(len(lines), 34)
+        self.assertEqual(lines, expected)
 
     def test_active_plugin_and_its_scripts_exist(self):
         attached=entries(self.main,"Plugin")
@@ -118,12 +119,13 @@ class ImportPreflight(unittest.TestCase):
     def test_local_rule_order_matches_verified_baseline(self):
         baseline=json.loads((ROOT / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
         guarded = json.loads((ROOT / "rules/routing_guardrails.json").read_text(encoding="utf-8"))["protected_proxy_domains"]
-        protected = ["DOMAIN-SUFFIX," + domain + ",Proxy" for domain in guarded]
+        protected = ["DOMAIN-SUFFIX," + domain for domain in guarded]
+        own_rules = [line for line in (ROOT / "rules/ProxyProtect.list").read_text(encoding="utf-8").splitlines()
+                     if line and not line.startswith("#")]
         self.assertEqual(len(protected), 17)
-        self.assertEqual(entries(self.main, "Rule"), protected + baseline["local_rules"])
-        self.assertEqual(entries(self.main, "Rule")[:len(protected)], protected)
+        self.assertEqual(own_rules, protected)
+        self.assertEqual(entries(self.main, "Rule"), baseline["local_rules"])
         self.assertTrue(self.main.startswith("# LoonKit v5.10.0"))
-        self.assertNotIn("/rules/generated/",section(self.main,"Remote Rule"))
         self.assertNotIn("members/getsub.php",self.main)
 
     def test_core_rules_and_dns_are_preserved(self):

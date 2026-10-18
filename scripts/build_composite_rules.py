@@ -459,8 +459,8 @@ def generate(sources, fetch=fetch_text):
             "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
             "Different-policy and ancestor conflicts require a routing priority review.",
             "Local [Rule] in Loon takes precedence over remote lists.",
-            "Generated lists are staged and NOT enabled by the active Loon config.",
-            "Protected diagnostic domains cannot be direct-routed by any staged DIRECT group.",
+            "Freshly generated lists are candidates until PR review; approved main snapshots may be active.",
+            "Protected diagnostic domains cannot be direct-routed by any generated DIRECT group.",
             "Audit conflict counts are visibility metrics, not proof that all routing conflicts are resolved.",
         ],
     }
