@@ -71,9 +71,9 @@ class CompositeRulesTests(unittest.TestCase):
     def test_generator_quarantines_direct_test_domain_and_keeps_ordinary_cn(self):
         source={"id":"test-mainland","group":"ChinaDirect","policy":"DIRECT",
                 "url":"https://rules.invalid/cn","format":"loon","min_rules":1}
-        fixture=("DOMAIN-SUFFIX,browserleaks.com\\n"
-                 "DOMAIN-SUFFIX,alipay.com\\n"
-                 "DOMAIN-SUFFIX,cn\\n")
+        fixture=("DOMAIN-SUFFIX,browserleaks.com\n"
+                 "DOMAIN-SUFFIX,alipay.com\n"
+                 "DOMAIN-SUFFIX,cn\n")
         output,audit=generate([source],lambda _:fixture)
         result=output["ChinaDirect.list"]
         self.assertNotIn("DOMAIN-SUFFIX,browserleaks.com",result)
