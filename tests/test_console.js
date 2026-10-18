@@ -150,7 +150,8 @@ check("explicit node egress changes are tracked locally without DIRECT requests"
    }))}},$done:r=>reports.push(r.content),console:{log(){}}};
   vm.runInNewContext(intel,ctx,{timeout:3000});
  }
- run();assert.match(reports[0],/首次记录基线/);
+ run();assert.match(reports[0],/出口 IP：/);
+ assert.doesNotMatch(reports[0],/邮编|近似坐标|时区|首次记录基线/);
  ip="18.144.88.67";run();assert.match(reports[1],/出口变化：IP/);
  assert(calls.every(x=>x.node==="My-Node"));
  assert(Object.keys(store).some(k=>k.startsWith("loon:node-egress:v1:")));
@@ -162,7 +163,15 @@ check("dynamic Proxy selector does not store egress history",()=>{
   $httpClient:{get(o,cb){cb(null,{status:200},JSON.stringify({
     ip:"18.144.88.66",location:{country:"US"},isp:{asn:"AS1",isp:"ISP"}
   }))}},$done:r=>done.push(r.content),console:{log(){}}},{timeout:3000});
- assert.match(done[0],/动态策略组或缓存结果不进行对比/);
+ assert.match(done[0],/出口 IP：/);
+ assert.doesNotMatch(done[0],/出口变化：/);
  assert(!Object.keys(store).some(k=>k.startsWith("loon:node-egress:v1:")));
+});
+check("compact node report omits redundant fields and truncates long names",()=>{
+ const q=ipquery();const report=q.run();
+ assert.match(report,/出口 IP：/);
+ assert.match(report,/网络：/);
+ assert.match(report,/类型：/);
+ assert.doesNotMatch(report,/邮编|近似坐标|时区|运营组织|机房\/托管组织|检测路线：/);
 });
 console.log("Console regression tests passed:",passed);
