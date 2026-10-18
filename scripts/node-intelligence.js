@@ -238,47 +238,40 @@
     return name.length > 34 ? name.slice(0, 16) + "…" + name.slice(-14) : name;
   }
   function render(info, local) {
-    var place = [];
-    if (info.countryCode !== "未知") place.push(info.countryCode);
-    else if (info.country !== "未知") place.push(info.country);
-    if (info.city !== "未知") place.push(info.city);
-    var net = [info.asn, info.isp].filter(function (x) { return x && x !== "未知"; });
-    var type = info.mobile === true ? "移动网络（情报）" :
-      info.datacenter === true ? "机房 / 托管（情报）" :
-      info.datacenter === false && info.mobile === false ? "未标记机房或移动网络（非家宽证明）" : "未知";
     var arr = [
+      "【基本信息】",
       "节点：" + shortName(route),
       "出口 IP：" + info.ip,
-      "位置：" + (place.join(" · ") || "未知"),
-      "网络：" + (net.join(" · ") || "未知"),
-      "类型：" + type
+      "国家/地区：" + info.country + (info.countryCode !== "未知" ? " (" + info.countryCode + ")" : "")
     ];
-    var change = egressChange(info);
-    if (change.indexOf("出口变化：动态") !== 0) {
-      if (change.indexOf("出口变化：首次") === 0) arr.push("出口变化：已记录首次基线");
-      else arr.push(change);
-    }
+    if (info.region !== "未知") arr.push("省/州：" + info.region);
+    if (info.city !== "未知") arr.push("城市：" + info.city);
+    arr.push("", "【网络归属】", "ASN：" + info.asn, "ISP：" + info.isp);
+    if (info.org !== "未知" && info.org !== info.isp) arr.push("运营组织：" + info.org);
+    arr.push("网络类型：" + classification(info));
+    arr.push("", "【安全情报】");
     if (info.riskScore !== null) arr.push("风险评分：" + info.riskScore + "/100（情报指标）");
-    if (info.vpn !== null || info.proxy !== null || info.tor !== null) {
-      arr.push("VPN / Proxy / Tor：" +
-        [signal(info.vpn), signal(info.proxy), signal(info.tor)].join(" / "));
-    }
+    arr.push("VPN：" + signal(info.vpn));
+    arr.push("Proxy：" + signal(info.proxy));
+    arr.push("Tor：" + signal(info.tor));
+    arr.push("", "【本地核验】");
     var localData = localIntel(info.ip);
     if (localData) {
       if (localData.geo !== "无数据") arr.push("Loon GeoIP：" + localData.geo);
-      if (localData.asn !== "无数据")
-        arr.push("Loon ASN：" + localData.asn +
-          (localData.org !== "无数据" ? " · " + localData.org : ""));
+      if (localData.asn !== "无数据") arr.push("Loon ASN：" + localData.asn);
       if (localData.geo !== "无数据" && info.countryCode !== "未知" &&
           localData.geo.toUpperCase() !== info.countryCode.toUpperCase())
-        arr.push("提示：两种地区数据库存在差异");
+        arr.push("注意：本地 GeoIP 与第三方数据不一致");
     }
+    var change = egressChange(info);
+    if (change.indexOf("出口变化：动态") !== 0)
+      arr.push(change.indexOf("出口变化：首次") === 0 ? "出口变化：已记录首次基线" : change);
     if (local && local.ip) {
       arr.push("直连出口：" + local.ip);
       if (route !== "DIRECT" && info.ip === local.ip)
         arr.push("注意：代理与直连出口相同，请核对所选策略");
     } else if (compare) arr.push("直连对照：查询失败");
-    arr.push("来源：" + info.provider + (info.cached ? "（缓存）" : ""));
+    arr.push("", "情报来源：" + info.provider + (info.cached ? "（缓存）" : ""));
     return arr.join("\n");
   }
   function finish(text) {
