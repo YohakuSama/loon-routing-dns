@@ -44,7 +44,9 @@ check("all current scripts remain local versioned assets",()=>{
 check("formal profile loads current plugin with fallback routing intact",()=>{
   assert(profile.includes("/main/plugins/v20261018r11/Network_Diagnostics.plugin, enabled=true"));
   assert(profile.includes("dns-server = 223.5.5.5"));
-  assert(profile.includes("doh-server = https://cloudflare-dns.com/dns-query"));
+  assert(profile.includes("doh-server = https://dns.alidns.com/dns-query"));
+  assert(profile.includes("dns.alidns.com = 223.5.5.5"));
+  assert(!profile.includes("cloudflare-dns.com"));
   assert(profile.includes("GEOIP,CN,DIRECT,no-resolve"));
   assert(profile.includes("FINAL,Final"));
 });
