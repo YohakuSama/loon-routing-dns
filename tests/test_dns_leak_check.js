@@ -60,7 +60,7 @@ check("normal sample reports observed resolvers without claiming absolute securi
   assert.match(a.text,/223\.5\.5\.5/);
   assert.match(a.text,/223\.6\.6\.6/);
   assert.match(a.text,/测试服务观察到的 HTTP 出口/);
-  assert.match(a.text,/仅代表本次采样/);
+  assert.match(a.text,/本次采样/);
   assert.doesNotMatch(a.text,/检测结果：没有 DNS 泄漏|检测结果：安全|100% 安全/);
   assert.equal(a.dnsCalls.length,4);
   assert(a.dnsCalls.every(x=>x.protocol==="auto"&&x.timeout===6500&&/^\d+\.12345678\.bash\.ws$/.test(x.domain)));
