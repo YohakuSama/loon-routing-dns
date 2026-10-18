@@ -55,7 +55,7 @@ check("healthy manual test reports actual configured DoH without clearTimeout",(
   assert.match(r.results[0].content,/所测项目正常/);
   assert.match(r.results[0].content,/dns.alidns.com/);
   assert(r.requests.some(x=>x.native));
-  assert(!r.requests.some(x=>x.url&&x.url.includes("dns.google")));
+  assert(!r.requests.some(x=>x.url&&x.url.includes("/dns-query")));
 });
 check("native UDP is flagged as plaintext instead of DoH success",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
