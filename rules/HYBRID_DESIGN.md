@@ -21,7 +21,7 @@
 - 来源登记：[sources.json](./sources.json)，当前 **87 个启用源**，含 10 个项目自身规则文件，哈啰规则文件并入国内 `DomesticCore`。
 - 生成器：[scripts/build_composite_rules.py](../scripts/build_composite_rules.py)，统一将来源映射到 **33 个策略目标**。
 - 输出目录：[`rules/generated/`](./generated/)，在主分支仓库自托管，更新先经自动化构建再由人工审查 PR 合并。完整配置的 33 条规则订阅全部指向自己的 `rules/generated`。
-- 新版默认使用 blackmatrix7 的 **AdvertisingLite + Privacy + Hijacking**（约 3.8 万条来源记录），而不是 29 万条的完整广告列表；保留在来源候选库中以便比较。
+- 新版使用 blackmatrix7 的 **AdvertisingLite + Privacy + Hijacking**；当前 `AdBlock` 输出约 7.7 万条规则（准确数量见 `rules/generated/audit.json`），而不是直接导入上游完整 Advertising 列表；保留在来源候选库中以便比较。
 - 原本属于 `[Rule]` 的第一方域名迁移到 `rules/custom/` 参与构建，不再与远程规则重复维护。`[Rule]` 仅保留必要资源出口、`GEOIP` 和 `FINAL`。
 - 哈啰已核验的 3 个官方域名已并入 `DomesticCore → DIRECT`，与高德地图、支付宝等国内关键服务一起维护；**不单独创建 HelloBike 策略组**。这些域名不是整个哈啰 App 的完整网络足迹，仍需看真机日志。
 
@@ -30,7 +30,7 @@
 1. 同一组内相同类型、相同目标的规则统一为一条（域名统一小写，IP 网络规范化）。
 2. `v2fly` 的普通域名转换为 `DOMAIN-SUFFIX`，`full:` 转为 `DOMAIN`，`keyword:` 转为 `DOMAIN-KEYWORD`；`@ads`、涉及跨境标记 `@!cn` 的非目标数据过滤；`include:` 依赖不自动递归，避免悄悄膨胀服务分类。RegExp 不擅自转换。
 3. 对未知语法、URL-REGEX、缺失来源及源文件异常缩减拒绝或隔离。报告 `audit.json` 记录审查依据。
-4. 跨策略组相同的精确匹配按发布订阅顺序仅保留最先命中组中的一条，并将去重前的归属记录到审计报告；跨策略的父子域名覆盖仅报告不自动修改语义。
+4. 跨策略组相同的精确匹配按发布订阅顺序仅保留最先命中组中的一条，并将去重前的归属记录到审计报告；跨策略的父子域名覆盖仅报告不自动修改语义。`IP-CIDR` / `IP-CIDR6` 始终带 `no-resolve`，避免改变经真机测试确认的 DNS 解析与命中顺序；此约束不可因通用“保留上游语义”建议而移除。
 5. 重要服务和中国直连排在广告过滤之前，优先保证正常业务功能；但这意味着部分广告域名可能被服务规则放行，这一权衡需要使用者验证。国内直连放在后面，`FINAL` 保持原来的代理优先配置。
 6. DNS 没有变更。DoH 加密不等于 DNS 匿名；不能因网页 DNS 检测结果与代理出口不同，就认定泄漏。
 7. 自动任务只提交候选 `rules/generated` 到更新 PR，**绝不自动覆盖 main 配置**；正式上主分支仍需手动审核与独立合并。

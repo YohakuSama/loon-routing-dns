@@ -32,6 +32,11 @@ jobs:
       - name: Validate Loon config and plugin references
         run: python3 scripts/validate_repo.py
 
+      - name: Run rule generator and release-profile regression tests
+        run: |
+          python3 -m unittest discover -s tests -p 'test_composite_rules.py' -v
+          python3 tests/test_hybrid_profile.py --generated
+
       - name: Check JavaScript syntax
         run: |
           node --check scripts/network-diagnostics.js

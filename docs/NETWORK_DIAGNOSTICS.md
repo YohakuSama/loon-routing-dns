@@ -95,7 +95,7 @@ DIRECT 出口对照**默认关闭**：只有你开启此功能，脚本才主动
 - [控制台脚本](../scripts/console.js)
 - [网络与 DNS 诊断脚本](../scripts/network-diagnostics.js)
 - [节点情报脚本](../scripts/node-intelligence.js)
-- [项目专属控制台图标](../icons/Console.png)
+- [项目专属控制台图标](../icons/v20261018r2/Console.png)
 - [开发与模拟测试](../tests/test_console.js)
 
 **自动模拟检查通过不代表已经在真实 iOS Loon 环境下验证。** 脚本有问题请提供 Loon Build 号和经过脱敏的脚本日志。
