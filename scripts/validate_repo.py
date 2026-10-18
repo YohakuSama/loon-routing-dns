@@ -19,7 +19,9 @@ PLUGIN = ROOT / "plugins" / "Network_Diagnostics.plugin"
 JS = [
     ROOT / "scripts" / "network-diagnostics.js",
     ROOT / "scripts" / "node-intelligence.js",
-    ROOT / "scripts" / "console.js",
+    ROOT / "scripts" / "console.js",  # legacy v1 console, retained for old standalone plugin installs
+    ROOT / "scripts" / "v20261018r4" / "network-diagnostics.js",
+    ROOT / "scripts" / "v20261018r4" / "node-intelligence.js",
 ]
 ISSUES = []
 
@@ -89,7 +91,7 @@ def check_config():
 
     # Full configuration must discover the control console automatically.
     plugin_text = section(data, "Plugin")
-    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r2/Network_Diagnostics.plugin"
+    expected_plugin = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r4/Network_Diagnostics.plugin"
     entries = [line.strip() for line in plugin_text.splitlines()
                if line.strip() and not line.lstrip().startswith("#")]
     require(len(entries) == 1, "expected one auto-bundled Console plugin")
@@ -119,8 +121,8 @@ def check_plugin():
     data = PLUGIN.read_text(encoding="utf-8")
     require("#!icon = https://" in data, "missing plugin icon")
     require("compare_direct = switch,false" in data, "DIRECT IP comparison must be opt-in")
-    require("notify_every_change = switch,false" in data, "normal notification must default off")
-    pinned_plugin=ROOT / "plugins" / "v20261018r2" / "Network_Diagnostics.plugin"
+    require("auto_check = switch,false" in data, "automatic checks must default off")
+    pinned_plugin=ROOT / "plugins" / "v20261018r4" / "Network_Diagnostics.plugin"
     require(pinned_plugin.is_file(), "missing versioned Console plugin")
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
             "versioned Console plugin differs from checked source")
@@ -131,24 +133,27 @@ def check_plugin():
             "unexpected Wi-Fi automation in plugin")
     arg_text = section(data, "Argument")
     names = set(re.findall(r"^([a-z_]+)\s*=", arg_text, re.M))
-    expected = {"doh_url", "auto_check", "target_policy", "compare_direct",
-                "notify_every_change", "direct_probe_url", "proxy_probe_url",
-                "probe_timeout", "primary_ip_url", "backup_ip_url",
-                "enable_ip_backup", "cache_seconds"}
-    require(expected <= names, "plugin arguments missing: " + str(expected - names))
+    expected = {"auto_check", "target_policy", "compare_direct"}
+    require(names == expected, "expected exactly three lean-plugin options, got: " + str(sorted(names)))
+    require("auto_check = switch,false" in data,
+            "automatic network monitoring must default off")
     scripts = section(data, "Script")
     lines = [s.strip() for s in scripts.splitlines() if s.strip() and not s.lstrip().startswith("#")]
-    require(len(lines) == 5, "expected 5 console script entries (got %d)" % len(lines))
-    require(sum(s.startswith("generic then script(") for s in lines) == 4, "missing 4 manual console scripts")
-    require(sum(s.startswith("network-changed then script(") for s in lines) == 1, "missing network-change script")
+    require(len(lines) == 3, "expected 3 lean-plugin script entries (got %d)" % len(lines))
+    require(sum(s.startswith("generic then script(") for s in lines) == 2, "expected 2 manual actions")
+    require(sum(s.startswith("network-changed then script(") for s in lines) == 1, "missing optional network-change hook")
+    require("with enable=${auto_check}" in scripts, "network-change hook must be controlled by auto_check")
+    require("模拟网络切换" not in scripts and "状态与设置摘要" not in scripts,
+            "obsolete developer tools must not appear in the user plugin")
     for name in re.findall(r"\$\{([a-z_]+)\}", scripts):
         require(name in names, "undeclared plugin argument " + name)
     src_urls = re.findall(r'script\("(https://[^"]+)"', scripts)
-    require(len(src_urls) == 5, "expected 5 script source URLs")
+    require(len(src_urls) == 3, "expected 3 script source URLs")
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/main/"
-        require(marker in url and (ROOT / url.split(marker)[1]).is_file(),
-                "plugin script URL missing local file: " + url)
+        require(marker in url and "/scripts/v20261018r4/" in url
+                and (ROOT / url.split(marker)[1]).is_file(),
+                "plugin must use v2 versioned scripts: " + url)
 
     for file in JS:
         require(file.is_file(), "JS missing " + str(file))
