@@ -120,7 +120,6 @@ DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
-# Optional lightweight network helper — three manual tools; network monitoring off by default.
-# No MITM or rewrite. Settings and feature toggles remain editable in Loon > Plugins.
+# Node information and basic network diagnostics.
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r9/Network_Diagnostics.plugin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/plugins/v20261018r10/Network_Diagnostics.plugin, enabled=true
