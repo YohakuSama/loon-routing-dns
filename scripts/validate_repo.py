@@ -6,11 +6,13 @@ External resources: python3 scripts/validate_repo.py --check-remote
 """
 import argparse
 import concurrent.futures
+import json
 import re
 import sys
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,8 +56,10 @@ def check_config():
     known = set(groups) | {"DIRECT", "REJECT", "REJECT-DROP", "REJECT-TINYGIF", "PROXY"}
     require({"Proxy", "Auto", "Fallback", "AdBlock", "Final"} <= set(groups), "missing core groups")
 
+    baseline = json.loads((ROOT / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
     remote_text = section(data, "Remote Rule")
     remote = []
+    remote_rows = []
     for line in remote_text.splitlines():
         line = line.strip()
         if not line or line.startswith("#"):
@@ -63,27 +67,34 @@ def check_config():
         match = re.match(r"(https://\S+?),\s*policy=([^,\s]+)", line)
         require(match is not None, "malformed remote rule: " + line[:90])
         if match:
+            remote_rows.append(line)
             remote.append(match.group(1))
             require(match.group(2) in known, "undefined remote rule policy: " + match.group(2))
-    require(len(remote) == 33, "expected 33 self-hosted lists (got %s)" % len(remote))
+    require(len(remote) == 28, "expected 28 historically verified rule subscriptions (got %s)" % len(remote))
+    require(remote_rows == baseline["remote_rules"],
+            "active remote rules/order differ from pre-migration verified baseline")
     for url in remote:
-        require(url.startswith("https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/"),
-                "remote URL must be a self-hosted main branch rule: " + url)
-        require((ROOT / "rules" / "generated" / url.rsplit("/", 1)[-1]).is_file(),
-                "missing built rule: " + url)
+        parsed = urlsplit(url)
+        require(parsed.scheme == "https" and parsed.netloc == "raw.githubusercontent.com"
+                and parsed.path.startswith("/blackmatrix7/ios_rule_script/master/rule/Loon/"),
+                "remote URL must use known upstream rule catalog: " + url)
     require(len(remote) == len(set(remote)), "duplicate remote rule URLs")
 
     rule_text = section(data, "Rule")
     local_count = 0
+    local_rows = []
     for line in rule_text.splitlines():
         line = line.strip()
         if not line or line.startswith("#"):
             continue
+        local_rows.append(line)
         parts = [part.strip() for part in line.split(",")]
         local_count += 1
         policy = parts[1] if parts[0] == "FINAL" else (parts[2] if len(parts) >= 3 else "")
         require(policy in known, "undefined local rule policy: " + line)
-    require(local_count == 3, "expected only three fallback local rules (got %s)" % local_count)
+    require(local_count == 66, "expected 66 verified local rules (got %s)" % local_count)
+    require(local_rows == baseline["local_rules"],
+            "local rules/order differ from pre-migration verified baseline")
     require("GEOIP,CN,DIRECT,no-resolve" in rule_text, "CN GEOIP route missing")
     require("FINAL,Final" in rule_text, "FINAL policy missing")
 
@@ -216,11 +227,15 @@ def cdn_urls_at_ref(urls, ref):
     if not re.fullmatch(r"[a-f0-9]{40}|main", ref):
         raise ValueError("--remote-ref must be main or a full commit SHA")
     prefix = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/"
+    approved_external = "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/"
     for url in urls:
-        if not url.startswith(prefix):
-            raise ValueError("Unexpected CDN URL: " + url)
-    return sorted({u.replace(prefix, prefix.replace("/main/", "/" + ref + "/"), 1)
-                   for u in urls})
+        if not (url.startswith(prefix) or url.startswith(approved_external)):
+            raise ValueError("Unexpected resource URL: " + url)
+    return sorted({
+        u.replace(prefix, prefix.replace("/main/", "/" + ref + "/"), 1)
+        if u.startswith(prefix) else u
+        for u in urls
+    })
 
 
 def main():
