@@ -39,11 +39,14 @@ jobs:
           node --check tests/test_scripts.js
           node --check tests/test_console.js
           node --check scripts/console.js
+          node --check scripts/rule-health.js
+          node --check scripts/comprehensive-diagnostics.js
 
       - name: Run Loon mocked-runtime regression tests
         run: |
           node tests/test_scripts.js
           node tests/test_console.js
+          python3 scripts/audit_rule_overlaps.py
 
   upstream-resource-check:
     name: Check upstream rules, scripts, and icons
