@@ -29,7 +29,7 @@
 
 ## 诊断域名安全保护
 
-- 上游 `ChinaMaxNoMedia_Domain` 曾把 `.browserleaks.com` 归入 `DIRECT`。本项目发布的自有 `ChinaDirect.list` 已清理该条目，生成器也会拦截再次导入。
+- 上游 `ChinaMaxNoMedia_Domain` 曾把 `.browserleaks.com`、`.whatismyip.com` 归入 `DIRECT`，同时有宽泛的 `DOMAIN-KEYWORD,stripe`。本项目自有 `ChinaDirect.list` 已清理这三条，生成器也会拦截再次导入。
 - `routing_guardrails.json` 中的受保护域名不能出现在任一自维护 `DIRECT` 组的域名、后缀、关键词匹配规则中；过滤结果带来源和行号写入审计报告。
 - CI 不仅测试生成器，还检查已生成 `ChinaDirect.list` 的实际内容和 `audit.json` 规则数。不允许上游自动刷新把误分类重新带回。
 - 仍需逐类人工审查广告冲突、共享域名和 IP 规则；**安全保护名单不能替代真机和业务功能验证**。
@@ -43,7 +43,7 @@ python3 -m unittest discover -s tests -p 'test_composite_rules.py'
 python3 scripts/build_composite_rules.py
 ```
 
-输出到 `rules/generated/` 下（**用于正式配置与审计；更新仍需审查**）：
+输出到 `rules/generated/` 下（**仅供候选审计及后续灰度，当前正式配置不默认启用**）：
 
 - 每个策略组生成单独的 Loon 原生 `.list`，保留来源标识。
 - `audit.json` 记录每个来源的内容指纹、成功解析数、组内去重数、跨组同策略重复数、跨策略冲突、域名后缀祖先冲突及被隔离的未知格式样本。
