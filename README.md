@@ -1,6 +1,6 @@
 # LoonKit
 
-适用于 **Loon** 的分流配置，包含常用服务策略、广告拦截、DNS 设置和网络辅助工具。**正式规则已恢复迁移前使用过的分流基线，复合规则库暂不启用。** 增加一条本地 `browserleaks.com → Proxy` 规则，避免被上游中国直连域名集错误命中。
+适用于 **Loon** 的分流配置，包含常用服务策略、广告拦截、DNS 设置和网络辅助工具。**正式规则已恢复迁移前使用过的分流基线，复合规则库暂不启用。** 增加三条本地代理覆盖规则，防止上游误将 `browserleaks.com`、`whatismyip.com` 和 Stripe 支付域名归到中国直连。
 
 [完整配置](./LoonKit.lcf) · [网络辅助插件](./plugins/Network_Diagnostics.plugin) · [插件使用说明](./docs/NETWORK_DIAGNOSTICS.md) · [问题反馈](https://github.com/YohakuSama/loonkit/issues)
 
@@ -56,11 +56,11 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 
 ## 自维护规则库质量门槛
 
-自有复合规则不是盲目复制上游：已在 [候选库审计报告](./rules/AUDIT_2026-10-18.md) 中核对 `ChinaDirect` 误收录 `browserleaks.com` 的来源，并从生成内容移除；未来刷新会通过 [规则保护名单](./rules/routing_guardrails.json) 和 CI 阻止同类误直连。正式配置目前仍采用稳定规则基线，复合库须经设备实测后才会重新默认启用。
+自有复合规则不是盲目复制上游：已在 [候选库审计报告](./rules/AUDIT_2026-10-18.md) 中核对 `ChinaDirect` 误收录的 `browserleaks.com`、`whatismyip.com` 和 `DOMAIN-KEYWORD,stripe`，并从生成内容移除；未来刷新会通过 [规则保护名单](./rules/routing_guardrails.json) 和 CI 阻止同类误直连。正式配置目前仍采用稳定规则基线，复合库须经设备实测后才会重新默认启用。
 
 ## 规则来源
 
-**正式启用的远程规则来自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script) 的旧版 28 个规则文件，辅以 66 条原有本地规则和 1 条 BrowserLeaks 代理例外；**[v2fly](https://github.com/v2fly/domain-list-community) 等复合规则仍在 [候选规则库](./rules/README.md) 保留供审计与后续真机灰度验证，默认不加载。历史配置的节点订阅和访问凭证不会纳入仓库。
+**正式启用的远程规则来自 [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script) 的旧版 28 个规则文件，辅以 66 条原有本地规则和 3 条重要域名代理例外；**[v2fly](https://github.com/v2fly/domain-list-community) 等复合规则仍在 [候选规则库](./rules/README.md) 保留供审计与后续真机灰度验证，默认不加载。历史配置的节点订阅和访问凭证不会纳入仓库。
 
 ---
 
