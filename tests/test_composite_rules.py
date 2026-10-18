@@ -5,7 +5,7 @@ from pathlib import Path
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from build_composite_rules import normalize, generate, read_catalog, prune_suffix_redundancy, own_cross_group_duplicates, PUBLISH_ORDER
+from build_composite_rules import normalize, generate, read_catalog, prune_suffix_redundancy, own_cross_group_duplicates, PUBLISH_ORDER, excluded_ai_rule
 
 
 class CompositeRulesTests(unittest.TestCase):
@@ -49,6 +49,35 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertEqual(len(report), 2)
         self.assertIn("DOMAIN-SUFFIX,example.com", groups["AI"])
         self.assertNotIn("DOMAIN-SUFFIX,example.com", groups["AdBlock"])
+
+    def test_ai_rule_safety_exclusions_are_repeatable(self):
+        self.assertEqual(excluded_ai_rule("IP-ASN,20473"), "AI broad ASN omitted")
+        for rule in (
+            "DOMAIN-SUFFIX,stripe.com", "DOMAIN-SUFFIX,auth0.com",
+            "DOMAIN-SUFFIX,intercom.io", "DOMAIN-SUFFIX,sentry.io",
+            "DOMAIN,static.cloudflareinsights.com",
+        ):
+            self.assertEqual(excluded_ai_rule(rule), "AI shared-provider root omitted")
+        self.assertIsNone(excluded_ai_rule("DOMAIN-SUFFIX,openai.com"))
+        self.assertIsNone(excluded_ai_rule("DOMAIN,openai-api.arkoselabs.com"))
+        self.assertIsNone(excluded_ai_rule("IP-CIDR,24.199.123.28/32,no-resolve"))
+
+    def test_published_ai_list_has_no_shared_roots_or_broad_asn(self):
+        profile = (Path(__file__).resolve().parents[1] / "rules/generated/AI.list").read_text(encoding="utf-8")
+        for line in profile.splitlines():
+            self.assertIsNone(excluded_ai_rule(line), line)
+
+    def test_generator_omits_risky_ai_records_without_losing_first_party(self):
+        src={"id":"sample","group":"AI","policy":"AI",
+             "url":"https://rules.invalid/sample","format":"loon","min_rules":1}
+        body=("DOMAIN-SUFFIX,openai.com\n"
+              "DOMAIN-SUFFIX,stripe.com\n"
+              "IP-ASN,20473\n")
+        output,audit=generate([src], lambda _: body)
+        self.assertIn("DOMAIN-SUFFIX,openai.com", output["AI.list"])
+        self.assertNotIn("stripe.com", output["AI.list"])
+        self.assertNotIn("IP-ASN", output["AI.list"])
+        self.assertEqual(audit["quarantined_by_reason"]["AI broad ASN omitted"],1)
 
     def test_normalizes_domainset_and_lowers_domain(self):
         self.assertEqual(normalize(".EXAMPLE.COM", "domainset")[0],

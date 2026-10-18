@@ -37,7 +37,7 @@ class RepositoryHygiene(unittest.TestCase):
         self.assertTrue((ROOT / "icons/v20261018r2/Console.png").is_file())
         self.assertIn("icons/v20261018r3/HBO.png", active)
         self.assertTrue((ROOT / "icons/v20261018r3/HBO.png").is_file())
-        self.assertTrue((ROOT / "reviews/LoonKit_Hybrid_Review.lcf").is_file())
+        self.assertFalse((ROOT / "reviews/LoonKit_Hybrid_Review.lcf").exists())
 
     def test_current_plugin_sources_are_available(self):
         data = (ROOT / "plugins/Network_Diagnostics.plugin").read_text(encoding="utf-8")
@@ -63,6 +63,8 @@ class RepositoryHygiene(unittest.TestCase):
             "scripts/node-intelligence.js",
             "scripts/v20261018r4/node-intelligence.js",
             "scripts/v20261018r5/node-intelligence.js",
+            "Loon_Routing_DNS.lcf",
+            "reviews/LoonKit_Hybrid_Review.lcf",
             "releases/v4.4.8/Loon_Routing_DNS.lcf",
             "releases/v5.1.0/CHANGELOG.md",
         ):

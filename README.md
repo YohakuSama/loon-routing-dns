@@ -10,7 +10,7 @@
 - **国内直连**：常用国内网站和服务优先直连。
 - **节点选择**：提供手动选择、自动测速和故障切换策略。
 - **广告拦截**：通过 `AdBlock` 策略控制。
-- **网络辅助**：查看出口 IP、节点网络信息，检查直连、代理和 DNS 连通性。
+- **网络辅助**：查看出口 IP、节点网络信息，并识别 Loon 实际 DNS 协议与解析器。
 
 ## 安装
 
@@ -25,8 +25,9 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 1. 在 Loon 中通过链接导入完整配置。
 2. 添加或恢复自己的节点订阅，并更新节点。
 3. 在「策略」中为 `Proxy` 选择一个可用节点，或配置 `Auto`、`Fallback`。
-4. 更新远程规则和插件资源，确认下载成功。
-5. 使用常见国内及海外网站，检查分流是否符合预期。
+4. **在 Loon 的 DNS 服务器页面关闭「加密 DNS 查询失败回退到普通 DNS」**。此开关无法仅凭配置文件控制。
+5. 更新远程规则和插件资源，确认下载成功。
+6. 运行网络与 DNS 诊断，在 DNS 日志中检查实际查询所用协议与解析器，并检查各 App 分流。
 
 **首次使用请先确保代理节点可用，再更新 GitHub 规则资源。** 配置中的 GitHub 资源默认经 `Proxy` 策略访问；若没有可用节点，下载可能失败。
 
@@ -38,6 +39,8 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 |---|---|
 | 节点出口信息 | 查看公网 IP、地区、运营商、ASN 和网络类型 |
 | 网络与 DNS 诊断 | 检查直连、代理、DoH 和 Loon 原生 DNS |
+
+**重要：** 默认配置使用 Cloudflare 加密 DoH（`https://cloudflare-dns.com/dns-query`）；保留的普通 UDP DNS 仅用于兼容/应急。Loon **默认允许加密 DNS 故障回退到普通 DNS**，若要求严格避免明文回退，必须在 App 中手动关闭。Cloudflare DoH 与代理出口不同不一定代表明文泄漏；用户应用内置 DoH/DoT 及节点远端解析无法由本配置完全控制。详见 [DNS 隐私排查](./docs/DNS_PRIVACY.md)。
 
 网络切换提醒、直连 IP 对照默认关闭，可在插件设置中按需开启。详见[插件使用说明](./docs/NETWORK_DIAGNOSTICS.md)。
 

@@ -38,6 +38,25 @@ PUBLISH_ORDER = (
 # Advert/privacy safety: these selectors are excessively broad for an
 # always-on blocker; precise domains/suffixes remain enabled.
 ADBLOCK_ALLOWED = {"DOMAIN", "DOMAIN-SUFFIX"}
+# Shared authentication/payment/telemetry providers must not route unrelated
+# applications through a region-specific AI group. Keep AI-specific hosts.
+AI_SHARED_ROOTS = {
+    "algolia.net", "auth0.com", "identrust.com", "intercom.io",
+    "intercomcdn.com", "launchdarkly.com", "observeit.net",
+    "segment.io", "sentry.io", "stripe.com",
+}
+AI_SHARED_HOSTS = {"static.cloudflareinsights.com"}
+
+
+def excluded_ai_rule(rule):
+    kind, _, value = rule.partition(",")
+    if kind == "IP-ASN":
+        return "AI broad ASN omitted"
+    if kind in {"DOMAIN", "DOMAIN-SUFFIX"} and (
+        value in AI_SHARED_ROOTS or value in AI_SHARED_HOSTS
+    ):
+        return "AI shared-provider root omitted"
+    return None
 SOURCE_URL_PREFIXES = (
     "/blackmatrix7/ios_rule_script/",
     "/v2fly/domain-list-community/",
@@ -259,6 +278,11 @@ def generate(sources, fetch=fetch_text):
             if s["group"] == "AdBlock" and kind not in ADBLOCK_ALLOWED:
                 quarantined["adblock broad matcher omitted: " + kind] += 1
                 continue
+            if s["group"] == "AI":
+                reason = excluded_ai_rule(rule)
+                if reason:
+                    quarantined[reason] += 1
+                    continue
             key = s["group"]
             if rule in by_group[key]:
                 intra_dupes += 1
@@ -286,6 +310,8 @@ def generate(sources, fetch=fetch_text):
         "URL-REGEX excluded (may require MITM; separate review)",
         "v2fly include not expanded (explicit sources only)",
         "v2fly regexp excluded (manual review)",
+        "AI broad ASN omitted",
+        "AI shared-provider root omitted",
     }
     unexpected = {reason: count for reason, count in quarantined.items()
                   if reason not in allowed_quarantine

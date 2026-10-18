@@ -17,7 +17,7 @@
 
 ## 数据组织和发布方式
 
-- 完整候选文件：[reviews/LoonKit_Hybrid_Review.lcf](../reviews/LoonKit_Hybrid_Review.lcf)
+- 当前发布配置：[LoonKit.lcf](../LoonKit.lcf)。旧审核镜像已删除，历史版本通过 Git 历史回滚。
 - 来源登记：[sources.json](./sources.json)，当前 **87 个启用源**，含 10 个项目自身规则文件，哈啰规则文件并入国内 `DomesticCore`。
 - 生成器：[scripts/build_composite_rules.py](../scripts/build_composite_rules.py)，统一将来源映射到 **33 个策略目标**。
 - 输出目录：[`rules/generated/`](./generated/)，在主分支仓库自托管，更新先经自动化构建再由人工审查 PR 合并。完整配置的 33 条规则订阅全部指向自己的 `rules/generated`。
