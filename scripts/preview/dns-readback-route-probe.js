@@ -20,7 +20,7 @@ var watchdog=setTimeout(function(){
        "请检查 Loon 脚本与请求日志，不能据此判断 DNS 泄漏。"]);
 },39000);
 function request(url,policy,cb){
-  var options={url:url,timeout:8000,alpn:"h1",
+  var options={url:url,timeout:8000,alpn:"h1",insecure:false,
     headers:{"Accept":"application/json, text/plain"},
     "auto-cookie":false,"auto-redirect":false};
   if(policy==="Proxy")options.node="Proxy";
@@ -61,6 +61,7 @@ function run(id){
       if(finished)return;
       request(url,"Proxy",function(proxy){
         if(finished)return;
+        var certHint=(/167772294/.test((auto.error||"")+" "+(proxy.error||"")));
         var lines=[
           "【相同测试会话下的 HTTPS 读取结果】",
           label(auto),
@@ -68,9 +69,10 @@ function run(id){
           "【DNS 查询】",
           "10 个一次性域名已发起；Loon 回调 "+callbackCount+"/10，错误 "+dnsErrors+"。",
           "【解释】",
+          certHint?"错误码 167772294 在 OpenSSL 中对应证书验证失败。请检查证书链、中间证书、SNI 和 Loon 的 TLS 日志，不能因此判断 DNS 泄漏。":"未从错误文本中提取到已知的证书验证错误码。",
           "本测试仅比较 bash.ws 检测结果的 HTTPS 读取链路，并不根据 Proxy 读取成功就判断 DNS 没有泄漏。",
           "当前分流路径与 Proxy 策略可能选择同一节点，也可能不同。未修改 DNS、分流规则或节点选择。",
-          "HTTPS 仍正常验证证书；不会强制 DIRECT。",
+          "脚本显式设置 insecure:false（严格校验证书）；不会强制 DIRECT，也不会关闭 TLS 校验。",
           "如两种路径均报 TLS 错误，请提供这两行错误信息及 Loon 请求日志，不要公开个人节点信息。"
         ];
         done(lines);
