@@ -55,6 +55,35 @@
     // bash.ws /id supplies a decimal session id. Never interpolate unknown URLs.
     return /^\d{5,15}$/.test(id) ? id : "";
   }
+  function validIPv4(ip) {
+    if(!/^\d{1,3}(?:\.\d{1,3}){3}$/.test(ip))return false;
+    return ip.split(".").every(function(n){return Number(n)<=255;});
+  }
+  function validAddress(ip) {
+    if(validIPv4(ip))return true;
+    if(ip.indexOf(":")<0||ip.length>45||!/^[:a-fA-F0-9.]+$/.test(ip)||
+       ip.indexOf(":::")>=0)return false;
+    var sides=ip.split("::");
+    if(sides.length>2)return false;
+    var parts=[],hasV4=false;
+    for(var j=0;j<sides.length;j++){
+      if(!sides[j])continue;
+      var groups=sides[j].split(":");
+      for(var k=0;k<groups.length;k++) {
+        var g=groups[k];
+        if(g.indexOf(".")>=0){
+          if(k!==groups.length-1||j!==sides.length-1||!validIPv4(g)||hasV4)
+            return false;
+          hasV4=true;
+          parts.push("v4","v4");
+        }else{
+          if(!/^[a-fA-F0-9]{1,4}$/.test(g))return false;
+          parts.push(g);
+        }
+      }
+    }
+    return sides.length===2?parts.length<8:parts.length===8;
+  }
   function parseResult(body) {
     try {
       var raw=JSON.parse(body);
@@ -71,8 +100,7 @@
         }
         if(type!=="dns"&&type!=="ip") continue;
         var address=clean(r.ip,70);
-        if(!/^[0-9a-f:.]+$/i.test(address)||address.length>45||address.length<3)
-          continue;
+        if(!validAddress(address))continue;
         var key=type+"|"+address;
         if(seen[key])continue;
         seen[key]=true;
@@ -91,18 +119,18 @@
   function reviewText(list) {
     // Configured provider: AliDNS. Resolver source/ASN may be anycast or differ
     // from the endpoint; therefore mismatches are a warning, not proof of leakage.
-    var suspicious=[],unclear=[];
+    var matches=0,unverified=0,others=[];
     for(var i=0;i<list.length;i++) {
       var owner=list[i].asn.toLowerCase();
-      if(!owner) unclear.push(list[i].ip);
-      else if(!/alibaba|aliyun|alidns|alicloud/i.test(owner))
-        suspicious.push(list[i].ip);
+      if(/alibaba|aliyun|alidns|alicloud/.test(owner))matches++;
+      else if(!owner||/^as\d+$/i.test(owner))unverified++;
+      else others.push(list[i].ip);
     }
-    if(suspicious.length)
-      return "发现需要核对的解析器："+suspicious.join(", ")+"。与项目默认 AliDNS 名称不一致，仅代表疑点，不是泄漏定论。";
-    if(unclear.length)
-      return "部分解析器没有运营商资料，无法确认与当前 DNS 设置是否一致。";
-    return "解析器运营商名称与项目默认 AliDNS 看起来一致；仅代表本次采样，没有证明完全无泄漏。";
+    if(others.length)
+      return "有 "+others.length+" 个解析器归属名称未匹配 AliDNS，应核对是否为预期上游："+others.join(", ")+"；不能据此直接认定泄漏。";
+    if(unverified)
+      return "有 "+unverified+" 个解析器仅有 ASN 编号或缺失组织信息，无法仅凭名称判断；请人工对照预期 DNS。";
+    return "本次采样 "+matches+" 个解析器的运营商名称匹配 AliDNS 相关关键词；不代表所有 DNS 请求均安全。";
   }
   function render(values, id, queries) {
     if(values.dns.length===0) {
