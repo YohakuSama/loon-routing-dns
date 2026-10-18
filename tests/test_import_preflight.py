@@ -129,6 +129,18 @@ class ImportPreflight(unittest.TestCase):
             with self.subTest(value=required):
                 self.assertIn(required,self.main)
 
+    def test_cdn_premerge_checks_use_commit_sha_not_unpublished_main(self):
+        from scripts.validate_repo import cdn_urls_at_ref
+        url = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf"
+        sha = "a" * 40
+        result = cdn_urls_at_ref([url, url], sha)
+        self.assertEqual(result, [url.replace("/main/", "/" + sha + "/")])
+        self.assertEqual(cdn_urls_at_ref([url], "main"), [url])
+        for bad in ("../main", "refs/heads/main", "main/../../", "123"):
+            with self.subTest(ref=bad):
+                with self.assertRaises(ValueError):
+                    cdn_urls_at_ref([url], bad)
+
     def test_no_broken_unversioned_icon_urls_in_review(self):
         self.assertEqual(len(icons(self.review)),33)
         self.assertFalse(any("/main/icons/" in url and "/main/icons/v" not in url
