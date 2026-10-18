@@ -21,5 +21,5 @@ enable_ip_backup = switch,true,tag=IP 情报查询失败自动备用,desc=主要
 cache_seconds = input,"120",tag=节点情报缓存秒数,desc=0 表示关闭，仅明确节点入口缓存；支持 0–600 秒
 
 [Script]
-generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/node-intelligence.js", {${target_policy}, ${compare_direct}, ${primary_ip_url}, ${backup_ip_url}, ${enable_ip_backup}, ${cache_seconds}}) with tag="节点详情查询", img_url="location.fill.viewfinder.system", timeout=45
+generic then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/feat/console-rule-health-20261018/scripts/node-intelligence.js", {${target_policy}, ${compare_direct}, ${primary_ip_url}, ${backup_ip_url}, ${enable_ip_backup}, ${cache_seconds}}) with tag="节点详情查询", img_url="location.fill.viewfinder.system", timeout=45
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/scripts/network-diagnostics.js", {https://dns.alidns.com/dns-query, ${direct_probe_url}, http://cp.cloudflare.com/generate_204, ${probe_timeout}, ${notify_every_change}}) with enable=${auto_check}, tag="网络切换诊断", timeout=40
