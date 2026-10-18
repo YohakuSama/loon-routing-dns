@@ -37,7 +37,7 @@ class RepositoryHygiene(unittest.TestCase):
         self.assertTrue((ROOT / "icons/v20261018r2/Console.png").is_file())
         self.assertIn("icons/v20261018r3/HBO.png", active)
         self.assertTrue((ROOT / "icons/v20261018r3/HBO.png").is_file())
-        self.assertTrue((ROOT / "reviews/LoonKit_Hybrid_Review.lcf").is_file())
+        self.assertFalse((ROOT / "reviews/LoonKit_Hybrid_Review.lcf").exists())
 
     def test_current_plugin_sources_are_available(self):
         data = (ROOT / "plugins/Network_Diagnostics.plugin").read_text(encoding="utf-8")
