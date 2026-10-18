@@ -35,7 +35,7 @@ function run(options={}) {
     if(options.native==="fail")return cb({code:"TIMEOUT",message:"timeout"},null);
     cb(null,{
       protocol:options.protocol||"doh",
-      server:options.server||"https://cloudflare-dns.com/dns-query",
+      server:options.server||"https://dns.alidns.com/dns-query",
       fromCache:options.cached===true,
       answers:[{type:"A",value:"93.184.215.14"}]
     });
@@ -53,9 +53,9 @@ check("healthy manual test reports actual configured DoH without clearTimeout",(
   const r=run();
   assert.equal(r.results.length,1);
   assert.match(r.results[0].content,/所测项目正常/);
-  assert.match(r.results[0].content,/cloudflare-dns.com/);
+  assert.match(r.results[0].content,/dns.alidns.com/);
   assert(r.requests.some(x=>x.native));
-  assert(!r.requests.some(x=>x.url&&x.url.includes("dns.alidns.com")));
+  assert(!r.requests.some(x=>x.url&&x.url.includes("dns.google")));
 });
 check("native UDP is flagged as plaintext instead of DoH success",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
@@ -63,7 +63,7 @@ check("native UDP is flagged as plaintext instead of DoH success",()=>{
   assert.match(r.results[0].content,/明文 DNS/);
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
-  const r=run({server:"https://dns.alidns.com/dns-query"});
+  const r=run({server:"https://cloudflare-dns.com/dns-query"});
   assert.match(r.results[0].content,/部分项目不可用/);
   assert.match(r.results[0].content,/其他加密 DNS/);
 });
