@@ -14,11 +14,11 @@
     $done({title:"规则资源健康检查",content:message});
   }
   try {
-    $httpClient.get({url:URL,node:"DIRECT",timeout:12000,
+    $httpClient.get({url:URL,timeout:12000,
       headers:{"Accept":"application/vnd.github+json","User-Agent":"Loon-Routing-DNS"},
       "auto-cookie":false,"auto-redirect":false},function(err,response,body){
-      if(err) return done("无法获取 GitHub 规则目录："+String(err).slice(0,100)+"\n请检查 DIRECT 网络及 GitHub API 连通性。");
-      if(!response || response.status!==200) return done("GitHub API 返回 HTTP "+String(response&&response.status)+"。\n请稍后重试；可能遇到 API 限流。");
+      if(err) return done("无法获取 GitHub 规则目录："+String(err).slice(0,100)+"\n请检查 GitHub API 连通性及 Loon 分流；本次结果不代表规则文件异常。");
+      if(!response || response.status!==200) return done("GitHub API 返回 HTTP "+String(response&&response.status)+"。\n检查未完成，不代表规则文件异常；请检查网络或 API 限流。");
       var data;
       try { data=JSON.parse(body); } catch(e) {return done("GitHub API 返回内容无法解析。");}
       if(!data || !Array.isArray(data.tree) || data.truncated===true) return done("规则目录数据不完整，不能判定资源健康。");
