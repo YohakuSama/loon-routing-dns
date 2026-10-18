@@ -245,35 +245,38 @@
     var net = [info.asn, info.isp].filter(function (x) { return x && x !== "未知"; });
     var type = info.mobile === true ? "移动网络（情报）" :
       info.datacenter === true ? "机房 / 托管（情报）" :
-      info.datacenter === false && info.mobile === false ? "未标记为机房（非家宽证明）" : "未知";
+      info.datacenter === false && info.mobile === false ? "未标记机房或移动网络（非家宽证明）" : "未知";
     var arr = [
       "节点：" + shortName(route),
       "出口 IP：" + info.ip,
-      "地区：" + (place.join(" · ") || "未知"),
+      "位置：" + (place.join(" · ") || "未知"),
       "网络：" + (net.join(" · ") || "未知"),
       "类型：" + type
     ];
     var change = egressChange(info);
-    if (change.indexOf("出口变化：IP ") === 0 || change.indexOf("出口变化：ASN ") === 0 ||
-        change.indexOf("出口变化：ISP ") === 0) arr.push(change);
-    if (info.riskScore !== null)
-      arr.push("情报风险：" + info.riskScore + "/100（非节点质量评分）");
-    if (info.vpn === true || info.proxy === true || info.tor === true) {
-      var flags = [];
-      if (info.vpn === true) flags.push("VPN");
-      if (info.proxy === true) flags.push("Proxy");
-      if (info.tor === true) flags.push("Tor");
-      arr.push("情报标签：" + flags.join(" / "));
+    if (change.indexOf("出口变化：动态") !== 0) {
+      if (change.indexOf("出口变化：首次") === 0) arr.push("出口变化：已记录首次基线");
+      else arr.push(change);
+    }
+    if (info.riskScore !== null) arr.push("风险评分：" + info.riskScore + "/100（情报指标）");
+    if (info.vpn !== null || info.proxy !== null || info.tor !== null) {
+      arr.push("VPN / Proxy / Tor：" +
+        [signal(info.vpn), signal(info.proxy), signal(info.tor)].join(" / "));
     }
     var localData = localIntel(info.ip);
-    if (localData && localData.geo !== "无数据" &&
-        info.countryCode !== "未知" &&
-        localData.geo.toUpperCase() !== info.countryCode.toUpperCase())
-      arr.push("提示：Loon 与情报服务的地区数据不一致");
+    if (localData) {
+      if (localData.geo !== "无数据") arr.push("Loon GeoIP：" + localData.geo);
+      if (localData.asn !== "无数据")
+        arr.push("Loon ASN：" + localData.asn +
+          (localData.org !== "无数据" ? " · " + localData.org : ""));
+      if (localData.geo !== "无数据" && info.countryCode !== "未知" &&
+          localData.geo.toUpperCase() !== info.countryCode.toUpperCase())
+        arr.push("提示：两种地区数据库存在差异");
+    }
     if (local && local.ip) {
+      arr.push("直连出口：" + local.ip);
       if (route !== "DIRECT" && info.ip === local.ip)
         arr.push("注意：代理与直连出口相同，请核对所选策略");
-      else arr.push("直连出口：" + local.ip);
     } else if (compare) arr.push("直连对照：查询失败");
     arr.push("来源：" + info.provider + (info.cached ? "（缓存）" : ""));
     return arr.join("\n");
