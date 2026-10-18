@@ -1,18 +1,25 @@
 {
   "schema_version": 1,
-  "intent": "Key public-network and DNS diagnostic hosts must NEVER be routed DIRECT by a generated self-hosted rule. This is an explicit routing policy, not a DNS-leak guarantee.",
+  "intent": "Critical public IP/DNS diagnostic domains and internationally routed payment domains must never be classified DIRECT in staged self-hosted rules. Static protection only: not a guarantee of no DNS leakage or correct routing for every service.",
   "protected_proxy_domains": [
     "browserleaks.com",
+    "dnscheck.tools",
     "dnsleaktest.com",
-    "ipleak.net",
-    "test-ipv6.com",
-    "ipinfo.io",
+    "icanhazip.com",
     "ifconfig.co",
+    "ifconfig.me",
+    "ip.sb",
     "ipify.org",
-    "whoer.net",
+    "ipinfo.io",
+    "ipleak.net",
+    "iplocation.net",
+    "myip.com",
+    "stripe.com",
+    "test-ipv6.com",
+    "whatismyip.com",
     "whatismyipaddress.com",
-    "ip.sb"
+    "whoer.net"
   ],
-  "source_issue": "blackmatrix7 ChinaMaxNoMedia_Domain included .browserleaks.com, which routed the public IP test to DIRECT",
-  "review": "Review additions/deletions of protected domains and require an on-device comparison before enabling composite lists."
+  "source_issue": "Repeated upstream misclassification: ChinaMaxNoMedia_Domain included .browserleaks.com and .whatismyip.com; ChinaMaxNoMedia.list included broad DOMAIN-KEYWORD,stripe.",
+  "review": "Treat every new DIRECT keyword and non-CN diagnostic/payment domain as a candidate for explicit policy review. Run all emitted-list CI tests and validate on-device before enabling composites."
 }

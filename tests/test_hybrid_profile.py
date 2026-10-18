@@ -66,9 +66,11 @@ def validate(check_generated=False):
         urls.add(url)
 
     local = active(section(conf, "Rule"))
-    assert local == ["DOMAIN-SUFFIX,browserleaks.com,Proxy"] + baseline["local_rules"], (
-        "DNS test site must override remote ChinaDirect before unchanged historical local rules")
-    assert len(local) == 67
+    assert local == ["DOMAIN-SUFFIX,browserleaks.com,Proxy",
+             "DOMAIN-SUFFIX,whatismyip.com,Proxy",
+             "DOMAIN-SUFFIX,stripe.com,Proxy"] + baseline["local_rules"], (
+        "diagnostic and payment domains must proxy before historical remote ChinaDirect")
+    assert len(local) == 69
     assert local[-2:] == ["GEOIP,CN,DIRECT,no-resolve", "FINAL,Final"]
     assert any(x.startswith("DOMAIN-SUFFIX,openai.com,AI") for x in local)
     assert any(x.startswith("DOMAIN-SUFFIX,whatsapp.com,Whatsapp") for x in local)
