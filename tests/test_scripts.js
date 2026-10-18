@@ -176,10 +176,10 @@ check("Node lookup failure never impersonates local IP", () => {
 });
 check("Fallback provider does not claim residential type", () => {
   const r = runIntel({ primaryFail: true });
-  assert.match(r.text, /未知（当前情报源无机房识别字段）/);
+  assert.match(r.text, /类型：未知/);
 });
 check("Mobile classifier uses documented API data", () => {
   const r = runIntel({ risk: { ...sample.risk, is_mobile: true, is_datacenter: false } });
-  assert.match(r.text, /移动网络 \/ 蜂窝 IP/);
+  assert.match(r.text, /类型：移动网络（情报）/);
 });
 console.log("Completed", count, "regression tests.");
