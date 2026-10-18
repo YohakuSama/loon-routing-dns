@@ -33,7 +33,11 @@ def local_path(url: str) -> Path:
     parsed = urlsplit(url.strip())
     assert parsed.scheme == "https" and parsed.netloc == HOST, url
     parts = unquote(parsed.path).lstrip("/").split("/")
-    assert len(parts) >= 5 and parts[0] == "YohakuSama", url
+    assert len(parts) >= 5, url
+    config = ACTIVE.read_text(encoding="utf-8")
+    matched = re.search(r"(?m)^# GitHub:\s+https://github\.com/([^/\s]+)/([^/\s]+)\s*$", config)
+    assert matched is not None, "Missing project GitHub metadata"
+    assert parts[0:2] == [matched.group(1), matched.group(2)], url
     assert parts[2] == "main", url
     assert all(p and p not in (".", "..") for p in parts), url
     relative = Path(*parts[3:])
