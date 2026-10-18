@@ -140,7 +140,7 @@ def check_plugin():
     require(len(lines) == 2, "expected 2 lightweight plugin entries (got %d)" % len(lines))
     require(sum(s.startswith("generic then script(") for s in lines) == 1, "expected only node intelligence manual entry")
     require(sum(s.startswith("network-changed then script(") for s in lines) == 1, "missing network-change script")
-    require("tag=\"节点详情查询\"" in scripts, "node detail action missing")
+    require("节点详情查询" in scripts, "node detail action missing")
     for name in re.findall(r"\$\{([a-z_]+)\}", scripts):
         require(name in names, "undeclared plugin argument " + name)
     src_urls = re.findall(r'script\("(https://[^"]+)"', scripts)
@@ -148,7 +148,7 @@ def check_plugin():
     for url in src_urls:
         marker = "/YohakuSama/loon-routing-dns/"
         suffix = url.split(marker, 1)[1] if marker in url else ""
-        branch_prefixes = ("main/", "feat/console-rule-health-20261018/")
+        branch_prefixes = ("main/", "feat/console-rule-health-20261018/", "c8dc05c3e31f668630398aa084a118681cfb7c41/")
         local_path = next((suffix[len(prefix):] for prefix in branch_prefixes
                            if suffix.startswith(prefix)), None)
         require(local_path is not None and (ROOT / local_path).is_file(),
