@@ -92,9 +92,9 @@ def check_config():
         local_count += 1
         policy = parts[1] if parts[0] == "FINAL" else (parts[2] if len(parts) >= 3 else "")
         require(policy in known, "undefined local rule policy: " + line)
-    require(local_count == 66, "expected 66 verified local rules (got %s)" % local_count)
-    require(local_rows == baseline["local_rules"],
-            "local rules/order differ from pre-migration verified baseline")
+    require(local_count == 67, "expected 67 local rules including the DNS-test routing exception (got %s)" % local_count)
+    require(local_rows == ["DOMAIN-SUFFIX,browserleaks.com,Proxy"] + baseline["local_rules"],
+            "browserleaks.com must proxy before unchanged pre-migration routing")
     require("GEOIP,CN,DIRECT,no-resolve" in rule_text, "CN GEOIP route missing")
     require("FINAL,Final" in rule_text, "FINAL policy missing")
 
