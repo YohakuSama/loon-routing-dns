@@ -11,7 +11,6 @@ from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 ACTIVE = ROOT / "LoonKit.lcf"
-REVIEW = ROOT / "Loon_Routing_DNS.lcf"
 HOST = "raw.githubusercontent.com"
 
 
@@ -59,35 +58,27 @@ class ImportPreflight(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.main=ACTIVE.read_text(encoding="utf-8")
-        cls.review=REVIEW.read_text(encoding="utf-8")
         cls.plugin=(ROOT / "plugins/Network_Diagnostics.plugin").read_text(encoding="utf-8")
 
-    def test_active_and_review_strategy_icons_exist(self):
+    def test_active_strategy_icons_exist(self):
         main=icons(self.main)
-        draft=icons(self.review)
         self.assertEqual(len(main), 33)
-        self.assertEqual([x[0] for x in main], [x[0] for x in draft])
-        for name,url in main+draft:
-            with self.subTest(name=name, url=url):
-                self.assertTrue(local_path(url).is_file(), url)
-
-    def test_review_has_same_strategy_group_definitions(self):
-        for a,b in zip(entries(self.main,"Proxy Group"),entries(self.review,"Proxy Group")):
-            self.assertEqual(a.split("img-url",1)[0], b.split("img-url",1)[0])
+        for name,url in main:
+            with self.subTest(name=name,url=url):
+                self.assertTrue(local_path(url).is_file(),url)
 
     def test_all_remote_rules_exist_and_use_defined_policy(self):
         policy_names={name for name,_ in icons(self.main)}
         self.assertEqual(len(policy_names),33)
-        for source in (self.main, self.review):
-            lines=entries(source,"Remote Rule")
-            self.assertEqual(len(lines),33)
-            for row in lines:
-                m=re.fullmatch(r"(https://[^,\s]+),\s*policy=([^,]+),\s*tag=([^,]+),\s*enabled=true",row)
-                self.assertIsNotNone(m,row)
-                url,policy,_=m.groups()
-                with self.subTest(rule=url):
-                    self.assertTrue(local_path(url).is_file(), url)
-                    self.assertIn(policy,policy_names | {"DIRECT"})
+        lines=entries(self.main,"Remote Rule")
+        self.assertEqual(len(lines),33)
+        for row in lines:
+            m=re.fullmatch(r"(https://[^,\s]+),\s*policy=([^,]+),\s*tag=([^,]+),\s*enabled=true",row)
+            self.assertIsNotNone(m,row)
+            url,policy,_=m.groups()
+            with self.subTest(rule=url):
+                self.assertTrue(local_path(url).is_file(),url)
+                self.assertIn(policy,policy_names | {"DIRECT"})
 
     def test_active_plugin_and_its_scripts_exist(self):
         attached=entries(self.main,"Plugin")
@@ -103,12 +94,12 @@ class ImportPreflight(unittest.TestCase):
         self.assertIsNotNone(image)
         self.assertTrue(local_path(image.group(1)).is_file())
 
-    def test_old_config_filename_is_identical_compatibility_alias(self):
-        alias = (ROOT / "Loon_Routing_DNS.lcf").read_text(encoding="utf-8")
-        self.assertEqual(alias, self.main)
+    def test_deprecated_config_copies_removed(self):
+        self.assertFalse((ROOT / "Loon_Routing_DNS.lcf").exists())
+        self.assertFalse((ROOT / "reviews/LoonKit_Hybrid_Review.lcf").exists())
 
     def test_only_new_repository_paths_are_used_by_active_assets(self):
-        assets = [self.main, self.review, self.plugin]
+        assets = [self.main, self.plugin]
         for path in ("scripts/v20261018r11/node-intelligence.js",
                      "scripts/v20261018r11/network-diagnostics.js"):
             assets.append((ROOT / path).read_text(encoding="utf-8"))
@@ -142,10 +133,10 @@ class ImportPreflight(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     cdn_urls_at_ref([url], bad)
 
-    def test_no_broken_unversioned_icon_urls_in_review(self):
-        self.assertEqual(len(icons(self.review)),33)
+    def test_no_unversioned_icon_urls_in_active_profile(self):
+        self.assertEqual(len(icons(self.main)),33)
         self.assertFalse(any("/main/icons/" in url and "/main/icons/v" not in url
-                             for _,url in icons(self.review)))
+                             for _,url in icons(self.main)))
 
 
 if __name__ == "__main__":
