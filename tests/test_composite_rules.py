@@ -198,21 +198,20 @@ class CompositeRulesTests(unittest.TestCase):
         self.assertIsNotNone(normalize("IP-CIDR,2001:db8::/64")[1])
         self.assertIsNotNone(normalize("IP-CIDR,10.0.0.1/24,no-resolve,no-resolve")[1])
 
-    def test_composite_publish_order_stays_staged_until_device_validation(self):
-        import json
+    def test_composite_publish_order_matches_active_self_hosted_manifest(self):
         root = Path(__file__).resolve().parents[1]
         profile = (root / "LoonKit.lcf").read_text(encoding="utf-8")
-        baseline = json.loads((root / "rules/verified-routing-baseline.json").read_text(encoding="utf-8"))
-        section = profile.split("[Remote Rule]", 1)[1].split("[Rule]", 1)[0]
-        active_remote = [row.strip() for row in section.splitlines()
-                         if row.strip().startswith("https://")]
-        self.assertEqual(active_remote,baseline["remote_rules"])
-        self.assertEqual(len(active_remote),28)
-        self.assertNotIn("/rules/generated/",section)
-        self.assertEqual(len(PUBLISH_ORDER),33)
+        manifest = json.loads((root / "rules/active_profile.json").read_text(encoding="utf-8"))
+        remote = profile.split("[Remote Rule]", 1)[1].split("[Rule]", 1)[0]
+        active = [row.strip() for row in remote.splitlines() if row.strip().startswith("https://")]
+        self.assertEqual(manifest["group_order"], ["ProxyProtect"] + list(PUBLISH_ORDER))
+        self.assertEqual(len(active), 34)
+        self.assertTrue(active[0].startswith(
+            "https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/ProxyProtect.list, policy=Proxy,"))
+        self.assertNotIn("/blackmatrix7/", remote)
         for group in PUBLISH_ORDER:
-            name = group.replace("動畫瘋","AnimeCrazy")
-            self.assertTrue((root / "rules/generated" / (name + ".list")).is_file(),name)
+            name = group.replace("動畫瘋", "AnimeCrazy")
+            self.assertTrue((root / "rules/generated" / (name + ".list")).is_file(), name)
 
     def test_cidr_flag_variants_canonicalize_to_one_rule(self):
         sources = [

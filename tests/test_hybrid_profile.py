@@ -48,8 +48,16 @@ def validate(check_generated=False):
                for s in active(section(conf, "Proxy Group")))
 
     remote = active(section(conf, "Remote Rule"))
-    assert remote == baseline["remote_rules"], "active remote rules/order have drifted from working baseline"
-    assert len(remote) == 28
+    manifest = json.loads((ROOT / "rules/active_profile.json").read_text(encoding="utf-8"))
+    direct_groups = {"DomesticCore", "AppleOTA", "SteamCN", "ChinaDirect"}
+    expected_remote = []
+    for group in manifest["group_order"]:
+        name = "AnimeCrazy" if group == "動畫瘋" else group
+        path = "rules/ProxyProtect.list" if group == "ProxyProtect" else "rules/generated/" + name + ".list"
+        policy = "Proxy" if group == "ProxyProtect" else "DIRECT" if group in direct_groups else group
+        expected_remote.append("https://raw.githubusercontent.com/YohakuSama/loonkit/main/" +
+                               path + ", policy=" + policy + ", tag=Our-" + name + ", enabled=true")
+    assert len(remote) == 34 and remote == expected_remote
     policies = set(groups) | {"DIRECT", "REJECT"}
     urls = set()
     for line in remote:
@@ -61,17 +69,15 @@ def validate(check_generated=False):
         assert policy in policies
         parsed = urlparse(url)
         assert parsed.netloc == "raw.githubusercontent.com"
-        assert parsed.path.startswith("/blackmatrix7/ios_rule_script/master/rule/Loon/")
+        assert parsed.path.startswith("/YohakuSama/loonkit/main/rules/")
         assert url not in urls
         urls.add(url)
 
     local = active(section(conf, "Rule"))
+    assert local == baseline["local_rules"] and len(local) == 66
     guarded = json.loads((ROOT / "rules/routing_guardrails.json").read_text(encoding="utf-8"))["protected_proxy_domains"]
-    protected = ["DOMAIN-SUFFIX," + domain + ",Proxy" for domain in guarded]
-    assert len(protected) == 17
-    assert local == protected + baseline["local_rules"], (
-        "active local Proxy rules must exactly cover the protected domains before the baseline")
-    assert len(local) == 66 + len(protected)
+    own_protect = active((ROOT / "rules/ProxyProtect.list").read_text(encoding="utf-8"))
+    assert own_protect == ["DOMAIN-SUFFIX," + domain for domain in guarded]
     assert local[-2:] == ["GEOIP,CN,DIRECT,no-resolve", "FINAL,Final"]
     assert any(x.startswith("DOMAIN-SUFFIX,openai.com,AI") for x in local)
     assert any(x.startswith("DOMAIN-SUFFIX,whatsapp.com,Whatsapp") for x in local)
@@ -86,14 +92,14 @@ def validate(check_generated=False):
                and x["policy"] == "DIRECT" for x in sources)
     names = {x["group"].replace("動畫瘋", "AnimeCrazy") + ".list" for x in sources}
     assert len(names) == 33 and "HelloBike.list" not in names
-    assert not any("/rules/generated/" in line for line in remote), "staged rule lists must not be enabled"
+    assert any("/rules/generated/" in line for line in remote), "self-hosted rules must be enabled"
     if check_generated:
         actual = {p.name for p in GENERATED.glob("*.list")}
         assert actual == names, "unexpected staged rule file set"
         for name in names:
             assert (GENERATED / name).stat().st_size > 50, name
     assert not (ROOT / "reviews/LoonKit_Hybrid_Review.lcf").exists()
-    print("PASS: v5.10.0 routing 28/66 + 17 protected-domain Proxy overrides, staged composite 33 lists, AliDNS baseline")
+    print("PASS: own 34 remote lists + 66 local rules + 17 protected domains; AliDNS baseline")
 
 
 if __name__ == "__main__":
