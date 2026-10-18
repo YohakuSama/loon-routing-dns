@@ -142,6 +142,7 @@
     });
   }
   function notify(result) {
+    if (finished) return; // Never alert after a watchdog timeout has completed the script.
     // A single endpoint failure is an indication, not proof of DNS misconfiguration.
     var problem=!result.doh.ok?"DoH 检测服务不可达":!result.direct.ok?"直连探测未通过":"";
     if (!problem) {
