@@ -1,6 +1,6 @@
 # Loon Routing DNS
 
-适用于 **Loon iOS** 的分流与 DNS 配置。按服务分类管理代理策略，国内服务直连，海外服务按策略组选择节点，提供基础广告拦截和网络诊断。
+**正式配置：v5.1.0**。适用于 **Loon iOS** 的分流与 DNS 配置。按服务分类管理代理策略，国内服务直连，海外服务按策略组选择节点，提供基础广告拦截和网络诊断。
 
 [完整配置](./Loon_Routing_DNS.lcf) · [网络辅助插件](./plugins/Network_Diagnostics.plugin) · [规则列表](./rules/generated/) · [问题反馈](https://github.com/YohakuSama/loon-routing-dns/issues)
 
