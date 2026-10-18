@@ -786,7 +786,7 @@
     }
   ],
   "group_sizes": {
-    "AI": 124,
+    "AI": 112,
     "Abema": 25,
     "AdBlock": 77213,
     "Apple": 1600,
@@ -3480,7 +3480,9 @@
     "adblock broad matcher omitted: IP-CIDR": 239,
     "adblock broad matcher omitted: IP-CIDR6": 1,
     "v2fly include not expanded (explicit sources only)": 10,
-    "v2fly regexp excluded (manual review)": 5
+    "v2fly regexp excluded (manual review)": 5,
+    "AI broad ASN omitted": 1,
+    "AI shared-provider root omitted": 11
   },
   "quarantined_examples": [
     {
@@ -3592,6 +3594,18 @@
     "Ad/Privacy uses domain and domain-suffix, excludes keyword/IP/shared-CDN blockers.",
     "Different-policy and ancestor conflicts require a routing priority review.",
     "Local [Rule] in Loon takes precedence over remote lists.",
-    "Generated lists are published in main and referenced by the active Loon config; changes require PR review."
-  ]
+    "Generated lists are published in main and referenced by the active Loon config; changes require PR review.",
+    "Post-release hardening removed 12 overbroad AI matchers; their upstream input hashes remain available for reproducibility."
+  ],
+  "release_hardening": {
+    "date": "2026-10-18",
+    "subject": "AI published rule hardening",
+    "removed_total": 12,
+    "reasons": [
+      "one generic cloud-provider IP-ASN",
+      "eleven shared provider/root domains"
+    ],
+    "output_rule_count_after": 112,
+    "note": "Source provenance and pre-publication cross-policy conflict samples remain unchanged. Subsequent upstream regeneration should refresh all derived metrics."
+  }
 }
