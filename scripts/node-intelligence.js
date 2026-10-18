@@ -210,11 +210,35 @@
     return {geo: check("geoip"), asn: check("ipasn"), org: check("ipaso")};
   }
 
+  function egressChange(info) {
+    if (!cacheIsSafe() || info.cached || typeof $persistentStore === "undefined")
+      return "出口变化：动态策略组或缓存结果不进行对比";
+    var key = "loon:node-egress:v1:" + encodeURIComponent(route);
+    var old = null;
+    try { old = JSON.parse($persistentStore.read(key) || "null"); } catch(e) {}
+    var message = "出口变化：首次记录基线";
+    if (old && old.ip && old.at && Date.now() >= old.at &&
+        Date.now() - old.at < 30 * 86400000) {
+      var changes = [];
+      if (old.ip !== info.ip) changes.push("IP " + safe(old.ip) + " → " + info.ip);
+      if (old.asn !== "未知" && info.asn !== "未知" && old.asn !== info.asn)
+        changes.push("ASN " + safe(old.asn) + " → " + info.asn);
+      if (old.isp !== "未知" && info.isp !== "未知" && old.isp !== info.isp)
+        changes.push("ISP " + safe(old.isp) + " → " + info.isp);
+      message = changes.length ? "出口变化：" + changes.join("；") +
+        "（IP 动态变化或情报更新不一定是故障）" : "出口变化：与上次查询一致";
+    }
+    try { $persistentStore.write(JSON.stringify({
+      at: Date.now(), ip: info.ip, asn: info.asn, isp: info.isp
+    }), key); } catch(e) {}
+    return message;
+  }
   function render(info, local) {
     var arr = [
       "检测对象：" + safe(route),
       "检测路线：" + (route === "DIRECT" ? "DIRECT" : "通过「" + safe(route) + "」指定节点/策略"),
       "出口 IP：" + info.ip,
+      egressChange(info),
       "归属国家/地区：" + info.country + " (" + info.countryCode + ")",
       "州/省：" + info.region,
       "城市：" + info.city,
