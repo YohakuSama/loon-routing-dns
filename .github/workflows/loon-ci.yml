@@ -53,6 +53,7 @@ jobs:
           node --check tests/test_dns_leak_check.js
           node --check scripts/v20261018r7/dns-leak-check.js
           node --check tests/test_dns_probe_reliability.js
+          node --check scripts/v20261018r8/dns-leak-check.js
 
       - name: Run Loon mocked-runtime regression tests
         run: |
