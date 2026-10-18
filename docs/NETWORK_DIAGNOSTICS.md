@@ -1,4 +1,4 @@
-# Loon Routing DNS · 网络辅助插件 v2.4
+# Loon Routing DNS · 网络辅助插件 v2.5（候选）
 
 随完整配置自动加载的轻量插件。提供 **三个手动入口**与 **一个可选的网络切换提醒**，不修改 Loon 的 DNS、规则、节点、VPN 或代理策略。
 
@@ -8,7 +8,7 @@
 |---|---|---|
 | **节点出口信息** | 显示出口 IP、位置、ASN/ISP/组织、VPN/代理/Tor 标签、可用的风险分数，以及本地 GeoIP/ASN/ASO 对照 | 查询的是公网出口，不一定是节点服务器入口；数据可能不准确 |
 | **网络与 DNS 诊断** | 分项检查 DIRECT、Proxy、指定 DoH 服务，以及支持时的 Loon 原生 DNS 查询 | 服务检查不等于 DNS 泄漏测试，不保证所有网站可达 |
-| **DNS 解析器泄漏检测** | 手动触发四个随机域名的 Loon 原生 DNS 查询，并通过 bash.ws 权威 DNS 观察实际递归解析器 | 不是“零 DNS 泄漏证明”；需 Loon Build 988+，第三方服务可用且未被拦截；无法采样时明确显示「无法判定」 |
+| **DNS 解析器泄漏检测** | 手动触发十个随机域名的 Loon 原生 DNS 查询，并通过 bash.ws 权威 DNS 观察实际递归解析器 | 不是“零 DNS 泄漏证明”；需 Loon Build 988+，第三方服务可用且未被拦截；无法采样时明确显示「无法判定」 |
 | **网络变化异常提醒** | 可选：Wi-Fi/蜂窝切换后等待网络稳定并复测，连续失败才提醒 | 默认关闭；只有 Loon/iOS 触发事件时才执行 |
 
 **默认配置只有 3 个选项：**
@@ -25,7 +25,7 @@ IP 情报固定采用主源 ipquery.io、备用 ipwho.is；网络诊断探测默
 
 https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_DNS.lcf
 
-**正式配置只有在合并本次 PR 后才指向新插件。** 旧版插件保留在 `plugins/v20261018r2/Network_Diagnostics.plugin`，旧版脚本仍为历史订阅保留，不再作为新版用户菜单入口。新版插件位于 `plugins/v20261018r8/`，详细节点情报脚本位于 `scripts/v20261018r5/`，网络诊断继续使用未修改的 `scripts/v20261018r4/`。旧版插件目录保留，方便回滚。
+**正式配置只有在合并本次 PR 后才指向新插件。** 旧版插件保留在 `plugins/v20261018r2/Network_Diagnostics.plugin`，旧版脚本仍为历史订阅保留，不再作为新版用户菜单入口。新版插件位于 `plugins/v20261018r9/`，详细节点情报脚本位于 `scripts/v20261018r5/`，网络诊断继续使用未修改的 `scripts/v20261018r4/`。旧版插件目录保留，方便回滚。
 
 若曾单独订阅旧插件，请避免同时启用新旧两个插件；更新前备份个人参数。旧参数不再有对应功能，需重新开启需要的可选开关。
 
@@ -39,7 +39,7 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 
 ## DNS 解析器泄漏检测：检测内容和边界
 
-点击「DNS 解析器泄漏检测」才会运行，不随网络变化自动执行。脚本从 `https://bash.ws/id` 获取一次性会话 ID，调用 Loon Build 988+ 的 `$dns.query()` 通过当前 DNS 配置查询四个未缓存域名，再读取 `https://bash.ws/dnsleak/test/<id>?json` 返回的真实递归解析器观测数据。服务来源与测试方式可参阅 [bash.ws](https://bash.ws/dnsleak) 和 [开源客户端](https://github.com/macvk/dnsleaktest)。
+点击「DNS 解析器泄漏检测」才会运行，不随网络变化自动执行。脚本从 `https://bash.ws/id` 获取一次性会话 ID，调用 Loon Build 988+ 的 `$dns.query()` 通过当前 DNS 配置查询十个未缓存域名，再读取 `https://bash.ws/dnsleak/test/<id>?json` 返回的真实递归解析器观测数据。服务来源与测试方式可参阅 [bash.ws](https://bash.ws/dnsleak) 和 [开源客户端](https://github.com/macvk/dnsleaktest)。
 
 报告包含观测到的 DNS 解析器 IP、国家、ASN 和测试服务看到的 HTTP 出口地址，以及与**项目默认** AliDNS 的有限名称比对。**不能因为 DNS ASN 不等于代理出口 ASN 就判为泄漏；也不能因为解析器名称包含 AliDNS 就判为绝对安全。** 如果用户改过 DNS、路由或使用远程代理 DNS，需以实际配置为准。无法观测、返回格式错误、服务请求失败、Loon 接口缺失或超时均显示**无法判定**，绝不显示「无泄漏」。
 
@@ -53,10 +53,10 @@ https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/Loon_Routing_
 
 ## 维护与回退
 
-- [新版插件](../plugins/v20261018r8/Network_Diagnostics.plugin)
+- [新版插件](../plugins/v20261018r9/Network_Diagnostics.plugin)
 - [节点出口脚本](../scripts/v20261018r5/node-intelligence.js)
 - [诊断脚本](../scripts/v20261018r4/network-diagnostics.js)
-- [DNS 解析器测试脚本](../scripts/v20261018r8/dns-leak-check.js)
+- [DNS 解析器测试脚本](../scripts/v20261018r9/dns-leak-check.js)
 - [DNS 解析器测试回归](../tests/test_dns_leak_check.js) · [v2.3 可靠性回归](../tests/test_dns_probe_reliability.js)
 - [新版模拟测试](../tests/test_plugin_v2.js)
 - [旧版插件（历史兼容）](../plugins/v20261018r2/Network_Diagnostics.plugin)
@@ -74,3 +74,11 @@ v2.3 使用 10 个一次性 DNS 测试域名，结果轮询最多六次，不依
 ### v2.4：bash.ws 测试 ID 校验兼容性修复
 
 使用真实 HTTPS 接口与一次独立 DNS 查询核对后，确认 bash.ws `/id` 返回的是纯文本 **16 位字母数字混合 ID**，不是旧版 v2.3 校验器要求的纯数字。旧版会在「创建会话」阶段停止，显示「DNS 查询 0/0」和「结果检查 0 次」；此时根本没有进行泄漏检查。v2.4 将 ID 验证更改为严格合法的 DNS 标签字符和长度校验（8–63 位），禁止点号、路径、空格、HTML 和 URL 注入，同时支持旧的纯数字测试会话。已补充 Loon 模拟回归测试；手机真实网络运行仍须验证。
+
+### v2.5：TLS 错误分支与备用 HTTP 协议
+
+iPhone 真机曾出现「DNS 查询 10/10、错误 0、结果读取 6 次」但结果请求失败：`LNGCDAsyncSocketTLSError Code=16777`。说明 DNS 查询已执行，失败在查询权威 DNS 观测结果的 HTTPS TLS 连接，不是 DNS 泄漏结论。
+
+v2.5 在脚本 HTTP GET 请求发生 TLS 类错误时，以**相同 URL 与当前 Loon 路由**尝试 `alpn: "h2"`（原请求 `alpn: "h1"`）。该协议备选不能解决所有代理、TLS、证书或网络问题，但若成功会显示「HTTP/2 备用 1 次（成功 1）」。若两种协议均发生 TLS 握手错误，**立即报告「无法判定」**及原因，避免无意义地重复轮询 6 次。脚本不关闭 HTTPS 证书验证，也不使用隐藏 DIRECT 策略。Loon $httpClient 支持上述 ALPN 选项，参考 [官方脚本 API](https://nsloon.app/docs/Script/script_api/)。
+
+**在正式发布前进行真机测试**：[独立 v2.5 预览插件](https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/fix/dns-leak-https-alpn-fallback-20261018/plugins/preview/DNS_Leak_TLS_v2_5.plugin)，只含一个手动按钮。点击后请提供结果或「失败阶段、错误说明、HTTP/2 备用统计」，无需公开 IP 或测试 ID。测试完成后停用独立预览插件，以免出现重复菜单。
