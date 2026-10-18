@@ -21,13 +21,13 @@
 
 原始来源及许可证保留在 `rules/sources.json` 与 `rules/LICENSE.*`。**主配置里的 33 条远程订阅全部指向自己的 `main/rules/generated/*.list`，不是第三方规则地址。**
 
-## 图标更新（v20261018r2）
+## 图标更新（v20261018r2；HBO 单独更新至 v20261018r3）
 
-为处理 Loon 对旧图标地址的缓存，**33 个策略组**与 Console 插件图标现使用全新的版本化链接 `main/icons/v20261018r2/`，控制台插件本身也改为 `main/plugins/v20261018r2/Network_Diagnostics.plugin`。已经导入 Loon 的本地配置不会因仓库更改而必然自动替换内含的 `img-url`；需先备份含节点订阅与私人改动的配置，再更新本地配置中的图标 URL，或按 Loon 的配置更新流程重新获取完整配置。只更新规则列表不足以更新策略组图标。
+为处理 Loon 对旧图标地址的缓存，**除 HBO 外的 32 个策略组**与 Console 插件图标使用版本化链接 `main/icons/v20261018r2/`；**HBO 单独使用 `main/icons/v20261018r3/HBO.png`**，控制台插件本身也改为 `main/plugins/v20261018r2/Network_Diagnostics.plugin`。已经导入 Loon 的本地配置不会因仓库更改而必然自动替换内含的 `img-url`；需先备份含节点订阅与私人改动的配置，再更新本地配置中的图标 URL，或按 Loon 的配置更新流程重新获取完整配置。只更新规则列表不足以更新策略组图标。
 
 ### 图标材质一致性调整
 
-本次图标修订将 Spotify、Netflix、Telegram、Discord、Instagram、TikTok 的玻璃边缘替换为品牌标准矢量轮廓加完整底板，并将 Proxy、AI、Console 替换为经审核的原创符号。HBO Max 因完整字标仍待核对，继续保留上一版 App Store 图标。图片现采用 `icons/v20261018r2/`，插件采用 `plugins/v20261018r2/`。请备份已有配置后更新**完整配置**才能看到变化；仅更新远程规则不改变策略组图标。
+本次图标修订将 Spotify、Netflix、Telegram、Discord、Instagram、TikTok 的玻璃边缘替换为品牌标准矢量轮廓加完整底板，并将 Proxy、AI、Console 替换为经审核的原创符号。HBO 图标在 v20261018r3 中单独裁去外围装饰圈，其余图标仍采用 `icons/v20261018r2/`，插件采用 `plugins/v20261018r2/`。请备份已有配置后更新**完整配置**才能看到变化；仅更新远程规则不改变策略组图标。
 
 ## 快速安装
 
