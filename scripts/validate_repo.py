@@ -111,7 +111,8 @@ def check_config():
 
     print("Config: %s groups; %s remote lists; %s local rules; %s icon links"
           % (len(groups), len(remote), local_count, len(icon_urls)))
-    return remote + icon_urls + [expected_plugin]
+    config_url = "https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf"
+    return remote + icon_urls + [expected_plugin, config_url]
 
 
 def check_plugin():
@@ -212,13 +213,18 @@ def check_url(url):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--check-remote", action="store_true",
-                        help="check every rule, icon and plugin script URL; network required")
+                        help="check every rule, icon, plugin and main config URL; network required")
+    parser.add_argument("--remote-ref", default="main",
+                        help="git revision to check on CDN; use a PR head SHA before merging")
     args = parser.parse_args()
     urls = check_config() + check_plugin()
     check_readme()
     if args.check_remote:
-        urls = sorted(set(urls))
-        print("Checking %s upstream URLs (HEAD)..." % len(urls))
+        require(bool(re.fullmatch(r"[a-f0-9]{40}|main", args.remote_ref)),
+                "--remote-ref must be main or a full commit SHA")
+        if not ISSUES:
+            urls = sorted({u.replace("/main/", "/" + args.remote_ref + "/", 1) for u in urls})
+            print("Checking %s CDN URLs (HEAD) at %s..." % (len(urls), args.remote_ref))
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
             for failure in executor.map(check_url, urls):
                 if failure:
