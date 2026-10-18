@@ -129,10 +129,12 @@ check("ad/privacy diagnostic uses default routing and never claims REJECT",()=>{
  assert.match(done[0].content,/请求失败 ≠ 证明拦截成功/);
  assert.doesNotMatch(done[0].content,/拦截成功率/);
 });
-check("plugin exposes five nonduplicate manual entries",()=>{
+check("plugin exposes only node detail as manual action",()=>{
  const p=load("plugins/v20261018r2/Network_Diagnostics.plugin");
  const lines=p.split("\\n").filter(x=>x.startsWith("generic then script("));
- assert.equal(lines.length,5);
+ assert.equal(lines.length,1);
+ assert(lines[0].includes("节点详情查询"));
+ assert(p.includes("auto_check = switch,false"));
  assert(!lines.some(x=>x.includes("模拟网络切换诊断")||x.includes("国内外分流辅助诊断")));
 });
 console.log("Console regression tests passed:",passed);
