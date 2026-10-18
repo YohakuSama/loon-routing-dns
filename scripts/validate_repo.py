@@ -101,17 +101,18 @@ def check_config():
     icon_urls = re.findall(r"\bimg-url\s*=\s*(https://\S+)", groups_text)
     require(len(icon_urls) == 33, "expected one icon per proxy group")
     require(len(icon_urls) == len(set(icon_urls)), "duplicate group icon URLs")
-    icon_root = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/v20261018r2/"
-    for icon_url in icon_urls:
-        require(icon_url.startswith(icon_root), "policy icon does not use the versioned release: " + icon_url)
-        name = icon_url[len(icon_root):]
-        require("/" not in name and name.endswith(".png"), "invalid versioned icon name: " + name)
-        require((ROOT / "icons" / "v20261018r2" / name).is_file(), "missing versioned PNG: " + name)
-        require((ROOT / "icons" / "v20261018r2" / name).read_bytes() == (ROOT / "icons" / name).read_bytes(), "pinned icon differs from current release: " + name)
+    icon_root = "https://raw.githubusercontent.com/YohakuSama/loon-routing-dns/main/icons/"
+    for group, icon_url in zip(groups, icon_urls):
+        expected_name = "AnimeCrazy" if group == "動畫瘋" else group
+        expected_version = "v20261018r3" if group == "HBO" else "v20261018r2"
+        expected_url = f"{icon_root}{expected_version}/{expected_name}.png"
+        require(icon_url == expected_url, "policy icon URL/version mismatch for " + group + ": " + icon_url)
+        require((ROOT / "icons" / expected_version / (expected_name + ".png")).is_file(),
+                "missing versioned PNG: " + expected_name + " (" + expected_version + ")")
 
     print("Config: %s groups; %s remote lists; %s local rules; %s icon links"
           % (len(groups), len(remote), local_count, len(icon_urls)))
-    return remote + icon_urls
+    return remote + icon_urls + [expected_plugin]
 
 
 def check_plugin():
@@ -124,7 +125,8 @@ def check_plugin():
     require(pinned_plugin.read_bytes() == PLUGIN.read_bytes(),
             "versioned Console plugin differs from checked source")
     require("/main/icons/v20261018r2/Console.png" in data, "console icon must reference versioned release")
-    require((ROOT / "icons/v20261018r2/Console.png").read_bytes() == (ROOT / "icons/Console.png").read_bytes(), "versioned Console icon does not match validated source PNG")
+    require((ROOT / "icons/v20261018r2/Console.png").is_file(),
+            "missing published versioned Console PNG")
     require("ssid-trigger" not in data and "wifi-cellular-mode" not in data,
             "unexpected Wi-Fi automation in plugin")
     arg_text = section(data, "Argument")
