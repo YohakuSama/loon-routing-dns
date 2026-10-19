@@ -1,0 +1,539 @@
+{
+  "schema_version": 1,
+  "baseline_name": "Historical remote and local references",
+  "source_repository": "https://github.com/YohakuSama/loonkit",
+  "source_commit": "6b1e091ee66bc601b5e166987b3a01e5b3a39329",
+  "source_path": "Loon_Routing_DNS.lcf",
+  "remote_rules": [
+    {
+      "order": 1,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising.list",
+      "policy": "AdBlock",
+      "tag": "Advertising",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 2,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Advertising/Advertising_Domain.list",
+      "policy": "AdBlock",
+      "tag": "AdvertisingDomain",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 3,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SystemOTA/SystemOTA.list",
+      "policy": "DIRECT",
+      "tag": "AppleOTA",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 4,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SteamCN/SteamCN.list",
+      "policy": "DIRECT",
+      "tag": "SteamCN",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 5,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list",
+      "policy": "YouTube",
+      "tag": "YouTube",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 6,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list",
+      "policy": "Netflix",
+      "tag": "Netflix",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 7,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Disney/Disney.list",
+      "policy": "Disney",
+      "tag": "Disney",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 8,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PrimeVideo/PrimeVideo.list",
+      "policy": "PrimeVideo",
+      "tag": "PrimeVideo",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 9,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list",
+      "policy": "Spotify",
+      "tag": "Spotify",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 10,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list",
+      "policy": "TikTok",
+      "tag": "TikTok",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 11,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitch/Twitch.list",
+      "policy": "Twitch",
+      "tag": "Twitch",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 12,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AbemaTV/AbemaTV.list",
+      "policy": "Abema",
+      "tag": "AbemaTV",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 13,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BBC/BBC.list",
+      "policy": "BBC",
+      "tag": "BBC",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 14,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list",
+      "policy": "Bilibili",
+      "tag": "BiliBili",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 15,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list",
+      "policy": "Telegram",
+      "tag": "Telegram",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 16,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list",
+      "policy": "Instagram",
+      "tag": "Instagram",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 17,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list",
+      "policy": "Twitter",
+      "tag": "Twitter",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 18,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Discord/Discord.list",
+      "policy": "Discord",
+      "tag": "Discord",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 19,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Line/Line.list",
+      "policy": "Line",
+      "tag": "Line",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 20,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/LinkedIn/LinkedIn.list",
+      "policy": "Linkedin",
+      "tag": "LinkedIn",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 21,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Reddit/Reddit.list",
+      "policy": "Reddit",
+      "tag": "Reddit",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 22,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list",
+      "policy": "Google",
+      "tag": "Google",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 23,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple_Domain.list",
+      "policy": "Apple",
+      "tag": "AppleDomain",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 24,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list",
+      "policy": "Apple",
+      "tag": "Apple",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 25,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list",
+      "policy": "Steam",
+      "tag": "Steam",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 26,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list",
+      "policy": "Paypal",
+      "tag": "PayPal",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 27,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia.list",
+      "policy": "DIRECT",
+      "tag": "ChinaDirect",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    },
+    {
+      "order": 28,
+      "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list",
+      "policy": "DIRECT",
+      "tag": "ChinaDomain",
+      "enabled": "true",
+      "historical_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+    }
+  ],
+  "local_rules": [
+    {
+      "order": 1,
+      "rule": "DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy"
+    },
+    {
+      "order": 2,
+      "rule": "DOMAIN-SUFFIX,openai.com,AI"
+    },
+    {
+      "order": 3,
+      "rule": "DOMAIN-SUFFIX,chatgpt.com,AI"
+    },
+    {
+      "order": 4,
+      "rule": "DOMAIN-SUFFIX,oaistatic.com,AI"
+    },
+    {
+      "order": 5,
+      "rule": "DOMAIN-SUFFIX,oaiusercontent.com,AI"
+    },
+    {
+      "order": 6,
+      "rule": "DOMAIN-SUFFIX,anthropic.com,AI"
+    },
+    {
+      "order": 7,
+      "rule": "DOMAIN-SUFFIX,claude.ai,AI"
+    },
+    {
+      "order": 8,
+      "rule": "DOMAIN-SUFFIX,claude.com,AI"
+    },
+    {
+      "order": 9,
+      "rule": "DOMAIN-SUFFIX,perplexity.ai,AI"
+    },
+    {
+      "order": 10,
+      "rule": "DOMAIN-SUFFIX,perplexity.com,AI"
+    },
+    {
+      "order": 11,
+      "rule": "DOMAIN-SUFFIX,cursor.com,AI"
+    },
+    {
+      "order": 12,
+      "rule": "DOMAIN-SUFFIX,cursor.sh,AI"
+    },
+    {
+      "order": 13,
+      "rule": "DOMAIN-SUFFIX,grok.com,AI"
+    },
+    {
+      "order": 14,
+      "rule": "DOMAIN,gemini.google.com,AI"
+    },
+    {
+      "order": 15,
+      "rule": "DOMAIN,aistudio.google.com,AI"
+    },
+    {
+      "order": 16,
+      "rule": "DOMAIN,copilot.microsoft.com,AI"
+    },
+    {
+      "order": 17,
+      "rule": "DOMAIN-SUFFIX,chat.com,AI"
+    },
+    {
+      "order": 18,
+      "rule": "DOMAIN-SUFFIX,sora.com,AI"
+    },
+    {
+      "order": 19,
+      "rule": "DOMAIN-SUFFIX,cursorapi.com,AI"
+    },
+    {
+      "order": 20,
+      "rule": "DOMAIN-SUFFIX,x.ai,AI"
+    },
+    {
+      "order": 21,
+      "rule": "DOMAIN-SUFFIX,notebooklm.google,AI"
+    },
+    {
+      "order": 22,
+      "rule": "DOMAIN-SUFFIX,ai.google.dev,AI"
+    },
+    {
+      "order": 23,
+      "rule": "DOMAIN-SUFFIX,generativeai.googleapis.com,AI"
+    },
+    {
+      "order": 24,
+      "rule": "DOMAIN-SUFFIX,whatsapp.com,Whatsapp"
+    },
+    {
+      "order": 25,
+      "rule": "DOMAIN-SUFFIX,whatsapp.net,Whatsapp"
+    },
+    {
+      "order": 26,
+      "rule": "DOMAIN-SUFFIX,whatsapp.biz,Whatsapp"
+    },
+    {
+      "order": 27,
+      "rule": "DOMAIN-SUFFIX,wa.me,Whatsapp"
+    },
+    {
+      "order": 28,
+      "rule": "DOMAIN-SUFFIX,facebook.com,Facebook"
+    },
+    {
+      "order": 29,
+      "rule": "DOMAIN-SUFFIX,facebook.net,Facebook"
+    },
+    {
+      "order": 30,
+      "rule": "DOMAIN-SUFFIX,fb.com,Facebook"
+    },
+    {
+      "order": 31,
+      "rule": "DOMAIN-SUFFIX,fb.me,Facebook"
+    },
+    {
+      "order": 32,
+      "rule": "DOMAIN-SUFFIX,messenger.com,Facebook"
+    },
+    {
+      "order": 33,
+      "rule": "DOMAIN-SUFFIX,m.me,Facebook"
+    },
+    {
+      "order": 34,
+      "rule": "DOMAIN-SUFFIX,dazn.com,Dazn"
+    },
+    {
+      "order": 35,
+      "rule": "DOMAIN-SUFFIX,dazn-api.com,Dazn"
+    },
+    {
+      "order": 36,
+      "rule": "DOMAIN-SUFFIX,dazndn.com,Dazn"
+    },
+    {
+      "order": 37,
+      "rule": "DOMAIN-SUFFIX,indazn.com,Dazn"
+    },
+    {
+      "order": 38,
+      "rule": "DOMAIN-SUFFIX,indaznlab.com,Dazn"
+    },
+    {
+      "order": 39,
+      "rule": "DOMAIN-SUFFIX,hbo.com,HBO"
+    },
+    {
+      "order": 40,
+      "rule": "DOMAIN-SUFFIX,hbomax.com,HBO"
+    },
+    {
+      "order": 41,
+      "rule": "DOMAIN-SUFFIX,hbomaxcdn.com,HBO"
+    },
+    {
+      "order": 42,
+      "rule": "DOMAIN-SUFFIX,hbogo.com,HBO"
+    },
+    {
+      "order": 43,
+      "rule": "DOMAIN-SUFFIX,hboasia.com,HBO"
+    },
+    {
+      "order": 44,
+      "rule": "DOMAIN-SUFFIX,max.com,HBO"
+    },
+    {
+      "order": 45,
+      "rule": "DOMAIN-SUFFIX,gamer.com.tw,動畫瘋"
+    },
+    {
+      "order": 46,
+      "rule": "DOMAIN-SUFFIX,bahamut.com.tw,動畫瘋"
+    },
+    {
+      "order": 47,
+      "rule": "DOMAIN-SUFFIX,microsoft.com,Microsoft"
+    },
+    {
+      "order": 48,
+      "rule": "DOMAIN-SUFFIX,microsoftonline.com,Microsoft"
+    },
+    {
+      "order": 49,
+      "rule": "DOMAIN-SUFFIX,microsoft365.com,Microsoft"
+    },
+    {
+      "order": 50,
+      "rule": "DOMAIN-SUFFIX,office.com,Microsoft"
+    },
+    {
+      "order": 51,
+      "rule": "DOMAIN-SUFFIX,office365.com,Microsoft"
+    },
+    {
+      "order": 52,
+      "rule": "DOMAIN-SUFFIX,office.net,Microsoft"
+    },
+    {
+      "order": 53,
+      "rule": "DOMAIN-SUFFIX,outlook.com,Microsoft"
+    },
+    {
+      "order": 54,
+      "rule": "DOMAIN-SUFFIX,onedrive.com,Microsoft"
+    },
+    {
+      "order": 55,
+      "rule": "DOMAIN-SUFFIX,1drv.ms,Microsoft"
+    },
+    {
+      "order": 56,
+      "rule": "DOMAIN-SUFFIX,live.com,Microsoft"
+    },
+    {
+      "order": 57,
+      "rule": "DOMAIN-SUFFIX,windows.com,Microsoft"
+    },
+    {
+      "order": 58,
+      "rule": "DOMAIN-SUFFIX,windowsupdate.com,Microsoft"
+    },
+    {
+      "order": 59,
+      "rule": "DOMAIN-SUFFIX,xboxlive.com,Microsoft"
+    },
+    {
+      "order": 60,
+      "rule": "DOMAIN-SUFFIX,ccb.com,DIRECT"
+    },
+    {
+      "order": 61,
+      "rule": "DOMAIN-SUFFIX,abchina.com,DIRECT"
+    },
+    {
+      "order": 62,
+      "rule": "DOMAIN-SUFFIX,abchina.com.cn,DIRECT"
+    },
+    {
+      "order": 63,
+      "rule": "DOMAIN-SUFFIX,t3go.cn,DIRECT"
+    },
+    {
+      "order": 64,
+      "rule": "DOMAIN-SUFFIX,wo.cn,DIRECT"
+    },
+    {
+      "order": 65,
+      "rule": "GEOIP,CN,DIRECT,no-resolve"
+    },
+    {
+      "order": 66,
+      "rule": "FINAL,Final"
+    }
+  ],
+  "proxy_group_definitions": [
+    "Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Proxy/Proxy.png",
+    "Auto = url-test,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Auto/Auto.png",
+    "Fallback = fallback,ALL_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/lige47/lige_icon/main/icon/05icon/xunhuan.png",
+    "AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Reject/Reject.png",
+    "Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/Final/Final.png",
+    "AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/System/GeneralAI/GeneralAI.png",
+    "Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Google/Google/Google.png",
+    "Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Microsoft/Microsoft/Microsoft.png",
+    "Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Apple/Apple/Apple.png",
+    "YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Google/YouTube/YouTube.png",
+    "Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Media/Netflix/Netflix.png",
+    "Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Disney/Disney/Disney.png",
+    "PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Amazon/PrimeVideo/PrimeVideo.png",
+    "Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Music/Spotify/Spotify.png",
+    "TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/ByteDance/TikTok/TikTok.png",
+    "Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Amazon/Twitch/Twitch.png",
+    "HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/WarnerBrosDiscovery/HBOMax/HBOMax.png",
+    "Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Media/ABEMA/ABEMA.png",
+    "動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Media/Bahamut/Bahamut.png",
+    "Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Media/DAZN/DAZN.png",
+    "BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Media/BBC/BBC.png",
+    "Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Media/bilibili/bilibili.png",
+    "Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Communication/Telegram/Telegram.png",
+    "Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Meta/Facebook/WhatsApp/WhatsApp.png",
+    "Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Meta/Facebook/Instagram/Instagram.png",
+    "Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Meta/Facebook/Facebook/Facebook.png",
+    "Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/SpaceXAI/X/X.png",
+    "Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Communication/Discord/Discord.png",
+    "Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Communication/LINE/LINE.png",
+    "Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Social/Reddit/Reddit.png",
+    "Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Microsoft/LinkedIn/LinkedIn.png",
+    "Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Game/Steam/Steam.png",
+    "Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/Hawaiine/Oasisic-Icons/main/icons/Payment/PayPal/PayPal.png"
+  ],
+  "terminal_rules": [
+    "GEOIP,CN,DIRECT,no-resolve",
+    "FINAL,Final"
+  ],
+  "historical_upstream_content_status": "HISTORICAL_CONTENT_UNAVAILABLE"
+}

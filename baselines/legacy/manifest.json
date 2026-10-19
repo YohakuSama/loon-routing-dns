@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "baseline_name": "Loon Routing DNS",
+  "source_repository": "https://github.com/YohakuSama/loonkit",
+  "source_commit": "6b1e091ee66bc601b5e166987b3a01e5b3a39329",
+  "inventory_source_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
+  "files": [
+    {
+      "path": "Loon_Routing_DNS.lcf",
+      "git_blob_sha1": "a5a3b3dbdbf3d3e6e2ae14ad812e301ae1cb2058",
+      "sha256": "0b583fe15bb1fe9d8c6f39471d3ef47141c906550fb9d350deadb87033179b29",
+      "bytes": 12943
+    },
+    {
+      "path": "rules/verified-routing-baseline.json",
+      "git_blob_sha1": "2f160fab0253fad787dd6cb0e1f335465e6a2970",
+      "sha256": "dba05447087559b938864d1354521dbade31f14157cc5e34ab144ec425eea041",
+      "bytes": 7115
+    }
+  ],
+  "remote_subscription_count": 28,
+  "local_rule_count": 66,
+  "source_commit_verified": true,
+  "inventory_matches_source_config": true,
+  "historical_upstream_content_status": "HISTORICAL_CONTENT_UNAVAILABLE",
+  "unresolved_questions": [
+    "Historical upstream master URL bytes at the old observation date are not available.",
+    "Historical network behavior is not reproducible from source config alone.",
+    "Legacy upstream CN/DIRECT classifications are not all guaranteed correct."
+  ]
+}
