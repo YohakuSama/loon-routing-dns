@@ -44,3 +44,19 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_dns_privacy_profile.py' -v
       - name: Existing static repository validator
         run: python3 scripts/validate_repo.py
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Unchanged JavaScript and plugin regressions
+        run: |
+          node --check scripts/v20261018r11/network-diagnostics.js
+          node --check scripts/v20261018r11/node-intelligence.js
+          node --check tests/test_node_copy.js
+          node --check tests/test_network_diagnostics.js
+          node --check tests/test_current_plugin.js
+          node tests/test_node_copy.js
+          node tests/test_network_diagnostics.js
+          node tests/test_current_plugin.js
+      - name: Check unchanged icon/config references
+        run: python3 scripts/build-appstore-icons.py --check-config
