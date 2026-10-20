@@ -14,7 +14,7 @@ function check(name,fn){
 }
 check("only the shipped immutable plugin is present",()=>{
   assert(!fs.existsSync(path.join(root,"plugins/")));
-  assert(plugin.includes("/737b91e99b5264358d7fd39cc2d54d83ac870c38/scripts/"));
+  assert(plugin.includes("/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/scripts/"));
 });
 check("exactly two manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
@@ -44,7 +44,7 @@ check("all current scripts remain local versioned assets",()=>{
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/phase-07/assets/Network_Diagnostics.plugin");
-  assert(profile.includes("/bc7e720bcd671079cfa39aa51f5cab36e9f8d3ba/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/a2409b2d470e36ad0fa92f1fe424c37ae9543927/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
   assert(!rc2.includes("/main/icons/"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));

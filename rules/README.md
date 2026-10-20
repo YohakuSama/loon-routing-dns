@@ -1,6 +1,6 @@
 # v6.0.0 正式规则
 
-正式配置 `LoonKit.lcf` 使用 `rules/releases/vNext-RC2/` 的 26 份固定版本规则，远程资源引用提交 `d405e4be28c447b6e57a4790e965c89f342d6dd6`。规则内容、顺序与策略归属不因仓库精简而改变。
+正式配置 `LoonKit.lcf` 使用 `rules/releases/vNext-RC2/` 的 26 份固定版本规则，远程资源引用提交 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`。规则内容、顺序与策略归属不因仓库精简而改变。
 
 **唯一构建输入：** `rules/inputs/`（33 份冻结规则）与 `rules/custom/`（10 份本地补充），共 43 个独立文件。输入由 `build/sources.lock.json` 的 SHA256 和 Git Blob SHA1 校验，策略在 `build/engine_manifest.json` 中锁定。正式生成器为 `scripts/rule_engine.py`。
 

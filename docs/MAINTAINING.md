@@ -23,13 +23,17 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-当前仍引用固定提交 `d405e4be28c447b6e57a4790e965c89f342d6dd6`（规则和插件）以及 `95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98`（图标及脚本）。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+当前仍引用固定提交 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`（规则和插件）以及 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`（图标及脚本）。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
-主配置中的插件引用 `9fc773a08126207281a8431651577c1449641b8a` 的 `release/phase-07/assets/Network_Diagnostics.plugin`。插件内部使用 `a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1` 的 `scripts/v20261020r1/network-diagnostics.js`、节点出口脚本及图标。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的插件引用 `a2409b2d470e36ad0fa92f1fe424c37ae9543927` 的 `release/phase-07/assets/Network_Diagnostics.plugin`。插件内部使用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` 的 `scripts/v20261020r1/network-diagnostics.js`、节点出口脚本及图标。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 网络诊断脚本维护
 
 现役诊断脚本版本为 `scripts/v20261020r2/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本保留以免破坏旧固定 URL。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
+
+## 新版 Git 历史
+
+主线从无父提交的完整规则与图标资产开始，第二提交固定插件引用，第三提交固定正式配置。所有正式 Raw URL 均使用新历史中的祖先提交。旧分支和工件需要另行确认清理。
