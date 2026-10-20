@@ -15,7 +15,7 @@ python3 scripts/license_audit.py --check
 python3 -m unittest discover -s tests -p 'test_production.py' -v
 ```
 
-`scripts/review_source.py` 只生成上游差异；`scripts/prepare_release.py` 只在工作区外生成新候选。GitHub Actions 的 `ci.yml` 校验正式资源，`rules-update.yml` 生成上游审核附件，`release.yml` 供人工准备发布候选；不自动推送发布。
+`scripts/upstream_review.py` 拉取公开上游来源、解析格式，在仓库**外**生成规范化候选、完整差异、来源快照和风险审阅报告。`rules-update.yml` 每周执行；`scripts/review_source.py` 与 `scripts/prepare_release.py` 保留为手动审核及冻结构建工具。`ci.yml` 校验正式资源和候选安全回归测试；正式发布仍需审核确认，不自动发布。
 
 ## 兼容性清理
 
@@ -23,17 +23,21 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标及脚本引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；正式插件引用 `0f199add32277b24fff7b96608115326b6592daf`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标及脚本引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；正式插件引用 `5b115b5dd02836620597b2212b2b49c18c646bb7`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
-主配置中的现役插件引用 `0f199add32277b24fff7b96608115326b6592daf` 的 `release/Network_Diagnostics.plugin`，插件内的诊断、节点出口脚本及图标均引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，其中两份现役脚本位于 `scripts/v20261021r1/`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `5b115b5dd02836620597b2212b2b49c18c646bb7` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `af78ebb6b75bdbb341996db446d87cb2be719af4` 的 `scripts/v20261021r2/network-diagnostics.js`；节点出口脚本及图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 网络诊断脚本维护
 
-现役诊断脚本版本为 `scripts/v20261021r1/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本从主分支删除，但对应固定提交仍可通过历史访问，不重写已发布 Git 历史。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
+现役诊断脚本版本为 `scripts/v20261021r2/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本从主分支删除，但对应固定提交仍可通过历史访问，不重写已发布 Git 历史。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
 
 ## 新版 Git 历史
 
 主线从无父提交的完整规则与图标资产开始，第二提交固定插件引用，第三提交固定正式配置。所有正式 Raw URL 均使用新历史中的祖先提交。以 `main` 为正式发布分支；功能验证过程中可以临时创建并合并 PR 分支。
+
+## 上游候选的安全边界
+
+每周任务下载上游快照，生成全量增删差异、规范化候选及跨策略冲突审阅报告。来源不可用、未知格式、规则数量不符均标记为不完整，不能当成可发布候选。只对同策略内的精确重复及被该策略 `DOMAIN-SUFFIX` 明确覆盖的 `DOMAIN` 作候选去重；不自动合并 IP 网段或把宽关键字猜测为精确域名。**所有来源变更均不自动修改正式规则、输入锁、策略归属或用户配置**；新规则发布需要审核与回归测试。
