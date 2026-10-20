@@ -1,4 +1,5 @@
 {
+  "adblock_platform_ownership_risks": 5,
   "direct_broad_keywords": 10,
   "manual_source_review": 61,
   "missing_no_resolve": 7,
@@ -9,6 +10,10 @@
   "published_ip_overlap_pairs": 168,
   "published_keyword_conflict_pairs": 868,
   "published_rules": 206505,
+  "risk_counts": {
+    "P1": 54,
+    "P2": 16
+  },
   "runtime": "RUNTIME_VERIFICATION_REQUIRED",
   "scanned_sources": 87,
   "scanned_subscriptions": 34,

@@ -8,4 +8,6 @@
 - own_cross_group_duplicates: PUBLISH_ORDER first owner wins, with no business-domain adjudication.
 - Published files are lexically sorted; no original source order is maintained.
 - Shared-CDN ownership and AdBlock-vs-platform priority are not business-validated.
+- Loon docs: https://nsloon.bid/document/rule and https://nsloon.bid/document/ip_rule
+- Loon 3.0.3+ describes domain-first matching and then local DNS for unmatched domain queries.
 - The build report stores 100 examples for several conflict categories, not full prepublication records.

@@ -4,6 +4,7 @@ Explicit service routing is useful only where geo-exit, isolation or node choice
 Ordinary overseas traffic could use FINAL when routing requirements are identical, subject to testing.
 Shared CDN, auth, payment and telemetry infrastructure must not be assigned by string branding alone.
 Policy-specific tests are needed before any Stage-03 consolidation.
+Published groups can share auth, CDN and payment endpoints; inspect full overlap index.
 
 ## Published group sizes
 
