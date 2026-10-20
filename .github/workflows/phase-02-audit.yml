@@ -41,6 +41,21 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Run existing repository validator
         run: python3 scripts/validate_repo.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Unchanged JavaScript and plugin regression
+        run: |
+          node --check scripts/v20261018r11/network-diagnostics.js
+          node --check scripts/v20261018r11/node-intelligence.js
+          node --check tests/test_node_copy.js
+          node --check tests/test_network_diagnostics.js
+          node --check tests/test_current_plugin.js
+          node tests/test_node_copy.js
+          node tests/test_network_diagnostics.js
+          node tests/test_current_plugin.js
+      - name: Unchanged icons/config integrity
+        run: python3 scripts/build-appstore-icons.py --check-config
       - name: Ensure immutable inputs are unchanged
         run: |
           git diff --exit-code HEAD -- LoonKit.lcf LoonKit.PrivacyDNS.lcf rules/ baselines/ scripts/build_composite_rules.py
