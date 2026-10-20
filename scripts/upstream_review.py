@@ -173,7 +173,8 @@ def _overlap_index(published: dict[str, set[str]]):
             kind, value = fields(rule)
             if kind in {"DOMAIN", "DOMAIN-SUFFIX"}:
                 lookup[value].add(group)
-    return lookup, sorted(lookup)
+    # Reverse labels so all child names of a suffix are contiguous.
+    return lookup, sorted(".".join(reversed(host.split("."))) for host in lookup)
 
 
 def _semantic_expansion(rule: str, group: str, baseline: dict[str, set[str]],
@@ -187,10 +188,11 @@ def _semantic_expansion(rule: str, group: str, baseline: dict[str, set[str]],
             if other != group:
                 risks.add(other)
     if kind == "DOMAIN-SUFFIX":
-        prefix = value + "."
+        prefix = ".".join(reversed(value.split("."))) + "."
         i = bisect_left(sorted_domains, prefix)
         while i < len(sorted_domains) and sorted_domains[i].startswith(prefix):
-            risks.update(g for g in lookup[sorted_domains[i]] if g != group)
+            original_host = ".".join(reversed(sorted_domains[i].split(".")))
+            risks.update(g for g in lookup[original_host] if g != group)
             i += 1
     return sorted(risks)
 
