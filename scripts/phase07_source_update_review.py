@@ -38,15 +38,21 @@ def review(source: str, proposed: Path, root: Path=ROOT) -> dict:
          if x.strip() and not x.lstrip().startswith(("#",";","//"))}
     if len(new)<1:
         raise ValueError("proposed input contains no rules")
-    allowed={"DOMAIN","DOMAIN-SUFFIX","DOMAIN-KEYWORD","IP-CIDR","IP-CIDR6","IP-ASN","GEOIP"}
-    # Historic mixed input contains legacy matcher classes the vNext compiler
-    # already filters. Do not reject unchanged historic lines as a new defect;
-    # fail closed only on freshly introduced matchers under review.
+    # Historic mixed input contains legacy matcher classes the compiler already
+    # isolates. Validate only newly added entries through the *real compiler*
+    # grammar, not a weaker comma-count check that could admit invalid ASN/IP.
+    from vnext_rule_engine import normalize
     add=sorted(new-old)
     remove=sorted(old-new)
     for line in add:
-        if line.split(",")[0] not in allowed or len(line.split(",")) not in (2,3):
-            raise ValueError("invalid newly proposed Loon matcher: "+line[:120])
+        try:
+            canonical=normalize(line)
+        except (ValueError, TypeError) as exc:
+            raise ValueError("invalid newly proposed Loon matcher: "+line[:120]) from exc
+        if not canonical:
+            raise ValueError("missing newly proposed Loon matcher: "+line[:120])
+        if line.split(",",1)[0].upper()=="GEOIP":
+            raise ValueError("unexpected GEOIP in locked composite input: "+line[:120])
     return {
         "schema_version":1, "status":"PENDING_REVIEW_NOT_PUBLISHED",
         "source_path":source, "historical_lineage":"NOT_RECOVERABLE_FROM_MERGED_SNAPSHOT",

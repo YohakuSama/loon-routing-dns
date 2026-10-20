@@ -2,92 +2,92 @@
   "schema_version": 1,
   "release_status": "BLOCKED_PENDING_MAINTAINER_TEST",
   "candidate": "vNext-RC2",
-  "commit": null,
+  "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
   "generated_on": "2026-10-20",
   "checks": {
     "code_review": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "Await independent maintainer review of draft PR #39.",
       "commit": null,
       "test_time": null,
       "owner": "release-engineering",
       "blocks_release": true
     },
     "rule_generation": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#build-and-validate (vnext_rule_engine.py --check; phase07_release.py --build/--check; deterministic tests)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "source_integrity": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#build-and-validate (vnext_source_lock.py --check; immutable 44 files)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "config_integrity": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#build-and-validate (two RC2 .lcf, SHA256, plugin references, no private subscriptions)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "dns_tun_unchanged": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#build-and-validate (separate frozen General byte comparison: LoonKit and PrivacyDNS)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "dual_profile_parity": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#build-and-validate (same 26 rule subscriptions and 106 inline rules)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "plugin_icons": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#build-and-validate (phase07_resource_audit.py --check, pinned Git blobs)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "licenses": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
+      "status": "BLOCKED",
+      "evidence": "release/phase-07/LICENSE_REVIEW.md — copyright and mixed-source redistribution review remains unresolved.",
       "commit": null,
       "test_time": null,
       "owner": "release-engineering",
       "blocks_release": true
     },
     "ci": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#build-and-validate; https://github.com/YohakuSama/loonkit/actions/runs/39405301061; https://github.com/YohakuSama/loonkit/actions/runs/39405307710 (all engineering checks, excludes intentional maintainer gate failure)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "merge_rehearsal": {
-      "status": "NOT_EXECUTED",
-      "evidence": null,
-      "commit": null,
-      "test_time": null,
-      "owner": "release-engineering",
+      "status": "PASS",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#merge-and-rollback-simulation (disposable git worktree merge+abort, main unchanged)",
+      "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
+      "test_time": "2026-10-20T10:06:58Z",
+      "owner": "CI / release-engineering",
       "blocks_release": true
     },
     "rollback_rehearsal": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39405301038#merge-and-rollback-simulation — Git rollback PASS; Loon cache/old rule refresh remains NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "release-engineering",
@@ -95,7 +95,7 @@
     },
     "device_import": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "release/phase-07/DEVICE_TEST_PLAN.md; device-specific logs NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
@@ -103,7 +103,7 @@
     },
     "domestic_business": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "release/phase-07/DEVICE_TEST_PLAN.md — NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
@@ -111,7 +111,7 @@
     },
     "overseas_business": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "release/phase-07/DEVICE_TEST_PLAN.md — NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
@@ -119,7 +119,7 @@
     },
     "adblock": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "release/phase-07/DEVICE_TEST_PLAN.md — REJECT/DIRECT runtime NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
@@ -127,7 +127,7 @@
     },
     "final": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "release/phase-07/DEVICE_TEST_PLAN.md — all 4 selectors NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
@@ -135,7 +135,7 @@
     },
     "dns_egress": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "release/phase-07/DEVICE_TEST_PLAN.md — resolver/exit controlled comparison NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
@@ -143,7 +143,7 @@
     },
     "ipv4_ipv6": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "release/phase-07/DEVICE_TEST_PLAN.md — dual stack runtime NOT_EXECUTED.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
@@ -151,12 +151,12 @@
     },
     "maintainer_approval": {
       "status": "NOT_EXECUTED",
-      "evidence": null,
+      "evidence": "Draft PR #39 — no explicit written authorization.",
       "commit": null,
       "test_time": null,
       "owner": "maintainer",
       "blocks_release": true
     }
   },
-  "warning": "Status fields must reflect evidence, never auto-mark devices PASS on CI."
+  "warning": "Only eight offline/static engineering checks PASS (evidence references validated commit); Git worktree abort is not client cache rollback. Device and legal approval remain release blockers."
 }
