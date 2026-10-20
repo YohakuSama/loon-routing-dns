@@ -138,8 +138,6 @@
     "Google": {
       "google": "DOMAIN-SUFFIX,google.com",
       "gmail": "DOMAIN-SUFFIX,gmail.com",
-      "appspot": "DOMAIN-SUFFIX,appspot.com",
-      "blogspot": "DOMAIN-SUFFIX,blogspot.com",
       "recaptcha": "DOMAIN-SUFFIX,recaptcha.net"
     },
     "Facebook": {
@@ -170,5 +168,14 @@
       "tiktok": "DOMAIN-SUFFIX,tiktok.com"
     }
   },
-  "reviewed_keyword_narrowing_note": "Restrict unbounded brand-substring routing to listed owned DNS suffixes; nonmatching brands fall to other precise rules or FINAL. Existing suffix owners must remain subject to cross-policy auditing."
+  "reviewed_keyword_narrowing_note": "Restrict unbounded brand-substring routing to listed owned DNS suffixes; nonmatching brands fall to other precise rules or FINAL. Existing suffix owners must remain subject to cross-policy auditing.",
+  "reviewed_multi_tenant_suffixes": [
+    "akadns.net",
+    "edgesuite.net",
+    "llnwd.net",
+    "windows.net",
+    "appspot.com",
+    "blogspot.com"
+  ],
+  "multi_tenant_note": "Cross-tenant platform/CDN suffix roots should fall through to narrower service predicates or user-selected FINAL; shared roots must not force an unrelated tenant into a single region strategy."
 }
