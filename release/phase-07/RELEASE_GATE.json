@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release_status": "BLOCKED_PENDING_MAINTAINER_TEST",
+  "release_status": "PUBLISHED_WITH_OPEN_REVIEWS",
   "candidate": "vNext-RC2",
   "commit": "53f589b2b51df1e081b760866d764c0cb18889d2",
   "generated_on": "2026-10-20",
@@ -150,13 +150,13 @@
       "blocks_release": true
     },
     "maintainer_approval": {
-      "status": "NOT_EXECUTED",
-      "evidence": "Draft PR #39 — no explicit written authorization.",
-      "commit": null,
-      "test_time": null,
-      "owner": "maintainer",
+      "status": "PASS",
+      "evidence": "The user explicitly instructed immediate merge/publication in this conversation, and PR #39 was merged at https://github.com/YohakuSama/loonkit/pull/39 . Approval applies to deployment, not to third-party license clearance or individual runtime scenario results.",
+      "commit": "8e7b9a21fd2e230d4999d8f392dea860e69ebc91",
+      "test_time": "2026-10-20T12:51:29Z",
+      "owner": "Project maintainer (user direction in ChatGPT)",
       "blocks_release": true
     }
   },
-  "warning": "Only eight offline/static engineering checks PASS (evidence references validated commit); Git worktree abort is not client cache rollback. Device and legal approval remain release blockers."
+  "warning": "Published to main by explicit user request; static engineering checks succeeded. Unexecuted or incomplete runtime and license reviews remain disclosed, not relabeled PASS. No GitHub Release/tag was created."
 }

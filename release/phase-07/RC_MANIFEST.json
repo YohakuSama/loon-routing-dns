@@ -201,6 +201,6 @@
   },
   "schema_version": 1,
   "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
-  "stage": "STABLE_RELEASE_ASSETS_STAGED",
+  "stage": "PUBLISHED_TO_MAIN_WITH_DISCLOSED_LIMITATIONS",
   "upstream_historical_lineage": "UNRECOVERABLE"
 }

@@ -1,6 +1,6 @@
 # LoonKit · 网络辅助
 
-> vNext-RC2 采用固定 Git Commit 的插件封装和内部脚本；本页底部 main 链接仍是**历史稳定插件**，不应代替未发布 RC2 的固定资产。RC2 固定插件见 [发布资源](../release/phase-07/assets/Network_Diagnostics.plugin)。
+> LoonKit v6.0.0 使用冻结 RC2 规则数据及固定 Git Commit 的插件封装、内部脚本；本页底部 main 链接仍是**旧版独立插件兼容入口**。正式配置中的固定插件见 [发布资源](../release/phase-07/assets/Network_Diagnostics.plugin)。
 
 插件包含两个手动工具。使用时不会修改 Loon 的 DNS、代理模式或分流规则。
 
