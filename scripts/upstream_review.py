@@ -264,6 +264,9 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             tags = []
             if kind in HIGH_RISK_KINDS:
                 tags.append("BROAD_KEYWORD_OR_IP_REVIEW")
+            if kind == "DOMAIN-SUFFIX":
+                # New suffixes can unexpectedly route every subdomain.
+                tags.append("NEW_SUFFIX_SCOPE_REVIEW")
             if group in DIRECT_GROUPS and any(covers_domain(rule, host) for host in guarded):
                 tags.append("DIRECT_PROTECTED_DOMAIN")
             if len(cross_owner[rule]) > 1:
