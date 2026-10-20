@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Phase 05 immutable provenance, conservative overlap and device evidence tests."""
 import copy
+import ipaddress
 import json
 from pathlib import Path
 import sys
@@ -215,6 +216,42 @@ class TestCandidateQuality(unittest.TestCase):
     def test_known_negative_brand_strings_not_global_keywords(self):
         self.assertNotIn("DOMAIN-KEYWORD,taobao", self.generated["ChinaDirect"])
         self.assertNotIn("DOMAIN-KEYWORD,alipay", self.generated["ChinaDirect"])
+
+
+class TestIPv4IPv6NetworkBoundary(unittest.TestCase):
+    def test_ipv4_host_boundary_and_exclusion(self):
+        net = ipaddress.ip_network("192.0.2.0/24")
+        self.assertIn(ipaddress.ip_address("192.0.2.0"), net)
+        self.assertIn(ipaddress.ip_address("192.0.2.255"), net)
+        self.assertNotIn(ipaddress.ip_address("192.0.3.0"), net)
+        self.assertNotIn(ipaddress.ip_address("192.0.1.255"), net)
+        self.assertEqual(ve.normalize("IP-CIDR,192.0.2.7/24"),
+                         "IP-CIDR,192.0.2.0/24,no-resolve")
+
+    def test_ipv6_host_boundary_and_exclusion(self):
+        net = ipaddress.ip_network("2001:db8:abcd::/48")
+        self.assertIn(net.network_address, net)
+        self.assertIn(net.broadcast_address, net)
+        self.assertNotIn(ipaddress.ip_address("2001:db8:abce::"), net)
+        self.assertEqual(ve.normalize("IP-CIDR6,2001:db8:abcd::1/48"),
+                         "IP-CIDR6,2001:db8:abcd::/48,no-resolve")
+
+    def test_ip_family_mismatch_rejected(self):
+        for bad in ("IP-CIDR,2001:db8::/32", "IP-CIDR6,192.0.2.0/24"):
+            with self.subTest(bad=bad), self.assertRaisesRegex(ValueError, "family mismatch"):
+                ve.normalize(bad)
+
+    def test_cidr_nested_conflicts_and_asn_followups(self):
+        conflicts = ROOT/"refactor/vnext/reports/ip_network_overlaps.jsonl"
+        self.assertEqual(conflicts.read_text(encoding="utf-8").strip(), "")
+        profile = (ROOT/"refactor/vnext/LoonKit.vNext.Candidate.lcf").read_text()
+        self.assertEqual(profile.count("GEOIP,CN,DIRECT,no-resolve"), 1)
+        self.assertEqual(profile.count("FINAL,Final"), 1)
+        self.assertLess(profile.index("GEOIP,CN,DIRECT,no-resolve"),
+                        profile.index("FINAL,Final"))
+        for value in ("132203", "32934", "211157", "44907", "59930", "62014", "62041"):
+            self.assertEqual(ve.normalize("IP-ASN,AS"+value),
+                             "IP-ASN,"+value+",no-resolve")
 
 
 class TestDeviceValidator(unittest.TestCase):
