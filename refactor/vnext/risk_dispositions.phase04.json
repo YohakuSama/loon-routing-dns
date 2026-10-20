@@ -2,11 +2,11 @@
   "schema_version": 1,
   "stage": "04",
   "baseline_commit": "b982110a189b41b42e8562f7d10226071b0b2432",
-  "candidate_generation_commit": "0eeb7c7f9084a22a885c24a80a47eae0cfde784d",
+  "candidate_generation_commit": "2088025a0b2002ecce60ed29b28a656b6b075575",
   "engineering_status": "SUCCESS",
   "release_readiness": "READY_FOR_NEXT_STAGE",
   "production_readiness": "NOT_READY",
-  "ci": "https://github.com/YohakuSama/loonkit/actions/runs/39377869413",
+  "ci": "https://github.com/YohakuSama/loonkit/actions/runs/39378725132",
   "classification": "Offline static candidate; no iPhone validation",
   "risks": [
     {
@@ -61,8 +61,8 @@
     {
       "id": "R04-008",
       "status": "UNRESOLVED_RELEASE_BLOCKER",
-      "evidence": "refactor/vnext/reports/ownership_changes.jsonl",
-      "scope": "Cross-type suffix and keyword overlaps and shared CDNs outside exact collisions",
+      "evidence": "refactor/vnext/reports/domain_parent_child_conflicts.jsonl",
+      "scope": "7197 cross-policy domain parent-child ambiguities, 39 keyword risks, 64 nested IP-network overlaps",
       "residual": "Business signoff and device priority evidence"
     },
     {
