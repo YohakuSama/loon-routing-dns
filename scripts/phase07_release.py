@@ -134,7 +134,7 @@ def generate(root: Path = ROOT) -> dict[str, str]:
         raise ValueError("release profiles have different remote subscriptions")
     manifest = {
         "schema_version": 1, "label": "v6.0.0",
-        "stage": "STABLE_RELEASE_ASSETS_STAGED",
+        "stage": "PUBLISHED_TO_MAIN_WITH_DISCLOSED_LIMITATIONS",
         "source_snapshot_commit": spec["release_assets_commit"],
         "upstream_historical_lineage": "UNRECOVERABLE",
         "old_main_rollback_commit": spec["historic_main_commit"],

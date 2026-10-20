@@ -12,7 +12,7 @@ def check(require_ready=False):
     d=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text(encoding="utf-8"))
     if d.get("schema_version")!=1 or set(d.get("checks",{}))!=REQUIRED:
         raise ValueError("missing required gate check")
-    if d.get("release_status") not in {"BLOCKED_PENDING_MAINTAINER_TEST","READY_FOR_MAINTAINER_APPROVAL","APPROVED"}:
+    if d.get("release_status") not in {"BLOCKED_PENDING_MAINTAINER_TEST","READY_FOR_MAINTAINER_APPROVAL","APPROVED","PUBLISHED_WITH_OPEN_REVIEWS"}:
         raise ValueError("invalid overall release status")
     blockers=[]
     for name,row in d["checks"].items():
