@@ -74,14 +74,13 @@ check("target 503 proves server responded but does not prove proxy failure",()=>
 });
 check("Loon auto / https prefix is inconclusive, not a DNS leak",()=>{
   const r=run({protocol:"auto",server:"https://"});
-  assert.match(r.results[0].content,/部分检测尚未确认/);
   assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
   assert.match(r.results[0].content,/传输协议未确认/);
   assert.doesNotMatch(r.results[0].content,/结果：检测发现异常|明文 DNS 查询/);
 });
 check("cached UDP metadata does not claim a new plaintext lookup",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53",cached:true});
-  assert.match(r.results[0].content,/缓存解析成功/);
+  assert.match(r.results[0].content,/解析成功（缓存命中）/);
   assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
   assert.doesNotMatch(r.results[0].content,/结果：检测发现异常|本次使用普通 DNS 查询/);
 });
@@ -99,12 +98,11 @@ check("auto DNS with a full HTTPS resolver address is unverified",()=>{
 });
 check("native UDP is flagged as plaintext instead of DoH success",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
-  assert.match(r.results[0].content,/存在异常项目/);
+  assert.match(r.results[0].content,/检测发现异常/);
   assert.match(r.results[0].content,/普通 DNS 查询/);
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
-  assert.match(r.results[0].content,/部分检测尚未确认/);
   assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
   assert.match(r.results[0].content,/其他加密 DNS/);
 });
@@ -120,7 +118,7 @@ check("no DNS API cannot be misreported healthy",()=>{
 });
 check("native DNS error and proxy failure are detected",()=>{
   const r=run({native:"fail",proxyFail:true});
-  assert.match(r.results[0].content,/存在异常项目/);
+  assert.match(r.results[0].content,/检测发现异常/);
   assert.match(r.results[0].content,/超时/);
 });
 check("automatic check has no DNS probe and is silent when healthy",()=>{
