@@ -177,6 +177,33 @@ DOMAIN-SUFFIX,abchina.com.cn,DIRECT
 DOMAIN-SUFFIX,t3go.cn,DIRECT
 DOMAIN-SUFFIX,wo.cn,DIRECT
 # Minimal overseas service selector compatibility; candidate only.
+# Scoped AdBlock overrides precede local overseas service roots.
+DOMAIN,buttons.reddit.com,AdBlock
+DOMAIN,platform.linkedin.com,AdBlock
+DOMAIN-SUFFIX,a1.api.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,a1.api.bbc.com,AdBlock
+DOMAIN-SUFFIX,adeventtracker.spotify.com,AdBlock
+DOMAIN-SUFFIX,ads.linkedin.com,AdBlock
+DOMAIN-SUFFIX,alb.reddit.com,AdBlock
+DOMAIN-SUFFIX,analytics.m7g.twitch.tv,AdBlock
+DOMAIN-SUFFIX,analytics.pointdrive.linkedin.com,AdBlock
+DOMAIN-SUFFIX,analytics.spotify.com,AdBlock
+DOMAIN-SUFFIX,client-event-reporter.twitch.tv,AdBlock
+DOMAIN-SUFFIX,events.reddit.com,AdBlock
+DOMAIN-SUFFIX,fan.twitch.tv,AdBlock
+DOMAIN-SUFFIX,log.spotify.com,AdBlock
+DOMAIN-SUFFIX,pixel-static.spotify.com,AdBlock
+DOMAIN-SUFFIX,pixel.reddit.com,AdBlock
+DOMAIN-SUFFIX,pixel.spotify.com,AdBlock
+DOMAIN-SUFFIX,sa.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,spade.twitch.tv,AdBlock
+DOMAIN-SUFFIX,ssc.api.bbc.com,AdBlock
+DOMAIN-SUFFIX,stats.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,torimochi.line-apps.com,AdBlock
+DOMAIN-SUFFIX,trowel.twitch.tv,AdBlock
+DOMAIN-SUFFIX,visualscience.external.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,w3-reporting.reddit.com,AdBlock
+DOMAIN-SUFFIX,weblb-wg.gslb.spotify.com,AdBlock
 DOMAIN-SUFFIX,spotify.com,Spotify
 DOMAIN-SUFFIX,scdn.co,Spotify
 DOMAIN-SUFFIX,twitch.tv,Twitch
