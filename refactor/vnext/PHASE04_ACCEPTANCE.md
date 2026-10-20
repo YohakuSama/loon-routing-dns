@@ -5,8 +5,8 @@
 - Runtime: NOT VERIFIED. No physical device DNS/TUN/ASN, IPv4/IPv6 or node-unlock results are claimed.
 - Branch refactor/loonkit-vnext only; main is untouched.
 - Starting commit: b982110a189b41b42e8562f7d10226071b0b2432
-- Generated candidate commit: 0eeb7c7f9084a22a885c24a80a47eae0cfde784d
-- Successful complete CI: https://github.com/YohakuSama/loonkit/actions/runs/39377869413
+- Generated candidate commit: 2088025a0b2002ecce60ed29b28a656b6b075575
+- Successful complete CI: https://github.com/YohakuSama/loonkit/actions/runs/39378725132
 
 ## Inputs and outputs
 
@@ -39,9 +39,13 @@ Candidate: 197,842. Net removal: 8,663 (4.2%).
 
 - reports/provenance.tsv: retained rule and origin snapshot file and line.
 - reports/removed_or_modified.jsonl: old rule/group/line, reason, replacement and impact.
-- reports/ownership_changes.jsonl: 8,650 changed predicate ownership mappings.
+- reports/ownership_changes.jsonl: 8,667 changed predicate/group mappings (includes 17 retired ProxyProtect entries).
 - reports/direct_changes.jsonl; adblock_changes.jsonl; ip_no_resolve_changes.jsonl.
-- reports/proxyprotect_impact.jsonl; added.jsonl; diff_summary.json.
+- reports/proxyprotect_impact.jsonl: each of 17 retired rules has file, line and fallback impact.
+- reports/domain_parent_child_conflicts.jsonl: 7,197 cross-policy ancestry cases.
+- reports/domain_keyword_risks.jsonl: 39 keywords needing scope review.
+- reports/ip_network_overlaps.jsonl: 64 nested IP network cross-group cases.
+- reports/added.jsonl; diff_summary.json.
 - risk_dispositions.phase04.json: fixed, mitigated, isolated and release-blocking risks.
 
 ## Stage 05 blockers
