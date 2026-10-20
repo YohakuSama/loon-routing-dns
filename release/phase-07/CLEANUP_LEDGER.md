@@ -12,3 +12,13 @@
 | 阶段 01-06 CI 工作流 | **阶段性只读回归继续保留** | 作为历史正确性证明，不删测试掩盖回归 | 新增阶段 07 主发布 Gate 工作流 | 可能增加 CI 耗时 | 阶段06旧候选 + 阶段07新产物都检查 |
 
 没有无依赖证据的旧文件，不凭名称直接删除。正式宣布废弃旧代码前，须逐项获得实际调用方和客户端兼容性证明。
+
+## 阶段07 补充：历史冻结 CI 工作流归档与只读迁移
+
+- `.github/workflows/phase-02-audit.yml`：由 `contents: write`、`persist-credentials: true`、自动提交/推送改为 `contents: read`、无推送；以 `--check` 比较历史审计文件；历史文件仍完整保留。
+- `.github/workflows/composite-rules.yml`：取消定时自动建立 PR 的写权限。仍能以只读权限下载上游并上传隔离候选 artifact，不更新线上规则。
+- `refactor/vnext/templates/phase01-composite-rules.yml`：从冻结 Git 版本复制的**字节不变的旧工作流**，仅供阶段 01/02/03 哈希核验，不再执行。新工作流与历史报告的输入语义明确分离。
+- `scripts/phase07_historical_attestation.py`：通过 `git cat-file` 实查阶段 03 固定 Commit 的 44 个历史 Git blob，验证新目录 33 个快照与旧 `rules/generated/` 原始字节一致。无需外部网络下载，不能自动证明原始上游逐行来源。
+- `tests/test_phase07_release.py`：扫描全部现行 GitHub Actions 工作流，阻止未来回归写权限、自动提交/推送或自动创建 PR。
+
+上述整改不删除任何阶段性测试，也不伪造客户端 DNS、IPv6 或缓存恢复结果。

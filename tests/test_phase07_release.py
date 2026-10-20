@@ -11,6 +11,7 @@ import phase07_release as pr
 import phase07_gate as gate
 import phase07_source_update_review as updates
 import phase07_license_audit as license_audit
+import phase07_historical_attestation as historical_attestation
 import vnext_rule_engine as ve
 
 
@@ -19,6 +20,12 @@ class ReleaseBuildTests(unittest.TestCase):
     def setUpClass(cls):
         cls.outputs = pr.generate()
         cls.spec = pr.read_spec()
+
+    def test_all_44_frozen_inputs_have_original_git_object_bytes(self):
+        result=historical_attestation.check()
+        self.assertEqual(result["status"],"PINNED_HISTORICAL_BLOBS_VERIFIED")
+        self.assertEqual(result["verified_bytes"],44)
+        self.assertEqual(result["moved_generated_snapshots"],33)
 
     def test_source_and_output_are_disjoint_and_locked(self):
         m = ve.load_manifest()

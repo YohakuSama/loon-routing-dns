@@ -22,6 +22,7 @@ jobs:
       - name: Verify isolated frozen sources
         run: |
           python3 scripts/vnext_source_lock.py --check
+          python3 scripts/phase07_historical_attestation.py --check
           python3 scripts/vnext_rule_engine.py --check
           python3 scripts/vnext_phase05_report.py --check
       - name: Build both production-compatible candidate profiles (offline)
@@ -70,6 +71,7 @@ jobs:
             base="$(git rev-parse HEAD)"
             git -c user.name=ReleaseCI -c user.email=release-ci@example.invalid merge --no-ff --no-commit "$GITHUB_SHA"
             python3 scripts/vnext_source_lock.py --check
+            python3 scripts/phase07_historical_attestation.py --check
             python3 scripts/vnext_rule_engine.py --check
             python3 scripts/phase07_release.py --check
             python3 scripts/phase07_gate.py --lint
