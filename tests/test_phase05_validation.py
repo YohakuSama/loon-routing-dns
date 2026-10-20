@@ -12,6 +12,7 @@ import vnext_source_lock as sl
 import vnext_conflict_resolver as cr
 import validate_device_results as dr
 import vnext_rule_engine as ve
+import vnext_raw_trace as rt
 
 
 class TestSourceIntegrity(unittest.TestCase):
@@ -78,6 +79,36 @@ class TestSourceIntegrity(unittest.TestCase):
         for item in self.lock["inputs"]:
             self.assertEqual(item["evidence_level"], "FROZEN_BYTES_VERIFIED_NOT_RAW_UPSTREAM")
             self.assertIsNone(item["original_url"])
+
+
+class TestFutureUpstreamLineage(unittest.TestCase):
+    def test_full_raw_line_lifecycle_without_publishing(self):
+        manifest = ve.load_manifest()
+        raw = ("# comment\nDOMAIN-KEYWORD,taobao\n"
+               "DOMAIN-SUFFIX,taobao.com\nDOMAIN-SUFFIX,bank.example.cn\n"
+               "DOMAIN-KEYWORD,unverified-random\nMALFORMED\n").encode("utf-8")
+        events, output = rt.trace_bytes(
+            raw, source_id="test:raw", origin_path="refactor/vnext/upstream/test.list",
+            group="ChinaDirect", manifest=manifest)
+        self.assertEqual(len(events), 6)
+        self.assertEqual([e["original_line"] for e in events], list(range(1, 7)))
+        self.assertEqual([e["action"] for e in events],
+                         ["IGNORED_COMMENT_OR_EMPTY", "MODIFIED", "DEDUPLICATED",
+                          "RETAINED", "ISOLATED", "QUARANTINED"])
+        self.assertEqual(events[1]["normalization"], "DOMAIN-KEYWORD,taobao")
+        self.assertEqual(events[1]["candidate_rule"], "DOMAIN-SUFFIX,taobao.com")
+        self.assertEqual(events[2]["output_line"], events[1]["output_line"])
+        self.assertEqual(events[4]["reason"], "DIRECT_KEYWORD_UNPROVEN")
+        self.assertTrue(all(e["candidate_activation"] == "DISABLED_PREVIEW_ONLY"
+                            for e in events))
+        self.assertEqual(output, ["DOMAIN-SUFFIX,taobao.com",
+                                  "DOMAIN-SUFFIX,bank.example.cn"])
+
+    def test_future_trace_rejects_inactive_group(self):
+        with self.assertRaisesRegex(ValueError, "active candidate"):
+            rt.trace_bytes(b"DOMAIN,example.org", source_id="test",
+                           origin_path="fixture", group="RetiredOverseasGroup",
+                           manifest=ve.load_manifest())
 
 
 class TestOverlapClassification(unittest.TestCase):
