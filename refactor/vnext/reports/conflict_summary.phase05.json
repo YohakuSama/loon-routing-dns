@@ -68,6 +68,41 @@
   "release_claim": "NOT_READY_FOR_PRODUCTION",
   "runtime_test_count": 7331,
   "schema_version": 1,
+  "shard_size": 950,
+  "shards": [
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part01.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part02.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part03.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part04.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part05.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part06.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part07.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part08.jsonl",
+      "rows": 700
+    }
+  ],
   "top_parent_rules": [
     {
       "count": 3884,
@@ -193,40 +228,5 @@
   "total_disposed": 7350,
   "total_observed": 7350,
   "verified_equivalent_direct_count": 19,
-  "warning": "Machine-classified observations, not adjudicated Loon routing results.",
-  "shards": [
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part01.jsonl",
-      "rows": 950
-    },
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part02.jsonl",
-      "rows": 950
-    },
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part03.jsonl",
-      "rows": 950
-    },
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part04.jsonl",
-      "rows": 950
-    },
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part05.jsonl",
-      "rows": 950
-    },
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part06.jsonl",
-      "rows": 950
-    },
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part07.jsonl",
-      "rows": 950
-    },
-    {
-      "path": "refactor/vnext/reports/conflict_dispositions.part08.jsonl",
-      "rows": 700
-    }
-  ],
-  "shard_size": 950
+  "warning": "Machine-classified observations, not adjudicated Loon routing results."
 }
