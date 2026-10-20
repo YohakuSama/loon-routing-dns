@@ -32,7 +32,7 @@ UPSTREAMS = {
 }
 FORMAT_NAMES = {"loon", "domainset", "v2fly", "dnsmasq"}
 DIRECT_GROUPS = {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}
-HIGH_RISK_KINDS = {"DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6", "IP-ASN"}
+HIGH_RISK_KINDS = {"DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6", "IP-ASN", "USER-AGENT"}
 HOST = re.compile(r"^[a-z0-9.-]+$", re.I)
 # Conservative guards, NOT a substitute for a current Public Suffix List.
 # Unknown two-level public suffixes remain subject to manual review.
@@ -207,7 +207,7 @@ def _overlap_index(published: dict[str, set[str]]):
         for rule in rules:
             kind, value = fields(rule)
             if kind in {"DOMAIN", "DOMAIN-SUFFIX"}:
-                lookup[value].add(group)
+                lookup[value].add((group, kind))
     # Reverse labels so all child names of a suffix are contiguous.
     return lookup, sorted(".".join(reversed(host.split("."))) for host in lookup)
 
@@ -219,15 +219,16 @@ def _semantic_expansion(rule: str, group: str, baseline: dict[str, set[str]],
         return []
     risks = set()
     for p in _parents(value):
-        for other in lookup.get(p, ()):
-            if other != group:
+        for other, match_kind in lookup.get(p, ()):
+            # An exact DOMAIN,parent.example does not match its children.
+            if other != group and (p == value or match_kind == "DOMAIN-SUFFIX"):
                 risks.add(other)
     if kind == "DOMAIN-SUFFIX":
         prefix = ".".join(reversed(value.split("."))) + "."
         i = bisect_left(sorted_domains, prefix)
         while i < len(sorted_domains) and sorted_domains[i].startswith(prefix):
             original_host = ".".join(reversed(sorted_domains[i].split(".")))
-            risks.update(g for g in lookup[original_host] if g != group)
+            risks.update(g for g, _ in lookup[original_host] if g != group)
             i += 1
     return sorted(risks)
 
@@ -276,6 +277,8 @@ def _domain_risk(rule: str, group: str, protected: tuple[str, ...]) -> list[str]
     """Critical domains and shared hosts must never be auto-blocked or routed DIRECT."""
     kind, _ = fields(rule)
     tags = []
+    if kind == "DOMAIN-SUFFIX" and fields(rule)[1] in SHARED_PLATFORM_ROOTS:
+        tags.append("SHARED_INFRASTRUCTURE_SUFFIX_REVIEW")
     if group == "AdBlock":
         tags.append("ADBLOCK_NEW_RULE_REQUIRES_EVIDENCE")
         if kind not in {"DOMAIN", "DOMAIN-SUFFIX"}:
