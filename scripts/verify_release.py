@@ -12,7 +12,7 @@ from source_lock import check_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = "https://raw.githubusercontent.com/YohakuSama/loonkit/"
-LINK = re.compile(r"https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/([a-f0-9]{40})/([^,\s"\)]+)")
+LINK = re.compile(r'https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/([a-f0-9]{40})/([^,\\s")]+)')
 DNS = ("dns-server", "doh-server", "hijack-dns", "ip-mode", "ipv6-vif",
        "interface-mode", "skip-proxy", "bypass-tun", "real-ip")
 
