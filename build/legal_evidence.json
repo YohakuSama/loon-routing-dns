@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release_candidate": "vNext-RC2",
-  "status": "NOT_CLEARED",
+  "status": "NOT_INDEPENDENTLY_REVIEWED",
   "evidence_scope": "HISTORICAL_SOURCE_CATALOG_NOT_RULE_LEVEL_AUTHORIZATION",
   "candidate_rule_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
   "license_texts": [
