@@ -166,6 +166,13 @@
     },
     "TikTok": {
       "tiktok": "DOMAIN-SUFFIX,tiktok.com"
+    },
+    "ChinaDirect": {
+      "taobao": "DOMAIN-SUFFIX,taobao.com",
+      "baidu": "DOMAIN-SUFFIX,baidu.com",
+      "weibo": "DOMAIN-SUFFIX,weibo.com",
+      "alipay": "DOMAIN-SUFFIX,alipay.com",
+      "aliyun": "DOMAIN-SUFFIX,aliyun.com"
     }
   },
   "reviewed_keyword_narrowing_note": "Restrict unbounded brand-substring routing to listed owned DNS suffixes; nonmatching brands fall to other precise rules or FINAL. Existing suffix owners must remain subject to cross-policy auditing.",
