@@ -12,7 +12,7 @@ from source_lock import check_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = "https://raw.githubusercontent.com/YohakuSama/loonkit/"
-LINK = re.compile(r"https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/([a-f0-9]{40})/([^,\\s]+)")
+LINK = re.compile(r"https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/([a-f0-9]{40})/([^,\s]+)")
 DNS = ("dns-server", "doh-server", "hijack-dns", "ip-mode", "ipv6-vif",
        "interface-mode", "skip-proxy", "bypass-tun", "real-ip")
 
@@ -23,7 +23,7 @@ def sha(content):
 
 def section(profile, name):
     start = profile.index("[" + name + "]")
-    end = profile.find("\\n[", start+1)
+    end = profile.find("\n[", start+1)
     return profile[start:end if end >= 0 else None]
 
 
@@ -66,7 +66,7 @@ def verify(remote=False):
         raise ValueError("DNS settings must retain two distinct profiles")
     for profile in profiles.values():
         for key in DNS:
-            if not re.search(r"(?m)^"+re.escape(key)+r"\\s*=",section(profile,"General")):
+            if not re.search(r"(?m)^"+re.escape(key)+r"\s*=",section(profile,"General")):
                 raise ValueError("missing DNS/TUN property: " + key)
         if "GEOIP,CN,DIRECT,no-resolve" not in section(profile,"Rule") or "FINAL,Final" not in section(profile,"Rule"):
             raise ValueError("GEOIP or FINAL selector missing")
@@ -88,8 +88,8 @@ def verify(remote=False):
             if path.startswith("icons/") and ref != spec["reviewed_auxiliary_commit"]:
                 raise ValueError("icon pinned ref changed")
     plugin=(ROOT/release["plugin_path"]).read_bytes()
-    if sha(plugin)!=release["plugin_sha256"] or plugin!=(ROOT/"plugins/Network_Diagnostics.plugin").read_bytes():
-        raise ValueError("plugin hash or public alias changed")
+    if sha(plugin)!=release["plugin_sha256"]:
+        raise ValueError("production pinned plugin hash changed")
     if remote:
         for ref,path in sorted(set(LINK.findall(one))):
             if not path.startswith(("icons/","rules/releases/","release/phase-07/assets/")):

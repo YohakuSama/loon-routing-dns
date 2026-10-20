@@ -38,7 +38,7 @@ class ProductionTests(unittest.TestCase):
         data=orig.read_bytes()
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/"new.list"
-            p.write_bytes(data+b"\\nDOMAIN-SUFFIX,ci-test.invalid\\n")
+            p.write_bytes(data+b"\nDOMAIN-SUFFIX,ci-test.invalid\n")
             result=updates.review("rules/inputs/Google.list",p)
         self.assertEqual(result["added_rule_count"],1)
         self.assertFalse(result["release_write_performed"])

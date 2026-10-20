@@ -32,4 +32,4 @@ if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--output",type=Path,required=True)
     a=p.parse_args()
-    a.output.write_text(json.dumps(run(),ensure_ascii=False,indent=2,sort_keys=True)+"\\n")
+    a.output.write_text(json.dumps(run(),ensure_ascii=False,indent=2,sort_keys=True)+"\n")
