@@ -60,6 +60,8 @@ class HardeningTests(unittest.TestCase):
             ("domainset", ".co.uk"),
             ("domainset", "*.example.org"),
             ("domainset", "..example.org"),
+            ("domainset", ".github.io"),
+            ("domainset", ".cloudfront.net"),
             ("loon", "DOMAIN-KEYWORD,api"),
             ("loon", "DOMAIN-KEYWORD,foo*"),
             ("loon", "IP-CIDR,0.0.0.0/0"),
@@ -91,6 +93,17 @@ class HardeningTests(unittest.TestCase):
             "IP-CIDR,10.20.1.0/24,no-resolve", "AI", ix), [])
         self.assertEqual(review._ip_collisions(
             "DOMAIN-SUFFIX,example.org", "AI", ix), [])
+
+    def test_exact_parent_does_not_falsely_match_subdomain(self):
+        existing = {
+            "AI": {"DOMAIN,example.org"},
+            "Google": {"DOMAIN-SUFFIX,google.org"}
+        }
+        idx, domains = review._overlap_index(existing)
+        self.assertEqual(review._semantic_expansion(
+            "DOMAIN,sub.example.org", "ChinaDirect", existing, idx, domains), [])
+        self.assertEqual(review._semantic_expansion(
+            "DOMAIN,sub.google.org", "ChinaDirect", existing, idx, domains), ["Google"])
 
     def test_new_adblock_matchers_cannot_auto_block_critical_services(self):
         protected = tuple(["browserleaks.com"])
@@ -173,6 +186,15 @@ class CandidateWorkflow(unittest.TestCase):
             self.assertGreater(len(details["AI"]["additions"]), 0)
             self.assertTrue(all("reasons" in row for row
                                 in details["AI"]["additions"]))
+            self.assertTrue(all("source_ids" in row for row
+                                in details["AI"]["additions"]))
+            self.assertTrue(details["AI"]["removals"])
+            for group in result["groups"]:
+                name = "AnimeCrazy" if group == "動畫瘋" else group
+                preview = (output/"candidate"/(name+".list")).read_text()
+                self.assertNotIn("DOMAIN-KEYWORD,tracker", preview)
+                self.assertEqual(result["groups"][group]["publication_gate"],
+                                 "BLOCKED_UNTIL_EXPLICIT_APPROVAL")
             self.assertTrue((output/"snapshots/fixture-0.txt").exists())
             self.assertEqual((root/"rules/releases/vNext-RC2/AI.list").read_bytes(), before)
             with self.assertRaises(ValueError):
