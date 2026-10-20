@@ -2,7 +2,7 @@
   "schema_version": 1,
   "release_approved": false,
   "production_readiness": "NOT_READY",
-  "device_validation": "NOT_EXECUTED",
+  "device_validation": "PARTIAL",
   "blockers": [
     {
       "id": "RC-NODES",
@@ -12,7 +12,7 @@
     {
       "id": "RC-IMPORT",
       "status": "OPEN",
-      "reason": "Real Loon import not executed"
+      "reason": "Maintainer reports daily use of RC1 without obvious issues; exact Loon import evidence and logs not supplied"
     },
     {
       "id": "RC-DNS",
@@ -29,5 +29,11 @@
       "status": "OPEN",
       "reason": "FINAL=DIRECT and overseas shared infrastructure not device-tested"
     }
-  ]
+  ],
+  "device_observation": {
+    "source": "maintainer chat feedback",
+    "result": "NO_OBVIOUS_ISSUES_REPORTED",
+    "scope": "unspecified everyday use; no structured test logs",
+    "validated_by_script": false
+  }
 }
