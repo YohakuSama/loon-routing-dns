@@ -1,6 +1,6 @@
 # LoonKit v6.0.0 维护流程
 
-唯一正式入口：`LoonKit.lcf`。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式图标和插件仍保留它们在配置里固定的 Git Raw URL 原路径。
+唯一正式入口：`LoonKit.lcf`。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式图标仍保留固定 Git Raw URL；网络辅助插件更新时使用新的固定版本路径，旧插件路径保留兼容。
 
 ## 构建
 
@@ -27,12 +27,12 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## 网络诊断插件固定引用
 
-主配置中的插件引用 `a2409b2d470e36ad0fa92f1fe424c37ae9543927` 的 `release/phase-07/assets/Network_Diagnostics.plugin`。插件内部使用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` 的 `scripts/v20261020r2/network-diagnostics.js`、节点出口脚本及图标。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `a43e28aff0a4512964f5bbed7c7d8112bd856d0f` 的 `release/phase-08/assets/Network_Diagnostics.plugin`。插件内的网络与 DNS 诊断引用 `080a60897afd24c8c3c9387c25500615a6ec4145` 的 `scripts/v20261021r1/network-diagnostics.js`；节点出口脚本和图标仍固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 网络诊断脚本维护
 
-现役诊断脚本版本为 `scripts/v20261020r2/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本保留以免破坏旧固定 URL。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
+现役诊断脚本版本为 `scripts/v20261021r1/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本保留以免破坏旧固定 URL。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
 
 ## 新版 Git 历史
 

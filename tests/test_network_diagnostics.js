@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
 const ROOT = path.resolve(__dirname,"..");
-const source = fs.readFileSync(path.join(ROOT,"scripts/v20261020r2/network-diagnostics.js"),"utf8");
+const source = fs.readFileSync(path.join(ROOT,"scripts/v20261021r1/network-diagnostics.js"),"utf8");
 let passed=0;
 function check(name,fn) {
   try {fn();passed++;console.log("PASS",name);}
@@ -36,9 +36,9 @@ function run(options={}) {
     if(options.native==="fail")return cb({code:"TIMEOUT",message:"timeout"},null);
     cb(null,{
       protocol:options.protocol||"doh",
-      server:options.server||"https://dns.alidns.com/dns-query",
+      server:options.server===undefined?"https://dns.alidns.com/dns-query":options.server,
       fromCache:options.cached===true,
-      answers:[{type:"A",value:"93.184.215.14"}]
+      answers:options.answers===undefined?[{type:"A",value:"93.184.215.14"}]:options.answers
     });
   }};
   vm.runInNewContext(source,ctx,{timeout:2500});
@@ -50,11 +50,11 @@ function run(options={}) {
   assert(loops<20,"unbounded timers");
   return {requests,results,alerts,store};
 }
-check("healthy manual test reports actual configured DoH without clearTimeout",()=>{
+check("healthy manual test reports DoH address without claiming capture",()=>{
   const r=run();
   assert.equal(r.results.length,1);
-  assert.match(r.results[0].content,/所测项目正常/);
-  assert.match(r.results[0].content,/解析成功，Loon 报告使用配置的 DoH/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.match(r.results[0].content,/解析成功 · DoH（AliDNS）/);
   assert(r.requests.some(x=>x.native));
   assert(!r.requests.some(x=>x.url&&x.url.includes("/dns-query")));
 });
@@ -62,7 +62,7 @@ check("proxy 301 is an inconclusive redirect, not a false outage",()=>{
   const r=run({proxyStatus:301});
   assert.match(r.results[0].content,/部分检测尚未确认/);
   assert.match(r.results[0].content,/HTTP 301/);
-  assert.doesNotMatch(r.results[0].content,/结果：检测发现异常/);
+  assert.doesNotMatch(r.results[0].content,/结果：检测到连接或解析失败/);
   const p=r.requests.find(x=>x.node==="Proxy");
   assert.equal(p.url,"https://www.gstatic.com/generate_204");
   assert.equal(p["auto-redirect"],false);
@@ -74,42 +74,43 @@ check("target 503 proves server responded but does not prove proxy failure",()=>
 });
 check("Loon auto / https prefix is inconclusive, not a DNS leak",()=>{
   const r=run({protocol:"auto",server:"https://"});
-  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
-  assert.match(r.results[0].content,/传输协议未确认/);
-  assert.doesNotMatch(r.results[0].content,/结果：检测发现异常|明文 DNS 查询/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.match(r.results[0].content,/DNS 协议信息不完整/);
+  assert.doesNotMatch(r.results[0].content,/结果：检测到连接或解析失败|明文 DNS 查询/);
 });
 check("cached UDP metadata does not claim a new plaintext lookup",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53",cached:true});
-  assert.match(r.results[0].content,/解析成功（缓存命中）/);
-  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
+  assert.match(r.results[0].content,/解析成功（缓存）/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
   assert.doesNotMatch(r.results[0].content,/结果：检测发现异常|本次使用普通 DNS 查询/);
 });
 check("both HTTP 204 probes and ambiguous auto DNS are not an outage",()=>{
   const r=run({protocol:"auto",server:"https://"});
-  assert.match(r.results[0].content,/结果：网络连接正常，DNS 协议信息待确认/);
+  assert.match(r.results[0].content,/结果：网络连接与 DNS 解析正常/);
   assert.match(r.results[0].content,/直连网络：HTTP 204/);
   assert.match(r.results[0].content,/代理策略 Proxy：HTTP 204/);
   assert.doesNotMatch(r.results[0].content,/部分项目不可用|存在异常项目/);
 });
 check("auto DNS with a full HTTPS resolver address is unverified",()=>{
   const r=run({protocol:"auto",server:"https://dns.alidns.com/dns-query"});
-  assert.match(r.results[0].content,/自动协议和 HTTPS DNS 地址/);
-  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
+  assert.match(r.results[0].content,/DoH/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
 });
-check("native UDP is flagged as plaintext instead of DoH success",()=>{
+check("native UDP is a successful lookup with plaintext warning",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
-  assert.match(r.results[0].content,/检测发现异常/);
-  assert.match(r.results[0].content,/报告使用普通 DNS/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
+  assert.match(r.results[0].content,/DNS 回退设置/);
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
-  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
-  assert.match(r.results[0].content,/其他加密 DNS/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.match(r.results[0].content,/DoH/);
 });
 check("cached DoH cannot prove this test used an encrypted request",()=>{
   const r=run({cached:true});
-  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
-  assert.match(r.results[0].content,/缓存命中/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.match(r.results[0].content,/缓存/);
 });
 check("no DNS API cannot be misreported healthy",()=>{
   const r=run({native:"absent"});
@@ -118,7 +119,7 @@ check("no DNS API cannot be misreported healthy",()=>{
 });
 check("native DNS error and proxy failure are detected",()=>{
   const r=run({native:"fail",proxyFail:true});
-  assert.match(r.results[0].content,/检测发现异常/);
+  assert.match(r.results[0].content,/检测到连接或解析失败/);
   assert.match(r.results[0].content,/超时/);
 });
 check("automatic check has no DNS probe and is silent when healthy",()=>{
@@ -147,9 +148,45 @@ check("automatic double-failure alerts only once per cooldown",()=>{
 });
 
 check("diagnostics switches default to privacy-preserving values",()=>{
-  const plugin=fs.readFileSync(path.join(ROOT,"release/phase-07/assets/Network_Diagnostics.plugin"),"utf8");
+  const plugin=fs.readFileSync(path.join(ROOT,"release/phase-08/assets/Network_Diagnostics.plugin"),"utf8");
   assert.match(plugin,/auto_check = switch,false/);
   assert.match(plugin,/compare_direct = switch,false/);
   assert.equal(plugin.split("\n").filter(x=>x.startsWith("generic then script(")).length,2);
 });
+
+check("HTTP 200 on generate_204 endpoint is not reported as healthy",()=>{
+  const r=run({directStatus:200});
+  assert.match(r.results[0].content,/部分检测尚未确认/);
+  assert.match(r.results[0].content,/HTTP 200/);
+  assert.match(r.results[0].content,/可能为认证页面/);
+});
+check("auto + complete configured HTTPS resolver reports DoH",()=>{
+  const r=run({protocol:"auto",server:"https://dns.alidns.com/dns-query"});
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.match(r.results[0].content,/DoH（AliDNS）/);
+  assert.doesNotMatch(r.results[0].content,/DNS 协议信息不完整/);
+});
+check("unknown or truncated auto HTTPS DNS does not certify DoH",()=>{
+  const r=run({protocol:"auto",server:"https://"});
+  assert.match(r.results[0].content,/DNS 协议信息不完整/);
+  assert.doesNotMatch(r.results[0].content,/DoH（AliDNS）/);
+});
+check("ordinary DNS is shown as privacy notice, not DNS resolution failure",()=>{
+  const r=run({protocol:"udp",server:"223.5.5.5:53"});
+  assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
+  assert.match(r.results[0].content,/DNS 回退设置/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.doesNotMatch(r.results[0].content,/检测到连接或解析失败/);
+});
+check("an empty DNS address does not infer DoH or normal UDP",()=>{
+  const r=run({protocol:"auto",server:""});
+  assert.match(r.results[0].content,/DNS 协议信息不完整/);
+  assert.doesNotMatch(r.results[0].content,/DoH（AliDNS）/);
+});
+check("no A or AAAA value is a DNS failure even with record type",()=>{
+  const r=run({answers:[{type:"A",value:""}]});
+  assert.match(r.results[0].content,/检测到连接或解析失败/);
+  assert.match(r.results[0].content,/未获得有效的 A\/AAAA 地址/);
+});
+
 console.log("Current network diagnostic tests:",passed);

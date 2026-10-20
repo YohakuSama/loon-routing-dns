@@ -33,6 +33,7 @@ jobs:
         run: |
           node --check scripts/v20261018r11/network-diagnostics.js
           node --check scripts/v20261020r1/network-diagnostics.js
+          node --check scripts/v20261021r1/network-diagnostics.js
           node --check scripts/v20261018r11/node-intelligence.js
           node tests/test_node_copy.js
           node tests/test_network_diagnostics.js
