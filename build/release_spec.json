@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "rc_label": "vNext-RC2",
+  "stable_release_version": "v6.0.0",
+  "status": "PUBLISHED_TO_MAIN_WITH_DISCLOSED_LIMITATIONS",
+  "release_rules_dir": "rules/releases/vNext-RC2",
+  "release_assets_dir": "release/phase-07/assets",
+  "release_assets_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+  "reviewed_auxiliary_commit": "95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98",
+  "source_snapshot_dir": "rules/inputs",
+  "live_dns_tun_edits_permitted": false,
+  "release_gate_file": null,
+  "warning": "Single standard LoonKit v6.0.0 profile. Published pinned rules, icons and plugin remain unchanged; third-party legal review remains open.",
+  "plugin_assets_commit": "bc7e720bcd671079cfa39aa51f5cab36e9f8d3ba",
+  "script_assets_commit": "737b91e99b5264358d7fd39cc2d54d83ac870c38"
+}

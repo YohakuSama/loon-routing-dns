@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>Proxy — crossed relay ribbons</title><rect x="0" y="0" width="512" height="512" rx="111" fill="#164889"/>
+<!-- A: top-left to bottom-right. Both ribbons have continuous, non-arrow endpoints. -->
+<path d="M124 174 H184 Q200 174 210 190 L306 325 Q316 339 333 339 H387" fill="none" stroke="#F8FBFF" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- B: bottom-left to top-right. Explicit underpass: disconnected near center for visual precedence. -->
+<path d="M124 338 H184 Q199 338 209 324 L240 280" fill="none" stroke="#69E5DA" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M277 227 L306 187 Q316 173 333 173 H387" fill="none" stroke="#69E5DA" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

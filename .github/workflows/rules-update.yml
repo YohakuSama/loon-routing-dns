@@ -1,0 +1,34 @@
+name: Upstream Review (read only)
+on:
+  schedule:
+    - cron: '20 2 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 scripts/verify_release.py --check
+      - name: Validate immutable pinned resources on GitHub Raw
+        run: python3 scripts/verify_release.py --check --remote
+      - name: Check upstream current bytes without updating production
+        run: python3 scripts/check_sources.py --output "$RUNNER_TEMP/upstream.json"
+      - name: Generate offline candidate difference
+        run: python3 scripts/prepare_release.py --version vNext-RC999999999 --output "$RUNNER_TEMP/candidate" --build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: upstream-review-only
+          path: |
+            ${{ runner.temp }}/upstream.json
+            ${{ runner.temp }}/candidate/NEXT_RELEASE_DIFF.json
+            ${{ runner.temp }}/candidate/NEXT_RELEASE_MANIFEST.json
+          retention-days: 14
+          if-no-files-found: error
