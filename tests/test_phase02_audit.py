@@ -155,6 +155,17 @@ class Phase02AuditTest(unittest.TestCase):
             if row["stage_unique_added_before_pruning"] == 0:
                 self.assertEqual(row["recommendation"], "MERGE")
 
+
+    def test_22_local_source_line_level_match_is_nonexclusive(self):
+        local = audit.local_source_matches(self.rules)
+        self.assertEqual(local["exclusive_attribution"], "UNKNOWN")
+        self.assertGreaterEqual(len(local["sources"]), 8)
+        for source in local["sources"]:
+            self.assertEqual(source["normalized_local_input_count"], len(source["per_rule"]))
+            self.assertEqual(source["normalized_local_input_count"],
+                             source["published_condition_matches"] + source["unmatched_conditions"])
+            self.assertTrue(all(e["source_line"] > 0 for e in source["per_rule"]))
+
     def test_19_geoip_final_local_rule_handling(self):
         local = audit.scan_local_rules(self.index)
         self.assertTrue(any(r["rule_type"] == "GEOIP" and r["no_resolve"]

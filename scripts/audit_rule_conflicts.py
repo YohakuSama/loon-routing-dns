@@ -414,6 +414,8 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
             "Upstream repository-level licenses: blackmatrix7 GPL-2.0, v2fly MIT, felixonmars WTFPL-2.",
             "These CURRENT_UPSTREAM_REFERENCE license records do not prove original per-item rights.",
             "REMOVE_CANDIDATE requires independent provenance and business evidence.",
+            "Frozen local sources have line-level nonexclusive matches in data/local_source_matches.json.",
+            "Local matches show surviving conditions but NOT which source deserves exclusive credit.",
             "Historical remotes are URL-level evidence only; their historical contents are unavailable.",
         ]),
         "DUPLICATE_AUDIT.md": "\n".join([
@@ -524,6 +526,46 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
         (output / name).write_text(body + "\n", encoding="utf-8")
 
 
+def local_source_matches(records):
+    """Match immutable local input lines to published conditions (not exclusive origin proof).
+
+    This only proves that a local source's matcher exists in the final output. Another
+    remote source may have independently supplied the same matcher. Never infer sole credit.
+    """
+    catalog = read_json("rules/sources.json")
+    published = {(r["group"], rule_key(r)) for r in records}
+    outputs = []
+    for source in catalog["sources"]:
+        if source.get("role") != "local" or not source.get("enabled"):
+            continue
+        path = source["path"]
+        entries = []
+        for line_no, raw in enumerate((ROOT / path).read_text(encoding="utf-8").splitlines(), 1):
+            line = raw.strip()
+            if not line or line.startswith(("#", ";", "//")):
+                continue
+            entry = parse_rule(line, source["policy"], path, line_no, source["group"])
+            if entry["rule_type"] in {"IP-CIDR", "IP-CIDR6"}:
+                entry["no_resolve"] = True  # existing frozen generator normalize behavior
+            match = (source["group"], rule_key(entry)) in published
+            entries.append({"source_file": path, "source_line": line_no,
+                            "rule_type": entry["rule_type"], "rule_value": entry["rule_value"],
+                            "no_resolve": entry["no_resolve"],
+                            "published_match_in_target_group": match,
+                            "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH"})
+        outputs.append({
+            "source_id": source["id"], "source_file": path,
+            "normalized_local_input_count": len(entries),
+            "published_condition_matches": sum(e["published_match_in_target_group"] for e in entries),
+            "unmatched_conditions": sum(not e["published_match_in_target_group"] for e in entries),
+            "per_rule": entries,
+            "note": "Cannot prove sole source ownership without immutable remote source contents"
+        })
+    return {"evidence": "FROZEN_LOCAL_INPUT_VS_PUBLISHED_MATCH",
+            "exclusive_attribution": "UNKNOWN",
+            "sources": outputs}
+
+
 def scan_local_rules(index):
     """Inspect local GEOIP/FINAL separately, since 206505 counts remote rule files only."""
     items = []
@@ -571,6 +613,8 @@ def build(output):
     (data / "normalized_rules.jsonl.gz").write_bytes(gzip.compress(rows, compresslevel=9, mtime=0))
     dump(data / "published_file_inventory.json", details)
     dump(data / "local_rule_inventory.json", scan_local_rules(index))
+    local_map = local_source_matches(records)
+    dump(data / "local_source_matches.json", local_map)
     dump(data / "source_inventory.json", inventory)
     dump(data / "duplicate_report.json", {
         "published_exact_duplicates": overlaps["published_exact_duplicates"],
@@ -601,6 +645,9 @@ def build(output):
                    direct_broad_keywords=len(ip["direct_keywords"]),
                    source_recommendations=inventory["source_recommendation_counts"],
                    staged_zero_incremental_source_count=len(inventory["staged_zero_incremental_sources"]),
+                   verified_local_source_file_count=len(local_map["sources"]),
+                   local_input_rules_with_published_condition=sum(
+                       a["published_condition_matches"] for a in local_map["sources"]),
                    manual_source_review=sum(s["recommendation"] in ("INVESTIGATE", "MERGE")
                                             for s in inventory["sources"]),
                    provenance="SOURCE_PROVENANCE_INCOMPLETE",
