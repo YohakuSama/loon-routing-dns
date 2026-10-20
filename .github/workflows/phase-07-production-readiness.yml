@@ -31,6 +31,7 @@ jobs:
       - name: RC2 and historical regression plus gate schema
         run: |
           python3 scripts/phase07_gate.py --lint
+          python3 scripts/phase07_resource_audit.py --check
           python3 -m unittest discover -s tests -p 'test_*.py' -v
           python3 scripts/validate_repo.py
           python3 scripts/build-appstore-icons.py --check-config
@@ -70,6 +71,7 @@ jobs:
             python3 scripts/vnext_rule_engine.py --check
             python3 scripts/phase07_release.py --check
             python3 scripts/phase07_gate.py --lint
+            python3 scripts/phase07_resource_audit.py --check
             python3 -m unittest discover -s tests -p 'test_phase07_release.py' -v
             for config in LoonKit.lcf LoonKit.PrivacyDNS.lcf; do
               expected="$(git show "$GITHUB_SHA:$config" | sha256sum | cut -f1 -d' ')"
