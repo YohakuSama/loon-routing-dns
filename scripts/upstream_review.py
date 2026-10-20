@@ -38,6 +38,12 @@ HOST = re.compile(r"^[a-z0-9.-]+$", re.I)
 # Unknown two-level public suffixes remain subject to manual review.
 COMMON_SECOND_LEVEL = {"co", "com", "net", "org", "gov", "ac", "edu"}
 RESERVED_ROOTS = {"localhost", "local", "internal", "test", "invalid", "example"}
+# Multi-tenant parent domains can represent unrelated customers; proposals for
+# their entire suffix are rejected, while subdomains remain reviewable.
+MULTITENANT_ROOTS = set(SHARED_PLATFORM_ROOTS) | {
+    "appspot.com", "blogspot.com", "github.io", "pages.dev", "workers.dev",
+    "vercel.app", "netlify.app", "herokuapp.com", "azurewebsites.net"
+}
 MAX_RULE_LENGTH = 256
 
 
@@ -54,9 +60,9 @@ def _validate_matcher(rule: str) -> str:
                 or parts[-1] in RESERVED_ROOTS):
             raise ValueError("invalid or private/reserved domain matcher")
         if kind == "DOMAIN-SUFFIX" and (
-            len(parts) == 2 and len(parts[-1]) == 2
-            and parts[0] in COMMON_SECOND_LEVEL):
-            raise ValueError("public-suffix-like match blocks unrelated domains")
+            (len(parts) == 2 and len(parts[-1]) == 2
+             and parts[0] in COMMON_SECOND_LEVEL) or value in MULTITENANT_ROOTS):
+            raise ValueError("public-suffix or multi-tenant scope blocks unrelated domains")
     elif kind == "DOMAIN-KEYWORD":
         if len(value) < 4 or "*" in value or value in {"http", "https", "cdn", "api"}:
             raise ValueError("generic/unbounded keyword")
