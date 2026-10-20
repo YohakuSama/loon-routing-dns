@@ -5,10 +5,10 @@
   "locked_inputs_path": "build/sources.lock.json",
   "maintainer_approval": "NOT_EXECUTED",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
-  "plugin_path": "release/phase-07/assets/Network_Diagnostics.plugin",
-  "plugin_sha256": "932d4e2c47488d16dc91ade91759b3061121042794e1f5219af78bfd92834587",
+  "plugin_path": "release/phase-08/assets/Network_Diagnostics.plugin",
+  "plugin_sha256": "bd263261a57370ecd6c392c8f9a6a146441df8b337eefed6e1cd224d76a15dab",
   "profile_sha256": {
-    "LoonKit.lcf": "311fc741ed0545050c3bfc105d0cdbfc26da38ae66b028da5eb4568802946884"
+    "LoonKit.lcf": "fc86ed5c320250af287f719e7177e86da1f18ec2dbf2808da7d2f04e23715e37"
   },
   "remote_rule_count": 197765,
   "remote_subscription_count": 26,
