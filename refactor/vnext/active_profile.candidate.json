@@ -404,7 +404,7 @@
     {
       "name": "Discord",
       "current_policy": "Discord",
-      "business_definition": "Discord chat",
+      "business_definition": "Discord messaging, voice/video calls, community servers and related authentication services; preserve selectable exit policy and review shared CDN ownership.",
       "logical_layer": "REGIONAL_OR_USER_SELECTED",
       "logical_priority": "DEPENDENT_ON_MATCH_CLASS_AND_REVIEWED_EXCEPTION_NOT_GLOBAL_INTEGER",
       "current_subscription_order": 24,
