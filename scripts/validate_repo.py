@@ -16,7 +16,7 @@ from urllib.parse import urlsplit
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CONF = ROOT / "LoonKit.lcf"
+CONF = ROOT / "refactor/vnext/templates/LoonKit.legacy-seed.lcf"
 PLUGIN = ROOT / "plugins" / "Network_Diagnostics.plugin"
 JS = [
     ROOT / "scripts" / "v20261018r11" / "network-diagnostics.js",
@@ -267,7 +267,13 @@ def main():
     parser.add_argument("--remote-ref", default="main",
                         help="git revision to check on CDN; use a PR head SHA before merging")
     args = parser.parse_args()
+    # Strict legacy compatibility checks remain on the frozen original seed.
     urls = check_config() + check_plugin()
+    from phase07_release import run as check_release
+    try:
+        check_release(check=True)
+    except (ValueError, RuntimeError, FileNotFoundError) as e:
+        ISSUES.append("RC2 production validation: " + str(e))
     check_readme()
     if args.check_remote:
         try:

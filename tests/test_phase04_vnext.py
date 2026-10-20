@@ -232,13 +232,13 @@ class Phase04Tests(unittest.TestCase):
             self.assertIn("FINAL=DIRECT", detail["compatibility"])
 
     def test_production_general_section_byte_equivalent(self):
-        original = (ROOT / "LoonKit.lcf").read_text()
+        original = (ROOT / "refactor/vnext/templates/LoonKit.legacy-seed.lcf").read_text()
         candidate = self.files["refactor/vnext/LoonKit.vNext.Candidate.lcf"]
         self.assertEqual(original.split("[General]", 1)[1].split("[Proxy]", 1)[0],
                          candidate.split("[General]", 1)[1].split("[Proxy]", 1)[0])
 
     def test_original_group_names_preserved(self):
-        original = (ROOT / "LoonKit.lcf").read_text()
+        original = (ROOT / "refactor/vnext/templates/LoonKit.legacy-seed.lcf").read_text()
         candidate = self.files["refactor/vnext/LoonKit.vNext.Candidate.lcf"]
         orig = original.split("[Proxy Group]", 1)[1].split("[Remote Rule]", 1)[0]
         new = candidate.split("[Proxy Group]", 1)[1].split("[Remote Rule]", 1)[0]

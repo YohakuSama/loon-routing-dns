@@ -167,7 +167,7 @@ def check_repo_resource(url: str) -> str:
 def check(config: str | None = None, commit: str | None = None) -> dict:
     content = CONFIG.read_text(encoding="utf-8") if config is None else config
     profile = sections(content)
-    stable = sections((ROOT / "LoonKit.lcf").read_text(encoding="utf-8"))
+    stable = sections((ROOT / "refactor/vnext/templates/LoonKit.legacy-seed.lcf").read_text(encoding="utf-8"))
     original = general_fields(stable["General"])
     candidate = general_fields(profile["General"])
     if original != candidate:
