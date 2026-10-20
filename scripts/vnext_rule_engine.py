@@ -545,6 +545,26 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     candidate_profile = candidate_profile.replace(
         "# Historical verified local service rules. Diagnostic protections moved to rules/ProxyProtect.list.",
         "# Reviewed local service exceptions. No independent diagnostic proxy subscription.", 1)
+    # Keep seven legacy overseas selectors functionally reachable for narrowly
+    # scoped, owned service roots. Other auxiliary endpoints still need devices.
+    scoped_overseas = cfg.get("reviewed_overseas_inline_minimal", {})
+    if set(scoped_overseas) != set(inactive):
+        raise ValueError("every inactive overseas selector needs an explicit scoped disposition")
+    additions = []
+    for group in inactive:
+        for host in scoped_overseas[group]:
+            if not re.fullmatch(r"[a-z0-9.-]+\.[a-z]{2,}", host):
+                raise ValueError("unscoped overseas hostname")
+            additions.append("DOMAIN-SUFFIX," + host + "," + group)
+    if len(additions) != len(set(additions)):
+        raise ValueError("duplicate overseas candidate inline rule")
+    marker = "GEOIP,CN,DIRECT,no-resolve\n"
+    if candidate_profile.count(marker) != 1:
+        raise ValueError("unexpected candidate GEOIP terminator")
+    candidate_profile = candidate_profile.replace(
+        marker,
+        "# Minimal overseas service selector compatibility; candidate only.\n"
+        + "\n".join(additions) + "\n" + marker, 1)
     files["refactor/vnext/LoonKit.vNext.Candidate.lcf"] = candidate_profile
     return files
 
