@@ -1,0 +1,232 @@
+{
+  "actual_candidate_modifications": 0,
+  "classification_counts": {
+    "ADBLOCK_OVERLAP": 6821,
+    "DIRECT_OVERLAP": 447,
+    "SAME_EFFECT_REDUNDANCY": 19,
+    "SHARED_CDN": 1,
+    "SHARED_INFRASTRUCTURE": 2,
+    "UNVERIFIED_RUNTIME_PRECEDENCE": 60
+  },
+  "input_report": "refactor/vnext/reports/domain_parent_child_conflicts.jsonl",
+  "policy_pairs": {
+    "AI|AdBlock": 1,
+    "AdBlock|AI": 1,
+    "AdBlock|Apple": 3,
+    "AdBlock|ChinaDirect": 15,
+    "AdBlock|Dazn": 1,
+    "AdBlock|Disney": 7,
+    "Apple|AdBlock": 8,
+    "Apple|AppleOTA": 46,
+    "Bilibili|AdBlock": 8,
+    "ChinaDirect|AdBlock": 6465,
+    "ChinaDirect|Apple": 64,
+    "ChinaDirect|AppleOTA": 9,
+    "ChinaDirect|Bilibili": 67,
+    "ChinaDirect|Google": 7,
+    "ChinaDirect|Microsoft": 108,
+    "ChinaDirect|Paypal": 12,
+    "ChinaDirect|PrimeVideo": 2,
+    "ChinaDirect|Steam": 12,
+    "ChinaDirect|SteamCN": 9,
+    "ChinaDirect|TikTok": 1,
+    "ChinaDirect|YouTube": 1,
+    "Disney|AdBlock": 68,
+    "DomesticCore|AdBlock": 8,
+    "DomesticCore|Apple": 1,
+    "Facebook|AdBlock": 5,
+    "Facebook|Whatsapp": 1,
+    "Google|AI": 35,
+    "Google|AdBlock": 41,
+    "Google|ChinaDirect": 46,
+    "Google|Discord": 2,
+    "Google|YouTube": 7,
+    "HBO|AdBlock": 20,
+    "Instagram|AdBlock": 1,
+    "Microsoft|AI": 4,
+    "Microsoft|AdBlock": 99,
+    "Microsoft|Apple": 1,
+    "Microsoft|ChinaDirect": 56,
+    "Microsoft|Dazn": 1,
+    "Microsoft|Disney": 1,
+    "Netflix|AdBlock": 7,
+    "Netflix|Disney": 1,
+    "Paypal|AdBlock": 6,
+    "SteamCN|ChinaDirect": 1,
+    "SteamCN|Steam": 3,
+    "Steam|AdBlock": 2,
+    "Steam|ChinaDirect": 1,
+    "Steam|SteamCN": 12,
+    "TikTok|AdBlock": 33,
+    "Twitter|AI": 1,
+    "Twitter|AdBlock": 10,
+    "YouTube|AdBlock": 2,
+    "YouTube|ChinaDirect": 9,
+    "YouTube|Google": 8,
+    "動畫瘋|AdBlock": 10
+  },
+  "release_claim": "NOT_READY_FOR_PRODUCTION",
+  "runtime_test_count": 7331,
+  "schema_version": 1,
+  "top_parent_rules": [
+    {
+      "count": 3884,
+      "rule": "DOMAIN-SUFFIX,cn"
+    },
+    {
+      "count": 191,
+      "rule": "DOMAIN-SUFFIX,qq.com"
+    },
+    {
+      "count": 187,
+      "rule": "DOMAIN-SUFFIX,baidu.com"
+    },
+    {
+      "count": 75,
+      "rule": "DOMAIN-SUFFIX,microsoft.com"
+    },
+    {
+      "count": 52,
+      "rule": "DOMAIN-SUFFIX,taobao.com"
+    },
+    {
+      "count": 51,
+      "rule": "DOMAIN-SUFFIX,sogou.com"
+    },
+    {
+      "count": 40,
+      "rule": "DOMAIN-SUFFIX,ourdvsss.com"
+    },
+    {
+      "count": 34,
+      "rule": "DOMAIN-SUFFIX,youdao.com"
+    },
+    {
+      "count": 32,
+      "rule": "DOMAIN-SUFFIX,msn.com"
+    },
+    {
+      "count": 30,
+      "rule": "DOMAIN-SUFFIX,163.com"
+    },
+    {
+      "count": 29,
+      "rule": "DOMAIN-SUFFIX,google.com"
+    },
+    {
+      "count": 29,
+      "rule": "DOMAIN-SUFFIX,xiaomi.com"
+    },
+    {
+      "count": 28,
+      "rule": "DOMAIN-SUFFIX,miui.com"
+    },
+    {
+      "count": 26,
+      "rule": "DOMAIN-SUFFIX,ifeng.com"
+    },
+    {
+      "count": 25,
+      "rule": "DOMAIN-SUFFIX,googleapis.com"
+    },
+    {
+      "count": 25,
+      "rule": "DOMAIN-SUFFIX,apple.com"
+    },
+    {
+      "count": 23,
+      "rule": "DOMAIN-SUFFIX,baofeng.com"
+    },
+    {
+      "count": 21,
+      "rule": "DOMAIN-SUFFIX,jd.com"
+    },
+    {
+      "count": 21,
+      "rule": "DOMAIN-SUFFIX,meizu.com"
+    },
+    {
+      "count": 21,
+      "rule": "DOMAIN-SUFFIX,globalsources.com"
+    },
+    {
+      "count": 20,
+      "rule": "DOMAIN-SUFFIX,ucweb.com"
+    },
+    {
+      "count": 19,
+      "rule": "DOMAIN-SUFFIX,snssdk.com"
+    },
+    {
+      "count": 18,
+      "rule": "DOMAIN-SUFFIX,126.net"
+    },
+    {
+      "count": 17,
+      "rule": "DOMAIN-SUFFIX,ximalaya.com"
+    },
+    {
+      "count": 16,
+      "rule": "DOMAIN-SUFFIX,go.com"
+    },
+    {
+      "count": 16,
+      "rule": "DOMAIN-SUFFIX,lenovomm.com"
+    },
+    {
+      "count": 15,
+      "rule": "DOMAIN-SUFFIX,xunlei.com"
+    },
+    {
+      "count": 14,
+      "rule": "DOMAIN-SUFFIX,weibo.com"
+    },
+    {
+      "count": 13,
+      "rule": "DOMAIN-SUFFIX,alibaba.com"
+    },
+    {
+      "count": 13,
+      "rule": "DOMAIN-SUFFIX,ksosoft.com"
+    }
+  ],
+  "total_disposed": 7350,
+  "total_observed": 7350,
+  "verified_equivalent_direct_count": 19,
+  "warning": "Machine-classified observations, not adjudicated Loon routing results.",
+  "shards": [
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part01.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part02.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part03.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part04.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part05.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part06.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part07.jsonl",
+      "rows": 950
+    },
+    {
+      "path": "refactor/vnext/reports/conflict_dispositions.part08.jsonl",
+      "rows": 700
+    }
+  ],
+  "shard_size": 950
+}
