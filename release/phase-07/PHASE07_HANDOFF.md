@@ -52,3 +52,11 @@
 - `release/phase-07/MIGRATION_ROLLBACK.md` 迁移与 Git/客户端分层回滚方案。
 
 最终状态并非“正式发布通过”，而是“已准备受控 RC2 工程候选，等待独立授权和维护者运行时验收”。
+
+## 阶段07持续维护与设备证据锁定补充
+
+- `scripts/phase07_source_update_review.py`：除最多30条审查样例外，输出 `full_change_set` 全量增删 matcher、全部变更的 SHA256 和高风险规则类型统计；导出报告不可覆盖配置、来源锁与发布资源。
+- `scripts/phase07_next_release.py`：仅在维护者明确指定新候选名称时、在仓库外的空目录预构建下一版；输出动态规则数、26份规则文件、逐文件 SHA256、对 RC2 的完整规则差异及摘要哈希；不可写入正式规则目录、不可发布、不可自动确定正式版本。
+- `scripts/phase07_device_attestation.py`：将未来真实的脱敏 `validation/phase-07/device-results.redacted.json` 与已测试配置的 Git Blob SHA256 和候选远程规则固定 Commit 绑定，要求两份配置独立通过 AdBlock 双模式、Final 四模式等对应 scope 的机器检查。不存在数据时不能将真机类发布门槛改成 PASS；即便格式检查通过仍需维护者审核真实设备结论。
+- `scripts/phase07_gate.py`：真机类门槛 PASS 必须触发上述实际证据核验，不能只凭手写文本或随意填写一个40位提交号绕过。许可证和维护者审批继续保持独立阻断。
+- 下一次生成不同字节的新候选，必须重新固定资源 Commit 与 SHA256，并按影响范围重新跑真机测试；RC2 原规则和配置字节不得静默更换。
