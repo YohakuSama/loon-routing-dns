@@ -43,22 +43,13 @@ jobs:
           fi
       - name: Independent phase 05 tests
         run: python3 -m unittest discover -s tests -p test_phase05_validation.py -v
-      - name: Generate all conflict dispositions for maintainer audit without pushing
-        run: |
-          python3 scripts/vnext_conflict_resolver.py --generate
-          python3 - <<'PY'
-          from pathlib import Path
-          for name in ('conflict_dispositions.jsonl', 'conflict_summary.phase05.json'):
-              p = Path('refactor/vnext/reports') / name
-              print('LOONKIT_REPORT_START ' + name)
-              print(p.read_text(encoding='utf-8'), end='')
-              print('LOONKIT_REPORT_END ' + name)
-          PY
+      - name: Verify complete 7350-row committed conflict disposition shards
+        run: python3 scripts/vnext_conflict_resolver.py --check
       - uses: actions/upload-artifact@v4
         with:
           name: phase05-classified-conflicts
           path: |
-            refactor/vnext/reports/conflict_dispositions.jsonl
+            refactor/vnext/reports/conflict_dispositions.part*.jsonl
             refactor/vnext/reports/conflict_summary.phase05.json
           if-no-files-found: error
           retention-days: 7
