@@ -224,8 +224,32 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     old_rules_by_group: dict[str, set[str]] = {}
     source_catalog = json.loads((root / "rules/sources.json").read_text(encoding="utf-8"))["sources"]
     source_groups = defaultdict(list)
-    for s in source_catalog:
-        source_groups[s["group"]].append(s["id"])
+    local_evidence = defaultdict(list)
+    source_inventory = []
+    for source in source_catalog:
+        source_groups[source["group"]].append(source["id"])
+        enabled = source["group"] in active
+        verified_local = source.get("role") == "local"
+        source_inventory.append({
+            "source_id": source["id"], "original_group": source["group"],
+            "original_role": source.get("role", "upstream"),
+            "input_kind": "HISTORIC_UPSTREAM_NOT_FETCHED" if not verified_local else "IMMUTABLE_LOCAL_FILE",
+            "candidate_status": ("GROUP_DISABLED_FINAL_FALLBACK" if not enabled else
+                                 "FROZEN_LOCAL_SOURCE_VERIFIABLE" if verified_local else
+                                 "FROZEN_MERGED_SNAPSHOT_ONLY_SOURCE_NOT_ATTRIBUTABLE"),
+            "historic_source_url": source.get("url"), "historic_local_path": source.get("path"),
+            "line_level_origin_proven": bool(verified_local),
+            "verified_candidate_lines": 0,
+            "snapshot_group_active": enabled,
+        })
+        if verified_local:
+            path = root / source["path"]
+            for line_number, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                normalized = normalize(raw)
+                if normalized:
+                    local_evidence[(source["group"], normalized)].append((
+                        source["id"], source["path"], line_number))
+
     for group in active + inactive:
         filename = "AnimeCrazy" if group == "動畫瘋" else group
         path = root / "rules/generated" / (filename + ".list")
@@ -305,6 +329,26 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
         files["refactor/vnext/generated/" + filename + ".list"] = "\n".join(
             [*header, *sorted(groups[group])]
         ) + "\n"
+    # Independently verify exact locally maintained lines against retained
+    # candidate rules. This proves local contributions only, not upstream ancestry.
+    verified = ["group\trule\tverified_source_id\tlocal_file\tlocal_line\tsnapshot_file\tsnapshot_line"]
+    evidence_counts = Counter()
+    for group in active:
+        for rule, origins in sorted(groups[group].items()):
+            for source_id, local_path, lineno in sorted(local_evidence.get((group, rule), ())):
+                evidence_counts[source_id] += 1
+                for snapshot_path, snapshot_line in sorted(origins):
+                    verified.append("\t".join([group, rule, source_id, local_path, str(lineno),
+                                                snapshot_path, str(snapshot_line)]))
+    files["refactor/vnext/reports/verified_local_provenance.tsv"] = "\n".join(verified) + "\n"
+    for item in source_inventory:
+        item["verified_candidate_lines"] = evidence_counts[item["source_id"]]
+    files["refactor/vnext/reports/sources.vnext.candidate.json"] = json.dumps({
+        "original_source_count": len(source_catalog),
+        "candidate_input_kind": "26_FROZEN_GROUP_COMPOSITES_NOT_UPSTREAM_REBUILD",
+        "entries": source_inventory,
+        "warning": "Upstream IDs are merely historic candidates, never claimed as line-level proof"
+    }, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
     # Trace every retained rule to snapshot file and line. Original upstream
     # source ids are only POSSIBLE contributors for a merged snapshot.
     prov = ["group\trule\tsnapshot_file\tsnapshot_line\tpossible_upstream_source_ids"]
@@ -428,6 +472,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
         "added_predicate_group_count": len(added), "removed_predicate_group_count": len(removed),
         "ownership_changes": len(ownership), "ip_no_resolve_changes": len(flag_changes),
         "active_remote_upstream_sources": 0,
+        "verified_local_source_line_mappings": sum(evidence_counts.values()),
         "source_status": "26 frozen group snapshots, not 26 independently verifiable upstream feeds",
         "adblock_anchors": list(AD_ANCHORS),
         "domain_parent_child_ambiguities": len(ancestry),
