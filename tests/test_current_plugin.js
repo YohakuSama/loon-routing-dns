@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const root = path.resolve(__dirname,"..");
 const read = file => fs.readFileSync(path.join(root,file),"utf8");
-const plugin = read("release/phase-07/assets/Network_Diagnostics.plugin");
+const plugin = read("release/phase-08/assets/Network_Diagnostics.plugin");
 const profile = read("LoonKit.lcf");
 let passed=0;
 function check(name,fn){
@@ -14,7 +14,7 @@ function check(name,fn){
 }
 check("only the shipped immutable plugin is present",()=>{
   assert(!fs.existsSync(path.join(root,"plugins/")));
-  assert(plugin.includes("/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/scripts/"));
+  assert(plugin.includes("/080a60897afd24c8c3c9387c25500615a6ec4145/scripts/v20261021r1/network-diagnostics.js"));
 });
 check("exactly two manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
@@ -38,13 +38,13 @@ check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
   assert.equal(s.length,3);
   assert.equal(s.filter(x=>x.includes("scripts/v20261018r11/node-intelligence.js")).length,1);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261020r2/network-diagnostics.js")).length,2);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261021r1/network-diagnostics.js")).length,2);
   assert(fs.existsSync(path.join(root,"scripts/v20261018r11/node-intelligence.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261020r2/network-diagnostics.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261021r1/network-diagnostics.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
-  const rc2 = read("release/phase-07/assets/Network_Diagnostics.plugin");
-  assert(profile.includes("/a2409b2d470e36ad0fa92f1fe424c37ae9543927/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true"));
+  const rc2 = read("release/phase-08/assets/Network_Diagnostics.plugin");
+  assert(profile.includes("/a43e28aff0a4512964f5bbed7c7d8112bd856d0f/release/phase-08/assets/Network_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
   assert(!rc2.includes("/main/icons/"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));
