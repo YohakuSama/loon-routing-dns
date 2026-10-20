@@ -1,6 +1,6 @@
 # LoonKit v6.0.0 维护流程
 
-唯一正式入口：`LoonKit.lcf`。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式图标仍保留固定 Git Raw URL；网络辅助插件更新时使用新的固定版本路径，旧插件路径保留兼容。
+唯一正式入口：`LoonKit.lcf`。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
 
 ## 构建
 
@@ -23,17 +23,17 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-正式配置中的规则、图标及脚本固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；插件本体固定引用 `a2409b2d470e36ad0fa92f1fe424c37ae9543927`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标及脚本引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；正式插件引用 `0f199add32277b24fff7b96608115326b6592daf`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
-主配置中的现役插件引用 `a43e28aff0a4512964f5bbed7c7d8112bd856d0f` 的 `release/phase-08/assets/Network_Diagnostics.plugin`。插件内的网络与 DNS 诊断引用 `080a60897afd24c8c3c9387c25500615a6ec4145` 的 `scripts/v20261021r1/network-diagnostics.js`；节点出口脚本和图标仍固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `0f199add32277b24fff7b96608115326b6592daf` 的 `release/Network_Diagnostics.plugin`，插件内的诊断、节点出口脚本及图标均引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，其中两份现役脚本位于 `scripts/v20261021r1/`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 网络诊断脚本维护
 
-现役诊断脚本版本为 `scripts/v20261021r1/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本保留以免破坏旧固定 URL。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
+现役诊断脚本版本为 `scripts/v20261021r1/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本从主分支删除，但对应固定提交仍可通过历史访问，不重写已发布 Git 历史。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
 
 ## 新版 Git 历史
 
-主线从无父提交的完整规则与图标资产开始，第二提交固定插件引用，第三提交固定正式配置。所有正式 Raw URL 均使用新历史中的祖先提交。当前公开分支仅保留 `main`。
+主线从无父提交的完整规则与图标资产开始，第二提交固定插件引用，第三提交固定正式配置。所有正式 Raw URL 均使用新历史中的祖先提交。以 `main` 为正式发布分支；功能验证过程中可以临时创建并合并 PR 分支。
