@@ -177,8 +177,17 @@ def main() -> None:
     files, summary = generate()
     if a.check:
         for relative, content in files.items():
-            if not (ROOT/relative).is_file() or (ROOT/relative).read_text(encoding="utf-8") != content:
-                raise ValueError("stale/uncommitted conflict disposition artifact: " + relative)
+            if not (ROOT/relative).is_file():
+                raise ValueError("missing conflict disposition artifact: " + relative)
+            actual = (ROOT/relative).read_text(encoding="utf-8")
+            if actual != content:
+                desired_lines, actual_lines = content.splitlines(), actual.splitlines()
+                mismatch = next((i for i, pair in enumerate(zip(desired_lines, actual_lines), 1)
+                                 if pair[0] != pair[1]), min(len(desired_lines),len(actual_lines))+1)
+                detail = (f" first_mismatch_line={mismatch} expected={desired_lines[mismatch-1][:160]!r}"
+                          f" committed={actual_lines[mismatch-1][:160]!r}"
+                          if mismatch <= min(len(desired_lines), len(actual_lines)) else " row count differs")
+                raise ValueError("stale conflict disposition artifact: " + relative + detail)
     if a.generate:
         for relative, content in files.items():
             (ROOT / relative).write_text(content, encoding="utf-8")
