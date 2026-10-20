@@ -85,6 +85,8 @@ class CandidateWorkflow(unittest.TestCase):
             data["fixture-0"] = ("DOMAIN-SUFFIX,example.org\n"
                 "DOMAIN,api.example.org\nDOMAIN-KEYWORD,tracker\n")
             data["fixture-1"] = "DOMAIN-SUFFIX,private.example.org\n"
+            # Deliberately remove AI's baseline entry to exercise removal review.
+            data["fixture-26"] = "DOMAIN-SUFFIX,updated.ai.org\n"
             result, snapshots, review_data = review.build_report(
                 root, fetcher=lambda s: data[s["id"]].encode())
             self.assertEqual(result["status"], "REVIEW_ONLY_NEVER_PUBLISH")
