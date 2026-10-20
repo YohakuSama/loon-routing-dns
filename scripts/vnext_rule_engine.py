@@ -212,7 +212,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
         suffixes = {fields(r)[1] for r in records if r.startswith("DOMAIN-SUFFIX,")}
         for rule in list(records):
             kind, value = fields(rule)
-            if kind == "DOMAIN" and any(is_covered(value, suffix) for suffix in suffixes):
+            if kind == "DOMAIN" and any(".".join(value.split(".")[i:]) in suffixes for i in range(len(value.split(".")))):
                 for file, line in sorted(records[rule]):
                     trace.append({"action": "REMOVED", "group": group, "rule": rule, "origin": file,
                                   "line": line, "reason": "SAME_POLICY_SUFFIX_COVERAGE",
