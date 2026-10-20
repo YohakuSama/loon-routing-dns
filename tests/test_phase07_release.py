@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import phase07_release as pr
 import phase07_gate as gate
+import phase07_source_update_review as updates
 import vnext_rule_engine as ve
 
 
@@ -88,6 +89,18 @@ class ReleaseBuildTests(unittest.TestCase):
         self.assertIn("maintainer_approval", evidence["open_blockers"])
         with self.assertRaisesRegex(ValueError, "release BLOCKED"):
             gate.check(require_ready=True)
+
+    def test_proposed_source_update_produces_review_only_diff(self):
+        source="rules/snapshots/phase03/generated/Google.list"
+        original=(ROOT/source).read_bytes()
+        with tempfile.TemporaryDirectory() as td:
+            proposed=Path(td)/"Google.proposed.list"
+            proposed.write_bytes(original+b"\nDOMAIN-SUFFIX,example-phase07.invalid\n")
+            report=updates.review(source,proposed)
+            self.assertEqual(report["status"],"PENDING_REVIEW_NOT_PUBLISHED")
+            self.assertEqual(report["added_rule_count"],1)
+            self.assertFalse(report["release_write_performed"])
+            self.assertEqual((ROOT/source).read_bytes(),original)
 
     def test_release_gate_remains_explicitly_blocked(self):
         gate=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text())
