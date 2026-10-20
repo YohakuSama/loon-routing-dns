@@ -53,7 +53,8 @@ def validate_snapshot():
         # Phase 01 snapshot hashes remain anchored to the archived publication,
         # even after the root production configs migrate to RC2.
         historical = {"LoonKit.lcf": "refactor/vnext/templates/LoonKit.legacy-seed.lcf",
-                      "LoonKit.PrivacyDNS.lcf": "refactor/vnext/templates/LoonKit.PrivacyDNS.legacy-seed.lcf"}
+                      "LoonKit.PrivacyDNS.lcf": "refactor/vnext/templates/LoonKit.PrivacyDNS.legacy-seed.lcf",
+                      ".github/workflows/composite-rules.yml": "refactor/vnext/templates/phase01-composite-rules.yml"}
         data = (ROOT / historical.get(item["path"], item["path"])).read_bytes()
         assert hashlib.sha256(data).hexdigest() == item["sha256"], item["path"]
         assert len(data) == item["bytes"], item["path"]

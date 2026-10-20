@@ -16,7 +16,8 @@ def sha256(path):
     # This phase tests hashes of historical version-frozen publication inputs,
     # not those of RC2 production entry points.
     archived = {"LoonKit.lcf": "refactor/vnext/templates/LoonKit.legacy-seed.lcf",
-                "LoonKit.PrivacyDNS.lcf": "refactor/vnext/templates/LoonKit.PrivacyDNS.legacy-seed.lcf"}
+                "LoonKit.PrivacyDNS.lcf": "refactor/vnext/templates/LoonKit.PrivacyDNS.legacy-seed.lcf",
+                ".github/workflows/composite-rules.yml": "refactor/vnext/templates/phase01-composite-rules.yml"}
     return hashlib.sha256((ROOT / archived.get(path, path)).read_bytes()).hexdigest()
 
 def decisions_valid(entries):
