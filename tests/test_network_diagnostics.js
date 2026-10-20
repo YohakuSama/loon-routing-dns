@@ -99,7 +99,7 @@ check("auto DNS with a full HTTPS resolver address is unverified",()=>{
 check("native UDP is flagged as plaintext instead of DoH success",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
   assert.match(r.results[0].content,/检测发现异常/);
-  assert.match(r.results[0].content,/普通 DNS 查询/);
+  assert.match(r.results[0].content,/报告使用普通 DNS/);
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
