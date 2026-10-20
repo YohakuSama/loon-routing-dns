@@ -52,19 +52,19 @@ def verify(remote=False):
         total += count
     if total != release["remote_rule_count"] or total != 197765:
         raise ValueError("matcher total changed")
-    profiles = {}
-    for name in ("LoonKit.lcf", "LoonKit.PrivacyDNS.lcf"):
-        data = (ROOT/name).read_bytes()
-        if sha(data) != release["profile_sha256"][name]:
-            raise ValueError("protected profile bytes changed: " + name)
-        profiles[name] = data.decode()
-    one, other = profiles.values()
-    for title in ("Proxy Group", "Remote Rule", "Rule", "Plugin"):
-        if section(one,title) != section(other,title):
-            raise ValueError("profiles have different routing: " + title)
-    if section(one,"General") == section(other,"General"):
-        raise ValueError("DNS settings must retain two distinct profiles")
-    for profile in profiles.values():
+    if (ROOT/"LoonKit.PrivacyDNS.lcf").exists():
+        raise ValueError("retired alternate profile reintroduced")
+    data = (ROOT/"LoonKit.lcf").read_bytes()
+    if sha(data) != release["profile_sha256"]["LoonKit.lcf"] or set(release["profile_sha256"]) != {"LoonKit.lcf"}:
+        raise ValueError("protected standard profile changed or duplicate profile manifest exists")
+    profile = data.decode("utf-8")
+    if not profile.startswith("# LoonKit v6.0.0"):
+        raise ValueError("unexpected production profile version")
+    if (ROOT/"rules/generated").exists() or (ROOT/"rules/ProxyProtect.list").exists() or (ROOT/"rules/active_profile.json").exists():
+        raise ValueError("retired compatibility rules reintroduced")
+    if (ROOT/"plugins").exists():
+        raise ValueError("obsolete plugin aliases reintroduced")
+    for profile in (profile,):
         for key in DNS:
             if not re.search(r"(?m)^"+re.escape(key)+r"\s*=",section(profile,"General")):
                 raise ValueError("missing DNS/TUN property: " + key)
@@ -91,14 +91,14 @@ def verify(remote=False):
     if sha(plugin)!=release["plugin_sha256"]:
         raise ValueError("production pinned plugin hash changed")
     if remote:
-        for ref,path in sorted(set(LINK.findall(one))):
+        for ref,path in sorted(set(LINK.findall(profile))):
             if not path.startswith(("icons/","rules/releases/","release/phase-07/assets/")):
                 continue
             with request.urlopen(request.Request(RAW+ref+"/"+path,headers={"User-Agent":"LoonKit-Integrity/1"}),timeout=25) as response:
                 live=response.read()
             if sha(live)!=sha((ROOT/path).read_bytes()):
                 raise ValueError("Raw content changed: "+path)
-    return {"release":"v6.0.0","rules":26,"matchers":total,"locked_inputs":checked["verified_frozen_inputs"],"profiles":2,"remote_checked":remote}
+    return {"release":"v6.0.0","rules":26,"matchers":total,"locked_inputs":checked["verified_frozen_inputs"],"profiles":1,"remote_checked":remote}
 
 
 if __name__=="__main__":

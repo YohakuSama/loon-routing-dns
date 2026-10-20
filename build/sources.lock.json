@@ -528,21 +528,6 @@
     {
       "encoding": "utf-8",
       "evidence_level": "FROZEN_BYTES_VERIFIED_NOT_RAW_UPSTREAM",
-      "git_blob_sha1": "014b2d460a5ea89778a8e60be20c73822389689b",
-      "immutable_ref": "b982110a189b41b42e8562f7d10226071b0b2432",
-      "input_kind": "FROZEN_MERGED_SNAPSHOT",
-      "license": "UNKNOWN_MERGED_PROVENANCE",
-      "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
-      "original_url": null,
-      "path": "rules/ProxyProtect.list",
-      "policy": "maintained_local_or_legacy",
-      "rule_format": "loon",
-      "sha256": "d4f330006ddd2a39da0d98d4a4dd3501e534a1c3b35250f9d1a7a4bc56067c38",
-      "source_id": "frozen:rules/ProxyProtect.list"
-    },
-    {
-      "encoding": "utf-8",
-      "evidence_level": "FROZEN_BYTES_VERIFIED_NOT_RAW_UPSTREAM",
       "git_blob_sha1": "5764d74a87d7842c5fd4211272b8f61dcf2e2794",
       "immutable_ref": "b982110a189b41b42e8562f7d10226071b0b2432",
       "input_kind": "FROZEN_MERGED_SNAPSHOT",
