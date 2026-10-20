@@ -10,7 +10,10 @@ on:
       - 'tests/test_phase05_validation.py'
       - 'validation/phase-05/**'
       - 'refactor/vnext/sources.lock.json'
-      - 'refactor/vnext/reports/conflict_dispositions.jsonl'
+      - 'refactor/vnext/reports/conflict_dispositions.part*.jsonl'
+      - 'refactor/vnext/reports/conflict_summary.phase05.json'
+      - 'refactor/vnext/engine_manifest.json'
+      - 'refactor/vnext/LoonKit.vNext.Candidate.lcf'
       - '.github/workflows/phase-05-validation.yml'
   workflow_dispatch:
 
@@ -33,14 +36,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Inspect frozen input pinning and emit reviewed lock candidates
-        run: |
-          if test -f refactor/vnext/sources.lock.json; then
-            python3 scripts/vnext_source_lock.py --check
-          else
-            echo "::warning::source lock not committed; bootstrap values are NOT a passed gate"
-            python3 scripts/vnext_source_lock.py --print-init-json
-          fi
+      - name: Fail closed on missing or changed immutable source lock
+        run: python3 scripts/vnext_source_lock.py --check
       - name: Independent phase 05 tests
         run: python3 -m unittest discover -s tests -p test_phase05_validation.py -v
       - name: Verify complete 7350-row committed conflict disposition shards
