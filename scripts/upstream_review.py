@@ -342,6 +342,7 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
     guarded = json.loads((root/"rules/routing_guardrails.json").read_text(encoding="utf-8"))["protected_proxy_domains"]
     group_report = {}
     deltas = {}
+    full_risks = {}
     cross_owner = defaultdict(set)
     for group, rules in candidate.items():
         for rule in rules:
@@ -352,6 +353,7 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
         removed = sorted(before-after)
         risk = Counter()
         risk_examples = []
+        detailed_risks = {"additions": [], "removals": []}
         for rule in added:
             kind, _ = fields(rule)
             tags = []
@@ -374,9 +376,16 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             if ip_groups or ip_candidate_groups:
                 tags.append("CROSS_POLICY_IP_RANGE_OVERLAP")
                 other_groups.update(ip_groups + ip_candidate_groups)
-            if _semantic_expansion(rule, group, baseline, index, domains):
+            if other_groups.intersection(set(_semantic_expansion(rule, group, baseline, index, domains))):
                 tags.append("CROSS_POLICY_DOMAIN_COVERAGE")
             other_groups = sorted(other_groups)
+            # Every added matcher remains quarantined, even without special risk flags.
+            detailed_risks["additions"].append({
+                "rule": rule,
+                "reasons": sorted(set(tags)) if tags else ["NEW_RULE_REQUIRES_APPROVAL"],
+                "source_ids": sorted(provenance.get((group, rule), ())),
+                "other_groups": other_groups
+            })
             for t in tags:
                 risk[t] += 1
             if tags and len(risk_examples) < 30:
@@ -384,12 +393,21 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
         # Removals are never silently applied, including upstream deletions.
         if removed:
             risk["REMOVALS_REQUIRE_APPROVAL"] = len(removed)
+            detailed_risks["removals"] = [
+                {"rule": rule, "reasons": ["UPSTREAM_REMOVAL_REQUIRES_APPROVAL"]}
+                for rule in removed
+            ]
+        volume_shift = abs(len(after) - len(before)) / max(len(before), 1)
+        if volume_shift > 0.20:
+            risk["LARGE_SOURCE_VOLUME_DRIFT_REVIEW"] = 1
+        full_risks[group] = detailed_risks
         group_report[group] = {
             "status": "INCOMPLETE_SOURCE_DATA" if group in invalid_groups else "REVIEW_ONLY",
             "publication_gate": "BLOCKED_UNTIL_EXPLICIT_APPROVAL",
             "emitted_preview": "UNCHANGED_PINNED_BASELINE",
             "change_review_required": bool(added or removed),
             "published_count": len(before), "candidate_count": len(after),
+            "volume_change_percent": round(volume_shift * 100, 2),
             "added": len(added), "removed": len(removed),
             "same_policy_covered_domains": len(groups[group]) - len(after),
             "risk_categories": dict(sorted(risk.items())),
@@ -418,7 +436,8 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             "No automatic tightening, widening, rule publication or source lock updates.",
         ],
     }
-    return report, snapshots, {"deltas": deltas, "rules": baseline,
+    return report, snapshots, {"deltas": deltas, "full_risk_audit": full_risks,
+                               "rules": baseline,
                                "unapproved_proposals": candidate,
                                "source_ids_by_rule": provenance}
 
@@ -436,6 +455,8 @@ def write_review(output: Path, report: dict, snapshots: dict[str, bytes], data: 
         sort_keys=True, indent=2) + "\n", encoding="utf-8")
     (folder/"FULL_DIFF.json").write_text(json.dumps(data["deltas"], ensure_ascii=False,
         sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    (folder/"FULL_RISK_AUDIT.json").write_text(json.dumps(data["full_risk_audit"],
+        ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     for sid, blob in sorted(snapshots.items()):
         dest = folder/"snapshots"/(sid+".txt")
         dest.parent.mkdir(parents=True, exist_ok=True)
