@@ -1,59 +1,82 @@
-# Phase 04 engineering acceptance — 2026-10-20
+# Phase 04 vNext candidate: engineering acceptance (2026-10-20)
 
-- ENGINEERING_STATUS: SUCCESS (offline candidate implementation).
-- RELEASE_READINESS: READY_FOR_NEXT_STAGE (for stage 05 tests; NOT production-ready).
-- Runtime: NOT VERIFIED. No physical device DNS/TUN/ASN, IPv4/IPv6 or node-unlock results are claimed.
-- Branch refactor/loonkit-vnext only; main is untouched.
-- Starting commit: b982110a189b41b42e8562f7d10226071b0b2432
-- Generated candidate commit: 2088025a0b2002ecce60ed29b28a656b6b075575
-- Successful complete CI: https://github.com/YohakuSama/loonkit/actions/runs/39378725132
+## Final status
 
-## Inputs and outputs
+- ENGINEERING_STATUS: SUCCESS for static candidate engineering, generator, tests, and committed rule outputs.
+- RELEASE_READINESS: READY_FOR_NEXT_STAGE. PRODUCTION_READINESS: NOT_READY.
+- Neither real Loon DNS/TUN/ASN routing nor iPhone node / unlock behavior is claimed to have passed.
+- Only refactor/loonkit-vnext changed. No main merge, public subscription activation, DNS or TUN change.
+- Start commit: b982110a189b41b42e8562f7d10226071b0b2432
+- Final generated artifact commit: 252ae73d99704f6040d375bd68fc4f039116ac3b
+- Full green stage 04 CI: https://github.com/YohakuSama/loonkit/actions/runs/39382796854
 
-Build: python3 scripts/vnext_rule_engine.py
-Verify: python3 scripts/vnext_rule_engine.py --check
+## Rule counts and differences (verified generated report)
 
-Reads immutable published rules/generated/*.list snapshots, not live upstream feeds.
-87 historical upstream source records retained; 26 selected group snapshots active, seven suspended.
-This is not proof of 26 recovered original upstream providers. Provenance records snapshot file/line
-and only POSSIBLE upstream source IDs. Candidate lists and config live entirely under refactor/vnext/.
+| Metric | Before | Candidate |
+|---|---:|---:|
+| Total publishable rule predicates, including separate ProxyProtect | 206,505 | 197,765 |
+| ChinaDirect | 123,008 | 114,837 |
+| AdBlock | 77,213 | 76,895 |
+| Independent ProxyProtect rules | 17 | 0 |
+| Original upstream source IDs | 87 | 87 documented |
+| Group snapshots selected as immutable candidate inputs | 33 | 26 |
+| Additional dedicated FINAL-fallback groups | 0 | 7 |
 
-Original count: 206,488 group snapshot predicates + 17 ProxyProtect = 206,505.
-Candidate: 197,842. Net removal: 8,663 (4.2%).
+Net predicate reduction: 8,740 (4.23%). Added predicate/group pairs: 8; removed: 8,748;
+changed ownership mappings: 8,752. These are static predicate counts, not semantic equivalence.
 
-## Concrete behavior changes
+## Substantive follow-up repairs
 
-- ChinaDirect 123,008 => 114,889. Nine unsafe keywords quarantined; one narrowed (.tmall.com -> suffix).
-  46 ambiguous one-label suffixes excluded; .cn retained. 8,061 overbroad IP ranges isolated.
-- AdBlock 77,213 => 76,895. 322 shared service rules isolated. Four advertising root suffixes
-  assigned to AdBlock; AdBlock remains selectable REJECT/DIRECT.
-- Seven IP-ASN entries amended to include no-resolve.
-- Independent ProxyProtect removed. No 17-rule diagnostic proxy whitelist copied.
-- Spotify, Twitch, Abema, BBC, Line, Reddit, Linkedin subscriptions removed from candidate
-  but their user-facing policy groups remain. Missing routes rely on Final: DIRECT choice may
-  direct traffic that was previously matched to a service policy.
-- Candidate subscription order starts with AdBlock; prior fixed cross-group exact dedup logic removed.
-- Original [General] DNS, DoH, IPv4, IPv6, TUN and proxy group selections byte-equivalent.
+- Frozen input integrity: all 33 published group list files, all 10 custom local files, and
+  ProxyProtect are checked against 44 frozen Git blob SHA-1 attestations before generation.
+- 87 historical source entries each have an explicit evidence status. Of those, 63 reference
+  active merged snapshots but are not individually attributable, 14 belong to disabled candidate
+  groups, and 10 are verifiable maintained-local sources; 65 retained local source-to-rule line
+  mappings are independently proven and emitted as verified_local_provenance.tsv.
+- The engine does not imply that a frozen merged snapshot equals a recovered original feed.
+- The initial 64 nested IP network collisions were resolved statically: 56 suspect ChinaDirect
+  IP ranges nested within Apple/Google policy nets were isolated; two overly broad Whatsapp
+  shared-AWS net ranges overlapping Netflix were isolated. Resulting nested conflicts: 0.
+- 20 high-risk global substring brand matches are now narrower validated domain suffixes.
+  Of these, five restore precise ChinaDirect support for baidu.com, taobao.com, weibo.com,
+  alipay.com, and aliyun.com; one previous `.tmall.com` keyword also remains suffix-scoped.
+- Four other unproven ChinaDirect keywords stay excluded. Generic shared-hosting keywords
+  `appspot` and `blogspot` are isolated, not reintroduced as whole-provider Google suffixes.
+- Six generic multitenant hosting / CDN suffixes cannot force a vendor-specific policy.
+- Seven IP-ASN predicates have exactly one no-resolve flag.
+- AdBlock remains select,REJECT,DIRECT, with four explicit advertising roots assigned to
+  AdBlock, while 322 risk-bearing shared-service blockers remain isolated.
+- 17 retired ProxyProtect entries each have file, line, replacement, and FINAL=DIRECT risk.
+- Seven disabled specialized overseas rule subscriptions fall back to the user's FINAL
+  selector without deleting any corresponding user-visible policy group names.
 
-## Detailed reports
+## Independent test coverage and evidence
 
-- reports/provenance.tsv: retained rule and origin snapshot file and line.
-- reports/removed_or_modified.jsonl: old rule/group/line, reason, replacement and impact.
-- reports/ownership_changes.jsonl: 8,667 changed predicate/group mappings (includes 17 retired ProxyProtect entries).
-- reports/direct_changes.jsonl; adblock_changes.jsonl; ip_no_resolve_changes.jsonl.
-- reports/proxyprotect_impact.jsonl: each of 17 retired rules has file, line and fallback impact.
-- reports/domain_parent_child_conflicts.jsonl: 7,197 cross-policy ancestry cases.
-- reports/domain_keyword_risks.jsonl: 39 keywords needing scope review.
-- reports/ip_network_overlaps.jsonl: 64 nested IP network cross-group cases.
-- reports/added.jsonl; diff_summary.json.
-- risk_dispositions.phase04.json: fixed, mitigated, isolated and release-blocking risks.
+- Run: `python3 scripts/vnext_rule_engine.py`
+- Determinism check: `python3 scripts/vnext_rule_engine.py --check`
+- Test command: `python3 -m unittest discover -s tests -p 'test_phase04_vnext.py' -v`
+- Full Python, Node, stages 01-03 baseline tests and repository validation passed in stage 04 CI.
+- 34 representative domain-only business scenarios and AdBlock REJECT/DIRECT plus all FINAL
+  selector states have static fixtures in business_regression_cases.json.
+- Six explicit IP-literal scenarios are stage 05 validation fixtures, NOT device-tested results.
+- `reports/domain_parent_child_conflicts.jsonl`: 7,350 potential parent/child overrides.
+- `reports/domain_keyword_risks.jsonl`: 22 remaining substring matchers.
+- `reports/ip_network_overlaps.jsonl`: zero remaining cross-policy nested IP networks.
+- `reports/provenance.tsv`: immutable published snapshot path/line, upstream candidates clearly
+  marked non-proven; `reports/verified_local_provenance.tsv`: proven local input path/line.
+- `reports/sources.vnext.candidate.json`: full 87-entry candidate-origin and attribution ledger.
+- `reports/removed_or_modified.jsonl`, `ownership_changes.jsonl`, `direct_changes.jsonl`,
+  `adblock_changes.jsonl`, `ip_no_resolve_changes.jsonl`, `proxyprotect_impact.jsonl`,
+  `diff_summary.json`: exhaustive machine-readable static change ledgers.
 
-## Stage 05 blockers
+## Unresolved release gates
 
-No real DNS, Loon matching, shared CDN, purchase, login or region-unlock testing occurred.
-Static simulator supports ONLY domain matches and the defined local/remote ordering approximation;
-it does NOT cover resolved IPs, ASN lookup, system bypass, UA, plugins or Loon app runtime.
-Large IP exclusions may break domestic IPv4/IPv6 service routes; inspect before publishing.
-Historic source attribution is incomplete and must not be represented as upstream-proven.
-
-Release gate remains closed. Do not merge or point main subscriptions to the candidate.
+- 7,350 domain parent-child overlap observations are not automatically 7,350 real misroutes.
+  Domain rule classes, local vs remote precedence and same-stage collision behavior still
+  require verified Loon device semantics and service-specific acceptance.
+- Of the 87 historic upstream feeds, complete original upstream byte/line provenance cannot
+  be retroactively reconstructed from old merged lists. Verified evidence is kept separate.
+- Domestic/overseas Apple, Netflix unlock, payments, anti-fraud, AdBlock, true DNS leak
+  behavior, ASN and IPv4/IPv6 routing need device and live-service tests.
+- A user's FINAL=DIRECT selection can direct previously filtered unknown foreign services.
+- No automatic candidate publication, main merge or change to either Loon DNS/TUN section.
