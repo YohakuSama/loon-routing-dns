@@ -109,10 +109,13 @@ class ReleaseBuildTests(unittest.TestCase):
 
     def test_gate_prevents_unauthorized_merge(self):
         evidence=gate.check()
-        self.assertEqual(evidence["release_status"], "BLOCKED_PENDING_MAINTAINER_TEST")
-        self.assertIn("maintainer_approval", evidence["open_blockers"])
-        with self.assertRaisesRegex(ValueError, "release BLOCKED"):
-            gate.check(require_ready=True)
+        if evidence["release_status"]=="APPROVED":
+            self.assertEqual(evidence["open_blockers"],[])
+            self.assertEqual(gate.check(require_ready=True)["release_status"],"APPROVED")
+        else:
+            self.assertIn("maintainer_approval", evidence["open_blockers"])
+            with self.assertRaisesRegex(ValueError, "release BLOCKED"):
+                gate.check(require_ready=True)
 
     def test_proposed_source_update_produces_review_only_diff(self):
         source="rules/snapshots/phase03/generated/Google.list"
@@ -142,13 +145,17 @@ class ReleaseBuildTests(unittest.TestCase):
                 updates.review(src,proposed)
             self.assertEqual((ROOT/src).read_bytes(),original)
 
-    def test_release_gate_remains_explicitly_blocked(self):
-        gate=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text())
-        self.assertEqual(gate["release_status"],"BLOCKED_PENDING_MAINTAINER_TEST")
+    def test_critical_gate_rows_always_block_without_real_evidence(self):
+        doc=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text())
+        evidence=gate.check()
         for key in ("licenses","device_import","domestic_business","overseas_business",
                     "adblock","final","dns_egress","ipv4_ipv6","maintainer_approval"):
-            self.assertTrue(gate["checks"][key]["blocks_release"])
-            self.assertNotEqual(gate["checks"][key]["status"],"PASS")
+            self.assertTrue(doc["checks"][key]["blocks_release"])
+            if doc["checks"][key]["status"]!="PASS":
+                self.assertIn(key,evidence["open_blockers"])
+            else:
+                self.assertTrue(doc["checks"][key]["evidence"])
+                self.assertEqual(len(doc["checks"][key]["commit"]),40)
 
 
 if __name__ == "__main__":

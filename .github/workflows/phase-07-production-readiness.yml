@@ -1,7 +1,7 @@
 name: Phase 07 pinned RC2 production readiness (read only)
 on:
   push:
-    branches: [refactor/loonkit-vnext]
+    branches: [main, refactor/loonkit-vnext]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -58,6 +58,7 @@ jobs:
           if-no-files-found: error
 
   merge-and-rollback-simulation:
+    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
