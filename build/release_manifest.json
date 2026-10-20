@@ -6,9 +6,9 @@
   "maintainer_approval": "NOT_EXECUTED",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
   "plugin_path": "release/phase-07/assets/Network_Diagnostics.plugin",
-  "plugin_sha256": "422308b4a6f5ba0d028a1aa4c294fbea0ec376f4fc279670163e804dd604d3e9",
+  "plugin_sha256": "ae99bf2c46d59a4d76601d78dd2a6ba009abb391f1b0ca9e03b31dfe20b1b449",
   "profile_sha256": {
-    "LoonKit.lcf": "4c5b3a98e714c752584fbcc16463ec0343a905bcfcc69703f4aebf77d9f7d7ac"
+    "LoonKit.lcf": "87914a36ed0a8b730ab8b9ce8bf3061f34de25f855584110ad4d3aa29b25b437"
   },
   "remote_rule_count": 197765,
   "remote_subscription_count": 26,
