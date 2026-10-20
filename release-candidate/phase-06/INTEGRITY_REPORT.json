@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "source_commit": "c565764b6d0d0ace1b367bc906102d73e2528b5f",
+  "verified_by_ci": "39393170808",
+  "ci_result": "SUCCESS",
+  "static_sha256_checks": "PASS_IN_CI",
+  "github_tree_resource_paths": "26_PRESENT_AT_SOURCE_COMMIT",
+  "raw_url_http_check": "NOT_EXECUTED",
+  "real_loon_import": "NOT_EXECUTED",
+  "production_readiness": "NOT_READY",
+  "limitations": [
+    "Git tree path and CI preflight are not equivalent to client HTTP access",
+    "No device verification"
+  ]
+}
