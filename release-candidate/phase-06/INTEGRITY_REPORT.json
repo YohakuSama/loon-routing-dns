@@ -9,7 +9,9 @@
   "real_loon_import": "NOT_EXECUTED",
   "production_readiness": "NOT_READY",
   "limitations": [
-    "Git tree path and CI preflight are not equivalent to client HTTP access",
-    "No device verification"
-  ]
+    "26 raw GitHub URLs verified from CI environment, not from the Loon device network",
+    "No structured Loon import logs or DNS/egress/runtime routing evidence",
+    "Icon and plugin URLs still point to main rather than immutable source commit"
+  ],
+  "device_observation": "NO_OBVIOUS_ISSUES_REPORTED_UNSTRUCTURED"
 }
