@@ -28,21 +28,13 @@ jobs:
         run: |
           python3 scripts/phase07_release.py --build
           python3 scripts/phase07_release.py --check
-      - name: Export reviewable nonsecret candidate assets to log and artifact
+      - name: RC2 and historical regression plus gate schema
         run: |
-          python3 - <<'PY'
-          import base64
-          from pathlib import Path
-          for name in (
-             "LoonKit.lcf", "LoonKit.PrivacyDNS.lcf",
-             "release/phase-07/LoonKit.vNext-RC2.lcf",
-             "release/phase-07/LoonKit.PrivacyDNS.vNext-RC2.lcf",
-             "release/phase-07/RC_MANIFEST.json",
-          ):
-              print("PHASE07_ARTIFACT|" + name + "|" + base64.b64encode(Path(name).read_bytes()).decode())
-          PY
-      - name: Run isolated build and dual-profile regression tests
-        run: python3 -m unittest discover -s tests -p 'test_phase07_release.py' -v
+          python3 scripts/phase07_gate.py --lint
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+          python3 scripts/validate_repo.py
+          python3 scripts/build-appstore-icons.py --check-config
+          git diff --exit-code -- LoonKit.lcf LoonKit.PrivacyDNS.lcf release/phase-07/RC_MANIFEST.json
       - uses: actions/upload-artifact@v4
         with:
           name: phase07-rc2-dual-profile-unreleased
@@ -52,3 +44,51 @@ jobs:
             release/phase-07/RC_MANIFEST.json
           retention-days: 30
           if-no-files-found: error
+
+  merge-and-rollback-simulation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Merge into disposable main worktree, verify, and undo without changing main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git worktree add --detach /tmp/loonkit-main-rehearsal origin/main
+          (
+            cd /tmp/loonkit-main-rehearsal
+            base="$(git rev-parse HEAD)"
+            git -c user.name=ReleaseCI -c user.email=release-ci@example.invalid merge --no-ff --no-commit "$GITHUB_SHA"
+            python3 scripts/vnext_source_lock.py --check
+            python3 scripts/vnext_rule_engine.py --check
+            python3 scripts/phase07_release.py --check
+            python3 scripts/phase07_gate.py --lint
+            python3 -m unittest discover -s tests -p 'test_phase07_release.py' -v
+            for config in LoonKit.lcf LoonKit.PrivacyDNS.lcf; do
+              expected="$(git show "$GITHUB_SHA:$config" | sha256sum | cut -f1 -d' ')"
+              actual="$(sha256sum "$config" | cut -f1 -d' ')"
+              test "$expected" = "$actual"
+            done
+            git merge --abort
+            test "$(git rev-parse HEAD)" = "$base"
+            git diff --quiet
+            test -z "$(git status --porcelain)"
+          )
+          git worktree remove /tmp/loonkit-main-rehearsal
+  maintainer-release-gate:
+    if: github.event_name == 'pull_request'
+    needs: [build-and-validate, merge-and-rollback-simulation]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Hard-block unauthorized production PR
+        run: python3 scripts/phase07_gate.py --require-ready

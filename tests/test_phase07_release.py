@@ -8,6 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import phase07_release as pr
+import phase07_gate as gate
 import vnext_rule_engine as ve
 
 
@@ -80,6 +81,13 @@ class ReleaseBuildTests(unittest.TestCase):
             output.unlink()
             self.assertEqual(expected,ve.compile_rules(scratch))
             (scratch/"rules/generated").rmdir()
+
+    def test_gate_prevents_unauthorized_merge(self):
+        evidence=gate.check()
+        self.assertEqual(evidence["release_status"], "BLOCKED_PENDING_MAINTAINER_TEST")
+        self.assertIn("maintainer_approval", evidence["open_blockers"])
+        with self.assertRaisesRegex(ValueError, "release BLOCKED"):
+            gate.check(require_ready=True)
 
     def test_release_gate_remains_explicitly_blocked(self):
         gate=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text())
