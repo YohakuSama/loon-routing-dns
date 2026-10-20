@@ -44,9 +44,9 @@ jobs:
           deletions=sum(g["removed"] for g in report["groups"].values())
           with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as fd:
               fd.write("## Upstream rule review (not publishable)\n")
-              fd.write(f"Sources requiring review: {report['incomplete_sources']}\\n")
-              fd.write(f"Proposed additions: {additions}; proposed deletions: {deletions}\\n")
-              fd.write("All 26 candidate previews match the immutable published baseline.\\n")
+              fd.write(f"Sources requiring review: {report['incomplete_sources']}\n")
+              fd.write(f"Proposed additions: {additions}; proposed deletions: {deletions}\n")
+              fd.write("All 26 candidate previews match the immutable published baseline.\n")
           PY
       - uses: actions/upload-artifact@v4
         with:
