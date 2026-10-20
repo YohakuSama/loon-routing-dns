@@ -84,6 +84,22 @@ class ReleaseBuildTests(unittest.TestCase):
             self.assertEqual(expected,ve.compile_rules(scratch))
             (scratch/"rules/generated").rmdir()
 
+    def test_all_live_actions_have_read_only_permissions_and_no_auto_write(self):
+        workflows=sorted((ROOT/".github/workflows").glob("*.yml"))
+        self.assertGreaterEqual(len(workflows),9)
+        for workflow in workflows:
+            body=workflow.read_text(encoding="utf-8")
+            for disallowed in ("contents: write", "pull-requests: write", "git push ",
+                               "git commit ", "peter-evans/create-pull-request",
+                               "persist-credentials: true"):
+                self.assertNotIn(disallowed,body,(workflow.name,disallowed))
+        archived=(ROOT/"refactor/vnext/templates/phase01-composite-rules.yml").read_bytes()
+        baseline=json.loads((ROOT/"baselines/current/manifest.json").read_text())
+        expected=next(row["sha256"] for row in baseline["files"]
+                      if row["path"]==".github/workflows/composite-rules.yml")
+        import hashlib
+        self.assertEqual(hashlib.sha256(archived).hexdigest(),expected)
+
     def test_gate_prevents_unauthorized_merge(self):
         evidence=gate.check()
         self.assertEqual(evidence["release_status"], "BLOCKED_PENDING_MAINTAINER_TEST")
