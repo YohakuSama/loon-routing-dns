@@ -1,4 +1,4 @@
-# LoonKit v5.10.0
+# LoonKit vNext-RC2 - NOT RELEASED
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loonkit
 # X: https://x.com/yohakusama
@@ -39,87 +39,79 @@ ALL_Filter = NameRegex, FilterKey = ".*"
 [Proxy Group]
 # Core
 # All strategy icons are self-hosted under icons/, reviewed for light and dark UI.
-Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Proxy.png
-Auto = url-test,ALL_Filter,url = http://bing.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Auto.png
-Fallback = fallback,ALL_Filter,url = http://bing.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Fallback.png
-AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/AdBlock.png
-Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Final.png
+Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Proxy.png
+Auto = url-test,ALL_Filter,url = http://bing.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Auto.png
+Fallback = fallback,ALL_Filter,url = http://bing.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Fallback.png
+AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/AdBlock.png
+Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Final.png
 
 # AI and Platforms
-AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/AI.png
-Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Google.png
-Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Microsoft.png
-Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Apple.png
+AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/AI.png
+Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Google.png
+Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Microsoft.png
+Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Apple.png
 
 # Streaming
-YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/YouTube.png
-Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Netflix.png
-Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Disney.png
-PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/PrimeVideo.png
-Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Spotify.png
-TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/TikTok.png
-Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Twitch.png
-HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r3/HBO.png
-Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Abema.png
-動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/AnimeCrazy.png
-Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Dazn.png
-BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/BBC.png
-Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Bilibili.png
+YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/YouTube.png
+Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Netflix.png
+Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Disney.png
+PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/PrimeVideo.png
+Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Spotify.png
+TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/TikTok.png
+Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Twitch.png
+HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r3/HBO.png
+Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Abema.png
+動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/AnimeCrazy.png
+Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Dazn.png
+BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/BBC.png
+Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Bilibili.png
 
 # Social — brand App Store artwork
-Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Telegram.png
-Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Whatsapp.png
-Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Instagram.png
-Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Facebook.png
-Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Twitter.png
-Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Discord.png
-Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Line.png
-Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Reddit.png
-Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Linkedin.png
+Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Telegram.png
+Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Whatsapp.png
+Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Instagram.png
+Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Facebook.png
+Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Twitter.png
+Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Discord.png
+Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Line.png
+Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Reddit.png
+Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Linkedin.png
 
 # Games and Payments
-Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Steam.png
-Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Paypal.png
+Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Steam.png
+Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Paypal.png
 
 [Remote Rule]
-# Self-hosted, reviewed rule snapshots. Match order: rules/active_profile.json.
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/ProxyProtect.list, policy=Proxy, tag=Our-ProxyProtect, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AI.list, policy=AI, tag=Our-AI, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/SteamCN.list, policy=DIRECT, tag=Our-SteamCN, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/YouTube.list, policy=YouTube, tag=Our-YouTube, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Netflix.list, policy=Netflix, tag=Our-Netflix, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Disney.list, policy=Disney, tag=Our-Disney, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/PrimeVideo.list, policy=PrimeVideo, tag=Our-PrimeVideo, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Spotify.list, policy=Spotify, tag=Our-Spotify, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/TikTok.list, policy=TikTok, tag=Our-TikTok, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Twitch.list, policy=Twitch, tag=Our-Twitch, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/HBO.list, policy=HBO, tag=Our-HBO, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Abema.list, policy=Abema, tag=Our-Abema, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/BBC.list, policy=BBC, tag=Our-BBC, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Bilibili.list, policy=Bilibili, tag=Our-Bilibili, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AnimeCrazy.list, policy=動畫瘋, tag=Our-AnimeCrazy, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Dazn.list, policy=Dazn, tag=Our-Dazn, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Telegram.list, policy=Telegram, tag=Our-Telegram, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Whatsapp.list, policy=Whatsapp, tag=Our-Whatsapp, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Instagram.list, policy=Instagram, tag=Our-Instagram, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Facebook.list, policy=Facebook, tag=Our-Facebook, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Twitter.list, policy=Twitter, tag=Our-Twitter, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Discord.list, policy=Discord, tag=Our-Discord, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Line.list, policy=Line, tag=Our-Line, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Reddit.list, policy=Reddit, tag=Our-Reddit, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Linkedin.list, policy=Linkedin, tag=Our-Linkedin, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Google.list, policy=Google, tag=Our-Google, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Microsoft.list, policy=Microsoft, tag=Our-Microsoft, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Apple.list, policy=Apple, tag=Our-Apple, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Steam.list, policy=Steam, tag=Our-Steam, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/Paypal.list, policy=Paypal, tag=Our-Paypal, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/rules/generated/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
+# vNext-RC2 pinned content; not an auto-updating branch.
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AI.list, policy=AI, tag=Our-AI, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/SteamCN.list, policy=DIRECT, tag=Our-SteamCN, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/YouTube.list, policy=YouTube, tag=Our-YouTube, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Netflix.list, policy=Netflix, tag=Our-Netflix, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Disney.list, policy=Disney, tag=Our-Disney, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/PrimeVideo.list, policy=PrimeVideo, tag=Our-PrimeVideo, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/TikTok.list, policy=TikTok, tag=Our-TikTok, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Bilibili.list, policy=Bilibili, tag=Our-Bilibili, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AnimeCrazy.list, policy=動畫瘋, tag=Our-AnimeCrazy, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Dazn.list, policy=Dazn, tag=Our-Dazn, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Telegram.list, policy=Telegram, tag=Our-Telegram, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Whatsapp.list, policy=Whatsapp, tag=Our-Whatsapp, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Instagram.list, policy=Instagram, tag=Our-Instagram, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Facebook.list, policy=Facebook, tag=Our-Facebook, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Twitter.list, policy=Twitter, tag=Our-Twitter, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Discord.list, policy=Discord, tag=Our-Discord, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/HBO.list, policy=HBO, tag=Our-HBO, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Google.list, policy=Google, tag=Our-Google, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Microsoft.list, policy=Microsoft, tag=Our-Microsoft, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Apple.list, policy=Apple, tag=Our-Apple, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Steam.list, policy=Steam, tag=Our-Steam, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Paypal.list, policy=Paypal, tag=Our-Paypal, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
 
 [Rule]
-# Historical verified local service rules. Diagnostic protections moved to rules/ProxyProtect.list.
+# Reviewed local service exceptions. No independent diagnostic proxy subscription.
 DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
 DOMAIN-SUFFIX,openai.com,AI
 DOMAIN-SUFFIX,chatgpt.com,AI
@@ -184,8 +176,50 @@ DOMAIN-SUFFIX,abchina.com,DIRECT
 DOMAIN-SUFFIX,abchina.com.cn,DIRECT
 DOMAIN-SUFFIX,t3go.cn,DIRECT
 DOMAIN-SUFFIX,wo.cn,DIRECT
+# Minimal overseas service selector compatibility; candidate only.
+# Scoped AdBlock overrides precede local overseas service roots.
+DOMAIN,buttons.reddit.com,AdBlock
+DOMAIN,platform.linkedin.com,AdBlock
+DOMAIN-SUFFIX,a1.api.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,a1.api.bbc.com,AdBlock
+DOMAIN-SUFFIX,adeventtracker.spotify.com,AdBlock
+DOMAIN-SUFFIX,ads.linkedin.com,AdBlock
+DOMAIN-SUFFIX,alb.reddit.com,AdBlock
+DOMAIN-SUFFIX,analytics.m7g.twitch.tv,AdBlock
+DOMAIN-SUFFIX,analytics.pointdrive.linkedin.com,AdBlock
+DOMAIN-SUFFIX,analytics.spotify.com,AdBlock
+DOMAIN-SUFFIX,client-event-reporter.twitch.tv,AdBlock
+DOMAIN-SUFFIX,events.reddit.com,AdBlock
+DOMAIN-SUFFIX,fan.twitch.tv,AdBlock
+DOMAIN-SUFFIX,log.spotify.com,AdBlock
+DOMAIN-SUFFIX,pixel-static.spotify.com,AdBlock
+DOMAIN-SUFFIX,pixel.reddit.com,AdBlock
+DOMAIN-SUFFIX,pixel.spotify.com,AdBlock
+DOMAIN-SUFFIX,sa.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,spade.twitch.tv,AdBlock
+DOMAIN-SUFFIX,ssc.api.bbc.com,AdBlock
+DOMAIN-SUFFIX,stats.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,torimochi.line-apps.com,AdBlock
+DOMAIN-SUFFIX,trowel.twitch.tv,AdBlock
+DOMAIN-SUFFIX,visualscience.external.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,w3-reporting.reddit.com,AdBlock
+DOMAIN-SUFFIX,weblb-wg.gslb.spotify.com,AdBlock
+DOMAIN-SUFFIX,spotify.com,Spotify
+DOMAIN-SUFFIX,scdn.co,Spotify
+DOMAIN-SUFFIX,twitch.tv,Twitch
+DOMAIN-SUFFIX,ttvnw.net,Twitch
+DOMAIN-SUFFIX,abema.tv,Abema
+DOMAIN-SUFFIX,abema.io,Abema
+DOMAIN-SUFFIX,bbc.co.uk,BBC
+DOMAIN-SUFFIX,bbc.com,BBC
+DOMAIN-SUFFIX,line.me,Line
+DOMAIN-SUFFIX,line-apps.com,Line
+DOMAIN-SUFFIX,reddit.com,Reddit
+DOMAIN-SUFFIX,redd.it,Reddit
+DOMAIN-SUFFIX,linkedin.com,Linkedin
+DOMAIN-SUFFIX,licdn.com,Linkedin
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loonkit/main/plugins/v20261018r11/Network_Diagnostics.plugin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true

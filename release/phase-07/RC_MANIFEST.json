@@ -1,0 +1,206 @@
+{
+  "device_test": "NOT_EXECUTED",
+  "label": "vNext-RC2",
+  "licenses": "BLOCKED_REVIEW",
+  "locked_inputs_path": "refactor/vnext/sources.lock.json",
+  "maintainer_approval": "NOT_EXECUTED",
+  "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
+  "plugin_path": "release/phase-07/assets/Network_Diagnostics.plugin",
+  "plugin_sha256": "431a8d92dcb63864aecd3055f77e38cc0582d24925e2c2f4d833e0256e393d20",
+  "profile_sha256": {
+    "LoonKit.PrivacyDNS.lcf": "a1532bdb8838f272efc94d932dcba190fed931628ac8cf399f77645a99cc7340",
+    "LoonKit.lcf": "edf11f900458fa6e28d257c43ea1465e1252e4237dfca03132049e1cf75a830e",
+    "release/phase-07/LoonKit.PrivacyDNS.vNext-RC2.lcf": "a1532bdb8838f272efc94d932dcba190fed931628ac8cf399f77645a99cc7340",
+    "release/phase-07/LoonKit.vNext-RC2.lcf": "edf11f900458fa6e28d257c43ea1465e1252e4237dfca03132049e1cf75a830e"
+  },
+  "remote_rule_count": 197765,
+  "remote_subscription_count": 26,
+  "rules": {
+    "AI": {
+      "path": "rules/releases/vNext-RC2/AI.list",
+      "rule_count": 111,
+      "sha256": "dd0175d4f1942f2100a662e99276a231ec33e87a45286bcc3a837c41ce38141a",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AI.list"
+    },
+    "AdBlock": {
+      "path": "rules/releases/vNext-RC2/AdBlock.list",
+      "rule_count": 76895,
+      "sha256": "c3989f42cc76bf6b5e29dbaf5b53cd1a610dd873e47f69c2d7d9c7fb5109ad16",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AdBlock.list"
+    },
+    "AnimeCrazy": {
+      "path": "rules/releases/vNext-RC2/AnimeCrazy.list",
+      "rule_count": 7,
+      "sha256": "fae58081052728ae9b1ab19bf77de04788c9c2eac2a0a837a1c1b2a91a46e53b",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AnimeCrazy.list"
+    },
+    "Apple": {
+      "path": "rules/releases/vNext-RC2/Apple.list",
+      "rule_count": 1600,
+      "sha256": "cf655539ee6a5a48c4a999000505ecf12336fbcad1f0688255d1fe665d85a8b4",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Apple.list"
+    },
+    "AppleOTA": {
+      "path": "rules/releases/vNext-RC2/AppleOTA.list",
+      "rule_count": 82,
+      "sha256": "cf8957d42168ae3331a99ff3d608f27dfef0563d0d983aed0feb894a175fa48c",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AppleOTA.list"
+    },
+    "Bilibili": {
+      "path": "rules/releases/vNext-RC2/Bilibili.list",
+      "rule_count": 132,
+      "sha256": "8ab1dbad3da66b2a51bc3629c5fc5b13af7ce3dafb0e62fc84c7879bf3440bd8",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Bilibili.list"
+    },
+    "ChinaDirect": {
+      "path": "rules/releases/vNext-RC2/ChinaDirect.list",
+      "rule_count": 114837,
+      "sha256": "d92c4c4b30b3d27aad2941358a26991824e1a56be268bdb1bbd1f65f2e103f90",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/ChinaDirect.list"
+    },
+    "Dazn": {
+      "path": "rules/releases/vNext-RC2/Dazn.list",
+      "rule_count": 20,
+      "sha256": "1552a7057a54196061d26c3f57897c22d4645fb452a4ef4ab1c0bad55c35f4b2",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Dazn.list"
+    },
+    "Discord": {
+      "path": "rules/releases/vNext-RC2/Discord.list",
+      "rule_count": 29,
+      "sha256": "1f33162c2b998f417fbba947e6f64878cbc0a8e1f179e0e84779d471a4a40e37",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Discord.list"
+    },
+    "Disney": {
+      "path": "rules/releases/vNext-RC2/Disney.list",
+      "rule_count": 186,
+      "sha256": "3fc62bd1f2d845809c1a26e7cfc6229608775e40c6934a1e496a719eecb73864",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Disney.list"
+    },
+    "DomesticCore": {
+      "path": "rules/releases/vNext-RC2/DomesticCore.list",
+      "rule_count": 7,
+      "sha256": "2b706f4dc440bb88105bd275ec1e9339d7a39b865839a96b080feba61e8e2ae0",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/DomesticCore.list"
+    },
+    "Facebook": {
+      "path": "rules/releases/vNext-RC2/Facebook.list",
+      "rule_count": 489,
+      "sha256": "f7dcd98f6bd87772e61bb736b761a5f26d5a2ea431ef5915f4521fb2f551e24d",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Facebook.list"
+    },
+    "Google": {
+      "path": "rules/releases/vNext-RC2/Google.list",
+      "rule_count": 684,
+      "sha256": "d3ac51a3db77df0b6f4cbd64100b7279d813745b347770f4c2f95dbfb0b6ba81",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Google.list"
+    },
+    "HBO": {
+      "path": "rules/releases/vNext-RC2/HBO.list",
+      "rule_count": 90,
+      "sha256": "47897db3c9bfe3fa3c2d29fbcd61213b65ece73dc27f93c351024e644cfa45a3",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/HBO.list"
+    },
+    "Instagram": {
+      "path": "rules/releases/vNext-RC2/Instagram.list",
+      "rule_count": 73,
+      "sha256": "b2b4013ba68a35b4a046db5456b684b071a5ad11367236ba62716a0ab9556342",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Instagram.list"
+    },
+    "Microsoft": {
+      "path": "rules/releases/vNext-RC2/Microsoft.list",
+      "rule_count": 665,
+      "sha256": "9c482847066292062866484dde877c4a2b7e131b30c3d46d3d2a6017720a67eb",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Microsoft.list"
+    },
+    "Netflix": {
+      "path": "rules/releases/vNext-RC2/Netflix.list",
+      "rule_count": 1156,
+      "sha256": "1304f2f31d5089bc0e40dd82d3de59952614d0c7829d8158a5f425706757e477",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Netflix.list"
+    },
+    "Paypal": {
+      "path": "rules/releases/vNext-RC2/Paypal.list",
+      "rule_count": 247,
+      "sha256": "16a2cd853182bb7e7cd8a5c58a901390f533c51a3c639b7a7311f12f8087fa66",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Paypal.list"
+    },
+    "PrimeVideo": {
+      "path": "rules/releases/vNext-RC2/PrimeVideo.list",
+      "rule_count": 33,
+      "sha256": "9c48cd7370192b5bbbc23b90ebe429354f6c2f3fd9e15b18a5ff0b1ab9b99714",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/PrimeVideo.list"
+    },
+    "Steam": {
+      "path": "rules/releases/vNext-RC2/Steam.list",
+      "rule_count": 61,
+      "sha256": "ed4a80acfadef611511f8d35cadd4be1dec38f03034b9041147ea5b82d1fcfdc",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Steam.list"
+    },
+    "SteamCN": {
+      "path": "rules/releases/vNext-RC2/SteamCN.list",
+      "rule_count": 17,
+      "sha256": "16cf34e201427578a97cb144bf947a219228f2f8a94ad3170c89c7be0ad07e92",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/SteamCN.list"
+    },
+    "Telegram": {
+      "path": "rules/releases/vNext-RC2/Telegram.list",
+      "rule_count": 43,
+      "sha256": "f5b88823378aeba3623406a0e46c4c68c2b0bd544f574b8c4c6e89143bbd7e97",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Telegram.list"
+    },
+    "TikTok": {
+      "path": "rules/releases/vNext-RC2/TikTok.list",
+      "rule_count": 57,
+      "sha256": "5342461ef4f7040b8a1bf323ab522012c80f329f633e796ff869a75732e3970f",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/TikTok.list"
+    },
+    "Twitter": {
+      "path": "rules/releases/vNext-RC2/Twitter.list",
+      "rule_count": 31,
+      "sha256": "519a95ff66fa131ebf7cef66eca5a65009d5aa741e97176a576e42ea71cb18a2",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Twitter.list"
+    },
+    "Whatsapp": {
+      "path": "rules/releases/vNext-RC2/Whatsapp.list",
+      "rule_count": 23,
+      "sha256": "c3b700b3c075caecedbe63bf31da5797d6d6b63683fb7c98698e79cca29b06dc",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Whatsapp.list"
+    },
+    "YouTube": {
+      "path": "rules/releases/vNext-RC2/YouTube.list",
+      "rule_count": 190,
+      "sha256": "4443fd6a2ff8fe8f7974b7871d95552a640bb8ce3ae54b74b22b25e3fa89e2b7",
+      "source_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+      "url": "https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/YouTube.list"
+    }
+  },
+  "schema_version": 1,
+  "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
+  "stage": "UNRELEASED_AWAITING_MAINTAINER_TEST_AND_APPROVAL",
+  "upstream_historical_lineage": "UNRECOVERABLE"
+}
