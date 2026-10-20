@@ -91,7 +91,8 @@ def covers_domain(rule: str, host: str) -> bool:
 
 def filter_rule(group: str, rule: str, protected: tuple[str, ...],
                 keywords: dict | None = None,
-                shared_roots: tuple[str, ...] = ()) -> tuple[str | None, str | None, str]:
+                shared_roots: tuple[str, ...] = (),
+                shared_keywords: dict | None = None) -> tuple[str | None, str | None, str]:
     kind, value = fields(rule)
     if group in {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}:
         if any(covers_domain(rule, x) for x in protected):
@@ -109,6 +110,9 @@ def filter_rule(group: str, rule: str, protected: tuple[str, ...],
                 minimum = 24 if net.version == 4 else 48
                 if net.prefixlen < minimum:
                     return None, "DIRECT_WIDE_IP_UNPROVEN", "GEOIP CN for IP destinations or FINAL"
+    if (kind == "DOMAIN-KEYWORD" and shared_keywords
+            and value in shared_keywords.get(group, ())):
+        return None, "MULTITENANT_SHARED_KEYWORD_ISOLATED", "precise owner or FINAL"
     if kind == "DOMAIN-KEYWORD" and keywords and value in keywords.get(group, {}):
         scoped = keywords[group][value]
         if not scoped.startswith("DOMAIN-SUFFIX,") or normalize(scoped) != scoped:
@@ -282,7 +286,8 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
             else:
                 outcome, reason, replacement = filter_rule(
                     group, rule, protected, cfg.get("reviewed_keyword_narrowing", {}),
-                    tuple(cfg.get("reviewed_multi_tenant_suffixes", [])))
+                    tuple(cfg.get("reviewed_multi_tenant_suffixes", [])),
+                    cfg.get("reviewed_multi_tenant_keywords", {}))
             if outcome:
                 groups[group][outcome].add((origin, n))
                 if outcome != rule:
