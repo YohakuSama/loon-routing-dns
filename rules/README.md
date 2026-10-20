@@ -6,4 +6,4 @@
 
 `python3 scripts/verify_release.py --check` 验证冻结输入和 26 份已发布规则逐字节一致。来源更新先使用 `scripts/review_source.py` 检查差异，再通过 `scripts/prepare_release.py` 在仓库外准备候选，不自动发布。
 
-旧版 `rules/generated/`、`rules/ProxyProtect.list` 和 v5 活动清单已应维护者要求删除；使用这些旧 Raw 地址的订阅将不再更新。许可正文仍保留在 `rules/LICENSE.*`，来源记录仍在 `rules/sources.json`，详情见[第三方声明](../docs/THIRD_PARTY_NOTICES.md)。
+旧版 `rules/generated/`、`rules/ProxyProtect.list` 和 v5 活动清单已应维护者要求删除；使用这些旧 Raw 地址的订阅将不再更新。第三方规则沿用实际适用的上游许可：blackmatrix7（GPL-2.0-only）、v2fly（MIT）、felixonmars（WTFPL-2.0）；完整许可文本保留在 `rules/LICENSE.*`，历史来源记录位于 `rules/sources.json`。无需逐条联系已通过相应许可证授权的规则作者；最终合并规则的逐行来源没有全部记录，不应宣称 LoonKit 拥有第三方内容版权。详见[第三方许可与来源声明](../docs/THIRD_PARTY_NOTICES.md)。
