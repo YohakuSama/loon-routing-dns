@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
 const ROOT = path.resolve(__dirname,"..");
-const source = fs.readFileSync(path.join(ROOT,"scripts/v20261018r11/network-diagnostics.js"),"utf8");
+const source = fs.readFileSync(path.join(ROOT,"scripts/v20261020r1/network-diagnostics.js"),"utf8");
 let passed=0;
 function check(name,fn) {
   try {fn();passed++;console.log("PASS",name);}
@@ -24,7 +24,8 @@ function run(options={}) {
       get(req,cb){
         requests.push(req);
         const fail=req.node==="DIRECT"?options.directFail:options.proxyFail;
-        cb(fail?"timeout":null,fail?null:{status:204},"");
+        const status=req.node==="DIRECT"?(options.directStatus||204):(options.proxyStatus||204);
+        cb(fail?"timeout":null,fail?null:{status},"");
       },
       post(){throw Error("An unsolicited third-party DNS probe must never run");}
     }
@@ -57,15 +58,40 @@ check("healthy manual test reports actual configured DoH without clearTimeout",(
   assert(r.requests.some(x=>x.native));
   assert(!r.requests.some(x=>x.url&&x.url.includes("/dns-query")));
 });
+check("proxy 301 is an inconclusive redirect, not a false outage",()=>{
+  const r=run({proxyStatus:301});
+  assert.match(r.results[0].content,/部分项目不可用/);
+  assert.match(r.results[0].content,/HTTP 301/);
+  assert.doesNotMatch(r.results[0].content,/结果：存在异常项目/);
+  const p=r.requests.find(x=>x.node==="Proxy");
+  assert.equal(p.url,"https://www.gstatic.com/generate_204");
+  assert.equal(p["auto-redirect"],false);
+});
+check("target 503 proves server responded but does not prove proxy failure",()=>{
+  const r=run({proxyStatus:503});
+  assert.match(r.results[0].content,/部分项目不可用/);
+  assert.match(r.results[0].content,/HTTP 503/);
+});
+check("Loon auto / https prefix is inconclusive, not a DNS leak",()=>{
+  const r=run({protocol:"auto",server:"https://"});
+  assert.match(r.results[0].content,/部分项目不可用/);
+  assert.match(r.results[0].content,/返回 auto/);
+  assert.doesNotMatch(r.results[0].content,/结果：存在异常项目|明文 DNS 查询/);
+});
+check("cached UDP metadata does not claim a new plaintext lookup",()=>{
+  const r=run({protocol:"udp",server:"223.5.5.5:53",cached:true});
+  assert.match(r.results[0].content,/缓存解析成功/);
+  assert.doesNotMatch(r.results[0].content,/结果：存在异常项目|本次使用普通 DNS 查询/);
+});
 check("native UDP is flagged as plaintext instead of DoH success",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
   assert.match(r.results[0].content,/存在异常项目/);
-  assert.match(r.results[0].content,/明文 DNS/);
+  assert.match(r.results[0].content,/普通 DNS 查询/);
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
   assert.match(r.results[0].content,/部分项目不可用/);
-  assert.match(r.results[0].content,/其他加密 DNS/);
+  assert.match(r.results[0].content,/使用加密 DNS，非当前配置预期地址/);
 });
 check("cached DoH cannot prove this test used an encrypted request",()=>{
   const r=run({cached:true});
@@ -88,6 +114,12 @@ check("automatic check has no DNS probe and is silent when healthy",()=>{
   assert.equal(r.alerts.length,0);
   assert(!r.requests.some(x=>x.native));
   assert(r.requests.every(x=>x.node==="DIRECT"));
+});
+check("auto notification ignores HTTP 301 on direct network",()=>{
+  const r=run({auto:true,directStatus:301});
+  assert.equal(r.alerts.length,0);
+  assert.equal(r.requests.length,1);
+  assert.equal(r.results.length,1);
 });
 check("automatic double-failure alerts only once per cooldown",()=>{
   const store={};

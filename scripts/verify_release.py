@@ -12,7 +12,7 @@ from source_lock import check_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = "https://raw.githubusercontent.com/YohakuSama/loonkit/"
-LINK = re.compile(r"https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/([a-f0-9]{40})/([^,\s]+)")
+LINK = re.compile(r'https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/([a-f0-9]{40})/([^,\s")]+)')
 DNS = ("dns-server", "doh-server", "hijack-dns", "ip-mode", "ipv6-vif",
        "interface-mode", "skip-proxy", "bypass-tun", "real-ip")
 
@@ -78,7 +78,7 @@ def verify(remote=False):
         plugins = [(ref,path) for ref,path in links if path.startswith("release/phase-07/assets/")]
         if len(rules)!=26 or len(set(path for _,path in rules))!=26 or len(icons)!=33:
             raise ValueError("wrong number of pinned rule/icon subscriptions")
-        if plugins != [(spec["release_assets_commit"],"release/phase-07/assets/Network_Diagnostics.plugin")]:
+        if plugins != [(spec["plugin_assets_commit"],"release/phase-07/assets/Network_Diagnostics.plugin")]:
             raise ValueError("plugin URL unexpectedly changed")
         for ref,path in links:
             if not (ROOT/path).is_file():
@@ -90,9 +90,20 @@ def verify(remote=False):
     plugin=(ROOT/release["plugin_path"]).read_bytes()
     if sha(plugin)!=release["plugin_sha256"]:
         raise ValueError("production pinned plugin hash changed")
+    # Inspect the embedded immutable URLs as well as the top-level plugin link.
+    # The diagnostic path is versioned to avoid stale Loon script caches.
+    embedded = LINK.findall(plugin.decode("utf-8"))
+    expected_script = "scripts/v20261020r1/network-diagnostics.js"
+    if len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
+        raise ValueError("expected immutable scripts or plugin icon missing")
+    for ref,path in embedded:
+        if ref != spec["script_assets_commit"] or not path.startswith(("scripts/", "icons/")):
+            raise ValueError("untrusted plugin script/icon reference: " + path)
+        if not (ROOT / path).is_file():
+            raise ValueError("missing plugin script/icon resource: " + path)
     if remote:
-        for ref,path in sorted(set(LINK.findall(profile))):
-            if not path.startswith(("icons/","rules/releases/","release/phase-07/assets/")):
+        for ref,path in sorted(set(LINK.findall(profile) + embedded)):
+            if not path.startswith(("icons/","rules/releases/","release/phase-07/assets/","scripts/")):
                 continue
             with request.urlopen(request.Request(RAW+ref+"/"+path,headers={"User-Agent":"LoonKit-Integrity/1"}),timeout=25) as response:
                 live=response.read()
