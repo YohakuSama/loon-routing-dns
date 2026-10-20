@@ -43,6 +43,30 @@ class Phase04Tests(unittest.TestCase):
                 if group != "AdBlock":
                     self.assertNotIn("DOMAIN-SUFFIX," + domain, rules)
 
+
+    def test_domain_only_business_regression(self):
+        samples = {
+            "www.ccb.com": "DIRECT",
+            "www.google.com": "Google",
+            "gemini.google.com": "AI",
+            "www.netflix.com": "Netflix",
+            "www.youtube.com": "YouTube",
+            "web.telegram.org": "Telegram",
+            "www.whatsapp.com": "Whatsapp",
+            "copilot.microsoft.com": "AI",
+            "login.microsoftonline.com": "Microsoft",
+        }
+        for host, expected in samples.items():
+            result = ve.simulate_domain(host, self.files)
+            self.assertEqual(result["policy"], expected, (host, result))
+        self.assertEqual(
+            ve.simulate_domain("ads-twitter.com", self.files, adblock_choice="REJECT")["effective"], "REJECT")
+        self.assertEqual(
+            ve.simulate_domain("ads-twitter.com", self.files, adblock_choice="DIRECT")["effective"], "DIRECT")
+        unknown = "unknown-5827469.invalid"
+        self.assertEqual(ve.simulate_domain(unknown, self.files, final_choice="DIRECT")["effective"], "DIRECT")
+        self.assertEqual(ve.simulate_domain(unknown, self.files, final_choice="Proxy")["effective"], "Proxy")
+
     def test_asn_no_resolve(self):
         for group, asns in (("ChinaDirect", ["132203"]),
                             ("Facebook", ["32934"]),
