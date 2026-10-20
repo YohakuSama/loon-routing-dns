@@ -353,6 +353,42 @@ def write_outputs(files: dict[str, str], root: Path = ROOT, check: bool = False)
         raise RuntimeError("candidate outputs out of date: " + ", ".join(problems))
 
 
+
+def simulate_domain(host: str, files: dict[str, str], *, final_choice: str = "Final",
+                    adblock_choice: str = "REJECT") -> dict:
+    """Deliberately LIMITED static simulator: domain rules only, no IP DNS/TUN/UA/plugin.
+
+    Consult Loon on-device for ties across matcher classes, IP ASN routing and
+    conflicting suffixes. Local profile domain rules are checked before remote
+    lists; the explicit candidate remote list order is used within subscriptions.
+    """
+    host = host.strip(".").lower()
+    if not re.fullmatch(r"[a-z0-9.-]+", host) or "." not in host:
+        raise ValueError("expected a valid dotted hostname")
+    if adblock_choice not in {"REJECT", "DIRECT"}:
+        raise ValueError("AdBlock selector must be REJECT or DIRECT")
+    config = files["refactor/vnext/LoonKit.vNext.Candidate.lcf"]
+    local_rules = config.split("\n[Rule]\n", 1)[1].split("\n[Plugin]", 1)[0].splitlines()
+    for raw in local_rules:
+        p = [x.strip() for x in raw.split(",")]
+        if len(p) < 3 or p[0] not in {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD"}:
+            continue
+        if covers_domain(p[0] + "," + p[1], host):
+            return {"policy": p[2], "effective": p[2], "layer": "local",
+                    "matched": p[0] + "," + p[1], "simulator": "DOMAIN_ONLY"}
+    cfg = load_manifest()
+    for group in cfg["subscription_order"]:
+        filename = "AnimeCrazy" if group == "動畫瘋" else group
+        contents = files["refactor/vnext/generated/" + filename + ".list"]
+        for raw in contents.splitlines():
+            if raw and not raw.startswith("#") and covers_domain(raw, host):
+                policy = "DIRECT" if group in {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"} else group
+                effective = adblock_choice if policy == "AdBlock" else policy
+                return {"policy": policy, "effective": effective, "layer": "remote",
+                        "matched": raw, "simulator": "DOMAIN_ONLY"}
+    return {"policy": "Final", "effective": final_choice, "layer": "final",
+            "matched": "FINAL,Final", "simulator": "DOMAIN_ONLY"}
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true", help="assert generated files match compiler")
