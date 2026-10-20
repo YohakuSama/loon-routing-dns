@@ -1,0 +1,55 @@
+# Risk register
+
+- Full entries: data/risk_register.json. No runtime finding is marked RUNTIME_CONFIRMED.
+- P0: 0; P1: 48; P2: 16; P3: 0.
+
+## All P0/P1 entries
+
+- P02-00017 **P1**: \`rules/generated/ChinaDirect.list:11186\` \`DOMAIN-SUFFIX,alibaba\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00018 **P1**: \`rules/generated/ChinaDirect.list:11773\` \`DOMAIN-SUFFIX,anquan\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00019 **P1**: \`rules/generated/ChinaDirect.list:22224\` \`DOMAIN-SUFFIX,citic\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00020 **P1**: \`rules/generated/ChinaDirect.list:22952\` \`DOMAIN-SUFFIX,cn\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00021 **P1**: \`rules/generated/ChinaDirect.list:49113\` \`DOMAIN-SUFFIX,icbc\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00022 **P1**: \`rules/generated/ChinaDirect.list:65938\` \`DOMAIN-SUFFIX,ms\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00023 **P1**: \`rules/generated/ChinaDirect.list:80682\` \`DOMAIN-SUFFIX,shouji\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00024 **P1**: \`rules/generated/ChinaDirect.list:81576\` \`DOMAIN-SUFFIX,sina\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00025 **P1**: \`rules/generated/ChinaDirect.list:82739\` \`DOMAIN-SUFFIX,sohu\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00026 **P1**: \`rules/generated/ChinaDirect.list:88345\` \`DOMAIN-SUFFIX,tmall\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00027 **P1**: \`rules/generated/ChinaDirect.list:90668\` \`DOMAIN-SUFFIX,unicom\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00028 **P1**: \`rules/generated/ChinaDirect.list:92639\` \`DOMAIN-SUFFIX,wang\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00029 **P1**: \`rules/generated/ChinaDirect.list:98061\` \`DOMAIN-SUFFIX,xihuan\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00030 **P1**: \`rules/generated/ChinaDirect.list:99290\` \`DOMAIN-SUFFIX,xn--1qqw23a\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00031 **P1**: \`rules/generated/ChinaDirect.list:99299\` \`DOMAIN-SUFFIX,xn--3bst00m\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00032 **P1**: \`rules/generated/ChinaDirect.list:99302\` \`DOMAIN-SUFFIX,xn--3ds443g\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00033 **P1**: \`rules/generated/ChinaDirect.list:99312\` \`DOMAIN-SUFFIX,xn--55qw42g\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00034 **P1**: \`rules/generated/ChinaDirect.list:99315\` \`DOMAIN-SUFFIX,xn--55qx5d\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00035 **P1**: \`rules/generated/ChinaDirect.list:99318\` \`DOMAIN-SUFFIX,xn--5tzm5g\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00036 **P1**: \`rules/generated/ChinaDirect.list:99321\` \`DOMAIN-SUFFIX,xn--6frz82g\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00037 **P1**: \`rules/generated/ChinaDirect.list:99325\` \`DOMAIN-SUFFIX,xn--6qq986b3xl\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00038 **P1**: \`rules/generated/ChinaDirect.list:99337\` \`DOMAIN-SUFFIX,xn--8y0a063a\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00039 **P1**: \`rules/generated/ChinaDirect.list:99339\` \`DOMAIN-SUFFIX,xn--9et52u\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00040 **P1**: \`rules/generated/ChinaDirect.list:99341\` \`DOMAIN-SUFFIX,xn--9krt00a\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00041 **P1**: \`rules/generated/ChinaDirect.list:99357\` \`DOMAIN-SUFFIX,xn--czr694b\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00042 **P1**: \`rules/generated/ChinaDirect.list:99358\` \`DOMAIN-SUFFIX,xn--czrs0t\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00043 **P1**: \`rules/generated/ChinaDirect.list:99359\` \`DOMAIN-SUFFIX,xn--czru2d\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00044 **P1**: \`rules/generated/ChinaDirect.list:99374\` \`DOMAIN-SUFFIX,xn--fiq228c5hs\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00045 **P1**: \`rules/generated/ChinaDirect.list:99376\` \`DOMAIN-SUFFIX,xn--fiq64b\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00046 **P1**: \`rules/generated/ChinaDirect.list:99380\` \`DOMAIN-SUFFIX,xn--fiqs8s\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00047 **P1**: \`rules/generated/ChinaDirect.list:99385\` \`DOMAIN-SUFFIX,xn--fiqz9s\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00048 **P1**: \`rules/generated/ChinaDirect.list:99387\` \`DOMAIN-SUFFIX,xn--fjq720a\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00049 **P1**: \`rules/generated/ChinaDirect.list:99388\` \`DOMAIN-SUFFIX,xn--g2xx48c\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00050 **P1**: \`rules/generated/ChinaDirect.list:99396\` \`DOMAIN-SUFFIX,xn--hxt814e\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00051 **P1**: \`rules/generated/ChinaDirect.list:99401\` \`DOMAIN-SUFFIX,xn--imr513n\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00052 **P1**: \`rules/generated/ChinaDirect.list:99402\` \`DOMAIN-SUFFIX,xn--io0a7i\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00053 **P1**: \`rules/generated/ChinaDirect.list:99410\` \`DOMAIN-SUFFIX,xn--kput3i\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00054 **P1**: \`rules/generated/ChinaDirect.list:99426\` \`DOMAIN-SUFFIX,xn--nyqy26a\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00055 **P1**: \`rules/generated/ChinaDirect.list:99428\` \`DOMAIN-SUFFIX,xn--otu796d\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00056 **P1**: \`rules/generated/ChinaDirect.list:99437\` \`DOMAIN-SUFFIX,xn--rhqv96g\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00057 **P1**: \`rules/generated/ChinaDirect.list:99447\` \`DOMAIN-SUFFIX,xn--ses554g\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00058 **P1**: \`rules/generated/ChinaDirect.list:99457\` \`DOMAIN-SUFFIX,xn--unup4y\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00059 **P1**: \`rules/generated/ChinaDirect.list:99466\` \`DOMAIN-SUFFIX,xn--vhquv\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00060 **P1**: \`rules/generated/ChinaDirect.list:99469\` \`DOMAIN-SUFFIX,xn--vuq861b\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00061 **P1**: \`rules/generated/ChinaDirect.list:99477\` \`DOMAIN-SUFFIX,xn--xhq521b\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00062 **P1**: \`rules/generated/ChinaDirect.list:99495\` \`DOMAIN-SUFFIX,xn--zfr164b\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00063 **P1**: \`rules/generated/ChinaDirect.list:104612\` \`DOMAIN-SUFFIX,yun\` — DIRECT_TOP_LEVEL_SUFFIX; Any domain under this top-level suffix, including cross-border services; runtime verification required.
+- P02-00064 **P1**: \`rules/generated/ChinaDirect.list:110393\` \`IP-ASN,132203\` — IP_NO_RESOLVE_MISSING; Unmatched domain request reaches eligible IP/ASN rule; runtime verification required.

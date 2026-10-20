@@ -1,0 +1,25 @@
+{
+  "direct_broad_keywords": 10,
+  "manual_source_review": 61,
+  "missing_no_resolve": 7,
+  "provenance": "SOURCE_PROVENANCE_INCOMPLETE",
+  "published_cross_policy_exact": 0,
+  "published_domain_ancestry_pairs": 7306,
+  "published_exact_duplicates": 0,
+  "published_ip_overlap_pairs": 168,
+  "published_keyword_conflict_pairs": 868,
+  "published_rules": 206505,
+  "runtime": "RUNTIME_VERIFICATION_REQUIRED",
+  "scanned_sources": 87,
+  "scanned_subscriptions": 34,
+  "snapshot_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
+  "type_counts": {
+    "DOMAIN": 23943,
+    "DOMAIN-KEYWORD": 54,
+    "DOMAIN-SUFFIX": 168604,
+    "IP-ASN": 7,
+    "IP-CIDR": 9459,
+    "IP-CIDR6": 4326,
+    "USER-AGENT": 112
+  }
+}

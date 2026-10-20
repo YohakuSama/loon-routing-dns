@@ -1,0 +1,648 @@
+{
+  "adblock_anchor_ownership": {
+    "admob.com": [
+      {
+        "group": "Google",
+        "no_resolve": false,
+        "policy": "Google",
+        "rule_type": "DOMAIN-SUFFIX",
+        "rule_value": "admob.com",
+        "source_file": "rules/generated/Google.list",
+        "source_line": 21
+      }
+    ],
+    "ads-twitter.com": [
+      {
+        "group": "Twitter",
+        "no_resolve": false,
+        "policy": "Twitter",
+        "rule_type": "DOMAIN-SUFFIX",
+        "rule_value": "ads-twitter.com",
+        "source_file": "rules/generated/Twitter.list",
+        "source_line": 5
+      }
+    ],
+    "app-measurement.com": [
+      {
+        "group": "Google",
+        "no_resolve": false,
+        "policy": "Google",
+        "rule_type": "DOMAIN-SUFFIX",
+        "rule_value": "app-measurement.com",
+        "source_file": "rules/generated/Google.list",
+        "source_line": 42
+      },
+      {
+        "group": "ChinaDirect",
+        "no_resolve": false,
+        "policy": "DIRECT",
+        "rule_type": "DOMAIN",
+        "rule_value": "app-measurement.com",
+        "source_file": "rules/generated/ChinaDirect.list",
+        "source_line": 32
+      }
+    ],
+    "doubleclick.com": [
+      {
+        "group": "Google",
+        "no_resolve": false,
+        "policy": "Google",
+        "rule_type": "DOMAIN-SUFFIX",
+        "rule_value": "doubleclick.com",
+        "source_file": "rules/generated/Google.list",
+        "source_line": 204
+      }
+    ]
+  },
+  "adblock_anchors_present_in_adblock": [],
+  "direct_ip_rule_types": {
+    "IP-ASN": 1,
+    "IP-CIDR": 8246,
+    "IP-CIDR6": 4313
+  },
+  "direct_keywords": [
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": ".tmall.com",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 272
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "alicdn",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 273
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "alipay",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 274
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "aliyun",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 275
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "baidu",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 276
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "beplay",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 277
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "hnagroup",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 278
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "officecdn",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 279
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "taobao",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 280
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-KEYWORD",
+      "rule_value": "weibo",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 281
+    }
+  ],
+  "direct_top_level_suffixes": [
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "alibaba",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 11186
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "anquan",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 11773
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "citic",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 22224
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "cn",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 22952
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "icbc",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 49113
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "ms",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 65938
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "shouji",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 80682
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "sina",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 81576
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "sohu",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 82739
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "tmall",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 88345
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "unicom",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 90668
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "wang",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 92639
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xihuan",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 98061
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--1qqw23a",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99290
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--3bst00m",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99299
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--3ds443g",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99302
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--55qw42g",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99312
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--55qx5d",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99315
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--5tzm5g",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99318
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--6frz82g",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99321
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--6qq986b3xl",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99325
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--8y0a063a",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99337
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--9et52u",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99339
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--9krt00a",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99341
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--czr694b",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99357
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--czrs0t",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99358
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--czru2d",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99359
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--fiq228c5hs",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99374
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--fiq64b",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99376
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--fiqs8s",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99380
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--fiqz9s",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99385
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--fjq720a",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99387
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--g2xx48c",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99388
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--hxt814e",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99396
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--imr513n",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99401
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--io0a7i",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99402
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--kput3i",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99410
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--nyqy26a",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99426
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--otu796d",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99428
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--rhqv96g",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99437
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--ses554g",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99447
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--unup4y",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99457
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--vhquv",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99466
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--vuq861b",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99469
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--xhq521b",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99477
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "xn--zfr164b",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 99495
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "DOMAIN-SUFFIX",
+      "rule_value": "yun",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 104612
+    }
+  ],
+  "missing_no_resolve": [
+    {
+      "group": "Telegram",
+      "no_resolve": false,
+      "policy": "Telegram",
+      "rule_type": "IP-ASN",
+      "rule_value": "211157",
+      "source_file": "rules/generated/Telegram.list",
+      "source_line": 32
+    },
+    {
+      "group": "Telegram",
+      "no_resolve": false,
+      "policy": "Telegram",
+      "rule_type": "IP-ASN",
+      "rule_value": "44907",
+      "source_file": "rules/generated/Telegram.list",
+      "source_line": 33
+    },
+    {
+      "group": "Telegram",
+      "no_resolve": false,
+      "policy": "Telegram",
+      "rule_type": "IP-ASN",
+      "rule_value": "59930",
+      "source_file": "rules/generated/Telegram.list",
+      "source_line": 34
+    },
+    {
+      "group": "Telegram",
+      "no_resolve": false,
+      "policy": "Telegram",
+      "rule_type": "IP-ASN",
+      "rule_value": "62014",
+      "source_file": "rules/generated/Telegram.list",
+      "source_line": 35
+    },
+    {
+      "group": "Telegram",
+      "no_resolve": false,
+      "policy": "Telegram",
+      "rule_type": "IP-ASN",
+      "rule_value": "62041",
+      "source_file": "rules/generated/Telegram.list",
+      "source_line": 36
+    },
+    {
+      "group": "Facebook",
+      "no_resolve": false,
+      "policy": "Facebook",
+      "rule_type": "IP-ASN",
+      "rule_value": "32934",
+      "source_file": "rules/generated/Facebook.list",
+      "source_line": 471
+    },
+    {
+      "group": "ChinaDirect",
+      "no_resolve": false,
+      "policy": "DIRECT",
+      "rule_type": "IP-ASN",
+      "rule_value": "132203",
+      "source_file": "rules/generated/ChinaDirect.list",
+      "source_line": 110393
+    }
+  ],
+  "prepublication_conflicts_unrecoverable": "SOURCE_PROVENANCE_INCOMPLETE",
+  "published_cross_policy_exact": 0,
+  "runtime_dns_evidence": "RUNTIME_VERIFICATION_REQUIRED"
+}
