@@ -22,5 +22,7 @@ Upstream repository-level licenses: blackmatrix7 GPL-2.0, v2fly MIT, felixonmars
 These CURRENT_UPSTREAM_REFERENCE license records do not prove original per-item rights.
 REMOVE_CANDIDATE requires independent provenance and business evidence.
 Frozen local sources have line-level nonexclusive matches in data/local_source_matches.json.
-Local matches show surviving conditions but NOT which source deserves exclusive credit.
+- Direct exact published condition matches: 65.
+- Additional same-group suffix coverage: 5.
+Local matches or coverage show surviving conditions but NOT which source deserves exclusive credit.
 Historical remotes are URL-level evidence only; their historical contents are unavailable.

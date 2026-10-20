@@ -1,7 +1,9 @@
 {
   "adblock_platform_ownership_risks": 5,
   "direct_broad_keywords": 10,
+  "local_input_rules_covered_by_published_suffix": 5,
   "local_input_rules_with_published_condition": 65,
+  "local_input_unexplained_conditions": 0,
   "manual_source_review": 61,
   "missing_no_resolve": 7,
   "provenance": "SOURCE_PROVENANCE_INCOMPLETE",
