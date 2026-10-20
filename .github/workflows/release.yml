@@ -1,0 +1,29 @@
+name: Manual Release Candidate (read only)
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'New version (e.g. v6.0.1-rc1)'
+        type: string
+permissions:
+  contents: read
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 scripts/verify_release.py --check
+      - run: python3 scripts/license_audit.py --check
+      - run: python3 scripts/prepare_release.py --version "${{ inputs.version }}" --output "$RUNNER_TEMP/candidate" --build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reviewed-release-candidate
+          path: ${{ runner.temp }}/candidate/
+          retention-days: 30
+          if-no-files-found: error

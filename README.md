@@ -1,43 +1,27 @@
-# LoonKit
+# LoonKit v6.0.0
 
-**Loon 分流规则与策略配置 · v6.0.0**
+适用于 [Loon](https://nsloon.app/) 的分流、策略组与广告拦截配置。**不包含代理节点**，请自行添加节点或订阅。
 
-LoonKit 提供国内外网络分流、常用服务的独立策略组和广告拦截规则，适用于 [Loon](https://nsloon.app/)。
+## 选择正式配置
 
-项目提供完整配置和规则，**代理节点需要自行添加**。
-
-## 配置订阅
-
-| 版本 | DNS 解析服务 | 订阅地址 |
+| 配置 | DNS / DoH | 订阅地址 |
 | --- | --- | --- |
-| 标准版 | 阿里 AliDNS（DoH） | [LoonKit.lcf](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf) |
-| DNSPod 版 | 腾讯 DNSPod（DoH） | [LoonKit.PrivacyDNS.lcf](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.PrivacyDNS.lcf) |
+| 标准版 | 阿里 AliDNS | [LoonKit.lcf](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf) |
+| DNSPod 版 | 腾讯 DNSPod | [LoonKit.PrivacyDNS.lcf](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.PrivacyDNS.lcf) |
 
-两个版本使用相同的分流规则、策略组和插件，仅 DNS 服务器与 DoH 地址不同。按自己的网络环境选择即可。
+在 Loon 中通过 URL 导入其中一份完整配置，再添加自己的代理节点订阅并选择策略组。两份配置使用相同的规则、策略和插件，仅 DNS 解析设置不同。
 
-## 快速开始
+## 功能与更新
 
-1. 在 Loon 中备份现有配置与节点订阅。
-2. 复制上方任一订阅地址，在 Loon 中通过 URL 导入完整配置。
-3. 添加或恢复自己的代理节点订阅，更新远程规则与插件。
-4. 在策略组中选择可用节点，并根据需要调整各项分流策略。
+- **分类分流**：国内直连；AI、搜索、流媒体、社交及游戏等分类选择策略。
+- **节点策略**：`Proxy`、`Auto`、`Fallback`；`Final` 处理未命中的连接。
+- **广告拦截**：`AdBlock` 在 `REJECT` / `DIRECT` 间切换。
+- **DNS**：标准版使用 AliDNS DoH，DNSPod 版使用 DNSPod DoH，其他现有 DNS/TUN/IPv4/IPv6 参数保持原样。
+- **诊断插件**：[网络诊断](./plugins/Network_Diagnostics.plugin)，查看节点出口和 DNS 状态。
+- **远程规则**：26 份版本固定规则，更新需先生成候选并通过审核，不会自动替换正式资源。
 
-从 v5.10.0 升级时，建议使用新版完整配置替换旧配置；如果以前单独订阅过旧规则，请检查并移除重复订阅。原有完整配置的订阅地址保持不变。
+## 文档
 
-## 主要功能
+[规则与来源](./rules/README.md) · [DNS 使用说明](./docs/DNS_PRIVACY.md) · [插件指南](./docs/NETWORK_DIAGNOSTICS.md) · [更新记录](./docs/CHANGELOG.md) · [维护流程](./docs/MAINTAINING.md) · [第三方许可](./docs/THIRD_PARTY_NOTICES.md)
 
-- **分类分流**：国内服务直连，AI、Google、Apple、流媒体、社交平台及游戏等服务按分类选择策略。
-- **灵活选路**：支持 `Proxy`、`Auto`、`Fallback` 等策略；`Final` 决定未命中其他规则的流量如何处理。
-- **广告拦截**：`AdBlock` 可在 `REJECT` 与 `DIRECT` 之间切换。
-- **网络诊断**：提供[网络辅助插件](./plugins/Network_Diagnostics.plugin)，可手动查看节点出口及 DNS 状态。
-- **版本化规则**：v6.0.0 使用 26 份远程规则文件、106 条本地规则和 33 个策略组；规则资源固定版本，便于核查与回滚。
-
-## 文档与维护
-
-- [DNS 配置与问题排查](./docs/DNS_PRIVACY.md)
-- [规则分类、来源与更新说明](./rules/README.md)
-- [v6.0.0 更新记录](./release/phase-07/CHANGELOG-v6.0.0.md)
-- [升级与回滚指南](./release/phase-07/MIGRATION_ROLLBACK.md)
-- [第三方来源及许可声明](./release/phase-07/THIRD_PARTY_NOTICES.md)
-
-遇到分流或配置问题，可以通过 [GitHub Issues](https://github.com/YohakuSama/loonkit/issues) 反馈。
+[GitHub Issues](https://github.com/YohakuSama/loonkit/issues)
