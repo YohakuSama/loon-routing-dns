@@ -60,3 +60,9 @@
 - `scripts/phase07_device_attestation.py`：将未来真实的脱敏 `validation/phase-07/device-results.redacted.json` 与已测试配置的 Git Blob SHA256 和候选远程规则固定 Commit 绑定，要求两份配置独立通过 AdBlock 双模式、Final 四模式等对应 scope 的机器检查。不存在数据时不能将真机类发布门槛改成 PASS；即便格式检查通过仍需维护者审核真实设备结论。
 - `scripts/phase07_gate.py`：真机类门槛 PASS 必须触发上述实际证据核验，不能只凭手写文本或随意填写一个40位提交号绕过。许可证和维护者审批继续保持独立阻断。
 - 下一次生成不同字节的新候选，必须重新固定资源 Commit 与 SHA256，并按影响范围重新跑真机测试；RC2 原规则和配置字节不得静默更换。
+
+## 维护者真机反馈与合规阻断的区分
+
+维护者于 2026-10-20 表示已完成真机测试，目前没有发现问题，并要求工程侧继续处理剩余事项；详情记录在 [MAINTAINER_FEEDBACK.json](./MAINTAINER_FEEDBACK.json)。这是一份明确的维护者自述，不是可机器复核的逐场景网络证据，工程侧不会伪造 DNS、IPv6、节点出口或缓存回滚等专项 PASS 记录，也不要求维护者为工程继续开展工作而重复测试。
+
+第三方完整 NOTICE 与历史输入清单已补齐，来自三家上游的许可证正文与原 Git blob 可一致核验；但历史混合来源逐行归属不明，且 blackmatrix7 README 的附加使用声明需要实质评估，许可证再分发审核继续阻止正式发布。独立法律审核可使用 `release/phase-07/legal-reviews/DECISION_TEMPLATE.json`，由具名审核者补全六项权利事实与依据后再通过 PR 审核。许可证工程验证与真实授权结论严格分开。

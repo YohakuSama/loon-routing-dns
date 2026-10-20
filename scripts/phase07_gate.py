@@ -33,6 +33,13 @@ def check(require_ready=False):
     if passed:
         from phase07_device_attestation import inspect as check_device
         check_device(passed,ROOT)
+    # A manually typed PASS on licensing is not proof of redistribution rights.
+    # Verify actual preserved texts and substantive independent rights review.
+    if d["checks"]["licenses"]["status"]=="PASS":
+        from phase07_license_evidence import check as check_legal
+        report=check_legal(ROOT)
+        if report["independent_clearance"]!="REVIEW_EVIDENCE_PRESENT":
+            raise ValueError("license PASS requires independent candidate-specific clearance evidence")
     if d["release_status"]=="APPROVED" and blockers:
         raise ValueError("APPROVED contradicts open blockers")
     if require_ready and (blockers or d["release_status"]!="APPROVED"):

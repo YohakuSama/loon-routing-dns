@@ -40,3 +40,7 @@ python3 scripts/validate_device_results.py /path/to/redacted-device-results.json
 - `final_choice`：Final 测试分别包含 `Proxy`、`Auto`、`Fallback`、`DIRECT`。
 
 DNS PASS 记录不得缺少实际解析器观测；IPv4/IPv6 PASS 必须具备双栈观测字段。机器门槛运行 `scripts/phase07_device_attestation.py` 的相应函数时会验证文件存在、隐私字段脱敏、以上 SHA / Commit 匹配、对应 scope 和策略选择完整；**即便机器验证成功，仍仅表示结构化结果收到、需要维护者人工核对真实性，不能自动放行许可证与最终批准。**
+
+## 维护者最新反馈
+
+维护者已在 2026-10-20 明确告知真机测试已完成且未发现异常；详见 `release/phase-07/MAINTAINER_FEEDBACK.json`。该声明无需重复向维护者索取。此文档之前列出的严格结构化案例与机器验证仍用于未来正式记录；如无可核实的场景明细，保持 `NOT_EXECUTED` 或 `NOT_SUBMITTED`，不可通过猜测填充。这不阻止继续进行工程整改，但也不覆盖许可证审核与正式发布的独立批准。

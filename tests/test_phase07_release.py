@@ -13,6 +13,7 @@ import phase07_source_update_review as updates
 import phase07_next_release as next_release
 import phase07_device_attestation as device_attestation
 import phase07_license_audit as license_audit
+import phase07_license_evidence as legal_evidence
 import phase07_historical_attestation as historical_attestation
 import vnext_rule_engine as ve
 
@@ -138,9 +139,31 @@ class ReleaseBuildTests(unittest.TestCase):
 
     def test_license_catalog_87_historical_records_is_explicitly_blocked(self):
         result=license_audit.audit()
-        self.assertEqual(result["status"],"BLOCKED_REVIEW")
+        self.assertIn(result["status"],{"BLOCKED_REVIEW","INDEPENDENT_REVIEW_DOCUMENTED"})
         self.assertEqual(result["historical_records_checked"],87)
         self.assertEqual(result["line_level_license_attribution"],"NOT_VERIFIED")
+
+    def test_license_texts_retain_true_upstream_git_blob_ids(self):
+        result=legal_evidence.check()
+        self.assertEqual(result["upstream_families"],3)
+        self.assertEqual(result["historical_sources"],87)
+        self.assertEqual(result["license_artifacts"],"VERIFIED_PRESERVED")
+
+    def test_license_gate_rejects_forged_pass_without_rights_evidence(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as temp:
+            scratch=Path(temp)
+            target=scratch/"release/phase-07/RELEASE_GATE.json"
+            target.parent.mkdir(parents=True)
+            forged=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text())
+            row=forged["checks"]["licenses"]
+            row.update({"status":"PASS","evidence":"fictional license approval",
+                        "commit":"53b1b7081ab00ca29103bb61b62ca614fa676baa",
+                        "test_time":"2026-10-20T12:00:00Z"})
+            target.write_text(json.dumps(forged))
+            with patch.object(gate,"ROOT",scratch):
+                with self.assertRaises((ValueError,FileNotFoundError)):
+                    gate.check()
 
     def test_runtime_gate_cannot_pass_without_real_bound_device_records(self):
         # This must keep working AFTER real device evidence is approved in the

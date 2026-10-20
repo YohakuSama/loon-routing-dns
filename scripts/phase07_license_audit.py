@@ -59,10 +59,15 @@ def audit(root=ROOT):
             raise ValueError("required historical license notice missing: "+filename)
     if counts!={"GPL-2.0-only":41,"MIT":35,"WTFPL-2.0":1,"INTERNAL_RIGHTS_TO_CONFIRM":10}:
         raise ValueError("historical source-family count changed unexpectedly")
-    return {"status":"BLOCKED_REVIEW","historical_records_checked":len(rows),
+    from phase07_license_evidence import check as check_review
+    recorded=check_review(root)
+    approved=(recorded["independent_clearance"]=="REVIEW_EVIDENCE_PRESENT")
+    return {"status":"INDEPENDENT_REVIEW_DOCUMENTED" if approved else "BLOCKED_REVIEW",
+            "historical_records_checked":len(rows),
             "source_families":dict(sorted(counts.items())),
             "line_level_license_attribution":"NOT_VERIFIED",
-            "icon_and_plugin_rights":"NOT_VERIFIED"}
+            "icon_and_plugin_rights":"HUMAN_REVIEW_DOCUMENTED" if approved else "NOT_VERIFIED",
+            "release_clearance_evidence":recorded["independent_clearance"]}
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()

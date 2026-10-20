@@ -34,6 +34,7 @@ jobs:
           python3 scripts/phase07_gate.py --lint
           python3 scripts/phase07_resource_audit.py --check
           python3 scripts/phase07_license_audit.py --check
+          python3 scripts/phase07_license_evidence.py --check
           python3 -m unittest discover -s tests -p 'test_*.py' -v
           python3 scripts/validate_repo.py
           python3 scripts/build-appstore-icons.py --check-config
@@ -53,6 +54,8 @@ jobs:
             release/phase-07/MIGRATION_ROLLBACK.md
             release/phase-07/LICENSE_REVIEW.md
             release/phase-07/LICENSE_SOURCE_LEDGER.json
+            release/phase-07/LEGAL_EVIDENCE.json
+            release/phase-07/THIRD_PARTY_NOTICES.md
             validation/phase-05/RESULT_TEMPLATE.json
           retention-days: 30
           if-no-files-found: error
@@ -86,6 +89,7 @@ jobs:
             python3 scripts/phase07_gate.py --lint
             python3 scripts/phase07_resource_audit.py --check
             python3 scripts/phase07_license_audit.py --check
+            python3 scripts/phase07_license_evidence.py --check
             python3 -m unittest discover -s tests -p 'test_phase07_release.py' -v
             for config in LoonKit.lcf LoonKit.PrivacyDNS.lcf; do
               expected="$(git show "$GITHUB_SHA:$config" | sha256sum | cut -f1 -d' ')"

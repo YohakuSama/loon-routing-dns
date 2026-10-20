@@ -33,3 +33,11 @@
 - https://github.com/felixonmars/dnsmasq-china-list/blob/master/LICENSE
 
 **严格限制**：机器检查仅说明历史来源及许可证声明存在，不表示 197,765 条混合输出取得了足够再分发授权。上游 `master` 动态链接不等同于当年使用的源提交；记录中的 `pinned_upstream_commit=null` 是尚未恢复的证据缺口。不能因 87 条记录无缺项便把 `licenses` 写成 PASS。需要独立确认上游许可证兼容性、所有保留版权/许可文本、组件权利、原作者要求、对应源代码提供方案；若无法取得可靠证据，则应替换存疑数据并重新出候选和验收。
+
+## 阶段07最终授权资料与可执行审核程序
+
+已核对三家上游 Git 仓库的实际 LICENSE 字节与本项目完整存档文本：blackmatrix7 `GPL-2.0-only`、v2fly `MIT`、felixonmars `WTFPL-2.0`，其 Git Blob SHA1 分别为 `d159169d1050894d3ea3b98e1c965c4058208fe1`、`1f086538ba3a1d26f46ec44cfda12c2a0c4753a6`、`e1d98509456e841f4cd793b21f14aac2c370f9e9`。许可证正文匹配并**不证明历史混合规则都由这些仓库授权**。完整第三方通知与历史清单见 [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md)；机器核对来源、许可及第三方声明的实际存档见 [LEGAL_EVIDENCE.json](./LEGAL_EVIDENCE.json)。
+
+执行 `python3 scripts/phase07_license_evidence.py --check` 仅检查存档、通知、版本哈希与法律审核证据完整性。法律清除必须具备一份独立审核者实际撰写的 `release/phase-07/legal-reviews/*.json` 实质性判断：包括规则再分发、GPL 义务、blackmatrix7 README 声明、历史来源缺口、图标商标权和插件脚本权六类议题的事实、推理与证据，并由 `LEGAL_EVIDENCE.json.clearance` 固定文件 SHA256、审核者和候选 Commit。可参照 [决议模板](./legal-reviews/DECISION_TEMPLATE.json)，**模板状态为 NOT_EXECUTED，不能视为任何形式的许可批准**。
+
+机器 Gate 的 `licenses=PASS` 现在还会校验上述文件；未有实质独立批准时保留 `BLOCKED`。这消除了发布流程的“永久只能阻断”实现缺陷，但不等于本阶段已经取得合法授权。若不能给出对混合来源的充分许可依据，必须更换相应第三方内容、新建候选，并重新核验。

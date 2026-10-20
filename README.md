@@ -61,3 +61,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.PrivacyDNS.lcf
 本 RC2 尚不能声明全部国内金融业务、海外地区解锁、IPv4/IPv6、DNS 出口或 Loon 插件真机通过；相关门槛仍为 `NOT_EXECUTED`。
 
 [反馈问题](https://github.com/YohakuSama/loonkit/issues)
+
+## 维护者真机反馈及许可证状态（2026-10-20）
+
+维护者已说明真机实际测试完成、未观察到问题；参见 [反馈记录](./release/phase-07/MAINTAINER_FEEDBACK.json)。但尚无脱敏的结构化解析器、出口、IPv6 和缓存恢复专项证明，因此机器真机门槛仍按可核查证据处理，不会生成虚假结果。第三方许可声明、完整许可证副本及历史来源参见 [第三方 NOTICE](./release/phase-07/THIRD_PARTY_NOTICES.md)。由于历史多源合并规则的真实逐行授权无法恢复，完整规则的再分发合规仍需要独立具名判断；这是当前独立于真机测试的发布阻断。
