@@ -1,0 +1,3444 @@
+{
+  "schema_version": 3,
+  "phase02_status": "PARTIAL",
+  "summary": {
+    "KEEP_CORE": 4,
+    "KEEP_SPECIALIZED": 22,
+    "CONSOLIDATE": 9,
+    "OPTIONAL": 0,
+    "REMOVE_CANDIDATE": 0,
+    "DEFER": 52
+  },
+  "sources": [
+    {
+      "source_id": "bm-advertising-lite",
+      "current_group": "AdBlock",
+      "current_policy": "AdBlock",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Ads and tracking selected by user REJECT or DIRECT",
+      "published_rule_contribution": {
+        "group_total": 77213,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 5,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 374,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_COLLATERAL_REJECT_OR_BYPASS",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-advertising-lite-domain",
+      "current_group": "AdBlock",
+      "current_policy": "AdBlock",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Ads and tracking selected by user REJECT or DIRECT",
+      "published_rule_contribution": {
+        "group_total": 77213,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 5,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 37692,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_COLLATERAL_REJECT_OR_BYPASS",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-systemota",
+      "current_group": "AppleOTA",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Apple update and software delivery routing",
+      "published_rule_contribution": {
+        "group_total": 82,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 78,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_CORE",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-steamcn",
+      "current_group": "SteamCN",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Mainland Steam downloads and game infrastructure",
+      "published_rule_contribution": {
+        "group_total": 17,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 1,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 17,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_CORE",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-youtube",
+      "current_group": "YouTube",
+      "current_policy": "YouTube",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "YouTube service routing",
+      "published_rule_contribution": {
+        "group_total": 191,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 190,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-netflix",
+      "current_group": "Netflix",
+      "current_policy": "Netflix",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Netflix geographical catalog and streaming",
+      "published_rule_contribution": {
+        "group_total": 1156,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 1157,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-disney",
+      "current_group": "Disney",
+      "current_policy": "Disney",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Disney streaming",
+      "published_rule_contribution": {
+        "group_total": 186,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 173,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-primevideo",
+      "current_group": "PrimeVideo",
+      "current_policy": "PrimeVideo",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Prime Video streaming",
+      "published_rule_contribution": {
+        "group_total": 34,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 18,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-spotify",
+      "current_group": "Spotify",
+      "current_policy": "Spotify",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Spotify music",
+      "published_rule_contribution": {
+        "group_total": 33,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 30,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-tiktok",
+      "current_group": "TikTok",
+      "current_policy": "TikTok",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "TikTok region-specific routing",
+      "published_rule_contribution": {
+        "group_total": 58,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 35,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-twitch",
+      "current_group": "Twitch",
+      "current_policy": "Twitch",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Twitch streaming",
+      "published_rule_contribution": {
+        "group_total": 48,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 21,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-abematv",
+      "current_group": "Abema",
+      "current_policy": "Abema",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Abema Japanese streaming",
+      "published_rule_contribution": {
+        "group_total": 25,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 24,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-bbc",
+      "current_group": "BBC",
+      "current_policy": "BBC",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "BBC regional content",
+      "published_rule_contribution": {
+        "group_total": 37,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 29,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-bilibili",
+      "current_group": "Bilibili",
+      "current_policy": "Bilibili",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Bilibili mainland and cross-border split",
+      "published_rule_contribution": {
+        "group_total": 132,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 127,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-telegram",
+      "current_group": "Telegram",
+      "current_policy": "Telegram",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Telegram messaging transport",
+      "published_rule_contribution": {
+        "group_total": 43,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 40,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [
+        "P02-00007",
+        "P02-00008",
+        "P02-00009",
+        "P02-00010",
+        "P02-00011"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-instagram",
+      "current_group": "Instagram",
+      "current_policy": "Instagram",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Instagram social",
+      "published_rule_contribution": {
+        "group_total": 74,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 4,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-twitter",
+      "current_group": "Twitter",
+      "current_policy": "Twitter",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "X/Twitter social",
+      "published_rule_contribution": {
+        "group_total": 33,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 33,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [
+        "P02-00002"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-discord",
+      "current_group": "Discord",
+      "current_policy": "Discord",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Discord chat",
+      "published_rule_contribution": {
+        "group_total": 29,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 29,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-line",
+      "current_group": "Line",
+      "current_policy": "Line",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "LINE messaging",
+      "published_rule_contribution": {
+        "group_total": 35,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 24,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-linkedin",
+      "current_group": "Linkedin",
+      "current_policy": "Linkedin",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "LinkedIn professional platform",
+      "published_rule_contribution": {
+        "group_total": 12,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 12,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-reddit",
+      "current_group": "Reddit",
+      "current_policy": "Reddit",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Reddit community",
+      "published_rule_contribution": {
+        "group_total": 15,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 8,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-google",
+      "current_group": "Google",
+      "current_policy": "Google",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Google services excluding verified dedicated AI/YouTube",
+      "published_rule_contribution": {
+        "group_total": 694,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 1,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 698,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [
+        "P02-00001",
+        "P02-00003",
+        "P02-00006"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-apple-domain",
+      "current_group": "Apple",
+      "current_policy": "Apple",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Apple services including China-region overrides",
+      "published_rule_contribution": {
+        "group_total": 1600,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 1560,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-apple",
+      "current_group": "Apple",
+      "current_policy": "Apple",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Apple services including China-region overrides",
+      "published_rule_contribution": {
+        "group_total": 1600,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 43,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-steam",
+      "current_group": "Steam",
+      "current_policy": "Steam",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Steam storefront and non-mainland services",
+      "published_rule_contribution": {
+        "group_total": 61,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 54,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-paypal",
+      "current_group": "Paypal",
+      "current_policy": "Paypal",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Cross-border PayPal payment",
+      "published_rule_contribution": {
+        "group_total": 248,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 248,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_SPECIALIZED",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-chinamaxnomedia",
+      "current_group": "ChinaDirect",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Explicit mainland direct business and reviewed IP coverage",
+      "published_rule_contribution": {
+        "group_total": 123008,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 12683,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_CORE",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [
+        "P02-00004",
+        "P02-00005",
+        "P02-00013",
+        "P02-00014",
+        "P02-00015",
+        "P02-00016",
+        "P02-00017",
+        "P02-00018",
+        "P02-00019",
+        "P02-00020",
+        "P02-00021",
+        "P02-00022",
+        "P02-00023",
+        "P02-00024",
+        "P02-00025",
+        "P02-00026",
+        "P02-00027",
+        "P02-00028",
+        "P02-00029",
+        "P02-00030",
+        "P02-00031",
+        "P02-00032",
+        "P02-00033",
+        "P02-00034",
+        "P02-00035",
+        "P02-00036",
+        "P02-00037",
+        "P02-00038",
+        "P02-00039",
+        "P02-00040",
+        "P02-00041",
+        "P02-00042",
+        "P02-00043",
+        "P02-00044",
+        "P02-00045",
+        "P02-00046",
+        "P02-00047",
+        "P02-00048",
+        "P02-00049",
+        "P02-00050",
+        "P02-00051",
+        "P02-00052",
+        "P02-00053",
+        "P02-00054",
+        "P02-00055",
+        "P02-00056",
+        "P02-00057",
+        "P02-00058",
+        "P02-00059",
+        "P02-00060",
+        "P02-00061",
+        "P02-00062",
+        "P02-00063",
+        "P02-00064",
+        "P02-00065",
+        "P02-00066",
+        "P02-00067",
+        "P02-00068",
+        "P02-00069",
+        "P02-00070"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-chinamaxnomedia-domain",
+      "current_group": "ChinaDirect",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "YES",
+      "original_business_purpose": "Explicit mainland direct business and reviewed IP coverage",
+      "published_rule_contribution": {
+        "group_total": 123008,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 110350,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "KEEP_CORE",
+      "confidence": "MEDIUM_FOR_PRESERVATION_ONLY",
+      "associated_risk_ids": [
+        "P02-00004",
+        "P02-00005",
+        "P02-00013",
+        "P02-00014",
+        "P02-00015",
+        "P02-00016",
+        "P02-00017",
+        "P02-00018",
+        "P02-00019",
+        "P02-00020",
+        "P02-00021",
+        "P02-00022",
+        "P02-00023",
+        "P02-00024",
+        "P02-00025",
+        "P02-00026",
+        "P02-00027",
+        "P02-00028",
+        "P02-00029",
+        "P02-00030",
+        "P02-00031",
+        "P02-00032",
+        "P02-00033",
+        "P02-00034",
+        "P02-00035",
+        "P02-00036",
+        "P02-00037",
+        "P02-00038",
+        "P02-00039",
+        "P02-00040",
+        "P02-00041",
+        "P02-00042",
+        "P02-00043",
+        "P02-00044",
+        "P02-00045",
+        "P02-00046",
+        "P02-00047",
+        "P02-00048",
+        "P02-00049",
+        "P02-00050",
+        "P02-00051",
+        "P02-00052",
+        "P02-00053",
+        "P02-00054",
+        "P02-00055",
+        "P02-00056",
+        "P02-00057",
+        "P02-00058",
+        "P02-00059",
+        "P02-00060",
+        "P02-00061",
+        "P02-00062",
+        "P02-00063",
+        "P02-00064",
+        "P02-00065",
+        "P02-00066",
+        "P02-00067",
+        "P02-00068",
+        "P02-00069",
+        "P02-00070"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Maintain existing behavior; historical or purposeful group evidence supports provisional retention, not deletion of other sources"
+    },
+    {
+      "source_id": "bm-openai",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 35,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-claude",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 3,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-gemini",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 13,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-whatsapp",
+      "current_group": "Whatsapp",
+      "current_policy": "Whatsapp",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "WhatsApp messaging",
+      "published_rule_contribution": {
+        "group_total": 26,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 17,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-facebook",
+      "current_group": "Facebook",
+      "current_policy": "Facebook",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Meta/Facebook platform services",
+      "published_rule_contribution": {
+        "group_total": 491,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 570,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [
+        "P02-00012"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-dazn",
+      "current_group": "Dazn",
+      "current_policy": "Dazn",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "DAZN sport regional streaming",
+      "published_rule_contribution": {
+        "group_total": 20,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 19,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-hbo",
+      "current_group": "HBO",
+      "current_policy": "HBO",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "HBO streaming",
+      "published_rule_contribution": {
+        "group_total": 90,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 49,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-bahamut",
+      "current_group": "動畫瘋",
+      "current_policy": "動畫瘋",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Bahamut animation regional content",
+      "published_rule_contribution": {
+        "group_total": 7,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 8,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-microsoft",
+      "current_group": "Microsoft",
+      "current_policy": "Microsoft",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Microsoft services including direct-or-proxy choice",
+      "published_rule_contribution": {
+        "group_total": 671,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 671,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-amazonprimevideo",
+      "current_group": "PrimeVideo",
+      "current_policy": "PrimeVideo",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Prime Video streaming",
+      "published_rule_contribution": {
+        "group_total": 34,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.518519,
+        "stage_first_owner_credit": 13,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "local-ai",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0.272727,
+        "stage_first_owner_credit": 16,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "local-whatsapp",
+      "current_group": "Whatsapp",
+      "current_policy": "Whatsapp",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "WhatsApp messaging",
+      "published_rule_contribution": {
+        "group_total": 26,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.75,
+        "stage_first_owner_credit": 1,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "local-facebook",
+      "current_group": "Facebook",
+      "current_policy": "Facebook",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "Meta/Facebook platform services",
+      "published_rule_contribution": {
+        "group_total": 491,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [
+        "P02-00012"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "local-dazn",
+      "current_group": "Dazn",
+      "current_policy": "Dazn",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "DAZN sport regional streaming",
+      "published_rule_contribution": {
+        "group_total": 20,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "local-hbo",
+      "current_group": "HBO",
+      "current_policy": "HBO",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "HBO streaming",
+      "published_rule_contribution": {
+        "group_total": 90,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "local-animecrazy",
+      "current_group": "動畫瘋",
+      "current_policy": "動畫瘋",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "Bahamut animation regional content",
+      "published_rule_contribution": {
+        "group_total": 7,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "local-microsoft",
+      "current_group": "Microsoft",
+      "current_policy": "Microsoft",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "Microsoft services including direct-or-proxy choice",
+      "published_rule_contribution": {
+        "group_total": 671,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "local-chinadirect",
+      "current_group": "ChinaDirect",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "Explicit mainland direct business and reviewed IP coverage",
+      "published_rule_contribution": {
+        "group_total": 123008,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.4,
+        "stage_first_owner_credit": 3,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [
+        "P02-00004",
+        "P02-00005",
+        "P02-00013",
+        "P02-00014",
+        "P02-00015",
+        "P02-00016",
+        "P02-00017",
+        "P02-00018",
+        "P02-00019",
+        "P02-00020",
+        "P02-00021",
+        "P02-00022",
+        "P02-00023",
+        "P02-00024",
+        "P02-00025",
+        "P02-00026",
+        "P02-00027",
+        "P02-00028",
+        "P02-00029",
+        "P02-00030",
+        "P02-00031",
+        "P02-00032",
+        "P02-00033",
+        "P02-00034",
+        "P02-00035",
+        "P02-00036",
+        "P02-00037",
+        "P02-00038",
+        "P02-00039",
+        "P02-00040",
+        "P02-00041",
+        "P02-00042",
+        "P02-00043",
+        "P02-00044",
+        "P02-00045",
+        "P02-00046",
+        "P02-00047",
+        "P02-00048",
+        "P02-00049",
+        "P02-00050",
+        "P02-00051",
+        "P02-00052",
+        "P02-00053",
+        "P02-00054",
+        "P02-00055",
+        "P02-00056",
+        "P02-00057",
+        "P02-00058",
+        "P02-00059",
+        "P02-00060",
+        "P02-00061",
+        "P02-00062",
+        "P02-00063",
+        "P02-00064",
+        "P02-00065",
+        "P02-00066",
+        "P02-00067",
+        "P02-00068",
+        "P02-00069",
+        "P02-00070"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-openai",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0.6,
+        "stage_first_owner_credit": 8,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-anthropic",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0.333333,
+        "stage_first_owner_credit": 6,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-google-deepmind",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0.195652,
+        "stage_first_owner_credit": 37,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-github-copilot",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 6,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-perplexity",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0.4,
+        "stage_first_owner_credit": 3,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-cursor",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0.6,
+        "stage_first_owner_credit": 2,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-xai",
+      "current_group": "AI",
+      "current_policy": "AI",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "AI products with potentially distinct egress",
+      "published_rule_contribution": {
+        "group_total": 112,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 11,
+        "stage_duplicate_ratio": 0.5,
+        "stage_first_owner_credit": 2,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-netflix",
+      "current_group": "Netflix",
+      "current_policy": "Netflix",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Netflix geographical catalog and streaming",
+      "published_rule_contribution": {
+        "group_total": 1156,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "v2-spotify",
+      "current_group": "Spotify",
+      "current_policy": "Spotify",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Spotify music",
+      "published_rule_contribution": {
+        "group_total": 33,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.8,
+        "stage_first_owner_credit": 5,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-youtube",
+      "current_group": "YouTube",
+      "current_policy": "YouTube",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "YouTube service routing",
+      "published_rule_contribution": {
+        "group_total": 191,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.994318,
+        "stage_first_owner_credit": 1,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-whatsapp",
+      "current_group": "Whatsapp",
+      "current_policy": "Whatsapp",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "WhatsApp messaging",
+      "published_rule_contribution": {
+        "group_total": 26,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.272727,
+        "stage_first_owner_credit": 8,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-telegram",
+      "current_group": "Telegram",
+      "current_policy": "Telegram",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Telegram messaging transport",
+      "published_rule_contribution": {
+        "group_total": 43,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.857143,
+        "stage_first_owner_credit": 3,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [
+        "P02-00007",
+        "P02-00008",
+        "P02-00009",
+        "P02-00010",
+        "P02-00011"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-facebook",
+      "current_group": "Facebook",
+      "current_policy": "Facebook",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Meta/Facebook platform services",
+      "published_rule_contribution": {
+        "group_total": 491,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 0.98731,
+        "stage_first_owner_credit": 5,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [
+        "P02-00012"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-tiktok",
+      "current_group": "TikTok",
+      "current_policy": "TikTok",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "TikTok region-specific routing",
+      "published_rule_contribution": {
+        "group_total": 58,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.333333,
+        "stage_first_owner_credit": 24,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-bilibili",
+      "current_group": "Bilibili",
+      "current_policy": "Bilibili",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Bilibili mainland and cross-border split",
+      "published_rule_contribution": {
+        "group_total": 132,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 0.833333,
+        "stage_first_owner_credit": 5,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-bilibili-cdn",
+      "current_group": "Bilibili",
+      "current_policy": "Bilibili",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Bilibili mainland and cross-border split",
+      "published_rule_contribution": {
+        "group_total": 132,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "v2-steam",
+      "current_group": "Steam",
+      "current_policy": "Steam",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Steam storefront and non-mainland services",
+      "published_rule_contribution": {
+        "group_total": 61,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.488372,
+        "stage_first_owner_credit": 22,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-paypal",
+      "current_group": "Paypal",
+      "current_policy": "Paypal",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Cross-border PayPal payment",
+      "published_rule_contribution": {
+        "group_total": 248,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.995708,
+        "stage_first_owner_credit": 1,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-twitch",
+      "current_group": "Twitch",
+      "current_policy": "Twitch",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Twitch streaming",
+      "published_rule_contribution": {
+        "group_total": 48,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.205882,
+        "stage_first_owner_credit": 27,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-discord",
+      "current_group": "Discord",
+      "current_policy": "Discord",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Discord chat",
+      "published_rule_contribution": {
+        "group_total": 29,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.928571,
+        "stage_first_owner_credit": 2,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-line",
+      "current_group": "Line",
+      "current_policy": "Line",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "LINE messaging",
+      "published_rule_contribution": {
+        "group_total": 35,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.35,
+        "stage_first_owner_credit": 13,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-reddit",
+      "current_group": "Reddit",
+      "current_policy": "Reddit",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Reddit community",
+      "published_rule_contribution": {
+        "group_total": 15,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.416667,
+        "stage_first_owner_credit": 7,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-instagram",
+      "current_group": "Instagram",
+      "current_policy": "Instagram",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Instagram social",
+      "published_rule_contribution": {
+        "group_total": 74,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.027778,
+        "stage_first_owner_credit": 70,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-twitter",
+      "current_group": "Twitter",
+      "current_policy": "Twitter",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "X/Twitter social",
+      "published_rule_contribution": {
+        "group_total": 33,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.956522,
+        "stage_first_owner_credit": 1,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [
+        "P02-00002"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-hbo",
+      "current_group": "HBO",
+      "current_policy": "HBO",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "HBO streaming",
+      "published_rule_contribution": {
+        "group_total": 90,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.338462,
+        "stage_first_owner_credit": 43,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-dazn",
+      "current_group": "Dazn",
+      "current_policy": "Dazn",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "DAZN sport regional streaming",
+      "published_rule_contribution": {
+        "group_total": 20,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.625,
+        "stage_first_owner_credit": 3,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-apple-update",
+      "current_group": "AppleOTA",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Apple update and software delivery routing",
+      "published_rule_contribution": {
+        "group_total": 82,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.142857,
+        "stage_first_owner_credit": 18,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "felix-apple-china",
+      "current_group": "Apple",
+      "current_policy": "Apple",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Apple services including China-region overrides",
+      "published_rule_contribution": {
+        "group_total": 1600,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.006061,
+        "stage_first_owner_credit": 164,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "local-hellobike",
+      "current_group": "DomesticCore",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "Verified mainland critical services and transport",
+      "published_rule_contribution": {
+        "group_total": 7,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 3,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "local-domestic-core",
+      "current_group": "DomesticCore",
+      "current_policy": "DIRECT",
+      "legacy_remote_presence": "UNVERIFIED",
+      "original_business_purpose": "Verified mainland critical services and transport",
+      "published_rule_contribution": {
+        "group_total": 7,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 4,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-privacy",
+      "current_group": "AdBlock",
+      "current_policy": "AdBlock",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Ads and tracking selected by user REJECT or DIRECT",
+      "published_rule_contribution": {
+        "group_total": 77213,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 5,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 20,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_COLLATERAL_REJECT_OR_BYPASS",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-hijacking",
+      "current_group": "AdBlock",
+      "current_policy": "AdBlock",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Ads and tracking selected by user REJECT or DIRECT",
+      "published_rule_contribution": {
+        "group_total": 77213,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 5,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 228,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_COLLATERAL_REJECT_OR_BYPASS",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-primevideo",
+      "current_group": "PrimeVideo",
+      "current_policy": "PrimeVideo",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Prime Video streaming",
+      "published_rule_contribution": {
+        "group_total": 34,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.714286,
+        "stage_first_owner_credit": 6,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-abema",
+      "current_group": "Abema",
+      "current_policy": "Abema",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Abema Japanese streaming",
+      "published_rule_contribution": {
+        "group_total": 25,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.714286,
+        "stage_first_owner_credit": 6,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-bbc",
+      "current_group": "BBC",
+      "current_policy": "BBC",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "BBC regional content",
+      "published_rule_contribution": {
+        "group_total": 37,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.714286,
+        "stage_first_owner_credit": 8,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-linkedin",
+      "current_group": "Linkedin",
+      "current_policy": "Linkedin",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "LinkedIn professional platform",
+      "published_rule_contribution": {
+        "group_total": 12,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "v2-threads",
+      "current_group": "Facebook",
+      "current_policy": "Facebook",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Meta/Facebook platform services",
+      "published_rule_contribution": {
+        "group_total": 491,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 2,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [
+        "P02-00012"
+      ],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-disney",
+      "current_group": "Disney",
+      "current_policy": "Disney",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Disney streaming",
+      "published_rule_contribution": {
+        "group_total": 186,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 2,
+        "stage_duplicate_ratio": 0.896296,
+        "stage_first_owner_credit": 14,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "v2-bilibili-game",
+      "current_group": "Bilibili",
+      "current_policy": "Bilibili",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Bilibili mainland and cross-border split",
+      "published_rule_contribution": {
+        "group_total": 132,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 4,
+        "stage_duplicate_ratio": 1,
+        "stage_first_owner_credit": 0,
+        "zero_incremental_at_ingest": true,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_DIRECT_OR_REGION_CROSSOVER",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "CANDIDATE_ONLY_ZERO_STAGE_CREDIT",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "CONSOLIDATE",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Zero incremental staged ingestion; consolidate only after immutable provenance and business equivalence checks"
+    },
+    {
+      "source_id": "v2-bahamut",
+      "current_group": "動畫瘋",
+      "current_policy": "動畫瘋",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Bahamut animation regional content",
+      "published_rule_contribution": {
+        "group_total": 7,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 3,
+        "stage_duplicate_ratio": 0.4,
+        "stage_first_owner_credit": 3,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "SHARED_CDN_AUTH_PAYMENT_AND_REGION_REVIEW",
+      "special_region_exit_necessary": "PRESERVE_USER_CHOICE_PENDING_DEVICE_TEST",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    },
+    {
+      "source_id": "bm-privacy-domain",
+      "current_group": "AdBlock",
+      "current_policy": "AdBlock",
+      "legacy_remote_presence": "NO",
+      "original_business_purpose": "Ads and tracking selected by user REJECT or DIRECT",
+      "published_rule_contribution": {
+        "group_total": 77213,
+        "individual": "UNKNOWN_SOURCE_PROVENANCE_INCOMPLETE"
+      },
+      "irreplaceable_rule_contribution": "UNKNOWN_REQUIRES_PINNED_RAW_INPUTS_AND_POSTFILTER_PROVENANCE",
+      "cross_source_overlap": {
+        "stage_same_group_sources": 5,
+        "stage_duplicate_ratio": 0,
+        "stage_first_owner_credit": 39916,
+        "zero_incremental_at_ingest": false,
+        "meaning": "INPUT_STAGE_ORDER_DEPENDENT_NOT_PUBLISHED_EXCLUSIVE"
+      },
+      "potential_misroute_risk": "HIGH_COLLATERAL_REJECT_OR_BYPASS",
+      "special_region_exit_necessary": "NOT_ESTABLISHED",
+      "can_fall_through_final": "NOT_APPROVED_REQUIRES_POLICY_EQUIVALENCE_AND_USER_CHOICE_TEST",
+      "suitable_for_consolidation": "UNPROVEN",
+      "removal_business_loss": "UNKNOWN_POSSIBLE_BREAKAGE_OR_REGIONAL_UNLOCK_REGRESSION",
+      "evidence_sources": [
+        "rules/sources.json",
+        "audits/phase-02/data/source_inventory.json",
+        "baselines/legacy/sources.json",
+        "audits/phase-02/data/published_file_inventory.json"
+      ],
+      "recommendation": "DEFER",
+      "confidence": "LOW",
+      "associated_risk_ids": [],
+      "risk_association_scope": "GROUP_LEVEL_NOT_PROOF_OF_ORIGIN",
+      "phase04_condition": "Immutable upstream commit and raw lines, provenance through pruning, conflict review, regression and real-device validation",
+      "is_removal_approved": false,
+      "reason": "Published exact attribution and/or business necessity not proved; no removal decision"
+    }
+  ]
+}
