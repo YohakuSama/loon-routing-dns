@@ -226,6 +226,16 @@ def source_inventory(index, records):
     stats = {s["id"]: s for s in build.get("sources", [])}
     assert len(stats) == 87, "staged provenance summary incomplete"
     per_group = Counter(r["group"] for r in records)
+    # CURRENT_UPSTREAM_REFERENCE: upstream repository LICENSE files verified separately.
+    # This is not a per-entry legal conclusion and does not substitute for source provenance.
+    licenses = {
+        "blackmatrix7": ("GPL-2.0 (repository-level)",
+                         "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE"),
+        "v2fly": ("MIT (repository-level)",
+                  "https://github.com/v2fly/domain-list-community/blob/master/LICENSE"),
+        "felixonmars": ("WTFPL-2 (repository-level)",
+                         "https://github.com/felixonmars/dnsmasq-china-list/blob/master/LICENSE"),
+    }
     lines = []
     for s in catalog["sources"]:
         if not s["enabled"]:
@@ -237,7 +247,11 @@ def source_inventory(index, records):
         historical = url in historical_urls if url else "UNVERIFIED_LOCAL_HISTORY"
         lines.append({
             "id": s["id"], "url": url, "path": s.get("path"), "maintainer_or_org": org,
-            "original_license": "UNVERIFIED_REVIEW_UPSTREAM_LICENSE",
+            "original_license": (licenses[org][0] if org in licenses
+                                 else "LOCAL_SELF_MAINTAINED_LICENSE_UNVERIFIED"),
+            "license_documentation_url": licenses[org][1] if org in licenses else None,
+            "license_evidence": "CURRENT_UPSTREAM_REFERENCE_NOT_RELEASE_PINNED",
+            "original_rule_item_license": "UNKNOWN_THIRD_PARTY_DERIVATION",
             "format": s["format"], "group": group, "policy": s["policy"],
             "role": s.get("role"), "is_historical_remote_subscription": historical,
             "is_added_relative_to_historical_remotes": not historical if url else "UNKNOWN",
@@ -297,6 +311,18 @@ def candidates(records, conflicts, inventory):
             "recommendation_phase": "03" if category.startswith("DIRECT") else "04",
             "recommendation": recommendation
         })
+    for name in sorted(ad_control):
+        for owner in ad_control[name]:
+            if owner["group"] != "AdBlock":
+                add("P1", "ADBLOCK_PLATFORM_OWNERSHIP", owner,
+                    "Matching ad/tracker host falls under a platform rule; AdBlock is a later remote subscription",
+                    name + ": advertising, tracking, measurement or related infrastructure",
+                    recommendation="Review functional dependencies and source ownership; decide block/allow explicitly")
+                if owner["policy"] == "DIRECT":
+                    add("P1", "DIRECT_MEASUREMENT_INFRASTRUCTURE", owner,
+                        "Domain is also covered by another service's suffix; local and remote precedence must be checked",
+                        name + ": cross-region analytics and measurement",
+                        recommendation="Validate priority and legitimate geographic business before any change")
     for r in records:
         if r["rule_type"] in IP_TYPES and not r["no_resolve"]:
             add("P1" if r["policy"] == "DIRECT" else "P2", "IP_NO_RESOLVE_MISSING",
@@ -330,31 +356,33 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
     counts = Counter(r["rule_type"] for r in records)
     sev = Counter(x["severity"] for x in risks)
     first = lambda n, arr: "\n".join(
-        f'- \`{x["source_file"]}:{x["source_line"]}\` '
-        f'\`{x["rule_type"]},{x["rule_value"]}\` → \`{x["policy"]}\`'
+        f'- `{x["source_file"]}:{x["source_line"]}` '
+        f'`{x["rule_type"]},{x["rule_value"]}` → `{x["policy"]}`'
         for x in arr[:n]) or "- None found"
     index = [
         "# Phase 02 — frozen published snapshot audit",
-        "", f"- Frozen source commit: \`{SOURCE_COMMIT}\`",
+        "", f"- Frozen source commit: `{SOURCE_COMMIT}`",
         "- Input: 34 indexed published .list subscriptions. Local GEOIP and FINAL reviewed separately.",
         f"- Published rules parsed: **{len(records):,}** across **{len(details)}** files.",
         "- All 87 enabled inputs inventoried, but exact post-filter source attribution is unavailable.",
-        "- Historical remote bodies: \`HISTORICAL_CONTENT_UNAVAILABLE\`.",
-        "- Runtime DNS packet captures: \`RUNTIME_VERIFICATION_REQUIRED\`.",
+        "- Historical remote bodies: `HISTORICAL_CONTENT_UNAVAILABLE`.",
+        "- Runtime DNS packet captures: `RUNTIME_VERIFICATION_REQUIRED`.",
         "", "## Published matcher type totals", "",
         *[f"- {kind}: {value:,}" for kind, value in sorted(counts.items())],
         "", "## Risk register", "",
         *[f"- {k}: {sev[k]}" for k in ("P0", "P1", "P2", "P3")],
-        "", "Full data: \`data/normalized_rules.jsonl.gz\`, other JSON datasets.",
+        "", "Full data: `data/normalized_rules.jsonl.gz`, other JSON datasets.",
         "Counts from the historical generator audit are INPUT-STAGE observations, not published errors.",
     ]
     docs = {
         "README.md": "\n".join(index),
         "SOURCE_AUDIT.md": "\n".join([
             "# Source audit", "", "87 catalog sources; all recorded in data/source_inventory.json.",
-            "Staged per-source \`parsed\` counts are historical build-report claims, not retrievable raw inputs.",
+            "Staged per-source `parsed` counts are historical build-report claims, not retrievable raw inputs.",
             "No current upstream download was performed. Per-source final contribution cannot be reconstructed.",
-            "Licenses need checking at upstream license roots. REMOVE_CANDIDATE requires independent evidence.",
+            "Upstream repository-level licenses: blackmatrix7 GPL-2.0, v2fly MIT, felixonmars WTFPL-2.",
+            "These CURRENT_UPSTREAM_REFERENCE license records do not prove original per-item rights.",
+            "REMOVE_CANDIDATE requires independent provenance and business evidence.",
             "Historical remotes are URL-level evidence only; their historical contents are unavailable.",
         ]),
         "DUPLICATE_AUDIT.md": "\n".join([
@@ -392,9 +420,13 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
             "Privacy/Hijacking may contribute supplemental domains, but per-source published output is untraceable.",
             "The generator only admits DOMAIN/DOMAIN-SUFFIX to AdBlock; keyword/IP exclusions alter coverage.",
             "Platform-first ownership means ad-related exact matches may be removed from AdBlock.",
+            "The published anchor check confirms Google owns admob.com, doubleclick.com and",
+            "app-measurement.com; Twitter owns ads-twitter.com; ChinaDirect has an exact",
+            "app-measurement.com entry. That is a policy-risk candidate, not a proven bypass.",
+            "AdBlock is configured as select,REJECT,DIRECT, so runtime selection matters.",
             "Do not infer that every telemetry domain should be blocked.",
             "", "## Required anchored domain conditions", "",
-            *[f"- \`{name}\`: {encoded(ip['adblock_anchor_ownership'][name])}"
+            *[f"- `{name}`: {encoded(ip['adblock_anchor_ownership'][name])}"
               for name in sorted(ip["adblock_anchor_ownership"])],
             "", "Suggested classification: BLOCK_CANDIDATE, ALLOW_CANDIDATE, CONFLICT, REVIEW_REQUIRED.",
         ]),
@@ -404,6 +436,7 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
             "Ordinary overseas traffic could use FINAL when routing requirements are identical, subject to testing.",
             "Shared CDN, auth, payment and telemetry infrastructure must not be assigned by string branding alone.",
             "Policy-specific tests are needed before any Stage-03 consolidation.",
+            "Published groups can share auth, CDN and payment endpoints; inspect full overlap index.",
             "", "## Published group sizes", "",
             *[f"- {d['group']}: {d['rules']}" for d in details if d["group"] in INTERNATIONAL],
         ]),
@@ -428,6 +461,8 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
             "- own_cross_group_duplicates: PUBLISH_ORDER first owner wins, with no business-domain adjudication.",
             "- Published files are lexically sorted; no original source order is maintained.",
             "- Shared-CDN ownership and AdBlock-vs-platform priority are not business-validated.",
+            "- Loon docs: https://nsloon.bid/document/rule and https://nsloon.bid/document/ip_rule",
+            "- Loon 3.0.3+ describes domain-first matching and then local DNS for unmatched domain queries.",
             "- The build report stores 100 examples for several conflict categories, not full prepublication records.",
         ]),
         "RISK_REGISTER.md": "\n".join([
@@ -435,8 +470,8 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
             "- Full entries: data/risk_register.json. No runtime finding is marked RUNTIME_CONFIRMED.",
             f"- P0: {sev['P0']}; P1: {sev['P1']}; P2: {sev['P2']}; P3: {sev['P3']}.",
             "", "## All P0/P1 entries", "",
-            *[f"- {r['risk_id']} **{r['severity']}**: \`{r['source_file']}:{r['source_line']}\` "
-              f"\`{r['rule']}\` — {r['category']}; {r['trigger_condition']}; "
+            *[f"- {r['risk_id']} **{r['severity']}**: `{r['source_file']}:{r['source_line']}` "
+              f"`{r['rule']}` — {r['category']}; {r['trigger_condition']}; "
               "runtime verification required."
               for r in risks if r["severity"] in ("P0", "P1")],
         ]),
@@ -456,6 +491,40 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
         (output / name).write_text(body + "\n", encoding="utf-8")
 
 
+def scan_local_rules(index):
+    """Inspect local GEOIP/FINAL separately, since 206505 counts remote rule files only."""
+    items = []
+    for filename in index["configuration_files"]:
+        path = filename if isinstance(filename, str) else filename["path"]
+        section = ""
+        for lineno, raw in enumerate((ROOT / path).read_text(encoding="utf-8").splitlines(), 1):
+            line = raw.strip()
+            if line.startswith("[") and line.endswith("]"):
+                section = line
+                continue
+            if section != "[Rule]" or not line or line.startswith(("#", ";", "//")):
+                continue
+            parts = [part.strip() for part in line.split(",")]
+            if parts[0] == "FINAL" and len(parts) == 2:
+                policy, flag = parts[1], False
+            elif parts[0] == "GEOIP" and len(parts) in (3, 4):
+                policy = parts[2]
+                flag = len(parts) == 4 and parts[3].lower() == "no-resolve"
+            elif parts[0] in TYPES and len(parts) >= 3:
+                policy = parts[2]
+                flag = "no-resolve" in parts[3:]
+            else:
+                raise ValueError(f"unknown local rule: {path}:{lineno}")
+            items.append({
+                "source_file": path, "source_line": lineno, "rule_type": parts[0],
+                "rule_value": parts[1] if parts[0] != "FINAL" else "",
+                "policy": policy, "no_resolve": flag
+            })
+    assert any(r["rule_type"] == "GEOIP" for r in items)
+    assert any(r["rule_type"] == "FINAL" for r in items)
+    return items
+
+
 def build(output):
     _, index = validate_snapshot()
     records, details = scan_published(index)
@@ -468,6 +537,7 @@ def build(output):
     rows = "".join(encoded(locator(r)) + "\n" for r in records).encode("utf-8")
     (data / "normalized_rules.jsonl.gz").write_bytes(gzip.compress(rows, compresslevel=9, mtime=0))
     dump(data / "published_file_inventory.json", details)
+    dump(data / "local_rule_inventory.json", scan_local_rules(index))
     dump(data / "source_inventory.json", inventory)
     dump(data / "duplicate_report.json", {
         "published_exact_duplicates": overlaps["published_exact_duplicates"],
@@ -492,6 +562,9 @@ def build(output):
                    published_keyword_conflict_pairs=len(overlaps["keyword_cross_policy_possible"]),
                    published_ip_overlap_pairs=len(overlaps["ip_cross_policy_overlap"]),
                    missing_no_resolve=len(ip["missing_no_resolve"]),
+                   risk_counts=dict(sorted(Counter(r["severity"] for r in risks).items())),
+                   adblock_platform_ownership_risks=sum(
+                       r["category"] == "ADBLOCK_PLATFORM_OWNERSHIP" for r in risks),
                    direct_broad_keywords=len(ip["direct_keywords"]),
                    manual_source_review=sum(s["recommendation"] == "INVESTIGATE"
                                             for s in inventory["sources"]),
