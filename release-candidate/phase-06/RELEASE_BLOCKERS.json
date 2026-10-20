@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "release_approved": false,
+  "production_readiness": "NOT_READY",
+  "device_validation": "NOT_EXECUTED",
+  "blockers": [
+    {
+      "id": "RC-NODES",
+      "status": "OPEN",
+      "reason": "No private node subscription in public candidate"
+    },
+    {
+      "id": "RC-IMPORT",
+      "status": "OPEN",
+      "reason": "Real Loon import not executed"
+    },
+    {
+      "id": "RC-DNS",
+      "status": "OPEN",
+      "reason": "DNS/egress runtime comparison not executed"
+    },
+    {
+      "id": "RC-OVERLAPS",
+      "status": "OPEN",
+      "reason": "7331 non-equivalent parent/child observations need representative runtime tests"
+    },
+    {
+      "id": "RC-FINAL",
+      "status": "OPEN",
+      "reason": "FINAL=DIRECT and overseas shared infrastructure not device-tested"
+    }
+  ]
+}
