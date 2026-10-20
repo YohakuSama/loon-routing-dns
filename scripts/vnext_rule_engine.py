@@ -12,6 +12,9 @@ import ipaddress
 import json
 from pathlib import Path
 import re
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from vnext_source_lock import check_lock
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "refactor" / "vnext"
@@ -231,6 +234,7 @@ def quarantine_ip_overlaps(groups: dict, trace: list[dict]) -> None:
 def compile_rules(root: Path = ROOT) -> dict[str, str]:
     cfg = load_manifest(root / "refactor/vnext/engine_manifest.json")
     verify_immutable_sources(root, cfg)
+    check_lock(root)
     active, inactive = cfg["active_groups"], cfg["inactive_groups"]
     guardrails = json.loads((root / "rules/routing_guardrails.json").read_text(encoding="utf-8"))
     protected = tuple(guardrails["protected_proxy_domains"])
