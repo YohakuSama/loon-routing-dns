@@ -75,7 +75,7 @@ def canonical(text: str) -> str:
     rule = normalize(text)
     if rule is None:
         raise ValueError("empty or comment rule")
-    return _validate_matcher(rule)
+    return rule
 
 
 def source_line(source: dict, line: str) -> str | None:
@@ -88,7 +88,7 @@ def source_line(source: dict, line: str) -> str | None:
         if raw.upper().startswith("DOMAIN-SET,"):
             raise ValueError("unsupported DOMAIN-SET matcher")
         # Raw Loon rule source (not a Loon config with a third policy column).
-        return canonical(raw)
+        return _validate_matcher(canonical(raw))
     if fmt == "domainset":
         if raw.startswith("+."):
             raw = raw[2:]
@@ -96,7 +96,7 @@ def source_line(source: dict, line: str) -> str | None:
             raw = raw.lstrip(".")
         if "," in raw or " " in raw or not HOST.fullmatch(raw):
             raise ValueError("unrecognized domain set entry")
-        return canonical("DOMAIN-SUFFIX," + raw)
+        return _validate_matcher(canonical("DOMAIN-SUFFIX," + raw))
     if fmt == "v2fly":
         parts = raw.split()
         if len(parts) > 2 or not parts:
@@ -111,19 +111,19 @@ def source_line(source: dict, line: str) -> str | None:
         if match.startswith("include:") or match.startswith("regexp:"):
             raise ValueError("v2fly include/regexp requires explicit review")
         if match.startswith("full:"):
-            return canonical("DOMAIN," + match[5:])
+            return _validate_matcher(canonical("DOMAIN," + match[5:]))
         if match.startswith("domain:"):
-            return canonical("DOMAIN-SUFFIX," + match[7:])
+            return _validate_matcher(canonical("DOMAIN-SUFFIX," + match[7:]))
         if match.startswith("keyword:"):
-            return canonical("DOMAIN-KEYWORD," + match[8:])
+            return _validate_matcher(canonical("DOMAIN-KEYWORD," + match[8:]))
         if ":" in match:
             raise ValueError("unknown v2fly matcher")
-        return canonical("DOMAIN-SUFFIX," + match)
+        return _validate_matcher(canonical("DOMAIN-SUFFIX," + match))
     if fmt == "dnsmasq":
         m = re.fullmatch(r"(?:server|address)=/([^/]+)/[^/\s]+", raw)
         if not m:
             raise ValueError("unsupported dnsmasq directive")
-        return canonical("DOMAIN-SUFFIX," + m.group(1))
+        return _validate_matcher(canonical("DOMAIN-SUFFIX," + m.group(1)))
     raise ValueError("unknown source format")
 
 
