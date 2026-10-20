@@ -1,0 +1,210 @@
+{
+  "source_commit": "e8280fa589c8f647f46c092a064627f34e91a1b9",
+  "kind": "STAGE04_STATIC_EXPECTATIONS_NOT_ACTUAL_LOON",
+  "cases": [
+    {
+      "case_id": "domestic_bank_ccb",
+      "host": "www.ccb.com",
+      "expected_policy": "DIRECT",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "domestic_bank_abc",
+      "host": "www.abchina.com",
+      "expected_policy": "DIRECT",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "domestic_maps",
+      "host": "map.amap.com",
+      "expected_policy": "DIRECT",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "domestic_payment",
+      "host": "www.alipay.com",
+      "expected_policy": "DIRECT",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "domestic_travel",
+      "host": "www.t3go.cn",
+      "expected_policy": "DIRECT",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "domestic_ecommerce",
+      "host": "www.taobao.com",
+      "expected_policy": "DIRECT",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "apple_core",
+      "host": "www.apple.com",
+      "expected_policy": "Apple",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "google_search",
+      "host": "www.google.com",
+      "expected_policy": "Google",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "google_auth",
+      "host": "accounts.google.com",
+      "expected_policy": "Google",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "ai_openai",
+      "host": "www.openai.com",
+      "expected_policy": "AI",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "ai_chatgpt",
+      "host": "www.chatgpt.com",
+      "expected_policy": "AI",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "ai_gemini",
+      "host": "gemini.google.com",
+      "expected_policy": "AI",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "ai_copilot",
+      "host": "copilot.microsoft.com",
+      "expected_policy": "AI",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "netflix",
+      "host": "www.netflix.com",
+      "expected_policy": "Netflix",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "disney",
+      "host": "www.disneyplus.com",
+      "expected_policy": "Disney",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "youtube",
+      "host": "www.youtube.com",
+      "expected_policy": "YouTube",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "telegram",
+      "host": "web.telegram.org",
+      "expected_policy": "Telegram",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "whatsapp",
+      "host": "web.whatsapp.com",
+      "expected_policy": "Whatsapp",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "microsoft",
+      "host": "login.microsoftonline.com",
+      "expected_policy": "Microsoft",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "steam",
+      "host": "store.steampowered.com",
+      "expected_policy": "Steam",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "paypal",
+      "host": "www.paypal.com",
+      "expected_policy": "Paypal",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "tiktok",
+      "host": "www.tiktok.com",
+      "expected_policy": "TikTok",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "hbo",
+      "host": "www.hbo.com",
+      "expected_policy": "HBO",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "bilibili",
+      "host": "www.bilibili.com",
+      "expected_policy": "Bilibili",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "admob",
+      "host": "admob.com",
+      "expected_policy": "AdBlock",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "doubleclick",
+      "host": "doubleclick.com",
+      "expected_policy": "AdBlock",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "tracking_measurement",
+      "host": "app-measurement.com",
+      "expected_policy": "AdBlock",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "ads_twitter",
+      "host": "ads-twitter.com",
+      "expected_policy": "AdBlock",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "inactive_spotify",
+      "host": "www.spotify.com",
+      "expected_policy": "Final",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "inactive_twitch",
+      "host": "www.twitch.tv",
+      "expected_policy": "Final",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "inactive_reddit",
+      "host": "www.reddit.com",
+      "expected_policy": "Final",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "inactive_bbc",
+      "host": "www.bbc.co.uk",
+      "expected_policy": "Final",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "international_payments_stripe",
+      "host": "stripe.com",
+      "expected_policy": "Final",
+      "requires_device_validation": true
+    },
+    {
+      "case_id": "arbitrary_unknown",
+      "host": "unknown-5827469.invalid",
+      "expected_policy": "Final",
+      "requires_device_validation": true
+    }
+  ]
+}
