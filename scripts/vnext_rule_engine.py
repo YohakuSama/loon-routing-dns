@@ -201,6 +201,23 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
                               "replacement": replacement, "compatibility": "BEHAVIOR_MAY_CHANGE"})
                 reasons[reason] += 1
         old_rules_by_group[group] = old_set
+    # The legacy ProxyProtect list is a separate 17-rule subscription, outside
+    # the 33 generated snapshots. Record every retired rule individually.
+    proxy_path = root / "rules/ProxyProtect.list"
+    proxy_origin = proxy_path.relative_to(root).as_posix()
+    proxy_original = set()
+    for lineno, raw in enumerate(proxy_path.read_text(encoding="utf-8").splitlines(), 1):
+        rule = normalize(raw)
+        if not rule:
+            continue
+        proxy_original.add(rule)
+        before["ProxyProtect"] += 1
+        trace.append({"action": "REMOVED", "group": "ProxyProtect", "rule": rule,
+                      "origin": proxy_origin, "line": lineno,
+                      "reason": "INDEPENDENT_PROXYPROTECT_RETIRED",
+                      "replacement": "service owner or FINAL",
+                      "compatibility": "FINAL=DIRECT MAY NOW DIRECT THIS DESTINATION"})
+    old_rules_by_group["ProxyProtect"] = proxy_original
     # Explicit advertising classification, with reviewable virtual provenance.
     for domain in AD_ANCHORS:
         rule = "DOMAIN-SUFFIX," + domain
@@ -255,11 +272,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     for key, selected in (
         ("direct_changes", [x for x in trace if x["group"] in {"ChinaDirect", "DomesticCore", "AppleOTA", "SteamCN"}]),
         ("adblock_changes", [x for x in trace if x["group"] == "AdBlock" or x["reason"] == "ADVERTISING_REASSIGNED"]),
-        ("proxyprotect_impact", [{"source": "rules/ProxyProtect.list",
-                                  "old_policy": "Proxy",
-                                  "candidate_replacement": "ordinary service owner or FINAL",
-                                  "compatibility": "FINAL=DIRECT MAY CHANGE BEHAVIOR",
-                                  "message": "No 17-rule diagnostic whitelist copied into vNext"}]),
+        ("proxyprotect_impact", [x for x in trace if x["group"] == "ProxyProtect"]),
     ):
         files["refactor/vnext/reports/" + key + ".jsonl"] = "".join(
             json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in selected)
@@ -344,6 +357,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     report = {
         "status": "OFFLINE_CANDIDATE_NOT_DEVICE_VERIFIED",
         "baseline_rule_count_stage03": 206505,
+        "legacy_proxyprotect_rule_count": len(proxy_original),
         "baseline_count_from_selected_snapshot_groups": raw_total,
         "candidate_rule_count": new_total,
         "baseline_upstream_source_count": len(source_catalog),
