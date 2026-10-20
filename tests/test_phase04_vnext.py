@@ -159,6 +159,27 @@ class Phase04Tests(unittest.TestCase):
         self.assertIn("DOMAIN-SUFFIX,whatsapp.com", self.groups["Whatsapp"])
         self.assertIn("IP-CIDR,17.0.0.0/8,no-resolve", self.groups["Apple"])
 
+    def test_business_scenarios_include_full_selector_matrix(self):
+        fixture = json.loads((ROOT / "refactor/vnext/business_regression_cases.json").read_text())
+        self.assertEqual(fixture["kind"], "STATIC_DOMAIN_ONLY_NOT_LOON_RUNTIME")
+        self.assertGreaterEqual(len(fixture["cases"]), 30)
+        self.assertTrue(all(x["requires_device_validation"] for x in fixture["cases"]))
+        for entry in fixture["cases"]:
+            with self.subTest(entry["case_id"]):
+                routed = ve.simulate_domain(entry["host"], self.files)
+                self.assertEqual(routed["policy"], entry["expected_policy"],
+                                 f"domain-only route regression: {entry}: {routed}")
+                self.assertEqual(routed["simulator"], "DOMAIN_ONLY")
+        for selected in ("REJECT", "DIRECT"):
+            for host in ve.AD_ANCHORS:
+                routed = ve.simulate_domain(host, self.files, adblock_choice=selected)
+                self.assertEqual(routed["effective"], selected)
+        for selected in ("Proxy", "Auto", "Fallback", "DIRECT"):
+            routed = ve.simulate_domain("unknown-5827469.invalid", self.files,
+                                        final_choice=selected)
+            self.assertEqual(routed["effective"], selected)
+        self.assertGreaterEqual(len(fixture["ip_runtime_cases"]), 4)
+
     def test_brand_keyword_narrowing(self):
         decisions = self.manifest["reviewed_keyword_narrowing"]
         self.assertEqual(sum(map(len, decisions.values())), 15)
