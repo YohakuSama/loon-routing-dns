@@ -1,10 +1,12 @@
-# LoonKit DNS 隐私与路由排查（2026-10-18）
+# LoonKit DNS 隐私与路由排查（含 vNext-RC2，2026-10-20）
+
+> 阶段07仅整改分流规则，主配置和 PrivacyDNS 的原始 General、DNS/DoH/TUN 设置分别按原文保留；新候选**不再订阅 ProxyProtect**，文中涉及旧版机制的内容明确标为历史说明。
 
 ## 发现“仍然 DNS 泄漏”时的分类诊断（2026-10-19，国内 DoH 修订）
 
 **先区分三个独立现象：**
 
-1. **网页出口真实 IP**：BrowserLeaks 页面的 `Your IP Address` 如果显示本机运营商 IP，检查 `ProxyProtect` 是否下载成功、Loon 是否为分流模式、`Proxy` 是否选择到可用节点。**这属于路由/代理出口问题，不等于 DNS 查询明文泄漏。**
+1. **网页出口真实 IP**：BrowserLeaks 页面的 `Your IP Address` 如果显示本机运营商 IP，检查 Loon 实际命中的路由、当前 `Final` 选择、是否为分流模式及 `Proxy` 是否选择到可用节点。**这属于路由/代理出口问题，不等于 DNS 查询明文泄漏。**
 2. **网站显示 AliDNS 或其他 DNS 解析器**：正式兼容版明确配置 `https://dns.alidns.com/dns-query`；即使 Loon 使用 DoH 加密并代理网页，检测站也可以发现解析器不是代理节点所在地。**这不自动证明运营商能看到明文 DNS**。
 3. **原生 DNS 实际使用 UDP/system**：使用插件「网络与 DNS 诊断」的 `protocol`、`server`、`fromCache` 和 Loon DNS 日志确认。发现 `udp` 时，检查「DNS 服务器 → 加密 DNS 失败回退到普通 DNS」是否关闭、是否有额外订阅/插件 DNS 和浏览器自身 DNS 设置。单次 `fromCache=true` 不能证明发生新的网络请求。
 
@@ -23,11 +25,11 @@
 5. 运行插件「网络与 DNS 诊断」（Build 988+），检查 `$dns.query` 的 `protocol`、`server`、`fromCache`。预期为 `doh` 及 AliDNS 的 URL。若为 `udp` 则说明此次 Loon DNS 查询使用明文；如果命中缓存，就不能据此断定本次发生网络查询。
 6. 在 Loon 的 DNS 日志及请求日志复查其他域名，核对是否出现以前版本没有的解析器或出口；其他设置可能影响最终行为，但不应仅因 BrowserLeaks 列出多个服务器就断言有明文泄漏。
 
-## BrowserLeaks 真实 IP 显示（已定位）
+## 检测网站出口与路由（需按 RC2 实际命中判断）
 
 - 上游 `blackmatrix7/ios_rule_script` 的 `ChinaMaxNoMedia_Domain.list` 将 `.browserleaks.com` 放入中国直连域名集。如果未添加本地覆盖规则，Loon 会把 BrowserLeaks 网页直连，因此检测页会显示设备的中国移动公网 IP；**网页直连与 DNS 查询是否明文是两个不同问题**。
-- 正式版 v5.10.0 通过首位自托管 `rules/ProxyProtect.list`（`policy=Proxy`）集中管理 17 个受保护域名；不再在 `[Rule]` 中维护这些例外。它能纠正这些网站的错误直连，但不能证明整台设备没有 DNS 泄漏。
-- 更新后重连 Loon，清理 BrowserLeaks 已打开的标签页与连接缓存，再刷新网页，在 Loon 请求记录中检查命中的 `browserleaks.com` 规则是否为 `Proxy`。若没有记录，再确认新配置确实导入成功。
+- **历史 v5.10.0 的说明（非 RC2 运行配置）**：首位 `rules/ProxyProtect.list` 曾集中管理 17 项代理出口保护。**vNext-RC2 已取消独立 ProxyProtect 订阅，不隐藏复制旧保护名单**。检测网站按正常规则和 Final 选择处理；网页出口与 DNS 安全不是同一件事。
+- 切换 RC2 后应重连 Loon、确认缓存更新，使用请求日志实际核查 `browserleaks.com` 命中及所选出口，而不是要求它无条件命中 `Proxy`。若 `Final=DIRECT`，未分类测试域名也可能直连；结果不能代表全局 DNS 是否泄漏。
 
 ## DNS 解析并不等于代理出口
 

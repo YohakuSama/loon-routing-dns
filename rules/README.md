@@ -1,106 +1,32 @@
-# 自维护复合型 Loon 规则库 v5.10.0
+# LoonKit vNext 规则目录与可追溯来源
 
-> **审计报告：** [2026-10-18 自有规则安全核查](./AUDIT_2026-10-18.md) · [自维护直连保护策略](./routing_guardrails.json)。自有库必须独立修正误分类，并使用生成器和回归测试保证未来不会再次进入直连清单。
+> **vNext-RC2（尚未正式发布）**。历史版 v5.10.0 自托管复合规则说明已归档至 [legacy-v5.10-README.md](./legacy-v5.10-README.md)，供原订阅使用者与审计追溯。本文描述的是本重构分支中的候选架构，**不是 main 已正式切换的声明**。
 
-**状态：已发布主分支中的自托管规则快照用于正式分流。** 继续将自动生成的新规则作为候选 PR 审核，不自动覆盖发布文件。原始 28 条第三方规则及 66 条本地规则仍保存在 [verified-routing-baseline.json](./verified-routing-baseline.json) 作为回退参考。
+## 现役候选架构
 
-## 为什么采用“复合型规则库”？
+- **26 份规则文件，197,765 条远程规则**：`rules/releases/vNext-RC2/`。版本固定在 `d405e4be28c447b6e57a4790e965c89f342d6dd6`，以 `release/phase-07/RC_MANIFEST.json` 的 SHA256、条数和路径为准。
+- **两份正式候选配置**：`LoonKit.lcf` 与 `LoonKit.PrivacyDNS.lcf` 均引用完全相同的固定规则，106 条本地分流中有 26 条 AdBlock 本地优先级保护。两份 General 的 DNS/DoH/TUN 原文各自保持历史基线。
+- **规则输入**：`rules/snapshots/phase03/generated/` 独立冻结 33 个历史合并快照。生成器**不从 `rules/generated/` 读取任何输入**。
+- **源锁**：`refactor/vnext/engine_manifest.json`、`sources.lock.json` 锁定输入 SHA/ Git blob，`scripts/vnext_rule_engine.py` 可重复生成候选；`scripts/phase07_release.py --check` 验证版本化规则、正式候选配置及 SHA256。
+- **旧订阅兼容**：`rules/generated/` 的老版本输出保留不删除、不在未批准时直接替换；现役 RC2 只消费 `rules/releases/vNext-RC2/` 的固定版本规则。旧资源与新候选版本号不能混为一谈。
+- **无独立 ProxyProtect**：RC2 正式候选未订阅 `rules/ProxyProtect.list`。该文件及其 17 条历史保护匹配保留仅为旧客户端兼容和审计，不作为正式发布的 DNS 安全证据。
+- **遗留风险**：来源清单 `sources.json` 的 87 条历史条目不能证明所有当前规则的实际行级版权/来源归属；历史上游混合正文不可恢复。7,331 项非等效域名覆盖需要代表性真机测试；不能标为全部通过。
 
-复合规则库已作为正式配置中的规则来源，新候选仍须单独审核。旧版稳定分流使用 blackmatrix7 的 28 个远程规则条目和明确的本地域名补充；实验性复合规则可能在特定网络环境引入不可预期的路由差异。某些特殊网络环境下可能出现直连/代理误判、广告误杀、地区服务异常或更新滞后，影响体验。**这不意味着任一上游项目整体存在缺陷，也不意味着所有问题都由规则造成**；DNS 策略、节点、系统 TUN 行为和 CDN 调度必须分别诊断。
-
-本项目采用独立维护的复合型规则层，目标是：
-
-1. **继承可靠基础**：保留已被实际使用且来源明确的 Loon 原生规则。
-2. **交叉补全服务**：优先补齐现有策略组涉及的 AI、WhatsApp、Facebook、DAZN、HBO、动画疯、Microsoft、Prime Video 等目录。
-3. **有条件去重**：同一策略组内去除格式一致的重复项；跨策略组仅报告相同项，避免破坏可独立启停的分组。
-4. **识别策略冲突**：分析同一匹配项被分配到不同策略及域名后缀的父子关系。冲突不是总能自动修复，必须考虑 Loon 优先级。
-5. **来源可追溯**：每一份生成文件都有上游来源 ID，更新通过 PR 审核而非静默覆盖线上规则。
-6. **避免过时和误杀**：验证规则数量、格式、解析行为和使用场景；上游久未修改只是复核信号，并不自动等于失效。
-
-**为什么不直接合并所有规则？** 因为通配域名、共享 CDN、平台 IP、广告列表、国内直连和流媒体解锁规则可能互相覆盖。规则越多不一定越好。项目遵循“明确来源、有限引入、冲突可见、随时回退”的原则。
-
-## 正式规则来源
-
-候选规则来源见 [sources.json](./sources.json)，目前 87 个生成输入，产出 33 个已发布的分类策略规则组。基础分类来自 blackmatrix7，服务域名补全来自 v2fly，Apple 中国相关优化域名来自 felixonmars，常用国内业务例外由项目自行维护。对应 GPL-2.0、MIT、WTFPL 原始许可正文位于本目录 `LICENSE.*`。
-
-广告、隐私和劫持防护统一生成到 `AdBlock.list`；为降低误杀，广告保护仅保留精确域名和域名后缀，不引入模糊关键词、IP 共享网段封禁和需要 MITM 的 URL 正则。相同策略去重，同组父域覆盖的子规则裁剪；不同策略间精确相同匹配按订阅优先级保留第一条并记入 `audit.json`。不要对不同策略间的父子域名交叉直接推断为错误。
-
-其他候选项目需完成格式、维护状况和许可审查才能加入；不能为了增加数量无条件导入。
-
-## 诊断域名安全保护
-
-- 上游 `ChinaMaxNoMedia_Domain` 曾把 `.browserleaks.com`、`.whatismyip.com` 归入 `DIRECT`，同时有宽泛的 `DOMAIN-KEYWORD,stripe`。本项目自有 `ChinaDirect.list` 已清理这三条，生成器也会拦截再次导入。
-- `routing_guardrails.json` 中的受保护域名不能出现在任一自维护 `DIRECT` 组的域名、后缀、关键词匹配规则中；过滤结果带来源和行号写入审计报告。
-- CI 不仅测试生成器，还检查已生成 `ChinaDirect.list` 的实际内容和 `audit.json` 规则数。不允许上游自动刷新把误分类重新带回。
-- 仍需逐类人工审查广告冲突、共享域名和 IP 规则；**安全保护名单不能替代真机和业务功能验证**。
-
-## 构建、去重与安全约束
-
-用 Python 3.12+（仅标准库）运行：
+## 离线可复现验证
 
 ```bash
-python3 -m unittest discover -s tests -p 'test_composite_rules.py'
-python3 scripts/build_composite_rules.py
+python3 scripts/vnext_source_lock.py --check
+python3 scripts/vnext_rule_engine.py --check
+python3 scripts/vnext_phase05_report.py --check
+python3 scripts/phase07_release.py --check
+python3 scripts/phase07_resource_audit.py --check
+python3 scripts/phase07_gate.py --lint
 ```
 
-输出到 `rules/generated/` 下（**主分支已审核的文件可被正式配置加载；工作流构建的新版文件仍需 PR 审核**）：
+以上检查只验证来源、格式、生成结果和固定 Git 对象；DNS 出口、真实设备载入、地区解锁、银行支付、AdBlock 选择与 FINAL 出口需要维护者独立提供结构化真机数据。注意插件、图标、用户节点及缓存问题不一定是规则归属问题。
 
-- 每个策略组生成单独的 Loon 原生 `.list`，保留来源标识。
-- `audit.json` 记录每个来源的内容指纹、成功解析数、组内去重数、跨组同策略重复数、跨策略冲突、域名后缀祖先冲突及被隔离的未知格式样本。
-- `*_Domain.list` 先按 domain-set 转换成 `DOMAIN` 或 `DOMAIN-SUFFIX`，再参与规则比对。
-- 对 `IP-CIDR` / `IP-CIDR6` 做网段规范化并**强制附加 `no-resolve`**，维持已由维护者实测验证的 DNS 匹配与解析顺序；上游有无该标志都不改变发布行为。`IP-ASN` 保留上游提供的 `no-resolve` 标志。AI 分组额外剔除宽泛 ASN 和共享支付、认证、遥测服务的根域名，避免影响其他 App。不得未经真机回归将 CIDR 规则改为可触发预解析。
-- `URL-REGEX` 暂不混入结果：可能涉及 MITM、匹配开销与误杀；会记录在审计报告中。
-- 对未知语法不做猜测，隔离并记录。任何上游抓取失败、文件超限或低于来源设置的最低规则数时，**整次构建报错，不发布不完整输出**。
-- 当前正式版按照配置内的实际订阅优先级删除跨分组**完全相同**的匹配项，审计报告保留原始归属；此操作会产生分组间依赖，不能保证各订阅完全独立启停。不同组的父子域名覆盖仅审计，不自动删除。
+## 来源更新和审核
 
-### 需人工审核的重点
+先从许可允许的固定版本获取拟更新的来源，形成新的不可变候选文件，绝不能将已经输出的正式规则反过来当原始输入。使用 `scripts/phase07_source_update_review.py` 生成只读新增/删除差异报告。更新后必须通过来源锁、审计、分流回归、许可证检查以及维护者的运行时专项回归，新建候选版本号才能替换正式资产。完整流程见 [来源更新说明](../release/phase-07/UPSTREAM_UPDATE.md)。
 
-| 分组/问题 | 审核方向 |
-|---|---|
-| AI 与 Google/Microsoft | Gemini、Copilot 域名归属；优先专用 AI 规则，不强制全部 Google/Microsoft 走一个出口 |
-| ChinaDirect 与海外平台 | 重复、CN 泛匹配、同域不同地区出口的冲突 |
-| Apple/SystemOTA | App Store、iCloud、系统更新和 Apple CDN 必须区分，避免误直连 |
-| Advertising | 登录、支付、验证码、播放器、归因 SDK 的误杀回归 |
-| Facebook/Whatsapp | 共享 Facebook/Meta 基础设施不应未经验证强制属于某单一策略 |
-| Steam/SteamCN | 下载加速不应干扰国际社区、账户、商店流量 |
-| Bilibili/流媒体 | 使用日志观察 CDN 命中，避免整个共享 CDN 后缀被粗暴直连 |
-
-## Loon 的匹配机制
-
-依据 [Loon 官方规则文档](https://nsloon.app/docs/Rule/)：
-
-- 域名规则优先于 DNS 后的 IP 规则；
-- 本地 `[Rule]` 优先于插件规则，插件规则优先于远程订阅；
-- 同一匹配阶段的规则顺序也可能影响最后命中的策略；
-- `FINAL` 是未匹配时的兜底。**不能依靠字面去重来保证规则效果一致。**
-
-我们的审计包括跨远程列表的冲突报告，但**尚不能模拟 Loon 完整运行时行为**，包括插件优先级、DNS 缓存、IP 命中、脚本和节点健康状态。
-
-## 更新策略
-
-1. 自动运行离线单元测试；
-2. 定期重新拉取目录登记的上游规则、生成候选列表与审计报告；
-3. 有变更时由 GitHub Actions **自动打开更新 PR**，不会自动合并 `main`；
-4. 审核去重、冲突、隔离格式、文件变动和许可；
-5. 在真实 iPhone 上检查国内/海外、Apple、AI、登录与支付、WebRTC、流媒体、UDP、IPv6；
-6. 人工批准后，先灰度将部分自托管列表接入 `[Remote Rule]`，再按问题逐步扩展；保留回滚入口。
-
-> GitHub Actions 执行成功只说明构建和静态测试通过，不代表分流和 DNS 实际运行无异常。规则更新也无法单独解决 DNS 解析器选择或 IP 出口显示的问题。
-
-## 上游版权和许可
-
-- [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) —— 规则与数据来源。该仓库标注 GPL-2.0，完整许可文本保存在 [LICENSE.GPL-2.0](./LICENSE.GPL-2.0)。
-- 不应删除上游署名，生成器保留来源 ID；对再分发的规则及必要源码、版权告知和相应许可，需按上游实际授权履行义务。
-- GPL-3.0 作品与仅按 GPL-2.0 授权的内容可能存在许可兼容问题。因此其他候选源仅登记不导入，未完成许可核对前不直接混用。
-- 保留原项目维护者署名。本规则库为独立社区整理，**不代表 Loon 官方或任何上游项目的官方发布**。
-
-## 质量门槛
-
-在将任何一份新的生成规则并入**正式默认配置**前，要求：测试通过、上游地址可达、生成数量不异常骤降、`audit.json` 中没有未解释的高风险冲突、真实 Loon 试用完成，并保留稳定版规则快照和回滚方案。
-
-## 自托管发布与防误直连
-
-- [active_profile.json](./active_profile.json) 锁定 34 条实际订阅的顺序：首位 `ProxyProtect` 使用 `Proxy` 策略，其余 33 组按照生成器 `PUBLISH_ORDER` 排序。
-- `ProxyProtect.list` 由 [routing_guardrails.json](./routing_guardrails.json) 中的 17 个域名维护，保护名单不再复制到主配置 `[Rule]`。
-- 生成的 `audit.json` 中 `STAGED_CANDIDATE` 表示**生成和审查阶段状态**；主分支发布快照已由正式配置引用，并非自动刷新直接上线。
-- 历史的 159 项输入层跨策略精确重复及 7,421 项父子域名覆盖为审计指标，不能当成同等数量的已确认分流错误。精确跨策略重复按发布顺序保留第一次命中；父子覆盖须结合具体业务语义判定，不能粗暴全部剔除。
+许可证正文和历史回溯资料见 `rules/LICENSE.*`、`rules/sources.json` 和 [许可证风险审查](../release/phase-07/LICENSE_REVIEW.md)。在确认 GPL-2.0、MIT、WTFPL、混合数据再分发条款以及图标/插件授权前，正式发布不得放行。
