@@ -124,6 +124,30 @@ class Phase04Tests(unittest.TestCase):
         self.assertGreater(len(removed.splitlines()), 100)
         self.assertEqual(self.summary["baseline_upstream_source_count"], 87)
 
+    def test_cross_type_risks_are_audited(self):
+        for name, metric in (
+            ("domain_parent_child_conflicts", "domain_parent_child_ambiguities"),
+            ("domain_keyword_risks", "domain_keyword_review_count"),
+            ("ip_network_overlaps", "cross_policy_nested_ip_networks"),
+        ):
+            lines = self.files["refactor/vnext/reports/" + name + ".jsonl"].splitlines()
+            self.assertEqual(len(lines), self.summary[metric])
+            if lines:
+                record = json.loads(lines[0])
+                self.assertEqual(record["status"], "REQUIRES_RUNTIME_TEST")
+        self.assertFalse(any(r.startswith("DOMAIN-KEYWORD,") for r in self.groups["ChinaDirect"]))
+
+    def test_all_seventeen_proxyprotect_entries_have_retirement_ledger(self):
+        impacts = self.files["refactor/vnext/reports/proxyprotect_impact.jsonl"].splitlines()
+        self.assertEqual(len(impacts), 17)
+        self.assertEqual(self.summary["legacy_proxyprotect_rule_count"], 17)
+        for entry in impacts:
+            detail = json.loads(entry)
+            self.assertEqual(detail["group"], "ProxyProtect")
+            self.assertEqual(detail["replacement"], "service owner or FINAL")
+            self.assertTrue(detail["line"] >= 1)
+            self.assertIn("FINAL=DIRECT", detail["compatibility"])
+
     def test_production_general_section_byte_equivalent(self):
         original = (ROOT / "LoonKit.lcf").read_text()
         candidate = self.files["refactor/vnext/LoonKit.vNext.Candidate.lcf"]
