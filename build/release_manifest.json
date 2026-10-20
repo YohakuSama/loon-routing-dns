@@ -1,7 +1,7 @@
 {
   "device_test": "NOT_EXECUTED",
   "label": "v6.0.0",
-  "licenses": "BLOCKED_REVIEW",
+  "licenses": "NOTICES_DOCUMENTED_NOT_INDEPENDENTLY_CERTIFIED",
   "locked_inputs_path": "build/sources.lock.json",
   "maintainer_approval": "NOT_EXECUTED",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
