@@ -135,7 +135,7 @@ def choose_exact_owners(candidates: dict[str, dict[str, set[tuple[str, int]]]],
             continue
         kind, value = fields(rule)
         owner = None
-        if kind in {"DOMAIN", "DOMAIN-SUFFIX"} and value in AD_ANCHORS and "AdBlock" in groups:
+        if kind in {"DOMAIN", "DOMAIN-SUFFIX"} and "AdBlock" in groups:
             owner = "AdBlock"
         elif kind in {"DOMAIN", "DOMAIN-SUFFIX"} and value in AI_EXCEPTION_HOSTS and "AI" in groups:
             owner = "AI"
@@ -296,6 +296,9 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     candidate_profile = profile[:start] + "\n".join(remote) + "\n" + profile[end:]
     candidate_profile = candidate_profile.replace(
         "# LoonKit v5.10.0", "# LoonKit vNext candidate (UNRELEASED; do not auto-subscribe)", 1)
+    candidate_profile = candidate_profile.replace(
+        "# Historical verified local service rules. Diagnostic protections moved to rules/ProxyProtect.list.",
+        "# Reviewed local service exceptions. No independent diagnostic proxy subscription.", 1)
     files["refactor/vnext/LoonKit.vNext.Candidate.lcf"] = candidate_profile
     return files
 
