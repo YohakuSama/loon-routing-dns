@@ -182,13 +182,13 @@ class Phase04Tests(unittest.TestCase):
 
     def test_brand_keyword_narrowing(self):
         decisions = self.manifest["reviewed_keyword_narrowing"]
-        self.assertEqual(sum(map(len, decisions.values())), 15)
+        self.assertEqual(sum(map(len, decisions.values())), 20)
         for group, mappings in decisions.items():
             for old, scoped in mappings.items():
                 self.assertNotIn("DOMAIN-KEYWORD," + old, self.groups[group])
                 self.assertIn(scoped, self.groups[group])
         summary = self.summary
-        self.assertEqual(summary["reviewed_keyword_narrowing_count"], 15)
+        self.assertEqual(summary["reviewed_keyword_narrowing_count"], 20)
 
     def test_shared_multitenant_roots_fall_through_final(self):
         roots = self.manifest["reviewed_multi_tenant_suffixes"]
