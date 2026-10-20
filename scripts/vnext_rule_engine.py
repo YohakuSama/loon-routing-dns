@@ -123,6 +123,10 @@ def filter_rule(group: str, rule: str, protected: tuple[str, ...],
             return None, "ADVERTISING_REASSIGNED", "AdBlock (REJECT or DIRECT)"
     if group not in {"AdBlock", "ChinaDirect"} and kind == "DOMAIN-SUFFIX" and value in SHARED_PLATFORM_ROOTS:
         return None, "SHARED_INFRASTRUCTURE_ISOLATED", "FINAL"
+    if (group not in {"ChinaDirect", "AdBlock", "DomesticCore"} and kind == "DOMAIN-SUFFIX"
+            and value in {"akadns.net", "edgesuite.net", "llnwd.net",
+                          "windows.net", "appspot.com", "blogspot.com"}):
+        return None, "MULTITENANT_SHARED_ROOT_ISOLATED", "precise platform domain or FINAL"
     if group == "AI" and kind == "IP-ASN":
         return None, "AI_BROAD_ASN", "FINAL"
     return rule, None, group
