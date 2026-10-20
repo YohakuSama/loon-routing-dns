@@ -186,7 +186,13 @@ class Phase04Tests(unittest.TestCase):
         for group, mappings in decisions.items():
             for old, scoped in mappings.items():
                 self.assertNotIn("DOMAIN-KEYWORD," + old, self.groups[group])
-                self.assertIn(scoped, self.groups[group])
+                owners = [group]
+                if group == "ChinaDirect":
+                    # Identical DIRECT policy duplicates are legitimately owned
+                    # by the smaller DomesticCore group.
+                    owners += ["DomesticCore"]
+                self.assertTrue(any(scoped in self.groups[owner] for owner in owners),
+                                f"scoped {group}/{old} missing from reviewed same-policy owners")
         summary = self.summary
         self.assertEqual(summary["reviewed_keyword_narrowing_count"], 20)
 
