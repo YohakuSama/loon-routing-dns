@@ -176,6 +176,21 @@ DOMAIN-SUFFIX,abchina.com,DIRECT
 DOMAIN-SUFFIX,abchina.com.cn,DIRECT
 DOMAIN-SUFFIX,t3go.cn,DIRECT
 DOMAIN-SUFFIX,wo.cn,DIRECT
+# Minimal overseas service selector compatibility; candidate only.
+DOMAIN-SUFFIX,spotify.com,Spotify
+DOMAIN-SUFFIX,scdn.co,Spotify
+DOMAIN-SUFFIX,twitch.tv,Twitch
+DOMAIN-SUFFIX,ttvnw.net,Twitch
+DOMAIN-SUFFIX,abema.tv,Abema
+DOMAIN-SUFFIX,abema.io,Abema
+DOMAIN-SUFFIX,bbc.co.uk,BBC
+DOMAIN-SUFFIX,bbc.com,BBC
+DOMAIN-SUFFIX,line.me,Line
+DOMAIN-SUFFIX,line-apps.com,Line
+DOMAIN-SUFFIX,reddit.com,Reddit
+DOMAIN-SUFFIX,redd.it,Reddit
+DOMAIN-SUFFIX,linkedin.com,Linkedin
+DOMAIN-SUFFIX,licdn.com,Linkedin
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
