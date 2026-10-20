@@ -427,9 +427,15 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
                 tags.append("CROSS_POLICY_DOMAIN_COVERAGE")
             other_groups = sorted(other_groups)
             # Every added matcher remains quarantined, even without special risk flags.
+            # A routine new suffix or an AdBlock evidence requirement is not
+            # equivalent to a cross-policy conflict or a dangerously wide rule.
+            routine_tags = {"NEW_SUFFIX_SCOPE_REVIEW",
+                            "ADBLOCK_NEW_RULE_REQUIRES_EVIDENCE"}
+            review_tier = ("ELEVATED" if set(tags) - routine_tags
+                           else "STANDARD")
             detailed_risks["additions"].append({
                 "rule": rule,
-                "review_tier": "ELEVATED" if tags else "STANDARD",
+                "review_tier": review_tier,
                 "reasons": sorted(set(tags)) if tags else ["NEW_RULE_REQUIRES_APPROVAL"],
                 "source_ids": sorted(provenance.get((group, rule), ())),
                 "other_groups": other_groups
