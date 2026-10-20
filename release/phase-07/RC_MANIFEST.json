@@ -1,9 +1,9 @@
 {
-  "device_test": "MAINTAINER_REPORTED_NO_ISSUES",
+  "device_test": "NOT_EXECUTED",
   "label": "v6.0.0",
   "licenses": "BLOCKED_REVIEW",
   "locked_inputs_path": "refactor/vnext/sources.lock.json",
-  "maintainer_approval": "MAINTAINER_REQUESTED_PUBLICATION_IN_CHAT",
+  "maintainer_approval": "NOT_EXECUTED",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
   "plugin_path": "release/phase-07/assets/Network_Diagnostics.plugin",
   "plugin_sha256": "431a8d92dcb63864aecd3055f77e38cc0582d24925e2c2f4d833e0256e393d20",
