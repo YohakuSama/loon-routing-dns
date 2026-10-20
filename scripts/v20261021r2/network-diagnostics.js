@@ -77,34 +77,27 @@
 
         var protocol=String(reply.protocol || "unknown").toLowerCase().trim();
         var server=String(reply.server || "").trim().slice(0,180);
-        // A cache hit confirms resolution, but makes no fresh transport request.
+        // A successful answer proves resolution, not capture of all DNS traffic.
         if (reply.fromCache===true) {
-          cb({label:label,ok:true,detail:"解析成功（缓存）",
-            notice:"本次使用缓存，没有发生新的 DNS 查询。"});
+          cb({label:label,ok:true,detail:"解析成功（缓存）"});
           return;
         }
 
-        // Loon documents protocol=auto as choosing the transport by server scheme.
-        // A *complete* HTTPS resolver URL can identify configured DoH. A bare
-        // "https://" is incomplete and must never be called verified encryption.
+        // DNS is user-configurable. Identify the protocol without requiring a
+        // specific public resolver. A bare "https://" is not a full URL.
         var httpsUrl=/^https:\/\/[^\s\/?#]+(?:[\/?#]|$)/i.test(server);
-        var expected=/^https:\/\/dns\.alidns\.com\/dns-query(?:[?#]|$)/i.test(server);
-        if ((protocol==="auto" || protocol==="doh") && expected) {
-          cb({label:label,ok:true,detail:"解析成功 · DoH（AliDNS）"});
-        } else if ((protocol==="auto" || protocol==="doh") && httpsUrl) {
-          cb({label:label,ok:true,detail:"解析成功 · DoH",
-            notice:"DNS 地址不是配置的 AliDNS，请确认是否为预期设置。"});
-        } else if (protocol==="udp" || protocol==="system" ||
-                   (protocol==="auto" && (/^system$/i.test(server) ||
-                     /^[\d.]+(?::\d+)?$/.test(server) || /^\[[0-9a-f:]+\](?::\d+)?$/i.test(server)))) {
-          cb({label:label,ok:true,detail:"解析成功 · 普通 DNS",
-            notice:"本次解析未使用配置的 DoH，请检查 DNS 回退设置。"});
-        } else if (protocol==="doh" || protocol==="doh3" || protocol==="quic") {
-          cb({label:label,ok:true,detail:"解析成功 · Loon 报告加密 DNS",
-            notice:"返回的服务器信息不足以核对是否为配置的 AliDNS。"});
+        var tlsUrl=/^(?:tls|dot):\/\/[^\s\/?#]+/i.test(server);
+        if (protocol==="udp" || protocol==="system") {
+          cb({label:label,ok:true,detail:"解析成功 · 普通 DNS"});
+        } else if (protocol==="doh" || (protocol==="auto" && httpsUrl)) {
+          cb({label:label,ok:true,detail:"解析成功 · DoH"});
+        } else if (protocol==="dot" || (protocol==="auto" && tlsUrl)) {
+          cb({label:label,ok:true,detail:"解析成功 · DoT"});
+        } else if (protocol==="doh3" || protocol==="quic") {
+          cb({label:label,ok:true,detail:"解析成功 · Loon 报告加密 DNS"});
         } else {
           cb({label:label,ok:true,detail:"解析成功",
-            notice:"Loon 返回的 DNS 协议信息不完整，无法判断加密方式。"});
+            notice:"Loon 未提供完整的 DNS 传输信息；不影响本次解析结果。"});
         }
       });
     } catch (error) {
