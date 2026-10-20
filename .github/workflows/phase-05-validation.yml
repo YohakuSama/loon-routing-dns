@@ -7,6 +7,8 @@ on:
       - 'scripts/vnext_conflict_resolver.py'
       - 'scripts/validate_device_results.py'
       - 'scripts/vnext_rule_engine.py'
+      - 'scripts/vnext_raw_trace.py'
+      - 'scripts/vnext_phase05_report.py'
       - 'tests/test_phase05_validation.py'
       - 'validation/phase-05/**'
       - 'refactor/vnext/sources.lock.json'
@@ -50,6 +52,8 @@ jobs:
             refactor/vnext/reports/conflict_summary.phase05.json
           if-no-files-found: error
           retention-days: 7
+      - name: Emit deterministic stage05 validation reports for developer review
+        run: python3 scripts/vnext_phase05_report.py --print
       - name: Phase 04 candidate deterministic check
         run: python3 scripts/vnext_rule_engine.py --check
       - name: Verify repository was not rewritten
