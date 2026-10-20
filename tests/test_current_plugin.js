@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const root = path.resolve(__dirname,"..");
 const read = file => fs.readFileSync(path.join(root,file),"utf8");
-const plugin = read("release/phase-08/assets/Network_Diagnostics.plugin");
+const plugin = read("release/Network_Diagnostics.plugin");
 const profile = read("LoonKit.lcf");
 let passed=0;
 function check(name,fn){
@@ -14,7 +14,10 @@ function check(name,fn){
 }
 check("only the shipped immutable plugin is present",()=>{
   assert(!fs.existsSync(path.join(root,"plugins/")));
-  assert(plugin.includes("/080a60897afd24c8c3c9387c25500615a6ec4145/scripts/v20261021r1/network-diagnostics.js"));
+  for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
+    assert(!fs.existsSync(path.join(root,dir)),dir);
+  assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/scripts/v20261021r1/network-diagnostics.js"));
+  assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
 });
 check("exactly two manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
@@ -37,14 +40,14 @@ check("exactly three settings and private comparison off",()=>{
 check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
   assert.equal(s.length,3);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261018r11/node-intelligence.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261021r1/node-intelligence.js")).length,1);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r1/network-diagnostics.js")).length,2);
-  assert(fs.existsSync(path.join(root,"scripts/v20261018r11/node-intelligence.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261021r1/node-intelligence.js")));
   assert(fs.existsSync(path.join(root,"scripts/v20261021r1/network-diagnostics.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
-  const rc2 = read("release/phase-08/assets/Network_Diagnostics.plugin");
-  assert(profile.includes("/a43e28aff0a4512964f5bbed7c7d8112bd856d0f/release/phase-08/assets/Network_Diagnostics.plugin, enabled=true"));
+  const rc2 = read("release/Network_Diagnostics.plugin");
+  assert(profile.includes("/0f199add32277b24fff7b96608115326b6592daf/release/Network_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
   assert(!rc2.includes("/main/icons/"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));

@@ -75,10 +75,13 @@ def verify(remote=False):
         links = LINK.findall(profile)
         rules = [(ref,path) for ref,path in links if path.startswith("rules/releases/")]
         icons = [(ref,path) for ref,path in links if path.startswith("icons/")]
-        plugins = [(ref,path) for ref,path in links if path.startswith("release/phase-08/assets/")]
+        plugins = [(ref,path) for ref,path in links if path=="release/Network_Diagnostics.plugin"]
         if len(rules)!=26 or len(set(path for _,path in rules))!=26 or len(icons)!=33:
             raise ValueError("wrong number of pinned rule/icon subscriptions")
-        if plugins != [(spec["plugin_assets_commit"],"release/phase-08/assets/Network_Diagnostics.plugin")]:
+        if any(not path.startswith("icons/v20261021r1/") for _,path in icons) or len({path for _,path in icons})!=33:
+            raise ValueError("strategy icons are not consolidated or contain duplicates")
+
+        if plugins != [(spec["plugin_assets_commit"],"release/Network_Diagnostics.plugin")]:
             raise ValueError("plugin URL unexpectedly changed")
         for ref,path in links:
             if not (ROOT/path).is_file():
@@ -104,7 +107,7 @@ def verify(remote=False):
             raise ValueError("missing plugin script/icon resource: " + path)
     if remote:
         for ref,path in sorted(set(LINK.findall(profile) + embedded)):
-            if not path.startswith(("icons/","rules/releases/","release/phase-08/assets/","scripts/")):
+            if not path.startswith(("icons/","rules/releases/","release/","scripts/")):
                 continue
             with request.urlopen(request.Request(RAW+ref+"/"+path,headers={"User-Agent":"LoonKit-Integrity/1"}),timeout=25) as response:
                 live=response.read()

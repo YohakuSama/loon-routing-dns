@@ -2,7 +2,7 @@
 
 LoonKit 正式配置已内置 **网络辅助插件**，无需重复添加。最新正式配置中的插件独立固定版本，更新 `LoonKit.lcf` 后应在 Loon 内**刷新插件及其脚本资源**。如旧结果仍出现，请确认插件/脚本缓存已经更新。
 
-[查看当前插件](../release/phase-08/assets/Network_Diagnostics.plugin) · [返回首页](../README.md)
+[查看当前插件](../release/Network_Diagnostics.plugin) · [返回首页](../README.md)
 
 ## 节点出口信息
 
