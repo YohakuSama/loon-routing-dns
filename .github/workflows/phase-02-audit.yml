@@ -1,0 +1,55 @@
+name: Phase 02 immutable rule audit
+
+on:
+  push:
+    branches:
+      - refactor/loonkit-vnext
+    paths:
+      - scripts/audit_rule_conflicts.py
+      - tests/test_phase02_audit.py
+      - .github/workflows/phase-02-audit.yml
+      - audits/phase-02/**
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase-02-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/refactor/loonkit-vnext'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check stage-01 frozen reference and generate standalone audit
+        run: python3 scripts/audit_rule_conflicts.py --output audits/phase-02
+      - name: Verify all phase-02 audit regression cases
+        run: python3 -m unittest discover -s tests -p 'test_phase02_audit.py' -v
+      - name: Verify byte-for-byte reproducibility of all report files
+        run: python3 scripts/audit_rule_conflicts.py --output audits/phase-02 --check
+      - name: Run existing Python test suite
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Run existing repository validator
+        run: python3 scripts/validate_repo.py
+      - name: Ensure immutable inputs are unchanged
+        run: |
+          git diff --exit-code HEAD -- LoonKit.lcf LoonKit.PrivacyDNS.lcf rules/ baselines/ scripts/build_composite_rules.py
+      - name: Commit only the new stage-02 audit reports
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- audits/phase-02/
+          if ! git diff --cached --quiet; then
+            git commit -m "audit(rules): persist reproducible phase 02 evidence and risk reports"
+            git push origin HEAD:refactor/loonkit-vnext
+          fi
