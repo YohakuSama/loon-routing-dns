@@ -92,8 +92,10 @@ def source_line(source: dict, line: str) -> str | None:
     if fmt == "domainset":
         if raw.startswith("+."):
             raw = raw[2:]
-        else:
-            raw = raw.lstrip(".")
+        elif raw.startswith("."):
+            # Strip exactly one documented domain-set prefix; do not hide
+            # malformed inputs such as '..example.org' by lstrip().
+            raw = raw[1:]
         if "," in raw or " " in raw or not HOST.fullmatch(raw):
             raise ValueError("unrecognized domain set entry")
         return _validate_matcher(canonical("DOMAIN-SUFFIX," + raw))
