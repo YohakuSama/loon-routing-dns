@@ -2,9 +2,6 @@
 # frozen input: rules/generated/Microsoft.list
 # reconstructed snapshot provenance: reports/provenance.tsv
 DOMAIN,vsmarketplacebadge.apphb.com
-DOMAIN-KEYWORD,1drv
-DOMAIN-KEYWORD,microsoft
-DOMAIN-KEYWORD,onedrive
 DOMAIN-KEYWORD,skydrive
 DOMAIN-SUFFIX,1drv.com
 DOMAIN-SUFFIX,1drv.ms
@@ -23,7 +20,6 @@ DOMAIN-SUFFIX,adaptivecards.io
 DOMAIN-SUFFIX,aggresmart.com
 DOMAIN-SUFFIX,aicscience.com
 DOMAIN-SUFFIX,aka.ms
-DOMAIN-SUFFIX,akadns.net
 DOMAIN-SUFFIX,ankarazirvesi2018.com
 DOMAIN-SUFFIX,api-extractor.com
 DOMAIN-SUFFIX,apihub-internal.cn
@@ -181,7 +177,6 @@ DOMAIN-SUFFIX,dwh5.com
 DOMAIN-SUFFIX,dynamics.cn
 DOMAIN-SUFFIX,dynamics.com
 DOMAIN-SUFFIX,e-msedge.net
-DOMAIN-SUFFIX,edgesuite.net
 DOMAIN-SUFFIX,efproject.net
 DOMAIN-SUFFIX,elderscrolls.com
 DOMAIN-SUFFIX,engkoo.com
@@ -627,7 +622,6 @@ DOMAIN-SUFFIX,windows
 DOMAIN-SUFFIX,windows-int.net
 DOMAIN-SUFFIX,windows-ppe.net
 DOMAIN-SUFFIX,windows.com
-DOMAIN-SUFFIX,windows.net
 DOMAIN-SUFFIX,windows.nl
 DOMAIN-SUFFIX,windows8.hk
 DOMAIN-SUFFIX,windowsazure.cn

@@ -37,7 +37,6 @@ AI	DOMAIN,webchannel-alkalimakersuite-pa.clients6.google.com	rules/generated/AI.
 AI	DOMAIN-KEYWORD,colab	rules/generated/AI.list	32	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-KEYWORD,developerprofiles	rules/generated/AI.list	33	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-KEYWORD,generativelanguage	rules/generated/AI.list	34	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
-AI	DOMAIN-KEYWORD,openai	rules/generated/AI.list	35	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,ai.com	rules/generated/AI.list	36	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,ai.google.dev	rules/generated/AI.list	37	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,ai.studio	rules/generated/AI.list	38	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
@@ -102,6 +101,7 @@ AI	DOMAIN-SUFFIX,oaistatsig.com	rules/generated/AI.list	96	bm-openai|bm-claude|b
 AI	DOMAIN-SUFFIX,oaiusercontent.com	rules/generated/AI.list	97	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,opal.google	rules/generated/AI.list	98	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,opal.google.com	rules/generated/AI.list	99	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
+AI	DOMAIN-SUFFIX,openai.com	rules/generated/AI.list	35	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,openai.com	rules/generated/AI.list	100	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net	rules/generated/AI.list	101	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
 AI	DOMAIN-SUFFIX,openai.org	rules/generated/AI.list	102	bm-openai|bm-claude|bm-gemini|local-ai|v2-openai|v2-anthropic|v2-google-deepmind|v2-github-copilot|v2-perplexity|v2-cursor|v2-xai
@@ -218,7 +218,6 @@ SteamCN	DOMAIN-SUFFIX,steamcontent.com	rules/generated/SteamCN.list	18	bm-steamc
 SteamCN	DOMAIN-SUFFIX,steamserver.net	rules/generated/SteamCN.list	19	bm-steamcn
 SteamCN	DOMAIN-SUFFIX,steamusercontent.com	rules/generated/SteamCN.list	20	bm-steamcn
 YouTube	DOMAIN,yt3.googleusercontent.com	rules/generated/YouTube.list	4	bm-youtube|v2-youtube
-YouTube	DOMAIN-KEYWORD,youtube	rules/generated/YouTube.list	5	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,ggpht.cn	rules/generated/YouTube.list	6	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,ggpht.com	rules/generated/YouTube.list	7	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,googlevideo.com	rules/generated/YouTube.list	8	bm-youtube|v2-youtube
@@ -266,6 +265,7 @@ YouTube	DOMAIN-SUFFIX,youtube.co.uk	rules/generated/YouTube.list	49	bm-youtube|v
 YouTube	DOMAIN-SUFFIX,youtube.co.ve	rules/generated/YouTube.list	50	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,youtube.co.za	rules/generated/YouTube.list	51	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,youtube.co.zw	rules/generated/YouTube.list	52	bm-youtube|v2-youtube
+YouTube	DOMAIN-SUFFIX,youtube.com	rules/generated/YouTube.list	5	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,youtube.com	rules/generated/YouTube.list	53	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,youtube.com.ar	rules/generated/YouTube.list	54	bm-youtube|v2-youtube
 YouTube	DOMAIN-SUFFIX,youtube.com.au	rules/generated/YouTube.list	55	bm-youtube|v2-youtube
@@ -1772,7 +1772,6 @@ PrimeVideo	DOMAIN-SUFFIX,amazonvideo.com	rules/generated/PrimeVideo.list	22	bm-p
 PrimeVideo	DOMAIN-SUFFIX,atv-ps.amazon.com	rules/generated/PrimeVideo.list	23	bm-primevideo|bm-amazonprimevideo|v2-primevideo
 PrimeVideo	DOMAIN-SUFFIX,avodmp4s3ww-a.akamaihd.net	rules/generated/PrimeVideo.list	24	bm-primevideo|bm-amazonprimevideo|v2-primevideo
 PrimeVideo	DOMAIN-SUFFIX,fls-na.amazon.com	rules/generated/PrimeVideo.list	25	bm-primevideo|bm-amazonprimevideo|v2-primevideo
-PrimeVideo	DOMAIN-SUFFIX,llnwd.net	rules/generated/PrimeVideo.list	26	bm-primevideo|bm-amazonprimevideo|v2-primevideo
 PrimeVideo	DOMAIN-SUFFIX,media-amazon.com	rules/generated/PrimeVideo.list	27	bm-primevideo|bm-amazonprimevideo|v2-primevideo
 PrimeVideo	DOMAIN-SUFFIX,prime-video.com	rules/generated/PrimeVideo.list	28	bm-primevideo|bm-amazonprimevideo|v2-primevideo
 PrimeVideo	DOMAIN-SUFFIX,primevideo.cc	rules/generated/PrimeVideo.list	29	bm-primevideo|bm-amazonprimevideo|v2-primevideo
@@ -1793,7 +1792,6 @@ TikTok	DOMAIN,roovza.launches.appsflyersdk.com	rules/generated/TikTok.list	9	bm-
 TikTok	DOMAIN,roovza.skadsdk.appsflyersdk.com	rules/generated/TikTok.list	10	bm-tiktok|v2-tiktok
 TikTok	DOMAIN,trae-api-sg.mchost.guru	rules/generated/TikTok.list	11	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-KEYWORD,musical.ly	rules/generated/TikTok.list	12	bm-tiktok|v2-tiktok
-TikTok	DOMAIN-KEYWORD,tiktok	rules/generated/TikTok.list	13	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,bytedapm.com	rules/generated/TikTok.list	14	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,bytegecko-i18n.com	rules/generated/TikTok.list	15	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,byteintlapi.com	rules/generated/TikTok.list	16	bm-tiktok|v2-tiktok
@@ -1814,6 +1812,7 @@ TikTok	DOMAIN-SUFFIX,snssdk.com	rules/generated/TikTok.list	30	bm-tiktok|v2-tikt
 TikTok	DOMAIN-SUFFIX,tik-tokapi.com	rules/generated/TikTok.list	31	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,tiktok-minis.com	rules/generated/TikTok.list	32	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,tiktok-row.net	rules/generated/TikTok.list	33	bm-tiktok|v2-tiktok
+TikTok	DOMAIN-SUFFIX,tiktok.com	rules/generated/TikTok.list	13	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,tiktok.com	rules/generated/TikTok.list	34	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,tiktokcdn-eu.com	rules/generated/TikTok.list	35	bm-tiktok|v2-tiktok
 TikTok	DOMAIN-SUFFIX,tiktokcdn-us.com	rules/generated/TikTok.list	36	bm-tiktok|v2-tiktok
@@ -2045,7 +2044,6 @@ Telegram	IP-CIDR6,2001:b28:f23c::/47,no-resolve	rules/generated/Telegram.list	44
 Telegram	IP-CIDR6,2001:b28:f23f::/48,no-resolve	rules/generated/Telegram.list	45	bm-telegram|v2-telegram
 Telegram	IP-CIDR6,2a0a:f280::/29,no-resolve	rules/generated/Telegram.list	46	bm-telegram|v2-telegram
 Whatsapp	DOMAIN,graph.facebook.com	rules/generated/Whatsapp.list	4	bm-whatsapp|local-whatsapp|v2-whatsapp
-Whatsapp	DOMAIN-KEYWORD,whatsapp	rules/generated/Whatsapp.list	5	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,bintray.com	rules/generated/Whatsapp.list	6	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,wa.me	rules/generated/Whatsapp.list	7	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,whatsapp-plus.info	rules/generated/Whatsapp.list	8	bm-whatsapp|local-whatsapp|v2-whatsapp
@@ -2053,6 +2051,7 @@ Whatsapp	DOMAIN-SUFFIX,whatsapp-plus.me	rules/generated/Whatsapp.list	9	bm-whats
 Whatsapp	DOMAIN-SUFFIX,whatsapp-plus.net	rules/generated/Whatsapp.list	10	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,whatsapp.biz	rules/generated/Whatsapp.list	11	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,whatsapp.cc	rules/generated/Whatsapp.list	12	bm-whatsapp|local-whatsapp|v2-whatsapp
+Whatsapp	DOMAIN-SUFFIX,whatsapp.com	rules/generated/Whatsapp.list	5	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,whatsapp.com	rules/generated/Whatsapp.list	13	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,whatsapp.info	rules/generated/Whatsapp.list	14	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	DOMAIN-SUFFIX,whatsapp.net	rules/generated/Whatsapp.list	15	bm-whatsapp|local-whatsapp|v2-whatsapp
@@ -2067,10 +2066,7 @@ Whatsapp	IP-CIDR,173.192.231.32/27,no-resolve	rules/generated/Whatsapp.list	23	b
 Whatsapp	IP-CIDR,18.194.0.0/15,no-resolve	rules/generated/Whatsapp.list	24	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	IP-CIDR,184.173.128.0/17,no-resolve	rules/generated/Whatsapp.list	25	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	IP-CIDR,208.43.122.128/27,no-resolve	rules/generated/Whatsapp.list	26	bm-whatsapp|local-whatsapp|v2-whatsapp
-Whatsapp	IP-CIDR,34.224.0.0/12,no-resolve	rules/generated/Whatsapp.list	27	bm-whatsapp|local-whatsapp|v2-whatsapp
 Whatsapp	IP-CIDR,50.22.198.204/30,no-resolve	rules/generated/Whatsapp.list	28	bm-whatsapp|local-whatsapp|v2-whatsapp
-Whatsapp	IP-CIDR,54.242.0.0/15,no-resolve	rules/generated/Whatsapp.list	29	bm-whatsapp|local-whatsapp|v2-whatsapp
-Instagram	DOMAIN-KEYWORD,instagram	rules/generated/Instagram.list	4	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,achat-followers-instagram.com	rules/generated/Instagram.list	5	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,acheter-followers-instagram.com	rules/generated/Instagram.list	6	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,acheterdesfollowersinstagram.com	rules/generated/Instagram.list	7	bm-instagram|v2-instagram
@@ -2100,6 +2096,7 @@ Instagram	DOMAIN-SUFFIX,instagram-engineering.com	rules/generated/Instagram.list
 Instagram	DOMAIN-SUFFIX,instagram-help.com	rules/generated/Instagram.list	31	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,instagram-press.com	rules/generated/Instagram.list	32	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,instagram-press.net	rules/generated/Instagram.list	33	bm-instagram|v2-instagram
+Instagram	DOMAIN-SUFFIX,instagram.com	rules/generated/Instagram.list	4	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,instagram.com	rules/generated/Instagram.list	34	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,instagramci.com	rules/generated/Instagram.list	35	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,instagramcn.com	rules/generated/Instagram.list	36	bm-instagram|v2-instagram
@@ -2144,8 +2141,6 @@ Instagram	DOMAIN-SUFFIX,onlineinstagram.com	rules/generated/Instagram.list	74	bm
 Instagram	DOMAIN-SUFFIX,theinstagramhack.com	rules/generated/Instagram.list	75	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,web-instagram.net	rules/generated/Instagram.list	76	bm-instagram|v2-instagram
 Instagram	DOMAIN-SUFFIX,wwwinstagram.com	rules/generated/Instagram.list	77	bm-instagram|v2-instagram
-Facebook	DOMAIN-KEYWORD,facebook	rules/generated/Facebook.list	4	bm-facebook|local-facebook|v2-facebook|v2-threads
-Facebook	DOMAIN-KEYWORD,fbcdn	rules/generated/Facebook.list	5	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,aboutfacebook.com	rules/generated/Facebook.list	6	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,accessfacebookfromschool.com	rules/generated/Facebook.list	7	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,accountkit.com	rules/generated/Facebook.list	8	bm-facebook|local-facebook|v2-facebook|v2-threads
@@ -2250,6 +2245,7 @@ Facebook	DOMAIN-SUFFIX,facebook-texas-holdem.net	rules/generated/Facebook.list	1
 Facebook	DOMAIN-SUFFIX,facebook.br	rules/generated/Facebook.list	107	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,facebook.ca	rules/generated/Facebook.list	108	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,facebook.cc	rules/generated/Facebook.list	109	bm-facebook|local-facebook|v2-facebook|v2-threads
+Facebook	DOMAIN-SUFFIX,facebook.com	rules/generated/Facebook.list	4	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,facebook.com	rules/generated/Facebook.list	110	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,facebook.design	rules/generated/Facebook.list	111	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,facebook.hu	rules/generated/Facebook.list	112	bm-facebook|local-facebook|v2-facebook|v2-threads
@@ -2441,6 +2437,7 @@ Facebook	DOMAIN-SUFFIX,fbbmarket.com	rules/generated/Facebook.list	297	bm-facebo
 Facebook	DOMAIN-SUFFIX,fbboostyourbusiness.com	rules/generated/Facebook.list	298	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,fbcdn-a.akamaihd.net	rules/generated/Facebook.list	299	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,fbcdn.com	rules/generated/Facebook.list	300	bm-facebook|local-facebook|v2-facebook|v2-threads
+Facebook	DOMAIN-SUFFIX,fbcdn.net	rules/generated/Facebook.list	5	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,fbcdn.net	rules/generated/Facebook.list	301	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,fbf8.com	rules/generated/Facebook.list	302	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	DOMAIN-SUFFIX,fbfeedback.com	rules/generated/Facebook.list	303	bm-facebook|local-facebook|v2-facebook|v2-threads
@@ -2635,7 +2632,6 @@ Facebook	IP-CIDR,54.162.243.80/32,no-resolve	rules/generated/Facebook.list	491	b
 Facebook	IP-CIDR,54.173.34.141/32,no-resolve	rules/generated/Facebook.list	492	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	IP-CIDR,54.235.23.242/32,no-resolve	rules/generated/Facebook.list	493	bm-facebook|local-facebook|v2-facebook|v2-threads
 Facebook	IP-CIDR,54.93.124.31/32,no-resolve	rules/generated/Facebook.list	494	bm-facebook|local-facebook|v2-facebook|v2-threads
-Twitter	DOMAIN-KEYWORD,twitter	rules/generated/Twitter.list	4	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,cms-twdigitalassets.com	rules/generated/Twitter.list	6	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,periscope.tv	rules/generated/Twitter.list	7	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,pscp.tv	rules/generated/Twitter.list	8	bm-twitter|v2-twitter
@@ -2647,6 +2643,7 @@ Twitter	DOMAIN-SUFFIX,twimg.com	rules/generated/Twitter.list	13	bm-twitter|v2-tw
 Twitter	DOMAIN-SUFFIX,twimg.org	rules/generated/Twitter.list	14	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,twitpic.com	rules/generated/Twitter.list	15	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,twitter.biz	rules/generated/Twitter.list	16	bm-twitter|v2-twitter
+Twitter	DOMAIN-SUFFIX,twitter.com	rules/generated/Twitter.list	4	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,twitter.com	rules/generated/Twitter.list	17	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,twitter.jp	rules/generated/Twitter.list	18	bm-twitter|v2-twitter
 Twitter	DOMAIN-SUFFIX,twitter.map.fastly.net	rules/generated/Twitter.list	19	bm-twitter|v2-twitter
@@ -2697,11 +2694,6 @@ Discord	DOMAIN-SUFFIX,discordstatus.com	rules/generated/Discord.list	30	bm-disco
 Discord	DOMAIN-SUFFIX,hammerandchisel.ssl.zendesk.com	rules/generated/Discord.list	31	bm-discord|v2-discord
 Discord	DOMAIN-SUFFIX,watchanimeattheoffice.com	rules/generated/Discord.list	32	bm-discord|v2-discord
 Google	DOMAIN,voice.telephony.goog	rules/generated/Google.list	4	bm-google
-Google	DOMAIN-KEYWORD,appspot	rules/generated/Google.list	5	bm-google
-Google	DOMAIN-KEYWORD,blogspot	rules/generated/Google.list	6	bm-google
-Google	DOMAIN-KEYWORD,gmail	rules/generated/Google.list	7	bm-google
-Google	DOMAIN-KEYWORD,google	rules/generated/Google.list	8	bm-google
-Google	DOMAIN-KEYWORD,recaptcha	rules/generated/Google.list	9	bm-google
 Google	DOMAIN-SUFFIX,0emm.com	rules/generated/Google.list	10	bm-google
 Google	DOMAIN-SUFFIX,1e100.net	rules/generated/Google.list	11	bm-google
 Google	DOMAIN-SUFFIX,1ucrs.com	rules/generated/Google.list	12	bm-google
@@ -2738,7 +2730,6 @@ Google	DOMAIN-SUFFIX,appbridge.ca	rules/generated/Google.list	44	bm-google
 Google	DOMAIN-SUFFIX,appbridge.io	rules/generated/Google.list	45	bm-google
 Google	DOMAIN-SUFFIX,appbridge.it	rules/generated/Google.list	46	bm-google
 Google	DOMAIN-SUFFIX,apps5.oingo.com	rules/generated/Google.list	47	bm-google
-Google	DOMAIN-SUFFIX,appspot.com	rules/generated/Google.list	48	bm-google
 Google	DOMAIN-SUFFIX,apture.com	rules/generated/Google.list	49	bm-google
 Google	DOMAIN-SUFFIX,area120.com	rules/generated/Google.list	50	bm-google
 Google	DOMAIN-SUFFIX,asp-cc.com	rules/generated/Google.list	51	bm-google
@@ -2775,7 +2766,6 @@ Google	DOMAIN-SUFFIX,blogspot.co.ke	rules/generated/Google.list	81	bm-google
 Google	DOMAIN-SUFFIX,blogspot.co.nz	rules/generated/Google.list	82	bm-google
 Google	DOMAIN-SUFFIX,blogspot.co.uk	rules/generated/Google.list	83	bm-google
 Google	DOMAIN-SUFFIX,blogspot.co.za	rules/generated/Google.list	84	bm-google
-Google	DOMAIN-SUFFIX,blogspot.com	rules/generated/Google.list	85	bm-google
 Google	DOMAIN-SUFFIX,blogspot.com.ar	rules/generated/Google.list	86	bm-google
 Google	DOMAIN-SUFFIX,blogspot.com.au	rules/generated/Google.list	87	bm-google
 Google	DOMAIN-SUFFIX,blogspot.com.br	rules/generated/Google.list	88	bm-google
@@ -2928,6 +2918,7 @@ Google	DOMAIN-SUFFIX,ggoogle.com	rules/generated/Google.list	235	bm-google
 Google	DOMAIN-SUFFIX,gipscorp.com	rules/generated/Google.list	236	bm-google
 Google	DOMAIN-SUFFIX,gkecnapps.cn	rules/generated/Google.list	237	bm-google
 Google	DOMAIN-SUFFIX,globaledu.org	rules/generated/Google.list	238	bm-google
+Google	DOMAIN-SUFFIX,gmail.com	rules/generated/Google.list	7	bm-google
 Google	DOMAIN-SUFFIX,gmail.com	rules/generated/Google.list	239	bm-google
 Google	DOMAIN-SUFFIX,gmodules.com	rules/generated/Google.list	240	bm-google
 Google	DOMAIN-SUFFIX,go-lang.com	rules/generated/Google.list	241	bm-google
@@ -3000,6 +2991,7 @@ Google	DOMAIN-SUFFIX,google.co.vi	rules/generated/Google.list	307	bm-google
 Google	DOMAIN-SUFFIX,google.co.za	rules/generated/Google.list	308	bm-google
 Google	DOMAIN-SUFFIX,google.co.zm	rules/generated/Google.list	309	bm-google
 Google	DOMAIN-SUFFIX,google.co.zw	rules/generated/Google.list	310	bm-google
+Google	DOMAIN-SUFFIX,google.com	rules/generated/Google.list	8	bm-google
 Google	DOMAIN-SUFFIX,google.com	rules/generated/Google.list	311	bm-google
 Google	DOMAIN-SUFFIX,google.com.af	rules/generated/Google.list	312	bm-google
 Google	DOMAIN-SUFFIX,google.com.ag	rules/generated/Google.list	313	bm-google
@@ -3292,6 +3284,7 @@ Google	DOMAIN-SUFFIX,questvisual.com	rules/generated/Google.list	599	bm-google
 Google	DOMAIN-SUFFIX,quickoffice.com	rules/generated/Google.list	600	bm-google
 Google	DOMAIN-SUFFIX,quiksee.com	rules/generated/Google.list	601	bm-google
 Google	DOMAIN-SUFFIX,recaptcha-cn.net	rules/generated/Google.list	602	bm-google
+Google	DOMAIN-SUFFIX,recaptcha.net	rules/generated/Google.list	9	bm-google
 Google	DOMAIN-SUFFIX,recaptcha.net	rules/generated/Google.list	603	bm-google
 Google	DOMAIN-SUFFIX,redhotlabs.com	rules/generated/Google.list	604	bm-google
 Google	DOMAIN-SUFFIX,redirector.gcpcdn.gvt1.com	rules/generated/Google.list	605	bm-google
@@ -3388,11 +3381,9 @@ Google	USER-AGENT,%E4%BA%91%E7%AB%AF%E7%A1%AC%E7%9B%98*	rules/generated/Google.l
 Google	USER-AGENT,*com.google.Drive*	rules/generated/Google.list	696	bm-google
 Google	USER-AGENT,Google.Drive*	rules/generated/Google.list	697	bm-google
 Microsoft	DOMAIN,vsmarketplacebadge.apphb.com	rules/generated/Microsoft.list	4	bm-microsoft|local-microsoft
-Microsoft	DOMAIN-KEYWORD,1drv	rules/generated/Microsoft.list	5	bm-microsoft|local-microsoft
-Microsoft	DOMAIN-KEYWORD,microsoft	rules/generated/Microsoft.list	6	bm-microsoft|local-microsoft
-Microsoft	DOMAIN-KEYWORD,onedrive	rules/generated/Microsoft.list	7	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-KEYWORD,skydrive	rules/generated/Microsoft.list	8	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,1drv.com	rules/generated/Microsoft.list	9	bm-microsoft|local-microsoft
+Microsoft	DOMAIN-SUFFIX,1drv.ms	rules/generated/Microsoft.list	5	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,1drv.ms	rules/generated/Microsoft.list	10	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,21vbc.com	rules/generated/Microsoft.list	11	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,21vbluecloud.com	rules/generated/Microsoft.list	12	bm-microsoft|local-microsoft
@@ -3409,7 +3400,6 @@ Microsoft	DOMAIN-SUFFIX,adaptivecards.io	rules/generated/Microsoft.list	22	bm-mi
 Microsoft	DOMAIN-SUFFIX,aggresmart.com	rules/generated/Microsoft.list	23	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,aicscience.com	rules/generated/Microsoft.list	24	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,aka.ms	rules/generated/Microsoft.list	25	bm-microsoft|local-microsoft
-Microsoft	DOMAIN-SUFFIX,akadns.net	rules/generated/Microsoft.list	26	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,ankarazirvesi2018.com	rules/generated/Microsoft.list	27	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,api-extractor.com	rules/generated/Microsoft.list	28	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,apihub-internal.cn	rules/generated/Microsoft.list	29	bm-microsoft|local-microsoft
@@ -3567,7 +3557,6 @@ Microsoft	DOMAIN-SUFFIX,dwh5.com	rules/generated/Microsoft.list	180	bm-microsoft
 Microsoft	DOMAIN-SUFFIX,dynamics.cn	rules/generated/Microsoft.list	181	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,dynamics.com	rules/generated/Microsoft.list	182	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,e-msedge.net	rules/generated/Microsoft.list	183	bm-microsoft|local-microsoft
-Microsoft	DOMAIN-SUFFIX,edgesuite.net	rules/generated/Microsoft.list	184	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,efproject.net	rules/generated/Microsoft.list	185	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,elderscrolls.com	rules/generated/Microsoft.list	186	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,engkoo.com	rules/generated/Microsoft.list	187	bm-microsoft|local-microsoft
@@ -3676,6 +3665,7 @@ Microsoft	DOMAIN-SUFFIX,microsoft.ca	rules/generated/Microsoft.list	289	bm-micro
 Microsoft	DOMAIN-SUFFIX,microsoft.cat	rules/generated/Microsoft.list	290	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,microsoft.ch	rules/generated/Microsoft.list	291	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,microsoft.cl	rules/generated/Microsoft.list	292	bm-microsoft|local-microsoft
+Microsoft	DOMAIN-SUFFIX,microsoft.com	rules/generated/Microsoft.list	6	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,microsoft.com	rules/generated/Microsoft.list	293	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,microsoft.com.nsatc.net	rules/generated/Microsoft.list	294	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,microsoft.cz	rules/generated/Microsoft.list	295	bm-microsoft|local-microsoft
@@ -3891,6 +3881,7 @@ Microsoft	DOMAIN-SUFFIX,omniroot.com	rules/generated/Microsoft.list	504	bm-micro
 Microsoft	DOMAIN-SUFFIX,onecollector.cloudapp.aria	rules/generated/Microsoft.list	505	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,onedrive.co	rules/generated/Microsoft.list	506	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,onedrive.co.uk	rules/generated/Microsoft.list	507	bm-microsoft|local-microsoft
+Microsoft	DOMAIN-SUFFIX,onedrive.com	rules/generated/Microsoft.list	7	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,onedrive.com	rules/generated/Microsoft.list	508	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,onedrive.eu	rules/generated/Microsoft.list	509	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,onedrive.net	rules/generated/Microsoft.list	510	bm-microsoft|local-microsoft
@@ -4013,7 +4004,6 @@ Microsoft	DOMAIN-SUFFIX,windows	rules/generated/Microsoft.list	626	bm-microsoft|
 Microsoft	DOMAIN-SUFFIX,windows-int.net	rules/generated/Microsoft.list	627	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,windows-ppe.net	rules/generated/Microsoft.list	628	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,windows.com	rules/generated/Microsoft.list	629	bm-microsoft|local-microsoft
-Microsoft	DOMAIN-SUFFIX,windows.net	rules/generated/Microsoft.list	630	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,windows.nl	rules/generated/Microsoft.list	631	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,windows8.hk	rules/generated/Microsoft.list	632	bm-microsoft|local-microsoft
 Microsoft	DOMAIN-SUFFIX,windowsazure.cn	rules/generated/Microsoft.list	633	bm-microsoft|local-microsoft
@@ -5719,7 +5709,6 @@ Steam	DOMAIN-SUFFIX,underlords.com	rules/generated/Steam.list	61	bm-steam|v2-ste
 Steam	DOMAIN-SUFFIX,valve.net	rules/generated/Steam.list	62	bm-steam|v2-steam
 Steam	DOMAIN-SUFFIX,valvesoftware.com	rules/generated/Steam.list	63	bm-steam|v2-steam
 Steam	DOMAIN-SUFFIX,wmsjsteam.com	rules/generated/Steam.list	64	bm-steam|v2-steam
-Paypal	DOMAIN-KEYWORD,paypal	rules/generated/Paypal.list	4	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,account-paypal.info	rules/generated/Paypal.list	5	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,account-paypal.net	rules/generated/Paypal.list	6	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,account-paypal.org	rules/generated/Paypal.list	7	bm-paypal|v2-paypal
@@ -5872,6 +5861,7 @@ Paypal	DOMAIN-SUFFIX,paypal-survey.org	rules/generated/Paypal.list	153	bm-paypal
 Paypal	DOMAIN-SUFFIX,paypal-team.com	rules/generated/Paypal.list	154	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,paypal-viewpoints.net	rules/generated/Paypal.list	155	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,paypal.ca	rules/generated/Paypal.list	156	bm-paypal|v2-paypal
+Paypal	DOMAIN-SUFFIX,paypal.com	rules/generated/Paypal.list	4	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,paypal.com	rules/generated/Paypal.list	157	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,paypal.com.cn	rules/generated/Paypal.list	158	bm-paypal|v2-paypal
 Paypal	DOMAIN-SUFFIX,paypal.com.hk	rules/generated/Paypal.list	159	bm-paypal|v2-paypal
@@ -94271,6 +94261,7 @@ ChinaDirect	DOMAIN-SUFFIX,aliyiyao.com	rules/generated/ChinaDirect.list	11332	bm
 ChinaDirect	DOMAIN-SUFFIX,aliyizhan.com	rules/generated/ChinaDirect.list	11333	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,aliypc.com	rules/generated/ChinaDirect.list	11334	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,aliyue.net	rules/generated/ChinaDirect.list	11335	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
+ChinaDirect	DOMAIN-SUFFIX,aliyun.com	rules/generated/ChinaDirect.list	275	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,alizch.com	rules/generated/ChinaDirect.list	11336	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,alizhaopin.com	rules/generated/ChinaDirect.list	11337	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,alizhizhu.com	rules/generated/ChinaDirect.list	11338	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
@@ -96440,6 +96431,7 @@ ChinaDirect	DOMAIN-SUFFIX,baidevalve.com	rules/generated/ChinaDirect.list	13502	
 ChinaDirect	DOMAIN-SUFFIX,baideye.com	rules/generated/ChinaDirect.list	13503	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,baidiapp.com	rules/generated/ChinaDirect.list	13504	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,baidinet.com	rules/generated/ChinaDirect.list	13505	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
+ChinaDirect	DOMAIN-SUFFIX,baidu.com	rules/generated/ChinaDirect.list	276	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,baieryk.com	rules/generated/ChinaDirect.list	13506	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,baifae.com	rules/generated/ChinaDirect.list	13507	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,baifang.in	rules/generated/ChinaDirect.list	13508	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
@@ -169122,6 +169114,7 @@ ChinaDirect	DOMAIN-SUFFIX,taoa.com	rules/generated/ChinaDirect.list	86190	bm-chi
 ChinaDirect	DOMAIN-SUFFIX,taoad.com	rules/generated/ChinaDirect.list	86191	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,taoart.com	rules/generated/ChinaDirect.list	86192	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,taoban.com	rules/generated/ChinaDirect.list	86193	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
+ChinaDirect	DOMAIN-SUFFIX,taobao.com	rules/generated/ChinaDirect.list	280	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,taobeihai.com	rules/generated/ChinaDirect.list	86194	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,taobizhong.com	rules/generated/ChinaDirect.list	86195	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,taoc.cc	rules/generated/ChinaDirect.list	86196	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
@@ -176306,6 +176299,7 @@ ChinaDirect	DOMAIN-SUFFIX,weibanan.com	rules/generated/ChinaDirect.list	93376	bm
 ChinaDirect	DOMAIN-SUFFIX,weibang.vip	rules/generated/ChinaDirect.list	93377	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,weibangong.com	rules/generated/ChinaDirect.list	93378	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,weibanzhushou.com	rules/generated/ChinaDirect.list	93379	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
+ChinaDirect	DOMAIN-SUFFIX,weibo.com	rules/generated/ChinaDirect.list	281	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,weibu.com	rules/generated/ChinaDirect.list	93380	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,weibusi.net	rules/generated/ChinaDirect.list	93381	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	DOMAIN-SUFFIX,weicaifu.com	rules/generated/ChinaDirect.list	93382	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
@@ -193833,7 +193827,6 @@ ChinaDirect	IP-CIDR,140.248.62.47/32,no-resolve	rules/generated/ChinaDirect.list
 ChinaDirect	IP-CIDR,140.248.63.47/32,no-resolve	rules/generated/ChinaDirect.list	113894	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,141.11.50.0/24,no-resolve	rules/generated/ChinaDirect.list	113899	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,144.168.216.128/25,no-resolve	rules/generated/ChinaDirect.list	113910	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,144.178.30.48/28,no-resolve	rules/generated/ChinaDirect.list	113911	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,144.2.238.68/30,no-resolve	rules/generated/ChinaDirect.list	113912	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,144.2.238.72/31,no-resolve	rules/generated/ChinaDirect.list	113913	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,144.211.138.0/24,no-resolve	rules/generated/ChinaDirect.list	113914	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
@@ -194024,60 +194017,6 @@ ChinaDirect	IP-CIDR,165.99.4.0/24,no-resolve	rules/generated/ChinaDirect.list	11
 ChinaDirect	IP-CIDR,166.118.227.88/32,no-resolve	rules/generated/ChinaDirect.list	114405	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,168.159.158.0/24,no-resolve	rules/generated/ChinaDirect.list	114414	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,168.230.0.0/24,no-resolve	rules/generated/ChinaDirect.list	114416	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.127.130.0/24,no-resolve	rules/generated/ChinaDirect.list	114418	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.188.209.0/24,no-resolve	rules/generated/ChinaDirect.list	114419	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.188.214.0/24,no-resolve	rules/generated/ChinaDirect.list	114421	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.80.226.0/24,no-resolve	rules/generated/ChinaDirect.list	114427	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.100.0/24,no-resolve	rules/generated/ChinaDirect.list	114431	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.108.0/24,no-resolve	rules/generated/ChinaDirect.list	114432	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.144.0/24,no-resolve	rules/generated/ChinaDirect.list	114434	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.161.0/24,no-resolve	rules/generated/ChinaDirect.list	114439	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.164.0/24,no-resolve	rules/generated/ChinaDirect.list	114440	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.165.40/29,no-resolve	rules/generated/ChinaDirect.list	114441	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.172.0/24,no-resolve	rules/generated/ChinaDirect.list	114444	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.183.0/24,no-resolve	rules/generated/ChinaDirect.list	114448	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.198.0/24,no-resolve	rules/generated/ChinaDirect.list	114453	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.202.0/24,no-resolve	rules/generated/ChinaDirect.list	114456	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.206.0/24,no-resolve	rules/generated/ChinaDirect.list	114458	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.207.0/25,no-resolve	rules/generated/ChinaDirect.list	114459	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.210.0/24,no-resolve	rules/generated/ChinaDirect.list	114461	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.214.0/24,no-resolve	rules/generated/ChinaDirect.list	114463	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.225.0/24,no-resolve	rules/generated/ChinaDirect.list	114466	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.228.0/24,no-resolve	rules/generated/ChinaDirect.list	114468	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.232.0/25,no-resolve	rules/generated/ChinaDirect.list	114469	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.251.0/28,no-resolve	rules/generated/ChinaDirect.list	114470	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.251.16/29,no-resolve	rules/generated/ChinaDirect.list	114471	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.251.27/32,no-resolve	rules/generated/ChinaDirect.list	114472	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.251.30/31,no-resolve	rules/generated/ChinaDirect.list	114473	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.251.32/28,no-resolve	rules/generated/ChinaDirect.list	114474	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.38.0/24,no-resolve	rules/generated/ChinaDirect.list	114477	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.7.0/24,no-resolve	rules/generated/ChinaDirect.list	114485	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.71.0/24,no-resolve	rules/generated/ChinaDirect.list	114486	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.75.0/24,no-resolve	rules/generated/ChinaDirect.list	114488	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.81.85.0/24,no-resolve	rules/generated/ChinaDirect.list	114492	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.85.6.64/29,no-resolve	rules/generated/ChinaDirect.list	114499	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.138.160/31,no-resolve	rules/generated/ChinaDirect.list	114506	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.141.0/24,no-resolve	rules/generated/ChinaDirect.list	114507	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.144.16/28,no-resolve	rules/generated/ChinaDirect.list	114509	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.145.192/27,no-resolve	rules/generated/ChinaDirect.list	114510	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.51.0/24,no-resolve	rules/generated/ChinaDirect.list	114520	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.53.0/24,no-resolve	rules/generated/ChinaDirect.list	114521	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.55.0/24,no-resolve	rules/generated/ChinaDirect.list	114522	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.72.224/31,no-resolve	rules/generated/ChinaDirect.list	114525	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.87.9.0/24,no-resolve	rules/generated/ChinaDirect.list	114527	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.104.64/31,no-resolve	rules/generated/ChinaDirect.list	114528	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.2.16/28,no-resolve	rules/generated/ChinaDirect.list	114531	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.207.192/32,no-resolve	rules/generated/ChinaDirect.list	114532	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.226.1/32,no-resolve	rules/generated/ChinaDirect.list	114533	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.73.0/31,no-resolve	rules/generated/ChinaDirect.list	114534	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.75.0/24,no-resolve	rules/generated/ChinaDirect.list	114535	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.80.160/31,no-resolve	rules/generated/ChinaDirect.list	114536	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.88.96.144/31,no-resolve	rules/generated/ChinaDirect.list	114537	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.94.0.22/32,no-resolve	rules/generated/ChinaDirect.list	114550	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.94.0.54/32,no-resolve	rules/generated/ChinaDirect.list	114551	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.94.0.93/32,no-resolve	rules/generated/ChinaDirect.list	114552	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.94.3.0/31,no-resolve	rules/generated/ChinaDirect.list	114558	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,17.94.3.248/29,no-resolve	rules/generated/ChinaDirect.list	114559	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,170.10.209.0/24,no-resolve	rules/generated/ChinaDirect.list	114562	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,172.16.1.254/32,no-resolve	rules/generated/ChinaDirect.list	114575	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,172.225.126.0/26,no-resolve	rules/generated/ChinaDirect.list	114576	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
@@ -196190,7 +196129,6 @@ ChinaDirect	IP-CIDR,74.119.193.32/27,no-resolve	rules/generated/ChinaDirect.list
 ChinaDirect	IP-CIDR,74.119.193.4/30,no-resolve	rules/generated/ChinaDirect.list	118594	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,74.119.193.64/26,no-resolve	rules/generated/ChinaDirect.list	118595	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,74.119.193.8/29,no-resolve	rules/generated/ChinaDirect.list	118596	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
-ChinaDirect	IP-CIDR,74.125.16.64/26,no-resolve	rules/generated/ChinaDirect.list	118597	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,74.214.161.0/24,no-resolve	rules/generated/ChinaDirect.list	118598	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,74.63.27.0/24,no-resolve	rules/generated/ChinaDirect.list	118599	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect
 ChinaDirect	IP-CIDR,74.80.115.0/24,no-resolve	rules/generated/ChinaDirect.list	118600	bm-chinamaxnomedia|bm-chinamaxnomedia-domain|local-chinadirect

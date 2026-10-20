@@ -2,7 +2,6 @@
 # frozen input: rules/generated/YouTube.list
 # reconstructed snapshot provenance: reports/provenance.tsv
 DOMAIN,yt3.googleusercontent.com
-DOMAIN-KEYWORD,youtube
 DOMAIN-SUFFIX,ggpht.cn
 DOMAIN-SUFFIX,ggpht.com
 DOMAIN-SUFFIX,googlevideo.com

@@ -1,7 +1,6 @@
 # LoonKit vNext candidate only - NOT a production subscription
 # frozen input: rules/generated/Paypal.list
 # reconstructed snapshot provenance: reports/provenance.tsv
-DOMAIN-KEYWORD,paypal
 DOMAIN-SUFFIX,account-paypal.info
 DOMAIN-SUFFIX,account-paypal.net
 DOMAIN-SUFFIX,account-paypal.org

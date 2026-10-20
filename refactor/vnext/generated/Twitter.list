@@ -1,7 +1,6 @@
 # LoonKit vNext candidate only - NOT a production subscription
 # frozen input: rules/generated/Twitter.list
 # reconstructed snapshot provenance: reports/provenance.tsv
-DOMAIN-KEYWORD,twitter
 DOMAIN-SUFFIX,cms-twdigitalassets.com
 DOMAIN-SUFFIX,periscope.tv
 DOMAIN-SUFFIX,pscp.tv

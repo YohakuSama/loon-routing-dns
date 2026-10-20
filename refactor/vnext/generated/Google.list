@@ -2,11 +2,6 @@
 # frozen input: rules/generated/Google.list
 # reconstructed snapshot provenance: reports/provenance.tsv
 DOMAIN,voice.telephony.goog
-DOMAIN-KEYWORD,appspot
-DOMAIN-KEYWORD,blogspot
-DOMAIN-KEYWORD,gmail
-DOMAIN-KEYWORD,google
-DOMAIN-KEYWORD,recaptcha
 DOMAIN-SUFFIX,0emm.com
 DOMAIN-SUFFIX,1e100.net
 DOMAIN-SUFFIX,1ucrs.com
@@ -43,7 +38,6 @@ DOMAIN-SUFFIX,appbridge.ca
 DOMAIN-SUFFIX,appbridge.io
 DOMAIN-SUFFIX,appbridge.it
 DOMAIN-SUFFIX,apps5.oingo.com
-DOMAIN-SUFFIX,appspot.com
 DOMAIN-SUFFIX,apture.com
 DOMAIN-SUFFIX,area120.com
 DOMAIN-SUFFIX,asp-cc.com
@@ -80,7 +74,6 @@ DOMAIN-SUFFIX,blogspot.co.ke
 DOMAIN-SUFFIX,blogspot.co.nz
 DOMAIN-SUFFIX,blogspot.co.uk
 DOMAIN-SUFFIX,blogspot.co.za
-DOMAIN-SUFFIX,blogspot.com
 DOMAIN-SUFFIX,blogspot.com.ar
 DOMAIN-SUFFIX,blogspot.com.au
 DOMAIN-SUFFIX,blogspot.com.br

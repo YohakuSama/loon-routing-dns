@@ -34,33 +34,33 @@
     "app-measurement.com",
     "ads-twitter.com"
   ],
-  "added_predicate_group_count": 4,
+  "added_predicate_group_count": 8,
   "after_groups": {
-    "AI": 112,
+    "AI": 111,
     "AdBlock": 76895,
     "Apple": 1600,
     "AppleOTA": 82,
     "Bilibili": 132,
-    "ChinaDirect": 114889,
+    "ChinaDirect": 114837,
     "Dazn": 20,
     "Discord": 29,
     "Disney": 186,
     "DomesticCore": 7,
-    "Facebook": 491,
-    "Google": 691,
+    "Facebook": 489,
+    "Google": 684,
     "HBO": 90,
-    "Instagram": 74,
-    "Microsoft": 671,
+    "Instagram": 73,
+    "Microsoft": 665,
     "Netflix": 1156,
-    "Paypal": 248,
-    "PrimeVideo": 34,
+    "Paypal": 247,
+    "PrimeVideo": 33,
     "Steam": 61,
     "SteamCN": 17,
     "Telegram": 43,
-    "TikTok": 58,
-    "Twitter": 32,
-    "Whatsapp": 26,
-    "YouTube": 191,
+    "TikTok": 57,
+    "Twitter": 31,
+    "Whatsapp": 23,
+    "YouTube": 190,
     "動畫瘋": 7
   },
   "asn_fixed": [
@@ -113,11 +113,11 @@
   },
   "candidate_frozen_snapshot_input_count": 26,
   "candidate_only": true,
-  "candidate_rule_count": 197842,
-  "cross_policy_nested_ip_networks": 64,
+  "candidate_rule_count": 197765,
+  "cross_policy_nested_ip_networks": 0,
   "dns_tun_changed": false,
-  "domain_keyword_review_count": 39,
-  "domain_parent_child_ambiguities": 7197,
+  "domain_keyword_review_count": 22,
+  "domain_parent_child_ambiguities": 7350,
   "engine_status": "STATIC_CANDIDATE_GENERATED",
   "inactive_groups_fall_through_final": [
     "Spotify",
@@ -132,11 +132,17 @@
   "isolation_causes": {
     "ADBLOCK_SHARED_CRITICAL_SERVICE": 322,
     "ADVERTISING_REASSIGNED": 6,
+    "BRAND_KEYWORD_SCOPED_TO_SUFFIX": 20,
+    "DIRECT_IP_PLATFORM_OVERLAP": 56,
     "DIRECT_KEYWORD_NARROWED": 1,
-    "DIRECT_KEYWORD_UNPROVEN": 9,
+    "DIRECT_KEYWORD_UNPROVEN": 4,
     "DIRECT_SINGLE_LABEL_UNPROVEN": 46,
     "DIRECT_WIDE_IP_UNPROVEN": 8061,
+    "EXACT_BUSINESS_OWNER": 1,
     "INDEPENDENT_PROXYPROTECT_RETIRED": 17,
+    "MULTITENANT_IP_NET_OVERLAP": 2,
+    "MULTITENANT_SHARED_KEYWORD_ISOLATED": 2,
+    "MULTITENANT_SHARED_ROOT_ISOLATED": 6,
     "SOURCE_DISABLED": 205
   },
   "legacy_proxyprotect_rule_count": 17,
@@ -157,9 +163,25 @@
     {
       "group": "AdBlock",
       "rule": "DOMAIN-SUFFIX,doubleclick.com"
+    },
+    {
+      "group": "ChinaDirect",
+      "rule": "DOMAIN-SUFFIX,aliyun.com"
+    },
+    {
+      "group": "ChinaDirect",
+      "rule": "DOMAIN-SUFFIX,baidu.com"
+    },
+    {
+      "group": "ChinaDirect",
+      "rule": "DOMAIN-SUFFIX,taobao.com"
+    },
+    {
+      "group": "ChinaDirect",
+      "rule": "DOMAIN-SUFFIX,weibo.com"
     }
   ],
-  "ownership_changes": 8667,
+  "ownership_changes": 8752,
   "proxyprotect_independent_subscription": false,
   "release": "NOT_READY_FOR_PRODUCTION",
   "remaining_risks": [
@@ -170,6 +192,10 @@
     "AdBlock REJECT/DIRECT and authentication/payment need functional tests"
   ],
   "removed_examples": [
+    {
+      "group": "AI",
+      "rule": "DOMAIN-KEYWORD,openai"
+    },
     {
       "group": "Abema",
       "rule": "DOMAIN-KEYWORD,abematv.akamaized.net"
@@ -565,15 +591,13 @@
     {
       "group": "AdBlock",
       "rule": "DOMAIN,d1w24oanovvxvg.cloudfront.net"
-    },
-    {
-      "group": "AdBlock",
-      "rule": "DOMAIN,d1wi563t0137vz.cloudfront.net"
     }
   ],
-  "removed_or_modified_origin_lines": 8667,
-  "removed_predicate_group_count": 8667,
+  "removed_or_modified_origin_lines": 8749,
+  "removed_predicate_group_count": 8748,
+  "reviewed_keyword_narrowing_count": 20,
   "source_count_comparison_warning": "87 upstream feeds vs active group snapshots are NOT equivalent provenance units",
   "source_status": "26 frozen group snapshots, not 26 independently verifiable upstream feeds",
-  "status": "OFFLINE_CANDIDATE_NOT_DEVICE_VERIFIED"
+  "status": "OFFLINE_CANDIDATE_NOT_DEVICE_VERIFIED",
+  "verified_local_source_line_mappings": 65
 }
