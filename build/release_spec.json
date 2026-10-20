@@ -10,7 +10,7 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Clean history: routing and DNS unchanged; third-party rights have not been independently recertified.",
+  "warning": "Routing and DNS unchanged; upstream licenses and attribution documented, with incomplete line-level provenance and separate brand rights.",
   "plugin_assets_commit": "a2409b2d470e36ad0fa92f1fe424c37ae9543927",
   "script_assets_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4"
 }
