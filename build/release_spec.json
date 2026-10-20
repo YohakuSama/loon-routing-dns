@@ -11,6 +11,6 @@
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "Single standard LoonKit v6.0.0 profile. Published pinned rules, icons and plugin remain unchanged; third-party legal review remains open.",
-  "plugin_assets_commit": "9fc773a08126207281a8431651577c1449641b8a",
-  "script_assets_commit": "a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1"
+  "plugin_assets_commit": "bc7e720bcd671079cfa39aa51f5cab36e9f8d3ba",
+  "script_assets_commit": "737b91e99b5264358d7fd39cc2d54d83ac870c38"
 }

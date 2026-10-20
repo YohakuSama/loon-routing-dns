@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
 const ROOT = path.resolve(__dirname,"..");
-const source = fs.readFileSync(path.join(ROOT,"scripts/v20261020r1/network-diagnostics.js"),"utf8");
+const source = fs.readFileSync(path.join(ROOT,"scripts/v20261020r2/network-diagnostics.js"),"utf8");
 let passed=0;
 function check(name,fn) {
   try {fn();passed++;console.log("PASS",name);}
@@ -54,34 +54,48 @@ check("healthy manual test reports actual configured DoH without clearTimeout",(
   const r=run();
   assert.equal(r.results.length,1);
   assert.match(r.results[0].content,/所测项目正常/);
-  assert.match(r.results[0].content,/dns.alidns.com/);
+  assert.match(r.results[0].content,/解析成功，Loon 报告使用配置的 DoH/);
   assert(r.requests.some(x=>x.native));
   assert(!r.requests.some(x=>x.url&&x.url.includes("/dns-query")));
 });
 check("proxy 301 is an inconclusive redirect, not a false outage",()=>{
   const r=run({proxyStatus:301});
-  assert.match(r.results[0].content,/部分项目不可用/);
+  assert.match(r.results[0].content,/部分检测尚未确认/);
   assert.match(r.results[0].content,/HTTP 301/);
-  assert.doesNotMatch(r.results[0].content,/结果：存在异常项目/);
+  assert.doesNotMatch(r.results[0].content,/结果：检测发现异常/);
   const p=r.requests.find(x=>x.node==="Proxy");
   assert.equal(p.url,"https://www.gstatic.com/generate_204");
   assert.equal(p["auto-redirect"],false);
 });
 check("target 503 proves server responded but does not prove proxy failure",()=>{
   const r=run({proxyStatus:503});
-  assert.match(r.results[0].content,/部分项目不可用/);
+  assert.match(r.results[0].content,/部分检测尚未确认/);
   assert.match(r.results[0].content,/HTTP 503/);
 });
 check("Loon auto / https prefix is inconclusive, not a DNS leak",()=>{
   const r=run({protocol:"auto",server:"https://"});
-  assert.match(r.results[0].content,/部分项目不可用/);
-  assert.match(r.results[0].content,/返回 auto/);
-  assert.doesNotMatch(r.results[0].content,/结果：存在异常项目|明文 DNS 查询/);
+  assert.match(r.results[0].content,/部分检测尚未确认/);
+  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
+  assert.match(r.results[0].content,/传输协议未确认/);
+  assert.doesNotMatch(r.results[0].content,/结果：检测发现异常|明文 DNS 查询/);
 });
 check("cached UDP metadata does not claim a new plaintext lookup",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53",cached:true});
   assert.match(r.results[0].content,/缓存解析成功/);
-  assert.doesNotMatch(r.results[0].content,/结果：存在异常项目|本次使用普通 DNS 查询/);
+  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
+  assert.doesNotMatch(r.results[0].content,/结果：检测发现异常|本次使用普通 DNS 查询/);
+});
+check("both HTTP 204 probes and ambiguous auto DNS are not an outage",()=>{
+  const r=run({protocol:"auto",server:"https://"});
+  assert.match(r.results[0].content,/结果：网络连接正常，DNS 协议信息待确认/);
+  assert.match(r.results[0].content,/直连网络：HTTP 204/);
+  assert.match(r.results[0].content,/代理策略 Proxy：HTTP 204/);
+  assert.doesNotMatch(r.results[0].content,/部分项目不可用|存在异常项目/);
+});
+check("auto DNS with a full HTTPS resolver address is unverified",()=>{
+  const r=run({protocol:"auto",server:"https://dns.alidns.com/dns-query"});
+  assert.match(r.results[0].content,/自动协议和 HTTPS DNS 地址/);
+  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
 });
 check("native UDP is flagged as plaintext instead of DoH success",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
@@ -90,17 +104,18 @@ check("native UDP is flagged as plaintext instead of DoH success",()=>{
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
-  assert.match(r.results[0].content,/部分项目不可用/);
-  assert.match(r.results[0].content,/使用加密 DNS，非当前配置预期地址/);
+  assert.match(r.results[0].content,/部分检测尚未确认/);
+  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
+  assert.match(r.results[0].content,/其他加密 DNS/);
 });
 check("cached DoH cannot prove this test used an encrypted request",()=>{
   const r=run({cached:true});
-  assert.match(r.results[0].content,/部分项目不可用/);
+  assert.match(r.results[0].content,/网络连接正常，DNS 协议信息待确认/);
   assert.match(r.results[0].content,/缓存命中/);
 });
 check("no DNS API cannot be misreported healthy",()=>{
   const r=run({native:"absent"});
-  assert.match(r.results[0].content,/部分项目不可用/);
+  assert.match(r.results[0].content,/部分检测尚未确认/);
   assert.match(r.results[0].content,/988/);
 });
 check("native DNS error and proxy failure are detected",()=>{
@@ -128,7 +143,11 @@ check("automatic double-failure alerts only once per cooldown",()=>{
   assert.equal(first.alerts.length,1);
   assert.equal(second.alerts.length,0);
   assert.equal(first.requests.length,2);
+  assert.equal(first.alerts[0][0],"Loon 网络切换提醒");
+  assert.equal(first.alerts[0][1],"直连连接连续失败");
+  assert.match(first.alerts[0][2],/网络切换后两次检测均未成功/);
 });
+
 check("diagnostics switches default to privacy-preserving values",()=>{
   const plugin=fs.readFileSync(path.join(ROOT,"release/phase-07/assets/Network_Diagnostics.plugin"),"utf8");
   assert.match(plugin,/auto_check = switch,false/);

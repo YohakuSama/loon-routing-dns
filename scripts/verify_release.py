@@ -93,7 +93,7 @@ def verify(remote=False):
     # Inspect the embedded immutable URLs as well as the top-level plugin link.
     # The diagnostic path is versioned to avoid stale Loon script caches.
     embedded = LINK.findall(plugin.decode("utf-8"))
-    expected_script = "scripts/v20261020r1/network-diagnostics.js"
+    expected_script = "scripts/v20261020r2/network-diagnostics.js"
     if len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
         raise ValueError("expected immutable scripts or plugin icon missing")
     for ref,path in embedded:
