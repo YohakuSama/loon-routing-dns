@@ -129,6 +129,19 @@ class TestCandidateQuality(unittest.TestCase):
                      "microsoftonline.com", "accounts.google.com"):
             self.assertNotIn("DOMAIN-SUFFIX," + root, self.generated["AdBlock"])
 
+    def test_local_overseas_roots_do_not_silence_precise_adblock_rules(self):
+        manifest = sl.read_json(ROOT/"refactor/vnext/engine_manifest.json")
+        blocked = []
+        for rule in self.generated["AdBlock"]:
+            if not rule.startswith(("DOMAIN,", "DOMAIN-SUFFIX,")):
+                continue
+            host = rule.split(",", 1)[1]
+            for group, roots in manifest["reviewed_overseas_inline_minimal"].items():
+                for root in roots:
+                    if cr.suffix_cover(root, host):
+                        blocked.append((group, root, rule))
+        self.assertEqual(blocked, [], "local overseas rule would shadow AdBlock: " + repr(blocked[:20]))
+
     def test_china_direct_no_unbounded_keywords(self):
         self.assertFalse(any(x.startswith("DOMAIN-KEYWORD,")
                              for x in self.generated["ChinaDirect"]))
