@@ -139,7 +139,7 @@ class ProductionTests(unittest.TestCase):
 
     def test_license_sources_and_evidence_preserved(self):
         checked = legal.audit()
-        self.assertIn(checked["status"], {"BLOCKED_REVIEW", "INDEPENDENT_REVIEW_DOCUMENTED"})
+        self.assertIn(checked["status"], {"LICENSE_NOTICES_DOCUMENTED", "INDEPENDENT_REVIEW_DOCUMENTED"})
         self.assertEqual(checked["historical_records_checked"], 87)
 
     def test_production_config_bytes_protected(self):
