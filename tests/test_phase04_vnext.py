@@ -124,6 +124,51 @@ class Phase04Tests(unittest.TestCase):
         self.assertGreater(len(removed.splitlines()), 100)
         self.assertEqual(self.summary["baseline_upstream_source_count"], 87)
 
+    def test_frozen_inputs_have_verified_git_blobs(self):
+        manifest = self.manifest
+        self.assertEqual(len(manifest["frozen_git_blob_sha1"]), 44)
+        ve.verify_immutable_sources(ROOT, manifest)
+        altered = dict(manifest)
+        altered["frozen_git_blob_sha1"] = dict(manifest["frozen_git_blob_sha1"])
+        altered["frozen_git_blob_sha1"]["rules/generated/Google.list"] = "0" * 40
+        with self.assertRaisesRegex(ValueError, "frozen input changed"):
+            ve.verify_immutable_sources(ROOT, altered)
+
+    def test_source_attribution_never_confuses_snapshot_and_upstream(self):
+        manifest = json.loads(self.files["refactor/vnext/reports/sources.vnext.candidate.json"])
+        self.assertEqual(manifest["original_source_count"], 87)
+        self.assertEqual(len(manifest["entries"]), 87)
+        local = [s for s in manifest["entries"] if s["original_role"] == "local"]
+        self.assertEqual(len(local), 10)
+        self.assertGreater(sum(s["verified_candidate_lines"] for s in local), 0)
+        self.assertTrue(all(s["input_kind"] == "IMMUTABLE_LOCAL_FILE" for s in local))
+        remote = [s for s in manifest["entries"] if s["original_role"] != "local"]
+        self.assertTrue(all(not s["line_level_origin_proven"] for s in remote))
+        trace = self.files["refactor/vnext/reports/verified_local_provenance.tsv"]
+        self.assertIn("local_line", trace)
+        self.assertIn("local-chinadirect", trace)
+
+    def test_cross_strategy_ip_net_conflicts_mitigated(self):
+        lines = self.files["refactor/vnext/reports/ip_network_overlaps.jsonl"].splitlines()
+        self.assertEqual(len(lines), 0, "platform and multitenant IP collisions remain")
+        changes = self.files["refactor/vnext/reports/removed_or_modified.jsonl"]
+        self.assertIn("DIRECT_IP_PLATFORM_OVERLAP", changes)
+        self.assertIn("MULTITENANT_IP_NET_OVERLAP", changes)
+        self.assertNotIn("IP-CIDR,34.224.0.0/12,no-resolve", self.groups["Whatsapp"])
+        self.assertNotIn("IP-CIDR,54.242.0.0/15,no-resolve", self.groups["Whatsapp"])
+        self.assertIn("DOMAIN-SUFFIX,whatsapp.com", self.groups["Whatsapp"])
+        self.assertIn("IP-CIDR,17.0.0.0/8,no-resolve", self.groups["Apple"])
+
+    def test_brand_keyword_narrowing(self):
+        decisions = self.manifest["reviewed_keyword_narrowing"]
+        self.assertEqual(sum(map(len, decisions.values())), 17)
+        for group, mappings in decisions.items():
+            for old, scoped in mappings.items():
+                self.assertNotIn("DOMAIN-KEYWORD," + old, self.groups[group])
+                self.assertIn(scoped, self.groups[group])
+        summary = self.summary
+        self.assertEqual(summary["reviewed_keyword_narrowing_count"], 17)
+
     def test_cross_type_risks_are_audited(self):
         for name, metric in (
             ("domain_parent_child_conflicts", "domain_parent_child_ambiguities"),
