@@ -1,6 +1,7 @@
 {
   "adblock_platform_ownership_risks": 5,
   "direct_broad_keywords": 10,
+  "local_input_rules_with_published_condition": 65,
   "manual_source_review": 61,
   "missing_no_resolve": 7,
   "provenance": "SOURCE_PROVENANCE_INCOMPLETE",
@@ -32,5 +33,6 @@
     "IP-CIDR": 9459,
     "IP-CIDR6": 4326,
     "USER-AGENT": 112
-  }
+  },
+  "verified_local_source_file_count": 10
 }
