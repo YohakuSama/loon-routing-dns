@@ -173,26 +173,34 @@
     {
       "case_id": "inactive_spotify",
       "host": "www.spotify.com",
-      "expected_policy": "Final",
-      "requires_device_validation": true
+      "expected_policy": "Spotify",
+      "requires_device_validation": true,
+      "compatibility": "RESTORED_INLINE_SCOPED_OVERSEAS_SELECTOR",
+      "risk_id": "PH05-OVERSEAS-SPOTIFY"
     },
     {
       "case_id": "inactive_twitch",
       "host": "www.twitch.tv",
-      "expected_policy": "Final",
-      "requires_device_validation": true
+      "expected_policy": "Twitch",
+      "requires_device_validation": true,
+      "compatibility": "RESTORED_INLINE_SCOPED_OVERSEAS_SELECTOR",
+      "risk_id": "PH05-OVERSEAS-TWITCH"
     },
     {
       "case_id": "inactive_reddit",
       "host": "www.reddit.com",
-      "expected_policy": "Final",
-      "requires_device_validation": true
+      "expected_policy": "Reddit",
+      "requires_device_validation": true,
+      "compatibility": "RESTORED_INLINE_SCOPED_OVERSEAS_SELECTOR",
+      "risk_id": "PH05-OVERSEAS-REDDIT"
     },
     {
       "case_id": "inactive_bbc",
       "host": "www.bbc.co.uk",
-      "expected_policy": "Final",
-      "requires_device_validation": true
+      "expected_policy": "BBC",
+      "requires_device_validation": true,
+      "compatibility": "RESTORED_INLINE_SCOPED_OVERSEAS_SELECTOR",
+      "risk_id": "PH05-OVERSEAS-BBC"
     },
     {
       "case_id": "international_payments_stripe",
@@ -205,6 +213,55 @@
       "host": "unknown-5827469.invalid",
       "expected_policy": "Final",
       "requires_device_validation": true
+    },
+    {
+      "case_id": "overseas_abema_minimal",
+      "host": "www.abema.tv",
+      "expected_policy": "Abema",
+      "requires_device_validation": true,
+      "risk_id": "PH05-OVERSEAS-ABEMA"
+    },
+    {
+      "case_id": "overseas_line_minimal",
+      "host": "www.line.me",
+      "expected_policy": "Line",
+      "requires_device_validation": true,
+      "risk_id": "PH05-OVERSEAS-LINE"
+    },
+    {
+      "case_id": "overseas_linkedin_minimal",
+      "host": "www.linkedin.com",
+      "expected_policy": "Linkedin",
+      "requires_device_validation": true,
+      "risk_id": "PH05-OVERSEAS-LINKEDIN"
+    },
+    {
+      "case_id": "negative_brand_taobao_external",
+      "host": "fake-taobao-global.invalid",
+      "expected_policy": "Final",
+      "requires_device_validation": true,
+      "risk_id": "PH05-DIRECT-FALSE-POSITIVE"
+    },
+    {
+      "case_id": "negative_brand_alipay_external",
+      "host": "alipay-credential-update.invalid",
+      "expected_policy": "Final",
+      "requires_device_validation": true,
+      "risk_id": "PH05-DIRECT-FALSE-POSITIVE"
+    },
+    {
+      "case_id": "negative_overseas_similar",
+      "host": "spotify-account-phishing.invalid",
+      "expected_policy": "Final",
+      "requires_device_validation": true,
+      "risk_id": "PH05-OVERSEAS-NEGATIVE"
+    },
+    {
+      "case_id": "negative_google_suffix_boundary",
+      "host": "google.com.other-company.invalid",
+      "expected_policy": "Final",
+      "requires_device_validation": true,
+      "risk_id": "PH05-SUFFIX-NEGATIVE"
     }
   ],
   "selector_modes": [
