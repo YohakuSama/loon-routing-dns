@@ -54,27 +54,60 @@ class SourceSyntax(unittest.TestCase):
 
 
 class HardeningTests(unittest.TestCase):
-    def test_reject_low_quality_and_overwide_inputs(self):
-        bad = [
-            ("domainset", "com"),
-            ("domainset", ".co.uk"),
+    def test_malformed_inputs_rejected_but_valid_broad_matchers_triaged(self):
+        malformed = [
             ("domainset", "*.example.org"),
             ("domainset", "..example.org"),
-            ("domainset", ".github.io"),
-            ("domainset", ".cloudfront.net"),
-            ("loon", "DOMAIN-KEYWORD,api"),
             ("loon", "DOMAIN-KEYWORD,foo*"),
-            ("loon", "IP-CIDR,0.0.0.0/0"),
-            ("loon", "IP-CIDR6,::/0"),
             ("loon", "DOMAIN-SUFFIX,foo..bar.com"),
-            ("loon", "DOMAIN-SUFFIX,localhost"),
+            ("loon", "DOMAIN-SUFFIX,-example.org"),
         ]
-        for fmt, raw in bad:
-            with self.subTest(fmt=fmt, raw=raw):
+        for fmt, raw in malformed:
+            with self.subTest(category="invalid", fmt=fmt, raw=raw):
                 rules, report = review.parse_source(
                     {"format": fmt, "min_rules": 1}, raw.encode())
                 self.assertEqual(rules, set())
                 self.assertEqual(report["invalid_count"], 1)
+                self.assertEqual(report["quality_review_count"], 0)
+
+        valid_but_risky = [
+            ("domainset", "com", "SINGLE_LABEL_OR_TLD_SCOPE_REVIEW"),
+            ("domainset", ".co.uk", "PUBLIC_SUFFIX_LIKE_SCOPE_REVIEW"),
+            ("domainset", ".github.io", "MULTITENANT_ROOT_SCOPE_REVIEW"),
+            ("domainset", ".cloudfront.net", "MULTITENANT_ROOT_SCOPE_REVIEW"),
+            ("loon", "DOMAIN-KEYWORD,api", "SHORT_KEYWORD_SCOPE_REVIEW"),
+            ("loon", "DOMAIN-KEYWORD,cdn", "GENERIC_KEYWORD_SCOPE_REVIEW"),
+            ("loon", "IP-CIDR,0.0.0.0/0", "WIDE_IP_SCOPE_REVIEW"),
+            ("loon", "IP-CIDR6,::/0", "WIDE_IP_SCOPE_REVIEW"),
+            ("loon", "DOMAIN-SUFFIX,localhost", "PRIVATE_OR_RESERVED_DOMAIN_REVIEW"),
+        ]
+        for fmt, raw, expected_flag in valid_but_risky:
+            with self.subTest(category="needs_review", fmt=fmt, raw=raw):
+                rules, report = review.parse_source(
+                    {"format": fmt, "min_rules": 1}, raw.encode())
+                self.assertEqual(len(rules), 1)
+                self.assertEqual(report["invalid_count"], 0)
+                self.assertEqual(report["quality_review_count"], 1)
+                self.assertIn(expected_flag,
+                              report["quality_review_samples"][0]["reasons"])
+                self.assertTrue(report["minimum_satisfied"])
+
+    def test_standard_matchers_not_overflagged(self):
+        standard = [
+            ("domainset", ".api.example.org"),
+            ("loon", "DOMAIN,api.example.org"),
+            ("loon", "DOMAIN-SUFFIX,example.org"),
+            ("loon", "IP-CIDR,203.0.113.0/24"),
+        ]
+        for fmt, raw in standard:
+            with self.subTest(fmt=fmt, raw=raw):
+                rules, report = review.parse_source(
+                    {"format": fmt, "min_rules": 1}, raw.encode())
+                self.assertEqual(len(rules), 1)
+                self.assertEqual(report["invalid_count"], 0)
+                self.assertNotIn("WIDE_IP_SCOPE_REVIEW",
+                                 report["quality_review_samples"][0]["reasons"]
+                                 if report["quality_review_samples"] else [])
 
     def test_ipv4_and_ipv6_cross_policy_overlap_both_directions(self):
         baseline = {
