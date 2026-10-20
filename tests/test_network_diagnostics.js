@@ -96,10 +96,11 @@ check("auto DNS with a full HTTPS resolver address is unverified",()=>{
   assert.match(r.results[0].content,/DoH/);
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
 });
-check("native UDP is flagged as plaintext instead of DoH success",()=>{
+check("native UDP is a successful lookup with plaintext warning",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
-  assert.match(r.results[0].content,/检测到连接或解析失败/);
-  assert.match(r.results[0].content,/普通 DNS/);
+  assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
+  assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
+  assert.match(r.results[0].content,/DNS 回退设置/);
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
