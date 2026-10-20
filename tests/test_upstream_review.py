@@ -52,6 +52,72 @@ class SourceSyntax(unittest.TestCase):
             "ChinaDirect", base, idx, domains), ["AI"])
 
 
+
+class HardeningTests(unittest.TestCase):
+    def test_reject_low_quality_and_overwide_inputs(self):
+        bad = [
+            ("domainset", "com"),
+            ("domainset", ".co.uk"),
+            ("domainset", "*.example.org"),
+            ("domainset", "..example.org"),
+            ("domainset", ".github.io"),
+            ("domainset", ".cloudfront.net"),
+            ("loon", "DOMAIN-KEYWORD,api"),
+            ("loon", "DOMAIN-KEYWORD,foo*"),
+            ("loon", "IP-CIDR,0.0.0.0/0"),
+            ("loon", "IP-CIDR6,::/0"),
+            ("loon", "DOMAIN-SUFFIX,foo..bar.com"),
+            ("loon", "DOMAIN-SUFFIX,localhost"),
+        ]
+        for fmt, raw in bad:
+            with self.subTest(fmt=fmt, raw=raw):
+                rules, report = review.parse_source(
+                    {"format": fmt, "min_rules": 1}, raw.encode())
+                self.assertEqual(rules, set())
+                self.assertEqual(report["invalid_count"], 1)
+
+    def test_ipv4_and_ipv6_cross_policy_overlap_both_directions(self):
+        baseline = {
+            "AI": {"IP-CIDR,10.20.0.0/16,no-resolve",
+                   "IP-CIDR6,2001:db8:abcd::/48,no-resolve"},
+            "ChinaDirect": {"IP-CIDR,192.168.8.0/24,no-resolve"}
+        }
+        ix = review._ip_overlap_index(baseline)
+        self.assertEqual(review._ip_collisions(
+            "IP-CIDR,10.20.1.0/24,no-resolve", "ChinaDirect", ix), ["AI"])
+        self.assertEqual(review._ip_collisions(
+            "IP-CIDR,10.20.0.0/15,no-resolve", "ChinaDirect", ix), ["AI"])
+        self.assertEqual(review._ip_collisions(
+            "IP-CIDR6,2001:db8::/32,no-resolve", "ChinaDirect", ix), ["AI"])
+        self.assertEqual(review._ip_collisions(
+            "IP-CIDR,10.20.1.0/24,no-resolve", "AI", ix), [])
+        self.assertEqual(review._ip_collisions(
+            "DOMAIN-SUFFIX,example.org", "AI", ix), [])
+
+    def test_exact_parent_does_not_falsely_match_subdomain(self):
+        existing = {
+            "AI": {"DOMAIN,example.org"},
+            "Google": {"DOMAIN-SUFFIX,google.org"}
+        }
+        idx, domains = review._overlap_index(existing)
+        self.assertEqual(review._semantic_expansion(
+            "DOMAIN,sub.example.org", "ChinaDirect", existing, idx, domains), [])
+        self.assertEqual(review._semantic_expansion(
+            "DOMAIN,sub.google.org", "ChinaDirect", existing, idx, domains), ["Google"])
+
+    def test_new_adblock_matchers_cannot_auto_block_critical_services(self):
+        protected = tuple(["browserleaks.com"])
+        for raw in ("DOMAIN-SUFFIX,stripe.com", "DOMAIN,accounts.google.com",
+                    "DOMAIN-SUFFIX,cloudfront.net"):
+            tags = review._domain_risk(raw, "AdBlock", protected)
+            self.assertIn("ADBLOCK_NEW_RULE_REQUIRES_EVIDENCE", tags)
+            self.assertTrue("ADBLOCK_CRITICAL_SERVICE_OVERLAP" in tags or
+                            "ADBLOCK_SHARED_HOSTING_OVERLAP" in tags)
+        self.assertIn("ADBLOCK_UNSAFE_MATCHER", review._domain_risk(
+            "DOMAIN-KEYWORD,track", "AdBlock", protected))
+        self.assertIn("DIRECT_PROTECTED_DOMAIN", review._domain_risk(
+            "DOMAIN-SUFFIX,browserleaks.com", "ChinaDirect", protected))
+
 class CandidateWorkflow(unittest.TestCase):
     @staticmethod
     def fixture(root: Path):
@@ -106,6 +172,29 @@ class CandidateWorkflow(unittest.TestCase):
             review.write_review(output, result, snapshots, review_data, root)
             self.assertTrue((output/"UPSTREAM_REVIEW.json").exists())
             self.assertTrue((output/"FULL_DIFF.json").exists())
+            self.assertTrue((output/"FULL_RISK_AUDIT.json").exists())
+            self.assertFalse(result["publication_allowed"])
+            self.assertTrue(result["preview_sha256_unchanged"])
+            self.assertEqual(review_data["rules"]["AI"],
+                             {"DOMAIN-SUFFIX,ai.org"})
+            self.assertIn("DOMAIN-SUFFIX,example.org",
+                          review_data["unapproved_proposals"]["AI"])
+            pinned_preview = (output/"candidate/AI.list").read_text()
+            self.assertIn("DOMAIN-SUFFIX,ai.org", pinned_preview)
+            self.assertNotIn("DOMAIN-SUFFIX,example.org", pinned_preview)
+            details = json.loads((output/"FULL_RISK_AUDIT.json").read_text())
+            self.assertGreater(len(details["AI"]["additions"]), 0)
+            self.assertTrue(all("reasons" in row for row
+                                in details["AI"]["additions"]))
+            self.assertTrue(all("source_ids" in row for row
+                                in details["AI"]["additions"]))
+            self.assertTrue(details["AI"]["removals"])
+            for group in result["groups"]:
+                name = "AnimeCrazy" if group == "動畫瘋" else group
+                preview = (output/"candidate"/(name+".list")).read_text()
+                self.assertNotIn("DOMAIN-KEYWORD,tracker", preview)
+                self.assertEqual(result["groups"][group]["publication_gate"],
+                                 "BLOCKED_UNTIL_EXPLICIT_APPROVAL")
             self.assertTrue((output/"snapshots/fixture-0.txt").exists())
             self.assertEqual((root/"rules/releases/vNext-RC2/AI.list").read_bytes(), before)
             with self.assertRaises(ValueError):
@@ -118,12 +207,14 @@ class CandidateWorkflow(unittest.TestCase):
             data = {s["id"]: ("DOMAIN-SUFFIX,"+s["group"].lower()+".org\n").encode()
                     for s in catalog}
             data["fixture-0"] = b"URL-REGEX,https://.*\n"
-            result, snapshots, _ = review.build_report(
+            result, snapshots, review_data = review.build_report(
                 root, fetcher=lambda s: data[s["id"]])
             self.assertEqual(result["incomplete_sources"], 1)
             self.assertIn("AI", result["incomplete_groups"])
             self.assertEqual(result["groups"]["AI"]["status"], "INCOMPLETE_SOURCE_DATA")
             self.assertTrue(snapshots)
+            self.assertEqual(review_data["rules"]["AI"],
+                             {"DOMAIN-SUFFIX,ai.org"})
 
 
 if __name__ == "__main__":

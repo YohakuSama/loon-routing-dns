@@ -11,6 +11,7 @@ import argparse
 from bisect import bisect_left
 from collections import Counter, defaultdict
 import hashlib
+import ipaddress
 import json
 from pathlib import Path
 import re
@@ -20,7 +21,8 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from rule_engine import normalize, fields, covers_domain
+from rule_engine import (normalize, fields, covers_domain, AD_SAFETY_ROOTS,
+                         SHARED_PLATFORM_ROOTS, is_covered)
 
 MAX_SOURCE = 30_000_000
 UPSTREAMS = {
@@ -30,8 +32,45 @@ UPSTREAMS = {
 }
 FORMAT_NAMES = {"loon", "domainset", "v2fly", "dnsmasq"}
 DIRECT_GROUPS = {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}
-HIGH_RISK_KINDS = {"DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6", "IP-ASN"}
-HOST = re.compile(r"^[a-z0-9*._-]+$", re.I)
+HIGH_RISK_KINDS = {"DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6", "IP-ASN", "USER-AGENT"}
+HOST = re.compile(r"^[a-z0-9.-]+$", re.I)
+# Conservative guards, NOT a substitute for a current Public Suffix List.
+# Unknown two-level public suffixes remain subject to manual review.
+COMMON_SECOND_LEVEL = {"co", "com", "net", "org", "gov", "ac", "edu"}
+RESERVED_ROOTS = {"localhost", "local", "internal", "test", "invalid", "example"}
+# Multi-tenant parent domains can represent unrelated customers; proposals for
+# their entire suffix are rejected, while subdomains remain reviewable.
+MULTITENANT_ROOTS = set(SHARED_PLATFORM_ROOTS) | {
+    "appspot.com", "blogspot.com", "github.io", "pages.dev", "workers.dev",
+    "vercel.app", "netlify.app", "herokuapp.com", "azurewebsites.net"
+}
+MAX_RULE_LENGTH = 256
+
+
+def _validate_matcher(rule: str) -> str:
+    """Reject obviously unsafe matchers before they enter a candidate preview."""
+    kind, value = fields(rule)
+    if len(rule) > MAX_RULE_LENGTH:
+        raise ValueError("oversized matcher")
+    if kind in {"DOMAIN", "DOMAIN-SUFFIX"}:
+        parts = value.split(".")
+        if (len(parts) < 2 or not HOST.fullmatch(value)
+                or any(not x or len(x) > 63 or x.startswith("-")
+                       or x.endswith("-") for x in parts)
+                or parts[-1] in RESERVED_ROOTS):
+            raise ValueError("invalid or private/reserved domain matcher")
+        if kind == "DOMAIN-SUFFIX" and (
+            (len(parts) == 2 and len(parts[-1]) == 2
+             and parts[0] in COMMON_SECOND_LEVEL) or value in MULTITENANT_ROOTS):
+            raise ValueError("public-suffix or multi-tenant scope blocks unrelated domains")
+    elif kind == "DOMAIN-KEYWORD":
+        if len(value) < 4 or "*" in value or value in {"http", "https", "cdn", "api"}:
+            raise ValueError("generic/unbounded keyword")
+    elif kind in {"IP-CIDR", "IP-CIDR6"}:
+        net = ipaddress.ip_network(value)
+        if net.prefixlen < (8 if net.version == 4 else 24):
+            raise ValueError("IP match is excessively broad")
+    return rule
 
 
 def digest(data: bytes) -> str:
@@ -55,15 +94,17 @@ def source_line(source: dict, line: str) -> str | None:
         if raw.upper().startswith("DOMAIN-SET,"):
             raise ValueError("unsupported DOMAIN-SET matcher")
         # Raw Loon rule source (not a Loon config with a third policy column).
-        return canonical(raw)
+        return _validate_matcher(canonical(raw))
     if fmt == "domainset":
         if raw.startswith("+."):
             raw = raw[2:]
-        else:
-            raw = raw.lstrip(".")
+        elif raw.startswith("."):
+            # Strip exactly one documented domain-set prefix; do not hide
+            # malformed inputs such as '..example.org' by lstrip().
+            raw = raw[1:]
         if "," in raw or " " in raw or not HOST.fullmatch(raw):
             raise ValueError("unrecognized domain set entry")
-        return canonical("DOMAIN-SUFFIX," + raw)
+        return _validate_matcher(canonical("DOMAIN-SUFFIX," + raw))
     if fmt == "v2fly":
         parts = raw.split()
         if len(parts) > 2 or not parts:
@@ -78,19 +119,19 @@ def source_line(source: dict, line: str) -> str | None:
         if match.startswith("include:") or match.startswith("regexp:"):
             raise ValueError("v2fly include/regexp requires explicit review")
         if match.startswith("full:"):
-            return canonical("DOMAIN," + match[5:])
+            return _validate_matcher(canonical("DOMAIN," + match[5:]))
         if match.startswith("domain:"):
-            return canonical("DOMAIN-SUFFIX," + match[7:])
+            return _validate_matcher(canonical("DOMAIN-SUFFIX," + match[7:]))
         if match.startswith("keyword:"):
-            return canonical("DOMAIN-KEYWORD," + match[8:])
+            return _validate_matcher(canonical("DOMAIN-KEYWORD," + match[8:]))
         if ":" in match:
             raise ValueError("unknown v2fly matcher")
-        return canonical("DOMAIN-SUFFIX," + match)
+        return _validate_matcher(canonical("DOMAIN-SUFFIX," + match))
     if fmt == "dnsmasq":
         m = re.fullmatch(r"(?:server|address)=/([^/]+)/[^/\s]+", raw)
         if not m:
             raise ValueError("unsupported dnsmasq directive")
-        return canonical("DOMAIN-SUFFIX," + m.group(1))
+        return _validate_matcher(canonical("DOMAIN-SUFFIX," + m.group(1)))
     raise ValueError("unknown source format")
 
 
@@ -172,7 +213,7 @@ def _overlap_index(published: dict[str, set[str]]):
         for rule in rules:
             kind, value = fields(rule)
             if kind in {"DOMAIN", "DOMAIN-SUFFIX"}:
-                lookup[value].add(group)
+                lookup[value].add((group, kind))
     # Reverse labels so all child names of a suffix are contiguous.
     return lookup, sorted(".".join(reversed(host.split("."))) for host in lookup)
 
@@ -184,17 +225,77 @@ def _semantic_expansion(rule: str, group: str, baseline: dict[str, set[str]],
         return []
     risks = set()
     for p in _parents(value):
-        for other in lookup.get(p, ()):
-            if other != group:
+        for other, match_kind in lookup.get(p, ()):
+            # An exact DOMAIN,parent.example does not match its children.
+            if other != group and (p == value or match_kind == "DOMAIN-SUFFIX"):
                 risks.add(other)
     if kind == "DOMAIN-SUFFIX":
         prefix = ".".join(reversed(value.split("."))) + "."
         i = bisect_left(sorted_domains, prefix)
         while i < len(sorted_domains) and sorted_domains[i].startswith(prefix):
             original_host = ".".join(reversed(sorted_domains[i].split(".")))
-            risks.update(g for g in lookup[original_host] if g != group)
+            risks.update(g for g, _ in lookup[original_host] if g != group)
             i += 1
     return sorted(risks)
+
+
+def _ip_overlap_index(published: dict[str, set[str]]) -> dict:
+    """Index IPv4/IPv6 CIDRs for precise cross-policy overlap analysis."""
+    index = {4: {"prefix": defaultdict(set), "starts": []},
+             6: {"prefix": defaultdict(set), "starts": []}}
+    for group, rules in published.items():
+        for rule in rules:
+            kind, value = fields(rule)
+            if kind not in {"IP-CIDR", "IP-CIDR6"}:
+                continue
+            net = ipaddress.ip_network(value)
+            idx = index[net.version]
+            start = int(net.network_address)
+            stop = int(net.broadcast_address)
+            idx["prefix"][(net.prefixlen, start)].add(group)
+            idx["starts"].append((start, stop, group))
+    for family in index.values():
+        family["starts"].sort()
+    return index
+
+
+def _ip_collisions(rule: str, group: str, index: dict) -> list[str]:
+    kind, value = fields(rule)
+    if kind not in {"IP-CIDR", "IP-CIDR6"}:
+        return []
+    net = ipaddress.ip_network(value)
+    bits = net.max_prefixlen
+    start, end = int(net.network_address), int(net.broadcast_address)
+    ix = index[net.version]
+    groups = set()
+    for prefix in range(net.prefixlen + 1):
+        address = start if prefix == bits else (start >> (bits-prefix)) << (bits-prefix)
+        groups.update(ix["prefix"].get((prefix, address), ()))
+    entries = ix["starts"]
+    i = bisect_left(entries, (start, -1, ""))
+    while i < len(entries) and entries[i][0] <= end:
+        groups.add(entries[i][2])
+        i += 1
+    return sorted(groups - {group})
+
+
+def _domain_risk(rule: str, group: str, protected: tuple[str, ...]) -> list[str]:
+    """Critical domains and shared hosts must never be auto-blocked or routed DIRECT."""
+    kind, _ = fields(rule)
+    tags = []
+    if kind == "DOMAIN-SUFFIX" and fields(rule)[1] in SHARED_PLATFORM_ROOTS:
+        tags.append("SHARED_INFRASTRUCTURE_SUFFIX_REVIEW")
+    if group == "AdBlock":
+        tags.append("ADBLOCK_NEW_RULE_REQUIRES_EVIDENCE")
+        if kind not in {"DOMAIN", "DOMAIN-SUFFIX"}:
+            tags.append("ADBLOCK_UNSAFE_MATCHER")
+        if any(covers_domain(rule, host) for host in AD_SAFETY_ROOTS):
+            tags.append("ADBLOCK_CRITICAL_SERVICE_OVERLAP")
+        if any(covers_domain(rule, host) for host in SHARED_PLATFORM_ROOTS):
+            tags.append("ADBLOCK_SHARED_HOSTING_OVERLAP")
+    if group in DIRECT_GROUPS and any(covers_domain(rule, host) for host in protected):
+        tags.append("DIRECT_PROTECTED_DOMAIN")
+    return tags
 
 
 def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes], dict]:
@@ -246,9 +347,13 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
                            if x.strip() and not x.lstrip().startswith(("#", ";", "//"))}
         candidate[group], _ = _same_policy_reduce(groups[group])
     index, domains = _overlap_index(baseline)
+    proposal_index, proposal_domains = _overlap_index(candidate)
+    baseline_ip_index = _ip_overlap_index(baseline)
+    proposal_ip_index = _ip_overlap_index(candidate)
     guarded = json.loads((root/"rules/routing_guardrails.json").read_text(encoding="utf-8"))["protected_proxy_domains"]
     group_report = {}
     deltas = {}
+    full_risks = {}
     cross_owner = defaultdict(set)
     for group, rules in candidate.items():
         for rule in rules:
@@ -259,6 +364,7 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
         removed = sorted(before-after)
         risk = Counter()
         risk_examples = []
+        detailed_risks = {"additions": [], "removals": []}
         for rule in added:
             kind, _ = fields(rule)
             tags = []
@@ -267,13 +373,30 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             if kind == "DOMAIN-SUFFIX":
                 # New suffixes can unexpectedly route every subdomain.
                 tags.append("NEW_SUFFIX_SCOPE_REVIEW")
-            if group in DIRECT_GROUPS and any(covers_domain(rule, host) for host in guarded):
-                tags.append("DIRECT_PROTECTED_DOMAIN")
+            tags.extend(_domain_risk(rule, group, tuple(guarded)))
             if len(cross_owner[rule]) > 1:
                 tags.append("CROSS_POLICY_EXACT_CONFLICT")
-            other_groups = _semantic_expansion(rule, group, baseline, index, domains)
-            if other_groups:
+            other_groups = set(_semantic_expansion(rule, group, baseline, index, domains))
+            candidate_groups = _semantic_expansion(rule, group, candidate,
+                                                   proposal_index, proposal_domains)
+            if candidate_groups:
+                tags.append("CROSS_POLICY_CANDIDATE_DOMAIN_COVERAGE")
+                other_groups.update(candidate_groups)
+            ip_groups = _ip_collisions(rule, group, baseline_ip_index)
+            ip_candidate_groups = _ip_collisions(rule, group, proposal_ip_index)
+            if ip_groups or ip_candidate_groups:
+                tags.append("CROSS_POLICY_IP_RANGE_OVERLAP")
+                other_groups.update(ip_groups + ip_candidate_groups)
+            if other_groups.intersection(set(_semantic_expansion(rule, group, baseline, index, domains))):
                 tags.append("CROSS_POLICY_DOMAIN_COVERAGE")
+            other_groups = sorted(other_groups)
+            # Every added matcher remains quarantined, even without special risk flags.
+            detailed_risks["additions"].append({
+                "rule": rule,
+                "reasons": sorted(set(tags)) if tags else ["NEW_RULE_REQUIRES_APPROVAL"],
+                "source_ids": sorted(provenance.get((group, rule), ())),
+                "other_groups": other_groups
+            })
             for t in tags:
                 risk[t] += 1
             if tags and len(risk_examples) < 30:
@@ -281,9 +404,21 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
         # Removals are never silently applied, including upstream deletions.
         if removed:
             risk["REMOVALS_REQUIRE_APPROVAL"] = len(removed)
+            detailed_risks["removals"] = [
+                {"rule": rule, "reasons": ["UPSTREAM_REMOVAL_REQUIRES_APPROVAL"]}
+                for rule in removed
+            ]
+        volume_shift = abs(len(after) - len(before)) / max(len(before), 1)
+        if volume_shift > 0.20:
+            risk["LARGE_SOURCE_VOLUME_DRIFT_REVIEW"] = 1
+        full_risks[group] = detailed_risks
         group_report[group] = {
             "status": "INCOMPLETE_SOURCE_DATA" if group in invalid_groups else "REVIEW_ONLY",
+            "publication_gate": "BLOCKED_UNTIL_EXPLICIT_APPROVAL",
+            "emitted_preview": "UNCHANGED_PINNED_BASELINE",
+            "change_review_required": bool(added or removed),
             "published_count": len(before), "candidate_count": len(after),
+            "volume_change_percent": round(volume_shift * 100, 2),
             "added": len(added), "removed": len(removed),
             "same_policy_covered_domains": len(groups[group]) - len(after),
             "risk_categories": dict(sorted(risk.items())),
@@ -300,7 +435,11 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
         "incomplete_groups": sorted(invalid_groups & set(active)),
         "full_delta_sha256": digest(full), "sources": records,
         "groups": group_report,
+        "publication_allowed": False,
+        "preview_sha256_unchanged": True,
         "safety": [
+            "Candidate .list files contain ONLY the unchanged pinned baseline, never unapproved upstream matchers.",
+            "Additions and removals are recorded as data, not automatically incorporated.",
             "Candidates never replace pinned production URLs or locked inputs.",
             "Historical merged rule provenance is not fully reconstructable.",
             "Unknown directives and v2fly includes/regex are reported, not guessed.",
@@ -308,7 +447,9 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             "No automatic tightening, widening, rule publication or source lock updates.",
         ],
     }
-    return report, snapshots, {"deltas": deltas, "rules": candidate,
+    return report, snapshots, {"deltas": deltas, "full_risk_audit": full_risks,
+                               "rules": baseline,
+                               "unapproved_proposals": candidate,
                                "source_ids_by_rule": provenance}
 
 
@@ -325,6 +466,8 @@ def write_review(output: Path, report: dict, snapshots: dict[str, bytes], data: 
         sort_keys=True, indent=2) + "\n", encoding="utf-8")
     (folder/"FULL_DIFF.json").write_text(json.dumps(data["deltas"], ensure_ascii=False,
         sort_keys=True, indent=2) + "\n", encoding="utf-8")
+    (folder/"FULL_RISK_AUDIT.json").write_text(json.dumps(data["full_risk_audit"],
+        ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
     for sid, blob in sorted(snapshots.items()):
         dest = folder/"snapshots"/(sid+".txt")
         dest.parent.mkdir(parents=True, exist_ok=True)
@@ -332,10 +475,10 @@ def write_review(output: Path, report: dict, snapshots: dict[str, bytes], data: 
     for group, rules in sorted(data["rules"].items()):
         dest = folder/"candidate"/(("AnimeCrazy" if group == "動畫瘋" else group)+".list")
         dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text("# REVIEW ONLY - NOT FOR LOON SUBSCRIPTION\n" +
+        dest.write_text("# UNCHANGED PINNED BASELINE - NOT A RULE UPDATE\n" +
             "\n".join(sorted(rules)) + "\n", encoding="utf-8")
     provenance = {g+"|"+r: sorted(ids) for (g, r), ids in sorted(
-        data["source_ids_by_rule"].items()) if r in data["rules"].get(g, ())}
+        data["source_ids_by_rule"].items()) if r in data["unapproved_proposals"].get(g, ())}
     (folder/"CANDIDATE_SOURCES.json").write_text(json.dumps(provenance, ensure_ascii=False,
         sort_keys=True, indent=2) + "\n", encoding="utf-8")
 
