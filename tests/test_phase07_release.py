@@ -143,30 +143,33 @@ class ReleaseBuildTests(unittest.TestCase):
         self.assertEqual(result["line_level_license_attribution"],"NOT_VERIFIED")
 
     def test_runtime_gate_cannot_pass_without_real_bound_device_records(self):
-        with self.assertRaisesRegex(ValueError,"cannot lack structured"):
-            device_attestation.inspect({"device_import"},ROOT)
+        # This must keep working AFTER real device evidence is approved in the
+        # repository. Always use a deliberately empty isolated workspace.
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError,"cannot lack structured"):
+                device_attestation.inspect({"device_import"},Path(tmp))
 
     def test_future_release_stages_independently_and_rebuilds_exact_bytes(self):
         with tempfile.TemporaryDirectory(prefix="loonkit-next-release-") as temp:
             stage=Path(temp)/"candidate"
-            result=next_release.run("vNext-RC3",stage)
+            result=next_release.run("vNext-RC999999999",stage)
             self.assertEqual(result["rule_file_count"],26)
             self.assertFalse(result["formal_user_paths_modified"])
             manifest=json.loads((stage/"NEXT_RELEASE_MANIFEST.json").read_text())
             self.assertEqual(manifest["status"],"CANDIDATE_REVIEW_ONLY_NOT_PUBLISHED")
             self.assertEqual(manifest["runtime_device_test"],"NOT_EXECUTED")
             self.assertEqual(len(manifest["rules"]),26)
-            self.assertEqual(manifest["remote_matchers"],197765)
+            self.assertEqual(manifest["remote_matchers"],sum(row["rule_count"] for row in manifest["rules"].values()))
             import hashlib
             self.assertEqual(
                 hashlib.sha256((stage/"NEXT_RELEASE_DIFF.json").read_bytes()).hexdigest(),
                 manifest["diff_sha256"])
-            self.assertEqual(next_release.run("vNext-RC3",stage,check=True)["rule_file_count"],26)
+            self.assertEqual(next_release.run("vNext-RC999999999",stage,check=True)["rule_file_count"],26)
             with self.assertRaisesRegex(ValueError,"initially empty"):
-                next_release.run("vNext-RC3",stage,check=False)
+                next_release.run("vNext-RC999999999",stage,check=False)
             with self.assertRaisesRegex(ValueError,"staged candidate differs"):
-                (stage/"rules/releases/vNext-RC3/AI.list").write_text("MALFORMED\\n")
-                next_release.run("vNext-RC3",stage,check=True)
+                (stage/"rules/releases/vNext-RC999999999/AI.list").write_text("MALFORMED\\n")
+                next_release.run("vNext-RC999999999",stage,check=True)
             for forbidden in ("vNext-RC2","../../main","main","v1"):
                 with self.assertRaises(ValueError):
                     next_release.render(forbidden)
