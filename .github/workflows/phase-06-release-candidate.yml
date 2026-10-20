@@ -45,6 +45,11 @@ jobs:
         run: |
           python3 scripts/vnext_pin_candidate.py --commit "$GITHUB_SHA" --output /tmp/LoonKit.vNext.RC1.Test.lcf
           python3 scripts/vnext_import_preflight.py --commit "$GITHUB_SHA" --config /tmp/LoonKit.vNext.RC1.Test.lcf --json-out /tmp/rc-pinned.json
+      - name: Validate all 26 immutable raw resources by GET
+        env:
+          RC_SHA: ${{ github.sha }}
+        run: |
+          python3 scripts/vnext_verify_raw_resources.py --commit "$RC_SHA" --json-out /tmp/rc-remote-http.json
       - name: Protect production and DNS/TUN and ensure clean checkout
         run: |
           git diff --exit-code HEAD -- LoonKit.lcf LoonKit.PrivacyDNS.lcf rules/ baselines/
@@ -57,5 +62,6 @@ jobs:
             /tmp/LoonKit.vNext.RC1.Test.lcf
             /tmp/rc-preflight.json
             /tmp/rc-pinned.json
+            /tmp/rc-remote-http.json
           retention-days: 30
           if-no-files-found: error
