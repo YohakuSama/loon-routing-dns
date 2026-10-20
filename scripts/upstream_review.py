@@ -11,6 +11,7 @@ import argparse
 from bisect import bisect_left
 from collections import Counter, defaultdict
 import hashlib
+import ipaddress
 import json
 from pathlib import Path
 import re
@@ -20,7 +21,8 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from rule_engine import normalize, fields, covers_domain
+from rule_engine import (normalize, fields, covers_domain, AD_SAFETY_ROOTS,
+                         SHARED_PLATFORM_ROOTS, is_covered)
 
 MAX_SOURCE = 30_000_000
 UPSTREAMS = {
@@ -31,7 +33,38 @@ UPSTREAMS = {
 FORMAT_NAMES = {"loon", "domainset", "v2fly", "dnsmasq"}
 DIRECT_GROUPS = {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}
 HIGH_RISK_KINDS = {"DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6", "IP-ASN"}
-HOST = re.compile(r"^[a-z0-9*._-]+$", re.I)
+HOST = re.compile(r"^[a-z0-9.-]+$", re.I)
+# Conservative guards, NOT a substitute for a current Public Suffix List.
+# Unknown two-level public suffixes remain subject to manual review.
+COMMON_SECOND_LEVEL = {"co", "com", "net", "org", "gov", "ac", "edu"}
+RESERVED_ROOTS = {"localhost", "local", "internal", "test", "invalid", "example"}
+MAX_RULE_LENGTH = 256
+
+
+def _validate_matcher(rule: str) -> str:
+    """Reject obviously unsafe matchers before they enter a candidate preview."""
+    kind, value = fields(rule)
+    if len(rule) > MAX_RULE_LENGTH:
+        raise ValueError("oversized matcher")
+    if kind in {"DOMAIN", "DOMAIN-SUFFIX"}:
+        parts = value.split(".")
+        if (len(parts) < 2 or not HOST.fullmatch(value)
+                or any(not x or len(x) > 63 or x.startswith("-")
+                       or x.endswith("-") for x in parts)
+                or parts[-1] in RESERVED_ROOTS):
+            raise ValueError("invalid or private/reserved domain matcher")
+        if kind == "DOMAIN-SUFFIX" and (
+            len(parts) == 2 and len(parts[-1]) == 2
+            and parts[0] in COMMON_SECOND_LEVEL):
+            raise ValueError("public-suffix-like match blocks unrelated domains")
+    elif kind == "DOMAIN-KEYWORD":
+        if len(value) < 4 or "*" in value or value in {"http", "https", "cdn", "api"}:
+            raise ValueError("generic/unbounded keyword")
+    elif kind in {"IP-CIDR", "IP-CIDR6"}:
+        net = ipaddress.ip_network(value)
+        if net.prefixlen < (8 if net.version == 4 else 24):
+            raise ValueError("IP match is excessively broad")
+    return rule
 
 
 def digest(data: bytes) -> str:
@@ -42,7 +75,7 @@ def canonical(text: str) -> str:
     rule = normalize(text)
     if rule is None:
         raise ValueError("empty or comment rule")
-    return rule
+    return _validate_matcher(rule)
 
 
 def source_line(source: dict, line: str) -> str | None:
