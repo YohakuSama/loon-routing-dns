@@ -4,13 +4,14 @@
   "stable_release_version": "v6.0.0",
   "status": "PUBLISHED_TO_MAIN_WITH_DISCLOSED_LIMITATIONS",
   "release_rules_dir": "rules/releases/vNext-RC2",
-  "release_assets_dir": "release/phase-07/assets",
+  "release_assets_dir": "release/phase-08/assets",
   "release_assets_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4",
   "reviewed_auxiliary_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4",
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "Routing and DNS unchanged; upstream licenses and attribution documented, with incomplete line-level provenance and separate brand rights.",
-  "plugin_assets_commit": "a2409b2d470e36ad0fa92f1fe424c37ae9543927",
-  "script_assets_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4"
+  "plugin_assets_commit": "a43e28aff0a4512964f5bbed7c7d8112bd856d0f",
+  "script_assets_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4",
+  "diagnostics_script_commit": "080a60897afd24c8c3c9387c25500615a6ec4145"
 }
