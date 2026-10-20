@@ -614,7 +614,8 @@ def simulate_domain(host: str, files: dict[str, str], *, final_choice: str = "Fi
         if len(p) < 3 or p[0] not in {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD"}:
             continue
         if covers_domain(p[0] + "," + p[1], host):
-            return {"policy": p[2], "effective": p[2], "layer": "local",
+            effective = adblock_choice if p[2] == "AdBlock" else p[2]
+            return {"policy": p[2], "effective": effective, "layer": "local",
                     "matched": p[0] + "," + p[1], "simulator": "DOMAIN_ONLY"}
     cfg = load_manifest()
     for group in cfg["subscription_order"]:
