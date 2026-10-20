@@ -276,6 +276,68 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
                               "candidate_groups": new_groups, "fallback": "FINAL if absent"})
     files["refactor/vnext/reports/ownership_changes.jsonl"] = "".join(
         json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in ownership)
+    # Cross-policy parent/child domain overlap: record predicate-level ambiguities,
+    # not just two exact-equal strings. No unsupported Loon precedence is assumed.
+    suffix_owners = defaultdict(list)
+    for group, records in groups.items():
+        for rule in records:
+            if rule.startswith("DOMAIN-SUFFIX,"):
+                suffix_owners[fields(rule)[1]].append((group, rule))
+    ancestry = []
+    for group, records in groups.items():
+        for rule in records:
+            kind, value = fields(rule)
+            if kind not in {"DOMAIN", "DOMAIN-SUFFIX"}:
+                continue
+            labels = value.split(".")
+            for offset in range(0 if kind == "DOMAIN" else 1, len(labels)):
+                ancestor = ".".join(labels[offset:])
+                for other_group, other_rule in suffix_owners.get(ancestor, ()):
+                    if other_group != group:
+                        ancestry.append({"child_group": group, "child_rule": rule,
+                                         "parent_group": other_group, "parent_rule": other_rule,
+                                         "status": "REQUIRES_RUNTIME_TEST",
+                                         "note": "Matcher class and local/remote priority must be validated"})
+    ancestry.sort(key=lambda x: (x["child_group"], x["child_rule"],
+                                  x["parent_group"], x["parent_rule"]))
+    files["refactor/vnext/reports/domain_parent_child_conflicts.jsonl"] = "".join(
+        json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in ancestry)
+    # DOMAIN-KEYWORD has intentionally non-boundary-scoped semantics. Keep every
+    # remaining non-DIRECT keyword visible for later business review.
+    kw_risks = []
+    for group, records in groups.items():
+        for rule in records:
+            if rule.startswith("DOMAIN-KEYWORD,"):
+                value = fields(rule)[1]
+                kw_risks.append({"group": group, "rule": rule,
+                                 "risk": "GLOBAL_SUBSTRING_MATCH",
+                                 "severity": "HIGH" if len(value) <= 4 else "REVIEW",
+                                 "status": "REQUIRES_RUNTIME_TEST"})
+    kw_risks.sort(key=lambda x: (x["group"], x["rule"]))
+    files["refactor/vnext/reports/domain_keyword_risks.jsonl"] = "".join(
+        json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in kw_risks)
+    # Detect nested IP nets that route through distinct policies. No O(n^2)
+    # full cross-product; compare each network to its exact supernet prefixes.
+    network_owners = defaultdict(list)
+    for group, records in groups.items():
+        for rule in records:
+            if rule.startswith(("IP-CIDR,", "IP-CIDR6,")):
+                network_owners[fields(rule)[1]].append((group, rule))
+    ip_overlap = []
+    for value, owners in network_owners.items():
+        net = ipaddress.ip_network(value)
+        for prefixlen in range(net.prefixlen):
+            parent = str(net.supernet(new_prefix=prefixlen))
+            for outer_group, outer_rule in network_owners.get(parent, ()):
+                for inner_group, inner_rule in owners:
+                    if inner_group != outer_group:
+                        ip_overlap.append({"inner_group": inner_group, "inner_rule": inner_rule,
+                                           "outer_group": outer_group, "outer_rule": outer_rule,
+                                           "status": "REQUIRES_RUNTIME_TEST"})
+    ip_overlap.sort(key=lambda x: (x["inner_group"], x["inner_rule"],
+                                   x["outer_group"], x["outer_rule"]))
+    files["refactor/vnext/reports/ip_network_overlaps.jsonl"] = "".join(
+        json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in ip_overlap)
     files["refactor/vnext/reports/added.jsonl"] = "".join(
         json.dumps({"group": g, "rule": r, "reason": "NEW_OR_RECLASSIFIED"},
                    ensure_ascii=False, sort_keys=True) + "\n" for g, r in added)
@@ -294,6 +356,9 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
         "active_remote_upstream_sources": 0,
         "source_status": "26 frozen group snapshots, not 26 independently verifiable upstream feeds",
         "adblock_anchors": list(AD_ANCHORS),
+        "domain_parent_child_ambiguities": len(ancestry),
+        "domain_keyword_review_count": len(kw_risks),
+        "cross_policy_nested_ip_networks": len(ip_overlap),
         "removed_or_modified_origin_lines": len(trace),
         "isolation_causes": dict(sorted(Counter(item["reason"] for item in trace).items())),
         "new_rules": [{"group": g, "rule": r} for g, r in added[:100]],
