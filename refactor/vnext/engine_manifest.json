@@ -68,7 +68,7 @@
     "Paypal",
     "ChinaDirect"
   ],
-  "inactive_replacement": "Final selector, may be DIRECT; no implicit proxy guarantee",
+  "inactive_replacement": "Reviewed first-party service roots now have minimal inline owners; unknown auxiliary hosts may still reach Final, including DIRECT.",
   "adblock_selector_choices": [
     "REJECT",
     "DIRECT"
@@ -189,6 +189,36 @@
     "Google": [
       "appspot",
       "blogspot"
+    ]
+  },
+  "reviewed_overseas_inline_minimal": {
+    "Spotify": [
+      "spotify.com",
+      "scdn.co"
+    ],
+    "Twitch": [
+      "twitch.tv",
+      "ttvnw.net"
+    ],
+    "Abema": [
+      "abema.tv",
+      "abema.io"
+    ],
+    "BBC": [
+      "bbc.co.uk",
+      "bbc.com"
+    ],
+    "Line": [
+      "line.me",
+      "line-apps.com"
+    ],
+    "Reddit": [
+      "reddit.com",
+      "redd.it"
+    ],
+    "Linkedin": [
+      "linkedin.com",
+      "licdn.com"
     ]
   }
 }
