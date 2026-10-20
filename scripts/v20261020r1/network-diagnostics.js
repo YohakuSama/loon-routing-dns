@@ -121,7 +121,7 @@
     httpProbe("代理策略 Proxy",PROXY_URL,"Proxy",function(x){collect("proxy",x);});
   }
   function notify(result) {
-    if (finished || result.ok) return;
+    if (finished || result.ok !== false) return;
     var last=null;
     try {last=JSON.parse($persistentStore.read(ALERT_KEY)||"null");}catch(e){}
     if (last && Date.now()-Number(last.at||0)<COOLDOWN) return;
@@ -133,7 +133,7 @@
   // Never send unsolicited DNS requests to an unrelated public resolver.
   setTimeout(function(){
     httpProbe("直连网络",DIRECT_URL,"DIRECT",function(first){
-      if (first.ok) return finish("网络已恢复");
+      if (first.ok!==false) return finish(first.ok===true?"网络已恢复":"网络检查结果待确认");
       setTimeout(function(){
         httpProbe("直连网络",DIRECT_URL,"DIRECT",function(second){
           notify(second);

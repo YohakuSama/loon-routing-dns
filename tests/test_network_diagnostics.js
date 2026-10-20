@@ -115,6 +115,12 @@ check("automatic check has no DNS probe and is silent when healthy",()=>{
   assert(!r.requests.some(x=>x.native));
   assert(r.requests.every(x=>x.node==="DIRECT"));
 });
+check("auto notification ignores HTTP 301 on direct network",()=>{
+  const r=run({auto:true,directStatus:301});
+  assert.equal(r.alerts.length,0);
+  assert.equal(r.requests.length,1);
+  assert.equal(r.results.length,1);
+});
 check("automatic double-failure alerts only once per cooldown",()=>{
   const store={};
   const first=run({auto:true,directFail:true,store});
