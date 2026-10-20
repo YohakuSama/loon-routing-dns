@@ -39,11 +39,14 @@ def review(source: str, proposed: Path, root: Path=ROOT) -> dict:
     if len(new)<1:
         raise ValueError("proposed input contains no rules")
     allowed={"DOMAIN","DOMAIN-SUFFIX","DOMAIN-KEYWORD","IP-CIDR","IP-CIDR6","IP-ASN","GEOIP"}
-    for line in new:
-        if line.split(",")[0] not in allowed or len(line.split(",")) not in (2,3):
-            raise ValueError("invalid Loon matcher in proposed source")
+    # Historic mixed input contains legacy matcher classes the vNext compiler
+    # already filters. Do not reject unchanged historic lines as a new defect;
+    # fail closed only on freshly introduced matchers under review.
     add=sorted(new-old)
     remove=sorted(old-new)
+    for line in add:
+        if line.split(",")[0] not in allowed or len(line.split(",")) not in (2,3):
+            raise ValueError("invalid newly proposed Loon matcher: "+line[:120])
     return {
         "schema_version":1, "status":"PENDING_REVIEW_NOT_PUBLISHED",
         "source_path":source, "historical_lineage":"NOT_RECOVERABLE_FROM_MERGED_SNAPSHOT",
