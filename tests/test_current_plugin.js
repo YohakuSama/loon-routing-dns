@@ -14,7 +14,7 @@ function check(name,fn){
 }
 check("only the shipped immutable plugin is present",()=>{
   assert(!fs.existsSync(path.join(root,"plugins/")));
-  assert(plugin.includes("/ea2a2d87ae57c7854ee037cba3174f7881041051/scripts/"));
+  assert(plugin.includes("/a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1/scripts/"));
 });
 check("exactly two manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
