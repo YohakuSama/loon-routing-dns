@@ -1,4 +1,4 @@
-"""Offline check of everything a Loon config needs to import successfully.
+"""Archived v5.10 production baseline import preflight (RC2 has separate checks).
 
 This checks file structure and *local* availability; it does not emulate Loon
 or claim that URLs/network nodes are reachable on a particular device.
@@ -11,7 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit, unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-ACTIVE = ROOT / "LoonKit.lcf"
+ACTIVE = ROOT / "refactor/vnext/templates/LoonKit.legacy-seed.lcf"
 HOST = "raw.githubusercontent.com"
 
 

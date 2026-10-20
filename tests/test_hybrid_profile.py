@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Validate the active historically verified profile and independent staged rules."""
+"""Validate frozen v5.10 profile independently of current RC2 release candidate."""
 from pathlib import Path
 import re
 import json
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "LoonKit.lcf"
+CONFIG = ROOT / "refactor/vnext/templates/LoonKit.legacy-seed.lcf"
 CATALOG = ROOT / "rules/sources.json"
 BASELINE = ROOT / "rules/verified-routing-baseline.json"
 GENERATED = ROOT / "rules/generated"
