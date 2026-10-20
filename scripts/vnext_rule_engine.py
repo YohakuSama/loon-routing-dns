@@ -558,13 +558,23 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
             additions.append("DOMAIN-SUFFIX," + host + "," + group)
     if len(additions) != len(set(additions)):
         raise ValueError("duplicate overseas candidate inline rule")
+    # Official Loon rule precedence: local predicates outrank subscribed ones.
+    # Preserve user-selectable AdBlock for precise ads under restored local roots.
+    # These selectors remain AdBlock (REJECT/DIRECT), never unconditional REJECT.
+    local_adblock = []
+    for rule in sorted(groups["AdBlock"]):
+        kind, value = fields(rule)
+        if kind in {"DOMAIN", "DOMAIN-SUFFIX"} and any(
+                is_covered(value, host) for hosts in scoped_overseas.values() for host in hosts):
+            local_adblock.append(rule + ",AdBlock")
     marker = "GEOIP,CN,DIRECT,no-resolve\n"
     if candidate_profile.count(marker) != 1:
         raise ValueError("unexpected candidate GEOIP terminator")
     candidate_profile = candidate_profile.replace(
         marker,
         "# Minimal overseas service selector compatibility; candidate only.\n"
-        + "\n".join(additions) + "\n" + marker, 1)
+        + "# Scoped AdBlock overrides precede local overseas service roots.\n"
+        + "\n".join([*local_adblock, *additions]) + "\n" + marker, 1)
     files["refactor/vnext/LoonKit.vNext.Candidate.lcf"] = candidate_profile
     return files
 
