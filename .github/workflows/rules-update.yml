@@ -17,6 +17,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: python3 scripts/verify_release.py --check
+      - name: Validate immutable pinned resources on GitHub Raw
+        run: python3 scripts/verify_release.py --check --remote
       - name: Check upstream current bytes without updating production
         run: python3 scripts/check_sources.py --output "$RUNNER_TEMP/upstream.json"
       - name: Generate offline candidate difference
