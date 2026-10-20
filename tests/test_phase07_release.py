@@ -149,6 +149,22 @@ class ReleaseBuildTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,"cannot lack structured"):
                 device_attestation.inspect({"device_import"},Path(tmp))
 
+    def test_release_gate_rejects_fabricated_runtime_pass_without_evidence(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp:
+            scratch=Path(tmp)
+            target=scratch/"release/phase-07/RELEASE_GATE.json"
+            target.parent.mkdir(parents=True)
+            forged=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text())
+            row=forged["checks"]["device_import"]
+            row.update({"status":"PASS","evidence":"validation/phase-07/device-results.redacted.json",
+                        "commit":"53b1b7081ab00ca29103bb61b62ca614fa676baa",
+                        "test_time":"2026-10-20T12:00:00Z"})
+            target.write_text(json.dumps(forged))
+            with patch.object(gate,"ROOT",scratch):
+                with self.assertRaisesRegex(ValueError,"cannot lack structured"):
+                    gate.check()
+
     def test_future_release_stages_independently_and_rebuilds_exact_bytes(self):
         with tempfile.TemporaryDirectory(prefix="loonkit-next-release-") as temp:
             stage=Path(temp)/"candidate"
