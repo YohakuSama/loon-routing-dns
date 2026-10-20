@@ -90,7 +90,8 @@ def covers_domain(rule: str, host: str) -> bool:
 
 
 def filter_rule(group: str, rule: str, protected: tuple[str, ...],
-                keywords: dict | None = None) -> tuple[str | None, str | None, str]:
+                keywords: dict | None = None,
+                shared_roots: tuple[str, ...] = ()) -> tuple[str | None, str | None, str]:
     kind, value = fields(rule)
     if group in {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}:
         if any(covers_domain(rule, x) for x in protected):
@@ -124,8 +125,7 @@ def filter_rule(group: str, rule: str, protected: tuple[str, ...],
     if group not in {"AdBlock", "ChinaDirect"} and kind == "DOMAIN-SUFFIX" and value in SHARED_PLATFORM_ROOTS:
         return None, "SHARED_INFRASTRUCTURE_ISOLATED", "FINAL"
     if (group not in {"ChinaDirect", "AdBlock", "DomesticCore"} and kind == "DOMAIN-SUFFIX"
-            and value in {"akadns.net", "edgesuite.net", "llnwd.net",
-                          "windows.net", "appspot.com", "blogspot.com"}):
+            and value in shared_roots):
         return None, "MULTITENANT_SHARED_ROOT_ISOLATED", "precise platform domain or FINAL"
     if group == "AI" and kind == "IP-ASN":
         return None, "AI_BROAD_ASN", "FINAL"
@@ -281,7 +281,9 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
             if group in inactive:
                 reason, replacement, outcome = "SOURCE_DISABLED", "FINAL", None
             else:
-                outcome, reason, replacement = filter_rule(group, rule, protected, cfg.get("reviewed_keyword_narrowing", {}))
+                outcome, reason, replacement = filter_rule(
+                    group, rule, protected, cfg.get("reviewed_keyword_narrowing", {}),
+                    tuple(cfg.get("reviewed_multi_tenant_suffixes", [])))
             if outcome:
                 groups[group][outcome].add((origin, n))
                 if outcome != rule:
