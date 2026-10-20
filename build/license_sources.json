@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release_status": "BLOCKED_REVIEW",
+  "release_status": "LICENSE_NOTICES_DOCUMENTED",
   "record_kind": "HISTORIC_SOURCE_CATALOG_NOT_PER_RULE_PROVENANCE",
   "historical_source_count": 87,
   "current_release_rule_count": 197765,
@@ -23,7 +23,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-advertising-lite-domain",
@@ -35,7 +35,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-systemota",
@@ -47,7 +47,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-steamcn",
@@ -59,7 +59,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-youtube",
@@ -71,7 +71,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-netflix",
@@ -83,7 +83,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-disney",
@@ -95,7 +95,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-primevideo",
@@ -107,7 +107,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-spotify",
@@ -119,7 +119,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-tiktok",
@@ -131,7 +131,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-twitch",
@@ -143,7 +143,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-abematv",
@@ -155,7 +155,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-bbc",
@@ -167,7 +167,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-bilibili",
@@ -179,7 +179,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-telegram",
@@ -191,7 +191,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-instagram",
@@ -203,7 +203,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-twitter",
@@ -215,7 +215,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-discord",
@@ -227,7 +227,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-line",
@@ -239,7 +239,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-linkedin",
@@ -251,7 +251,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-reddit",
@@ -263,7 +263,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-google",
@@ -275,7 +275,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-apple-domain",
@@ -287,7 +287,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-apple",
@@ -299,7 +299,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-steam",
@@ -311,7 +311,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-paypal",
@@ -323,7 +323,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-chinamaxnomedia",
@@ -335,7 +335,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-chinamaxnomedia-domain",
@@ -347,7 +347,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-openai",
@@ -359,7 +359,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-claude",
@@ -371,7 +371,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-gemini",
@@ -383,7 +383,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-whatsapp",
@@ -395,7 +395,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-facebook",
@@ -407,7 +407,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-dazn",
@@ -419,7 +419,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-hbo",
@@ -431,7 +431,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-bahamut",
@@ -443,7 +443,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-microsoft",
@@ -455,7 +455,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-amazonprimevideo",
@@ -467,7 +467,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-ai",
@@ -479,7 +479,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-whatsapp",
@@ -491,7 +491,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-facebook",
@@ -503,7 +503,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-dazn",
@@ -515,7 +515,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-hbo",
@@ -527,7 +527,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-animecrazy",
@@ -539,7 +539,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-microsoft",
@@ -551,7 +551,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-chinadirect",
@@ -563,7 +563,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-openai",
@@ -575,7 +575,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-anthropic",
@@ -587,7 +587,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-google-deepmind",
@@ -599,7 +599,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-github-copilot",
@@ -611,7 +611,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-perplexity",
@@ -623,7 +623,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-cursor",
@@ -635,7 +635,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-xai",
@@ -647,7 +647,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-netflix",
@@ -659,7 +659,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-spotify",
@@ -671,7 +671,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-youtube",
@@ -683,7 +683,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-whatsapp",
@@ -695,7 +695,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-telegram",
@@ -707,7 +707,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-facebook",
@@ -719,7 +719,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-tiktok",
@@ -731,7 +731,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-bilibili",
@@ -743,7 +743,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-bilibili-cdn",
@@ -755,7 +755,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-steam",
@@ -767,7 +767,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-paypal",
@@ -779,7 +779,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-twitch",
@@ -791,7 +791,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-discord",
@@ -803,7 +803,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-line",
@@ -815,7 +815,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-reddit",
@@ -827,7 +827,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-instagram",
@@ -839,7 +839,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-twitter",
@@ -851,7 +851,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-hbo",
@@ -863,7 +863,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-dazn",
@@ -875,7 +875,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-apple-update",
@@ -887,7 +887,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "felix-apple-china",
@@ -899,7 +899,7 @@
       "license_evidence_url": "https://github.com/felixonmars/dnsmasq-china-list/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-hellobike",
@@ -911,7 +911,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "local-domestic-core",
@@ -923,7 +923,7 @@
       "license_evidence_url": null,
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-privacy",
@@ -935,7 +935,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-hijacking",
@@ -947,7 +947,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-primevideo",
@@ -959,7 +959,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-abema",
@@ -971,7 +971,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-bbc",
@@ -983,7 +983,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-linkedin",
@@ -995,7 +995,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-threads",
@@ -1007,7 +1007,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-disney",
@@ -1019,7 +1019,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-bilibili-game",
@@ -1031,7 +1031,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "v2-bahamut",
@@ -1043,7 +1043,7 @@
       "license_evidence_url": "https://github.com/v2fly/domain-list-community/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     },
     {
       "source_id": "bm-privacy-domain",
@@ -1055,7 +1055,7 @@
       "license_evidence_url": "https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE",
       "pinned_upstream_commit": null,
       "per_rule_origin_verified": false,
-      "approval_status": "BLOCKED_PENDING_SOURCE_AND_LICENSE_REVIEW"
+      "approval_status": "SOURCE_FAMILY_LICENSE_RECORDED_UNVERIFIED_LINEAGE"
     }
   ]
 }
