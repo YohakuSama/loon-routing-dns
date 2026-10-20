@@ -30,8 +30,8 @@ def section(profile: str, name: str) -> str:
 
 def read_spec(root: Path = ROOT) -> dict:
     spec = json.loads((root / "release/phase-07/release_spec.json").read_text(encoding="utf-8"))
-    if spec["rc_label"] != "vNext-RC2" or spec["stable_release_version"] is not None:
-        raise ValueError("RC label cannot assert formal stable release")
+    if spec["rc_label"] != "vNext-RC2" or spec["stable_release_version"] != "v6.0.0":
+        raise ValueError("unexpected stable version; release code must be reviewed")
     for key in ("release_assets_commit", "reviewed_auxiliary_commit", "historic_main_commit"):
         if re.fullmatch(r"[a-f0-9]{40}", spec[key]) is None:
             raise ValueError("invalid immutable Git ref: " + key)
@@ -101,7 +101,7 @@ def generate(root: Path = ROOT) -> dict[str, str]:
         base = (root / "refactor/vnext/templates" / seed).read_text(encoding="utf-8")
         body = base[:base.index("[Remote Rule]")].replace(
             "/main/icons/", "/" + spec["reviewed_auxiliary_commit"] + "/icons/")
-        body = body.replace("# LoonKit v5.10.0", "# LoonKit vNext-RC2 - NOT RELEASED", 1)
+        body = body.replace("# LoonKit v5.10.0", "# LoonKit v6.0.0", 1)
         body += listing + "\n" + local.strip("\n") + "\n\n[Plugin]\n"
         body += plugin_url + ", enabled=true\n"
         if section(body, "General") != section(base, "General"):
@@ -133,8 +133,8 @@ def generate(root: Path = ROOT) -> dict[str, str]:
     if section(outputs["LoonKit.lcf"], "Remote Rule") != section(outputs["LoonKit.PrivacyDNS.lcf"], "Remote Rule"):
         raise ValueError("release profiles have different remote subscriptions")
     manifest = {
-        "schema_version": 1, "label": "vNext-RC2",
-        "stage": "UNRELEASED_AWAITING_MAINTAINER_TEST_AND_APPROVAL",
+        "schema_version": 1, "label": "v6.0.0",
+        "stage": "STABLE_RELEASE_ASSETS_STAGED",
         "source_snapshot_commit": spec["release_assets_commit"],
         "upstream_historical_lineage": "UNRECOVERABLE",
         "old_main_rollback_commit": spec["historic_main_commit"],

@@ -1,17 +1,17 @@
 {
-  "device_test": "NOT_EXECUTED",
-  "label": "vNext-RC2",
+  "device_test": "MAINTAINER_REPORTED_NO_ISSUES",
+  "label": "v6.0.0",
   "licenses": "BLOCKED_REVIEW",
   "locked_inputs_path": "refactor/vnext/sources.lock.json",
-  "maintainer_approval": "NOT_EXECUTED",
+  "maintainer_approval": "MAINTAINER_REQUESTED_PUBLICATION_IN_CHAT",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
   "plugin_path": "release/phase-07/assets/Network_Diagnostics.plugin",
   "plugin_sha256": "431a8d92dcb63864aecd3055f77e38cc0582d24925e2c2f4d833e0256e393d20",
   "profile_sha256": {
-    "LoonKit.PrivacyDNS.lcf": "a1532bdb8838f272efc94d932dcba190fed931628ac8cf399f77645a99cc7340",
-    "LoonKit.lcf": "edf11f900458fa6e28d257c43ea1465e1252e4237dfca03132049e1cf75a830e",
-    "release/phase-07/LoonKit.PrivacyDNS.vNext-RC2.lcf": "a1532bdb8838f272efc94d932dcba190fed931628ac8cf399f77645a99cc7340",
-    "release/phase-07/LoonKit.vNext-RC2.lcf": "edf11f900458fa6e28d257c43ea1465e1252e4237dfca03132049e1cf75a830e"
+    "LoonKit.PrivacyDNS.lcf": "cc277400ef7c6bdf7906ef5e0c507cc5da96c105710d88092cac8842a001d922",
+    "LoonKit.lcf": "4617809066f32fd27ee7ca0e6ef1de1c5de09e2440622e603624a3a88523895e",
+    "release/phase-07/LoonKit.PrivacyDNS.vNext-RC2.lcf": "cc277400ef7c6bdf7906ef5e0c507cc5da96c105710d88092cac8842a001d922",
+    "release/phase-07/LoonKit.vNext-RC2.lcf": "4617809066f32fd27ee7ca0e6ef1de1c5de09e2440622e603624a3a88523895e"
   },
   "remote_rule_count": 197765,
   "remote_subscription_count": 26,
@@ -201,6 +201,6 @@
   },
   "schema_version": 1,
   "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
-  "stage": "UNRELEASED_AWAITING_MAINTAINER_TEST_AND_APPROVAL",
+  "stage": "STABLE_RELEASE_ASSETS_STAGED",
   "upstream_historical_lineage": "UNRECOVERABLE"
 }

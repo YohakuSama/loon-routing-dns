@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "rc_label": "vNext-RC2",
-  "stable_release_version": null,
-  "status": "BLOCKED_PENDING_MAINTAINER_TEST",
+  "stable_release_version": "v6.0.0",
+  "status": "STABLE_RELEASE_ASSETS_STAGED",
   "release_rules_dir": "rules/releases/vNext-RC2",
   "release_assets_dir": "release/phase-07/assets",
   "release_assets_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
@@ -13,5 +13,5 @@
   "source_snapshot_dir": "rules/snapshots/phase03/generated",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": "release/phase-07/RELEASE_GATE.json",
-  "warning": "No main deployment, no release tag, no approval inferred from CI."
+  "warning": "Formal merge and tag are not implied by CI. Runtime routing remains the reviewed vNext-RC2 rule snapshot."
 }
