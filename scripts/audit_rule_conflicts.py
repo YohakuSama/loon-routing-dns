@@ -415,7 +415,9 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
             "These CURRENT_UPSTREAM_REFERENCE license records do not prove original per-item rights.",
             "REMOVE_CANDIDATE requires independent provenance and business evidence.",
             "Frozen local sources have line-level nonexclusive matches in data/local_source_matches.json.",
-            "Local matches show surviving conditions but NOT which source deserves exclusive credit.",
+            f"- Direct exact published condition matches: {sum(a['published_condition_matches'] for a in local_source_matches(records)['sources'])}.",
+            f"- Additional same-group suffix coverage: {sum(a['same_group_suffix_covered'] for a in local_source_matches(records)['sources'])}.",
+            "Local matches or coverage show surviving conditions but NOT which source deserves exclusive credit.",
             "Historical remotes are URL-level evidence only; their historical contents are unavailable.",
         ]),
         "DUPLICATE_AUDIT.md": "\n".join([
@@ -534,6 +536,8 @@ def local_source_matches(records):
     """
     catalog = read_json("rules/sources.json")
     published = {(r["group"], rule_key(r)) for r in records}
+    suffixes = {(r["group"], r["rule_value"]): locator(r)
+                for r in records if r["rule_type"] == "DOMAIN-SUFFIX"}
     outputs = []
     for source in catalog["sources"]:
         if source.get("role") != "local" or not source.get("enabled"):
@@ -548,15 +552,28 @@ def local_source_matches(records):
             if entry["rule_type"] in {"IP-CIDR", "IP-CIDR6"}:
                 entry["no_resolve"] = True  # existing frozen generator normalize behavior
             match = (source["group"], rule_key(entry)) in published
+            coverage = None
+            if not match and entry["rule_type"] in DOMAIN_TYPES:
+                labels = entry["rule_value"].split(".")
+                for pos in range(0, len(labels)):
+                    coverage = suffixes.get((source["group"], ".".join(labels[pos:])))
+                    if coverage:
+                        break
             entries.append({"source_file": path, "source_line": line_no,
                             "rule_type": entry["rule_type"], "rule_value": entry["rule_value"],
                             "no_resolve": entry["no_resolve"],
                             "published_match_in_target_group": match,
+                            "published_same_group_suffix_covers_condition": coverage,
+                            "publication_match_status": (
+                                "EXACT_MATCH" if match else
+                                "SAME_GROUP_SUFFIX_COVERAGE" if coverage else "UNEXPLAINED"),
                             "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH"})
         outputs.append({
             "source_id": source["id"], "source_file": path,
             "normalized_local_input_count": len(entries),
             "published_condition_matches": sum(e["published_match_in_target_group"] for e in entries),
+            "same_group_suffix_covered": sum(e["publication_match_status"] == "SAME_GROUP_SUFFIX_COVERAGE" for e in entries),
+            "unexplained_conditions": sum(e["publication_match_status"] == "UNEXPLAINED" for e in entries),
             "unmatched_conditions": sum(not e["published_match_in_target_group"] for e in entries),
             "per_rule": entries,
             "note": "Cannot prove sole source ownership without immutable remote source contents"
@@ -648,6 +665,10 @@ def build(output):
                    verified_local_source_file_count=len(local_map["sources"]),
                    local_input_rules_with_published_condition=sum(
                        a["published_condition_matches"] for a in local_map["sources"]),
+                   local_input_rules_covered_by_published_suffix=sum(
+                       a["same_group_suffix_covered"] for a in local_map["sources"]),
+                   local_input_unexplained_conditions=sum(
+                       a["unexplained_conditions"] for a in local_map["sources"]),
                    manual_source_review=sum(s["recommendation"] in ("INVESTIGATE", "MERGE")
                                             for s in inventory["sources"]),
                    provenance="SOURCE_PROVENANCE_INCOMPLETE",

@@ -164,6 +164,8 @@ class Phase02AuditTest(unittest.TestCase):
             self.assertEqual(source["normalized_local_input_count"], len(source["per_rule"]))
             self.assertEqual(source["normalized_local_input_count"],
                              source["published_condition_matches"] + source["unmatched_conditions"])
+            self.assertEqual(source["unmatched_conditions"],
+                             source["same_group_suffix_covered"] + source["unexplained_conditions"])
             self.assertTrue(all(e["source_line"] > 0 for e in source["per_rule"]))
 
     def test_19_geoip_final_local_rule_handling(self):
