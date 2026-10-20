@@ -86,12 +86,12 @@ check("cached UDP metadata does not claim a new plaintext lookup",()=>{
 check("native UDP is flagged as plaintext instead of DoH success",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
   assert.match(r.results[0].content,/存在异常项目/);
-  assert.match(r.results[0].content,/明文 DNS/);
+  assert.match(r.results[0].content,/普通 DNS 查询/);
 });
 check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
   assert.match(r.results[0].content,/部分项目不可用/);
-  assert.match(r.results[0].content,/其他加密 DNS/);
+  assert.match(r.results[0].content,/使用加密 DNS，非当前配置预期地址/);
 });
 check("cached DoH cannot prove this test used an encrypted request",()=>{
   const r=run({cached:true});

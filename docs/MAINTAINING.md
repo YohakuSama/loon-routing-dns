@@ -24,3 +24,8 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 ## Git 历史
 
 当前仍引用固定提交 `d405e4be28c447b6e57a4790e965c89f342d6dd6`（规则和插件）以及 `95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98`（图标及脚本）。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+
+## 网络诊断插件固定引用
+
+主配置中的插件引用 `97ec3554465ba5c338a00a5e2f7e8598b9f26b3a` 的 `release/phase-07/assets/Network_Diagnostics.plugin`。插件内部使用 `ea2a2d87ae57c7854ee037cba3174f7881041051` 的 `scripts/v20261020r1/network-diagnostics.js`、节点出口脚本及图标。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+

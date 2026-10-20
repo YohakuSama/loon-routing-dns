@@ -44,7 +44,7 @@ check("all current scripts remain local versioned assets",()=>{
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/phase-07/assets/Network_Diagnostics.plugin");
-  assert(profile.includes("/d405e4be28c447b6e57a4790e965c89f342d6dd6/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/97ec3554465ba5c338a00a5e2f7e8598b9f26b3a/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
   assert(!rc2.includes("/main/icons/"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));
