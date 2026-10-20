@@ -12,6 +12,10 @@ on:
       - '.github/workflows/phase-04-vnext.yml'
   workflow_dispatch:
 
+concurrency:
+  group: phase04-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
