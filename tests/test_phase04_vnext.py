@@ -161,13 +161,24 @@ class Phase04Tests(unittest.TestCase):
 
     def test_brand_keyword_narrowing(self):
         decisions = self.manifest["reviewed_keyword_narrowing"]
-        self.assertEqual(sum(map(len, decisions.values())), 17)
+        self.assertEqual(sum(map(len, decisions.values())), 15)
         for group, mappings in decisions.items():
             for old, scoped in mappings.items():
                 self.assertNotIn("DOMAIN-KEYWORD," + old, self.groups[group])
                 self.assertIn(scoped, self.groups[group])
         summary = self.summary
-        self.assertEqual(summary["reviewed_keyword_narrowing_count"], 17)
+        self.assertEqual(summary["reviewed_keyword_narrowing_count"], 15)
+
+    def test_shared_multitenant_roots_fall_through_final(self):
+        roots = self.manifest["reviewed_multi_tenant_suffixes"]
+        self.assertEqual(len(roots), 6)
+        for group, rules in self.groups.items():
+            if group in {"ChinaDirect", "DomesticCore", "AdBlock"}:
+                continue
+            for root in roots:
+                self.assertNotIn("DOMAIN-SUFFIX," + root, rules)
+        self.assertNotIn("DOMAIN-KEYWORD,appspot", self.groups["Google"])
+        self.assertNotIn("DOMAIN-KEYWORD,blogspot", self.groups["Google"])
 
     def test_cross_type_risks_are_audited(self):
         for name, metric in (
