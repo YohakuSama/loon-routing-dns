@@ -593,7 +593,10 @@ def scan_local_rules(index):
     for filename in index["configuration_files"]:
         path = filename if isinstance(filename, str) else filename["path"]
         section = ""
-        for lineno, raw in enumerate((ROOT / path).read_text(encoding="utf-8").splitlines(), 1):
+        legacy_profiles = {"LoonKit.lcf": "refactor/vnext/templates/LoonKit.legacy-seed.lcf",
+                           "LoonKit.PrivacyDNS.lcf": "refactor/vnext/templates/LoonKit.PrivacyDNS.legacy-seed.lcf"}
+        archived = legacy_profiles.get(path, path)
+        for lineno, raw in enumerate((ROOT / archived).read_text(encoding="utf-8").splitlines(), 1):
             line = raw.strip()
             if line.startswith("[") and line.endswith("]"):
                 section = line
