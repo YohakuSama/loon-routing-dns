@@ -140,6 +140,22 @@ class Phase02AuditTest(unittest.TestCase):
         self.assertFalse(d["published_exact_duplicates"])
         self.assertEqual(len(d["same_match_different_flags"]), 1)
 
+    def test_19_geoip_final_local_rule_handling(self):
+        local = audit.scan_local_rules(self.index)
+        self.assertTrue(any(r["rule_type"] == "GEOIP" and r["no_resolve"]
+                            for r in local))
+        self.assertTrue(any(r["rule_type"] == "FINAL" and r["policy"] == "Final"
+                            for r in local))
+        self.assertTrue(all(r["source_line"] > 0 for r in local))
+
+    def test_20_adblock_published_cross_ownership(self):
+        target = [r for r in self.rules if r["rule_value"] == "admob.com"]
+        self.assertTrue(any(r["group"] == "Google" for r in target))
+        obj, risks = audit.candidates(self.rules, audit.overlap_analysis(
+            [r for r in self.rules if r["rule_value"] in audit.KNOWN_AD]), {})
+        self.assertTrue(any(r["category"] == "ADBLOCK_PLATFORM_OWNERSHIP"
+                            for r in risks))
+
 
 if __name__ == "__main__":
     unittest.main()
