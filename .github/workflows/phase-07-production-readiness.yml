@@ -1,0 +1,54 @@
+name: Phase 07 pinned RC2 production readiness (read only)
+on:
+  push:
+    branches: [refactor/loonkit-vnext]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify isolated frozen sources
+        run: |
+          python3 scripts/vnext_source_lock.py --check
+          python3 scripts/vnext_rule_engine.py --check
+          python3 scripts/vnext_phase05_report.py --check
+      - name: Build both production-compatible candidate profiles (offline)
+        run: |
+          python3 scripts/phase07_release.py --build
+          python3 scripts/phase07_release.py --check
+      - name: Export reviewable nonsecret candidate assets to log and artifact
+        run: |
+          python3 - <<'PY'
+          import base64
+          from pathlib import Path
+          for name in (
+             "LoonKit.lcf", "LoonKit.PrivacyDNS.lcf",
+             "release/phase-07/LoonKit.vNext-RC2.lcf",
+             "release/phase-07/LoonKit.PrivacyDNS.vNext-RC2.lcf",
+             "release/phase-07/RC_MANIFEST.json",
+          ):
+              print("PHASE07_ARTIFACT|" + name + "|" + base64.b64encode(Path(name).read_bytes()).decode())
+          PY
+      - name: Run isolated build and dual-profile regression tests
+        run: python3 -m unittest discover -s tests -p 'test_phase07_release.py' -v
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase07-rc2-dual-profile-unreleased
+          path: |
+            LoonKit.lcf
+            LoonKit.PrivacyDNS.lcf
+            release/phase-07/RC_MANIFEST.json
+          retention-days: 30
+          if-no-files-found: error

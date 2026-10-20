@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "release_status": "BLOCKED_PENDING_MAINTAINER_TEST",
+  "candidate": "vNext-RC2",
+  "commit": null,
+  "generated_on": "2026-10-20",
+  "checks": {
+    "code_review": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "rule_generation": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "source_integrity": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "config_integrity": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "dns_tun_unchanged": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "dual_profile_parity": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "plugin_icons": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "licenses": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "ci": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "merge_rehearsal": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "rollback_rehearsal": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "release-engineering",
+      "blocks_release": true
+    },
+    "device_import": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    },
+    "domestic_business": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    },
+    "overseas_business": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    },
+    "adblock": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    },
+    "final": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    },
+    "dns_egress": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    },
+    "ipv4_ipv6": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    },
+    "maintainer_approval": {
+      "status": "NOT_EXECUTED",
+      "evidence": null,
+      "commit": null,
+      "test_time": null,
+      "owner": "maintainer",
+      "blocks_release": true
+    }
+  },
+  "warning": "Status fields must reflect evidence, never auto-mark devices PASS on CI."
+}
