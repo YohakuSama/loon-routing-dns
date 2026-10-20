@@ -1,3 +1,0 @@
-# Maintainer test execution
-
-Reuse `validation/phase-05/DEVICE_TEST_PLAN.md`, DNS/ROUTING/ADBLOCK/IPV6 matrices and `RESULT_TEMPLATE.json`. All real device tests start `NOT_EXECUTED`. Download the immutable CI artifact, verify commit and hashes, make a private local copy, insert existing private subscription without uploading it, import manually into Loon, test historical/production/vNext with same node and network, record rule hits, DNS paths, IPv4/IPv6, FINAL variants, AdBlock choices, domestic payment/maps/transport, overseas login/API/media and ASN. Validate redacted results with `python3 scripts/validate_device_results.py <local-results.json>` before any sharing.

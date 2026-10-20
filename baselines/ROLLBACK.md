@@ -1,9 +1,0 @@
-# Phase 01 safe rollback
-
-Verified current official Git SHA: `f19421933d2177f95e7537f1208d990b3094f1f4` (`LoonKit.lcf`, `LoonKit.PrivacyDNS.lcf`, `rules/ProxyProtect.list` and 33 `rules/generated/*.list`). Verified legacy Git SHA: `6b1e091ee66bc601b5e166987b3a01e5b3a39329` (`Loon_Routing_DNS.lcf`). No imaginary tags.
-
-1. Privately back up on-device Loon config and personal node URLs outside the repository. Never commit private subscriptions, or automatically replace `[Remote Proxy]` and other private settings with public templates.
-2. Inspect candidate branch changes: `git status --short`; `git diff f19421933d2177f95e7537f1208d990b3094f1f4...HEAD --name-status`. Revert **reviewed** refactor commits using `git revert <candidate_sha>`; do not force-reset shared branches or merge into main.
-3. Recover current official bytes from the verified commit in a **separate clean checkout**: `git show f19421933d2177f95e7537f1208d990b3094f1f4:LoonKit.lcf`, `git show f19421933d2177f95e7537f1208d990b3094f1f4:LoonKit.PrivacyDNS.lcf`, and `git ls-tree -r --name-only f19421933d2177f95e7537f1208d990b3094f1f4 rules/generated rules/ProxyProtect.list`. If later releases fail, create a reviewed restoration branch based on this SHA, without merging automatically.
-4. Review historical references without changing live subscriptions: `git show 6b1e091ee66bc601b5e166987b3a01e5b3a39329:Loon_Routing_DNS.lcf > /tmp/Loon_Routing_DNS.review.lcf`. The 28 URLs refer to upstream `master`; this is **not** an immutable snapshot of their old downloaded bytes. Restore private nodes manually only in isolated user-owned device configs.
-5. Verify production `git ls-remote origin refs/heads/main` against expected `f19421933d2177f95e7537f1208d990b3094f1f4`, absent another independently approved change, and run the SHA256 baseline tests. A refactor-only branch does not affect subscribers of `main`.

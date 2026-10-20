@@ -1,79 +1,32 @@
-# LoonKit DNS 隐私与路由排查（含 vNext-RC2，2026-10-20）
+# LoonKit v6.0.0 — DNS 配置与问题排查
 
-> 阶段07仅整改分流规则，主配置和 PrivacyDNS 的原始 General、DNS/DoH/TUN 设置分别按原文保留；新候选**不再订阅 ProxyProtect**，文中涉及旧版机制的内容明确标为历史说明。
+LoonKit 提供两份正式配置，使用相同的 26 份远程规则、106 条本地规则、策略组和网络辅助插件；它们各自的 DNS/TUN 参数在仓库清理中保持原样。
 
-## 发现“仍然 DNS 泄漏”时的分类诊断（2026-10-19，国内 DoH 修订）
+| 配置 | DNS | DoH |
+| --- | --- | --- |
+| [标准版](../LoonKit.lcf) | `223.5.5.5,223.6.6.6` | `https://dns.alidns.com/dns-query` |
+| [DNSPod 版](../LoonKit.PrivacyDNS.lcf) | `119.29.29.29` | `https://doh.pub/dns-query` |
 
-**先区分三个独立现象：**
+两份配置都保留 `hijack-dns = *:53`、`ip-mode = dual`、`ipv6-vif = auto` 及原有 `interface-mode`、`skip-proxy`、`bypass-tun`、`real-ip`。不建议只为完成仓库更新去更改这些参数。
 
-1. **网页出口真实 IP**：BrowserLeaks 页面的 `Your IP Address` 如果显示本机运营商 IP，检查 Loon 实际命中的路由、当前 `Final` 选择、是否为分流模式及 `Proxy` 是否选择到可用节点。**这属于路由/代理出口问题，不等于 DNS 查询明文泄漏。**
-2. **网站显示 AliDNS 或其他 DNS 解析器**：正式兼容版明确配置 `https://dns.alidns.com/dns-query`；即使 Loon 使用 DoH 加密并代理网页，检测站也可以发现解析器不是代理节点所在地。**这不自动证明运营商能看到明文 DNS**。
-3. **原生 DNS 实际使用 UDP/system**：使用插件「网络与 DNS 诊断」的 `protocol`、`server`、`fromCache` 和 Loon DNS 日志确认。发现 `udp` 时，检查「DNS 服务器 → 加密 DNS 失败回退到普通 DNS」是否关闭、是否有额外订阅/插件 DNS 和浏览器自身 DNS 设置。单次 `fromCache=true` 不能证明发生新的网络请求。
+## 首次导入
 
-**可选国内 DoH 配置：** `LoonKit.PrivacyDNS.lcf`（为兼容原订阅保留文件名）已从境外 Cloudflare 改为**腾讯 DNSPod** `https://doh.pub/dns-query`，普通 DNS 兼容地址也改为腾讯 `119.29.29.29`；默认 `LoonKit.lcf` 继续使用阿里 `https://dns.alidns.com/dns-query`。两个 DoH 都面向国内网络，但不承诺每条运营商线路都可达。导入前备份原配置与节点订阅，导入后确认 `Proxy` 节点、手动关闭 Loon 的明文 DNS 回退，然后重新打开 Loon 清理内存 DNS 缓存。国内 DoH 解决网络可达性和加密传输问题，**不能保证 DNS 与海外代理出口一致**。
+在 Loon 中先备份现有配置和节点订阅，再导入其中一份配置 URL，添加自己的代理节点订阅，确认 `Proxy` 策略可用并更新远程规则和插件。中国大陆的部分网络可能无法直连 `raw.githubusercontent.com`，必要时可先本地导入已保存的配置，再恢复可用节点下载远程资源。
 
-**进一步判断：** 在同一网络与代理节点下，比较 `https://browserleaks.com/dns` 的浏览器出口 IP、DNS 服务器归属和 Loon 实际的 DNS 协议。若 Loon 显示 DoH 但网站仍报告其他 DNS 服务器，检查浏览器内置 Secure DNS、其他 DNS/VPN 配置、代理端递归 DNS；没有设备侧抓包不能断定是哪一端发起的查询。Loon 的 `hijack-dns = *:53` 只处理 53 端口传统 DNS，不能通用阻断第三方 DoH/DoT。
+## DNS 与代理出口是不同的指标
 
-**重要局限：** Loon 当前公开文档并未为此配置证实“所有 DoH 查询强制通过 `Proxy` 节点”的全局开关。替换为另一家国内 DoH 仅改变 Loon 解析器，不保证 DNS 从代理出口发出、隐匿解析器地区、规避第三方 DoH 或无 IPv6 旁路。参见 [Loon DNS](https://nsloon.app/docs/DNS/)、[通用配置](https://nsloon.app/docs/General/) 和 [腾讯 DNSPod Public DNS 官方配置](https://cloud.tencent.com/document/product/302/110786)。
+- 网站显示的公网 IP 是该连接的网络出口；如果显示了本机运营商 IP，应先检查命中的规则、`Final` 策略、代理节点和 Loon 工作模式。
+- 检测站显示 AliDNS 或 DNSPod 的解析器地址，并不能单独证明 DNS 明文泄漏。DoH 解析器和代理出口可能位于不同地区。
+- `hijack-dns = *:53` 作用于传统 53 端口解析，不等于拦截所有应用内置 DoH/DoT；浏览器、系统其他 VPN 和代理端 DNS 也可能参与解析。
+- `ip-mode = dual` 允许 IPv4/IPv6；`GEOIP,CN,DIRECT,no-resolve`、ASN 的 `no-resolve` 与最终网络路径应结合 Loon 请求日志判断，不能只看 DNS 检测网页。
+- `Final` 可以选择 `DIRECT`，选择它会使未命中其他分流规则的连接直连；`AdBlock` 在 `DIRECT` 下也不会拒绝匹配的广告流量。
 
-## 先关闭 Loon 的明文 DNS 回退
+## 排查顺序
 
-1. 备份现有 Loon 配置和节点订阅，导入最新 `LoonKit.lcf`；确保 Loon 工作于规则模式并已配置可用节点。
-2. **前往 Loon > DNS 服务器，关闭「加密 DNS 失败回退到普通 DNS」**。官方文档明确说明此回退默认开启，目前不能通过已验证的 `[General]` 配置键代替这个 App 开关。
-3. 本项目恢复迁移前的解析配置：`dns-server = 223.5.5.5,223.6.6.6` 加上 `doh-server = https://dns.alidns.com/dns-query`。此前额外添加的 `[Host] dns.alidns.com = 223.5.5.5` 已删除，避免强制覆盖 DoH 域名的正常解析。加密 DNS 不等于请求一定经过代理节点。
-4. `dns-server = 223.5.5.5,223.6.6.6` 提供两个阿里大陆公共 UDP DNS 作为兼容性及应急备用；**如果回退开关开启，DoH 故障时仍可产生明文 DNS 查询**。如果所在网络阻断 DoH，关闭回退可能使解析失败，这是明确的安全/可用性取舍。
-5. 运行插件「网络与 DNS 诊断」（Build 988+），检查 `$dns.query` 的 `protocol`、`server`、`fromCache`。预期为 `doh` 及 AliDNS 的 URL。若为 `udp` 则说明此次 Loon DNS 查询使用明文；如果命中缓存，就不能据此断定本次发生网络查询。
-6. 在 Loon 的 DNS 日志及请求日志复查其他域名，核对是否出现以前版本没有的解析器或出口；其他设置可能影响最终行为，但不应仅因 BrowserLeaks 列出多个服务器就断言有明文泄漏。
+1. 确认当前使用的是标准版还是 DNSPod 版，以及是否已恢复节点、策略组和最新规则。
+2. 在 Loon 的 DNS 服务器设置中核查「加密 DNS 失败回退到普通 DNS」的开关。如果需要避免故障时使用普通 UDP DNS，应将该回退关闭；关闭后 DoH 不可达可能导致解析失败。
+3. 打开 [网络辅助插件](./NETWORK_DIAGNOSTICS.md) 的「网络与 DNS 诊断」，检查 `protocol`、`server`、`fromCache` 和 Loon DNS 日志。若 `protocol=udp`，此次 Loon DNS 查询使用普通 DNS；缓存命中并不代表发生了新查询。
+4. 在同一个节点、同一网络和同一时段对照 Loon 请求命中、出口 IP、DNS 记录、IPv4/IPv6。检查浏览器是否启用了单独的安全 DNS 设置。
+5. 如需定位无法解释的实际 DNS 请求路径，应结合设备或网络侧流量记录；单一网站测试不能给出全部结论。
 
-## 检测网站出口与路由（需按 RC2 实际命中判断）
-
-- 上游 `blackmatrix7/ios_rule_script` 的 `ChinaMaxNoMedia_Domain.list` 将 `.browserleaks.com` 放入中国直连域名集。如果未添加本地覆盖规则，Loon 会把 BrowserLeaks 网页直连，因此检测页会显示设备的中国移动公网 IP；**网页直连与 DNS 查询是否明文是两个不同问题**。
-- **历史 v5.10.0 的说明（非 RC2 运行配置）**：首位 `rules/ProxyProtect.list` 曾集中管理 17 项代理出口保护。**vNext-RC2 已取消独立 ProxyProtect 订阅，不隐藏复制旧保护名单**。检测网站按正常规则和 Final 选择处理；网页出口与 DNS 安全不是同一件事。
-- 切换 RC2 后应重连 Loon、确认缓存更新，使用请求日志实际核查 `browserleaks.com` 命中及所选出口，而不是要求它无条件命中 `Proxy`。若 `Final=DIRECT`，未分类测试域名也可能直连；结果不能代表全局 DNS 是否泄漏。
-
-## DNS 解析并不等于代理出口
-
-- `hijack-dns = *:53` 拦截传统 UDP/53，无法拦截所有 App 自带 DoH/DoT，更无法强制第三方解析器通过代理出口。
-- DoH 加密并不表示 DNS 服务器与代理节点处于同一地区，DNS 检测网页看到阿里 DNS 而代理出口是另一个 IP **不必然是明文泄漏**。
-- 如果希望远程站点在代理出口处解析域名，需要进一步核实使用的节点协议是否进行远端解析，并结合 Loon 的实际流量、DNS 日志和设备抓包；不能用本配置单独保证。
-- 现有 `GEOIP,CN,DIRECT,no-resolve` 保留 `no-resolve`，是为了不因匹配国内 IP 而强迫原本可能远端解析的域名先在本地解析。未命中的国内域名可能落入最终 Proxy，推荐补充明确、可审计的国内域名规则，而不是无条件移除该标志。
-- `ip-mode = dual` 会允许 IPv4 和 IPv6。DNS 与应用使用的 IPv6 路径都应单独检查；禁止 STUN 只能降低部分 WebRTC IP 暴露风险，不等于阻止 DNS 泄漏。
-
-## 规则层回退与历史验证
-
-- 迁移前的工作配置与当前配置 DNS 基本相同，**规则来源和顺序曾有显著差异**：复合库使用 33 个生成分组、远端源超过 80 个，旧版配置使用 28 个原始远程订阅与 66 条显式本地规则。
-- 正式版已切换为 33 个自托管分类规则和 1 个保护列表，同时保留历史 66 条本地规则。旧配置曾正常不代表复合规则必然导致了 DNS 泄漏，仍须在同一设备及代理节点下复测 BrowserLeaks。
-- 旧版 `Our-*` 生成规则订阅如果仍单独存在于 App 中，应停用以避免新旧两套同时执行；导入完整配置不一定会自动删除单独添加的订阅。
-- 私人节点的订阅 URL 含身份验证参数，不应提交到公开 GitHub，也不应发到公开问题页面；若已公开，建议到服务商撤换链接。
-
-## 历史基线与真实设备验证
-
-- 迁移前的正式版已使用 `dns-server = 223.5.5.5,223.6.6.6`、`doh-server = https://dns.alidns.com/dns-query`、`ip-mode = dual` 和 `ipv6-vif = auto`。因此不能把原本存在的 IPv6 配置误判为新版本独有错误。
-- 回归补丁仅撤回新增的 DoH 固定 Host 映射并恢复第二个备用 DNS；它能减少相对已知历史版本的变更，但**并不等于已经真机证明 BrowserLeaks 上的多解析器现象被消除**。
-- 若 Loon 请求记录显示某域名的出口已代理，DNS 日志只显示 AliDNS DoH，BrowserLeaks 的 Cloudflare 解析器也可能来自所用代理节点/远端递归链路，而非手机明文 DNS 流量。必须结合设备抓包或实际 DNS 查询日志区分。
-- 要判断浏览器网站显示真实中国移动出口是否直连，应查对应网站的请求记录、缓存/刷新情况及域名可能的其他服务请求，不能使用不同站点的代理命中记录替代。
-
-## 中国大陆网络及首次下载
-
-- 已移除境外 Cloudflare DoH，改为 `https://dns.alidns.com/dns-query`。该地址由阿里官方运营；不同运营商、区域及网络环境仍可能出现个别不可达，不能保证所有网络均成功。
-- `223.5.5.5` 和 `223.6.6.6` 属于阿里公共 DNS，支持中国大陆网络接入；普通 UDP DNS 的查询本身未加密，严格隐私要求下必须关闭 Loon 内的普通 DNS 回退。
-- `raw.githubusercontent.com` 是资源托管与下载依赖，部分大陆网络无法直连。DNS 设置无法取代代理节点。首次导入可以使用已保存到设备的 `.lcf` 文件，然后恢复代理节点，再更新远程规则与插件。
-- 当前规则 `DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy` 专门让**已经有可用代理节点的设备**下载 GitHub 原始资源，不能自行创造代理连接。
-
-## 最小化复测
-
-- 停止并重新启动 Loon 清除缓存，确认规则模式与最新配置已生效。
-- 正常网络下检查测试结果是否是 `doh / https://dns.alidns.com/dns-query`，再检查国内服务与国外服务的日志策略。
-- 在可控测试环境中阻断 DoH 请求后复测：若关掉了明文回退，预期是解析失败，不是静默使用 UDP。
-- 若定位到浏览器或某 App 自带 DNS，则在该应用中检查其 DoH/安全 DNS 选项；先确认隐私需求，再决定是否改动。
-- 遇到 DNS 失败不要为了恢复联网默认启用明文回退，先找出网络阻断、TLS/SNI 或代理节点问题。
-
-## 参考
-
-- [Loon DNS 查询与回退](https://nsloon.app/docs/DNS/)
-- [Loon DNS 映射](https://nsloon.app/docs/DNS/hostmap/)
-- [Loon 脚本 DNS API](https://nsloon.app/docs/Script/script_api/)
-- [Loon IP 规则与 no-resolve](https://nsloon.app/docs/Rule/ip_rule/)
-
-本文件说明修复与边界，不宣称可以通过单一网页测试证明整个设备不存在 DNS 泄漏。
-阿里公共 DNS 官方地址：https://alidns.com/。阿里免费公共 DNS 有流量管控与服务限制，是否正常以实际网络测试为准。
+参考：[Loon DNS 文档](https://nsloon.app/docs/DNS/) · [Loon 通用配置](https://nsloon.app/docs/General/) · [DNSPod 文档](https://cloud.tencent.com/document/product/302/110786)。
