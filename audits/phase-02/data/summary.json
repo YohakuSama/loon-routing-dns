@@ -18,6 +18,12 @@
   "scanned_sources": 87,
   "scanned_subscriptions": 34,
   "snapshot_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
+  "source_recommendations": {
+    "INVESTIGATE": 52,
+    "KEEP": 26,
+    "MERGE": 9
+  },
+  "staged_zero_incremental_source_count": 9,
   "type_counts": {
     "DOMAIN": 23943,
     "DOMAIN-KEYWORD": 54,

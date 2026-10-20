@@ -7,4 +7,6 @@
 5. Replace broad DIRECT keywords only after domain ownership and false-positive review.
 6. In Stage 04 redesign priority with deliberate shared-CDN / auth / payment ownership rules.
 7. Preserve source line mappings at normalization, filter, prune and publication steps.
-8. No source is recommended for removal solely because it is newly added or has many rules.
+8. First-ingestion zero-contribution sources are MERGE review candidates, not deletion proof.
+9. Do not remove sources until final surviving rules are attributable to immutable inputs.
+10. No source is recommended for removal solely because it is newly added or has many rules.
