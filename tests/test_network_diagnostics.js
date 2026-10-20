@@ -5,7 +5,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
 const ROOT = path.resolve(__dirname,"..");
-const source = fs.readFileSync(path.join(ROOT,"scripts/v20261021r1/network-diagnostics.js"),"utf8");
+const source = fs.readFileSync(path.join(ROOT,"scripts/v20261021r2/network-diagnostics.js"),"utf8");
 let passed=0;
 function check(name,fn) {
   try {fn();passed++;console.log("PASS",name);}
@@ -54,7 +54,7 @@ check("healthy manual test reports DoH address without claiming capture",()=>{
   const r=run();
   assert.equal(r.results.length,1);
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
-  assert.match(r.results[0].content,/解析成功 · DoH（AliDNS）/);
+  assert.match(r.results[0].content,/解析成功 · DoH/);
   assert(r.requests.some(x=>x.native));
   assert(!r.requests.some(x=>x.url&&x.url.includes("/dns-query")));
 });
@@ -96,16 +96,17 @@ check("auto DNS with a full HTTPS resolver address is unverified",()=>{
   assert.match(r.results[0].content,/DoH/);
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
 });
-check("native UDP is a successful lookup with plaintext warning",()=>{
+check("user-selected UDP resolves normally without false alert",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
   assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
-  assert.match(r.results[0].content,/DNS 回退设置/);
+  assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
 });
-check("unconfigured alternate DoH is not misreported as expected resolver",()=>{
+check("custom DoH resolver is accepted without any provider warning",()=>{
   const r=run({server:"https://cloudflare-dns.com/dns-query"});
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
   assert.match(r.results[0].content,/DoH/);
+  assert.doesNotMatch(r.results[0].content,/AliDNS|不是配置|请确认/);
 });
 check("cached DoH cannot prove this test used an encrypted request",()=>{
   const r=run({cached:true});
@@ -160,33 +161,49 @@ check("HTTP 200 on generate_204 endpoint is not reported as healthy",()=>{
   assert.match(r.results[0].content,/HTTP 200/);
   assert.match(r.results[0].content,/可能为认证页面/);
 });
-check("auto + complete configured HTTPS resolver reports DoH",()=>{
+check("auto with any valid HTTPS resolver is identified as DoH",()=>{
   const r=run({protocol:"auto",server:"https://dns.alidns.com/dns-query"});
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
-  assert.match(r.results[0].content,/DoH（AliDNS）/);
+  assert.match(r.results[0].content,/解析成功 · DoH/);
   assert.doesNotMatch(r.results[0].content,/DNS 协议信息不完整/);
 });
 check("unknown or truncated auto HTTPS DNS does not certify DoH",()=>{
   const r=run({protocol:"auto",server:"https://"});
   assert.match(r.results[0].content,/DNS 协议信息不完整/);
-  assert.doesNotMatch(r.results[0].content,/DoH（AliDNS）/);
+  assert.doesNotMatch(r.results[0].content,/解析成功 · DoH/);
 });
-check("ordinary DNS is shown as privacy notice, not DNS resolution failure",()=>{
+check("user-selected ordinary DNS is not treated as a config violation",()=>{
   const r=run({protocol:"udp",server:"223.5.5.5:53"});
   assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
-  assert.match(r.results[0].content,/DNS 回退设置/);
+  assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
   assert.doesNotMatch(r.results[0].content,/检测到连接或解析失败/);
 });
 check("an empty DNS address does not infer DoH or normal UDP",()=>{
   const r=run({protocol:"auto",server:""});
   assert.match(r.results[0].content,/DNS 协议信息不完整/);
-  assert.doesNotMatch(r.results[0].content,/DoH（AliDNS）/);
+  assert.doesNotMatch(r.results[0].content,/解析成功 · DoH/);
 });
 check("no A or AAAA value is a DNS failure even with record type",()=>{
   const r=run({answers:[{type:"A",value:""}]});
   assert.match(r.results[0].content,/检测到连接或解析失败/);
   assert.match(r.results[0].content,/未获得有效的 A\/AAAA 地址/);
+});
+
+check("custom DoH servers never trigger AliDNS mismatch tips",()=>{
+  for(const server of ["https://cloudflare-dns.com/dns-query","https://dns.google/dns-query","https://example.org/custom-query"]){
+    const r=run({protocol:"auto",server});
+    assert.match(r.results[0].content,/解析成功 · DoH/);
+    assert.doesNotMatch(r.results[0].content,/提示：|AliDNS|不符合配置|不是配置/);
+  }
+});
+check("user-selected DoT and UDP do not trigger provider mismatch tips",()=>{
+  const dot=run({protocol:"auto",server:"tls://one.one.one.one"});
+  assert.match(dot.results[0].content,/解析成功 · DoT/);
+  assert.doesNotMatch(dot.results[0].content,/提示：|AliDNS/);
+  const udp=run({protocol:"udp",server:"1.1.1.1:53"});
+  assert.match(udp.results[0].content,/解析成功 · 普通 DNS/);
+  assert.doesNotMatch(udp.results[0].content,/提示：|AliDNS/);
 });
 
 console.log("Current network diagnostic tests:",passed);
