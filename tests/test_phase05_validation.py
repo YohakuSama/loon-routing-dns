@@ -140,7 +140,26 @@ class TestCandidateQuality(unittest.TestCase):
                 for root in roots:
                     if cr.suffix_cover(root, host):
                         blocked.append((group, root, rule))
-        self.assertEqual(blocked, [], "local overseas rule would shadow AdBlock: " + repr(blocked))
+        self.assertGreater(len(blocked), 0, "expected historical AdBlock overlaps")
+        for group, root, rule in blocked:
+            with self.subTest(group=group, root=root, rule=rule):
+                explicit_adblock = rule + ",AdBlock"
+                dedicated_selector = "DOMAIN-SUFFIX," + root + "," + group
+                self.assertIn(explicit_adblock, self.profile)
+                self.assertLess(self.profile.index(explicit_adblock),
+                                self.profile.index(dedicated_selector))
+        self.assertEqual(len(blocked), 26)
+
+    def test_local_overseas_adblock_selector_remains_user_controlled(self):
+        files = ve.compile_rules()
+        for choice in ("REJECT", "DIRECT"):
+            result = ve.simulate_domain("pixel.reddit.com", files, adblock_choice=choice)
+            self.assertEqual(result["policy"], "AdBlock")
+            self.assertEqual(result["effective"], choice)
+            self.assertEqual(result["layer"], "local")
+        normal = ve.simulate_domain("www.reddit.com", files, final_choice="DIRECT")
+        self.assertEqual(normal["policy"], "Reddit")
+        self.assertEqual(normal["layer"], "local")
 
     def test_china_direct_no_unbounded_keywords(self):
         self.assertFalse(any(x.startswith("DOMAIN-KEYWORD,")
