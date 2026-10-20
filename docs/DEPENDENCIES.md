@@ -12,4 +12,4 @@
 
 ## 当前诊断插件运行时链
 
-`LoonKit.lcf` → 固定提交 `97ec3554465ba5c338a00a5e2f7e8598b9f26b3a` 中的 `release/phase-07/assets/Network_Diagnostics.plugin` → 固定提交 `ea2a2d87ae57c7854ee037cba3174f7881041051` 中的 `scripts/v20261020r1/network-diagnostics.js`、节点出口脚本及插件图标。老版 `scripts/v20261018r11/network-diagnostics.js` 保留为已发布历史路径；正式插件不再使用它。
+`LoonKit.lcf` → 固定提交 `9fc773a08126207281a8431651577c1449641b8a` 中的 `release/phase-07/assets/Network_Diagnostics.plugin` → 固定提交 `a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1` 中的 `scripts/v20261020r1/network-diagnostics.js`、节点出口脚本及插件图标。老版 `scripts/v20261018r11/network-diagnostics.js` 保留为已发布历史路径；正式插件不再使用它。

@@ -5,7 +5,7 @@
 独立插件地址（仅在需要单独安装时使用）：
 
 ```text
-https://raw.githubusercontent.com/YohakuSama/loonkit/97ec3554465ba5c338a00a5e2f7e8598b9f26b3a/release/phase-07/assets/Network_Diagnostics.plugin
+https://raw.githubusercontent.com/YohakuSama/loonkit/9fc773a08126207281a8431651577c1449641b8a/release/phase-07/assets/Network_Diagnostics.plugin
 ```
 
 ## 节点出口信息

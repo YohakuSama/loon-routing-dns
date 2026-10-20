@@ -2,7 +2,7 @@
 #!desc = 查看节点出口、网络状态和 DNS 连接情况
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loonkit
-#!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/ea2a2d87ae57c7854ee037cba3174f7881041051/icons/v20261018r2/Console.png
+#!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1/icons/v20261018r2/Console.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 网络,节点,诊断
@@ -14,6 +14,6 @@ target_policy = input,"Proxy",tag=查询策略,desc=默认 Proxy；从节点菜�
 compare_direct = switch,false,tag=直连 IP 对照,desc=可选；会向查询服务提供直连公网 IP
 
 [Script]
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/ea2a2d87ae57c7854ee037cba3174f7881041051/scripts/v20261018r11/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点出口信息", img_url="location.fill.viewfinder.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/ea2a2d87ae57c7854ee037cba3174f7881041051/scripts/v20261020r1/network-diagnostics.js", {${auto_check}}) with tag="网络与 DNS 诊断", img_url="network.system", timeout=40
-network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/ea2a2d87ae57c7854ee037cba3174f7881041051/scripts/v20261020r1/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1/scripts/v20261018r11/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点出口信息", img_url="location.fill.viewfinder.system", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1/scripts/v20261020r1/network-diagnostics.js", {${auto_check}}) with tag="网络与 DNS 诊断", img_url="network.system", timeout=40
+network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1/scripts/v20261020r1/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40

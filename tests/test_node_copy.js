@@ -112,7 +112,7 @@ check("node menu context takes precedence and outage stays explicit",()=>{
 check("current plugin uses versioned script and only two manual actions",()=>{
   const p=fs.readFileSync(path.join(root,"release/phase-07/assets/Network_Diagnostics.plugin"),"utf8");
   assert.equal(p.split("\n").filter(x=>x.startsWith("generic then script(")).length,2);
-  assert(p.includes("ea2a2d87ae57c7854ee037cba3174f7881041051/scripts/v20261018r11/node-intelligence.js"));
+  assert(p.includes("a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1/scripts/v20261018r11/node-intelligence.js"));
   assert(p.includes("auto_check = switch,false"));
   assert(p.includes("compare_direct = switch,false"));
   assert(!/已移除|情报源|DNS 解析器泄漏检测/.test(p));
