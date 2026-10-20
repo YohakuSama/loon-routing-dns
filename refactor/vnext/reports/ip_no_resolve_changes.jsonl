@@ -1,0 +1,7 @@
+{"candidate": "IP-ASN,211157,no-resolve", "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE", "group": "Telegram", "original": "IP-ASN,211157", "snapshot_file": "rules/generated/Telegram.list", "snapshot_line": 32}
+{"candidate": "IP-ASN,44907,no-resolve", "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE", "group": "Telegram", "original": "IP-ASN,44907", "snapshot_file": "rules/generated/Telegram.list", "snapshot_line": 33}
+{"candidate": "IP-ASN,59930,no-resolve", "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE", "group": "Telegram", "original": "IP-ASN,59930", "snapshot_file": "rules/generated/Telegram.list", "snapshot_line": 34}
+{"candidate": "IP-ASN,62014,no-resolve", "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE", "group": "Telegram", "original": "IP-ASN,62014", "snapshot_file": "rules/generated/Telegram.list", "snapshot_line": 35}
+{"candidate": "IP-ASN,62041,no-resolve", "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE", "group": "Telegram", "original": "IP-ASN,62041", "snapshot_file": "rules/generated/Telegram.list", "snapshot_line": 36}
+{"candidate": "IP-ASN,32934,no-resolve", "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE", "group": "Facebook", "original": "IP-ASN,32934", "snapshot_file": "rules/generated/Facebook.list", "snapshot_line": 471}
+{"candidate": "IP-ASN,132203,no-resolve", "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE", "group": "ChinaDirect", "original": "IP-ASN,132203", "snapshot_file": "rules/generated/ChinaDirect.list", "snapshot_line": 110393}

@@ -1,0 +1,573 @@
+{
+  "active_groups": [
+    "DomesticCore",
+    "AI",
+    "AppleOTA",
+    "SteamCN",
+    "YouTube",
+    "Netflix",
+    "Disney",
+    "PrimeVideo",
+    "TikTok",
+    "Bilibili",
+    "動畫瘋",
+    "Dazn",
+    "Telegram",
+    "Whatsapp",
+    "Instagram",
+    "Facebook",
+    "Twitter",
+    "Discord",
+    "Google",
+    "Microsoft",
+    "Apple",
+    "Steam",
+    "Paypal",
+    "HBO",
+    "AdBlock",
+    "ChinaDirect"
+  ],
+  "active_remote_upstream_sources": 0,
+  "adblock_anchors": [
+    "admob.com",
+    "doubleclick.com",
+    "app-measurement.com",
+    "ads-twitter.com"
+  ],
+  "added_predicate_group_count": 4,
+  "after_groups": {
+    "AI": 112,
+    "AdBlock": 76895,
+    "Apple": 1600,
+    "AppleOTA": 82,
+    "Bilibili": 132,
+    "ChinaDirect": 114889,
+    "Dazn": 20,
+    "Discord": 29,
+    "Disney": 186,
+    "DomesticCore": 7,
+    "Facebook": 491,
+    "Google": 691,
+    "HBO": 90,
+    "Instagram": 74,
+    "Microsoft": 671,
+    "Netflix": 1156,
+    "Paypal": 248,
+    "PrimeVideo": 34,
+    "Steam": 61,
+    "SteamCN": 17,
+    "Telegram": 43,
+    "TikTok": 58,
+    "Twitter": 32,
+    "Whatsapp": 26,
+    "YouTube": 191,
+    "動畫瘋": 7
+  },
+  "asn_fixed": [
+    "AS132203",
+    "AS32934",
+    "AS211157",
+    "AS44907",
+    "AS59930",
+    "AS62014",
+    "AS62041"
+  ],
+  "baseline_count_from_selected_snapshot_groups": 206488,
+  "baseline_rule_count_stage03": 206505,
+  "baseline_upstream_source_count": 87,
+  "before_groups": {
+    "AI": 112,
+    "Abema": 25,
+    "AdBlock": 77213,
+    "Apple": 1600,
+    "AppleOTA": 82,
+    "BBC": 37,
+    "Bilibili": 132,
+    "ChinaDirect": 123008,
+    "Dazn": 20,
+    "Discord": 29,
+    "Disney": 186,
+    "DomesticCore": 7,
+    "Facebook": 491,
+    "Google": 694,
+    "HBO": 90,
+    "Instagram": 74,
+    "Line": 35,
+    "Linkedin": 12,
+    "Microsoft": 671,
+    "Netflix": 1156,
+    "Paypal": 248,
+    "PrimeVideo": 34,
+    "Reddit": 15,
+    "Spotify": 33,
+    "Steam": 61,
+    "SteamCN": 17,
+    "Telegram": 43,
+    "TikTok": 58,
+    "Twitch": 48,
+    "Twitter": 33,
+    "Whatsapp": 26,
+    "YouTube": 191,
+    "動畫瘋": 7
+  },
+  "candidate_frozen_snapshot_input_count": 26,
+  "candidate_only": true,
+  "candidate_rule_count": 197842,
+  "dns_tun_changed": false,
+  "engine_status": "STATIC_CANDIDATE_GENERATED",
+  "inactive_groups_fall_through_final": [
+    "Spotify",
+    "Twitch",
+    "Abema",
+    "BBC",
+    "Line",
+    "Reddit",
+    "Linkedin"
+  ],
+  "ip_no_resolve_changes": 7,
+  "isolation_causes": {
+    "ADBLOCK_SHARED_CRITICAL_SERVICE": 322,
+    "ADVERTISING_REASSIGNED": 6,
+    "DIRECT_KEYWORD_NARROWED": 1,
+    "DIRECT_KEYWORD_UNPROVEN": 9,
+    "DIRECT_SINGLE_LABEL_UNPROVEN": 46,
+    "DIRECT_WIDE_IP_UNPROVEN": 8061,
+    "SOURCE_DISABLED": 205
+  },
+  "main_modified": false,
+  "new_rules": [
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN-SUFFIX,admob.com"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN-SUFFIX,ads-twitter.com"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN-SUFFIX,app-measurement.com"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN-SUFFIX,doubleclick.com"
+    }
+  ],
+  "ownership_changes": 8650,
+  "proxyprotect_independent_subscription": false,
+  "release": "NOT_READY_FOR_PRODUCTION",
+  "remaining_risks": [
+    "Frozen published snapshot cannot prove original upstream per-line owner",
+    "Cross-policy suffix and keyword overlap needs device matching evaluation",
+    "User-selected FINAL=DIRECT will direct-route unmatched traffic",
+    "ASN no-resolve must be evaluated against device DNS/IP literal flows",
+    "AdBlock REJECT/DIRECT and authentication/payment need functional tests"
+  ],
+  "removed_examples": [
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-KEYWORD,abematv.akamaized.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,abema-tv.com"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,abema.io"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,abema.tv"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,abematv.akamaized.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,abematv.co.jp"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,adx.promo"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,ameba.jp"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,amebame.com"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,amebaownd.com"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,amebaowndme.com"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,ameblo.jp"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,bucketeer.jp"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,d1otoma47x30pg.cloudfront.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,d2wy8f7a9ursnm.cloudfront.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,dokusho-ojikan.jp"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,ds-linear-abematv.akamaized.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,ds-vod-abematv.akamaized.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,hayabusa.dev"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,hayabusa.io"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,hayabusa.media"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,linear-abematv.akamaized.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,vod-abematv.akamaized.net"
+    },
+    {
+      "group": "Abema",
+      "rule": "DOMAIN-SUFFIX,winticket.jp"
+    },
+    {
+      "group": "Abema",
+      "rule": "USER-AGENT,AbemaTV*"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,c.paypal.com"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,cdncache2-a.akamaihd.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,contentcache-a.akamaihd.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,couponcp-a.akamaihd.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d10gj7yjsfriaj.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d10lpsik1i8c69.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d10lv7w3g0jvk9.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d11a2fzhgzqe7i.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d11tybz5ul8vel.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d13jhr4vol1304.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d140sbu1b1m3h0.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d141wsrw9m4as6.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d144jmuhz9kvbq.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d14821r0t3377v.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d158nafix8anfs.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d15cjcet1djbmv.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d15gt9gwxw5wu0.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d15kdpgjg3unno.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d15r06k2ko210l.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d162nnmwf9bggr.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d169bbxks24g2u.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d16fk4ms6rqz1v.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d16xpr36wrmcmk.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d17m68fovwmgxj.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d188elxamt3utn.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d18g6t7whf8ejf.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d18mealirgdbbz.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d18p8z0ptb8qab.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d18xeipe1243h6.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d191y0yd6d0jy4.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1aezk8tun0dhm.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1aqvw7cn4ydzo.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1bxkgbbc428vi.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1cdnlzf6usiff.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1cerpgff739r9.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1clfvuu2240eh.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1cr9zxt7u0sgu.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1crt12zco2cvf.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1ebha2k07asm5.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1gp8joe0evc8s.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1hi41nc56pmug.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1i9kr6k34lyp.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1iazwv1n1tsyi.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1il9t8pu4dsoj.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1ilwohzbe4ao6.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1jnvfp2m6fzvq.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1ks8roequxbwa.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1m6l9dfulcyw7.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1mbgf0ge24riu.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1mbihpm2gncx7.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1mib12jcgwmnv.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1n1ppeppre6d4.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1n3tk65esqc4k.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1nkvehlw5hmj4.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1nmxiiewlx627.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1nx2jii03b4ju.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1pdpbxj733bb1.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1qc76gneygidm.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1qggq1at2gusn.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1qk9ujrmkucbl.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1qpxk1wfeh8v1.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1r27qvpjiaqj3.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1r55yzuc1b1bw.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1r90st78epsag.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1rgnfh960lz2b.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1rguclfwp7nc8.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1rjzrtsxlzawf.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1rkf0bq85yx06.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1ros97qkrwjf5.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1t9uctetvi0tu.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1uanozc5el74n.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1uh1a7az90pt0.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1v99qnc7usc0g.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1w24oanovvxvg.cloudfront.net"
+    },
+    {
+      "group": "AdBlock",
+      "rule": "DOMAIN,d1wi563t0137vz.cloudfront.net"
+    }
+  ],
+  "removed_or_modified_origin_lines": 8650,
+  "removed_predicate_group_count": 8650,
+  "source_count_comparison_warning": "87 upstream feeds vs active group snapshots are NOT equivalent provenance units",
+  "source_status": "26 frozen group snapshots, not 26 independently verifiable upstream feeds",
+  "status": "OFFLINE_CANDIDATE_NOT_DEVICE_VERIFIED"
+}
