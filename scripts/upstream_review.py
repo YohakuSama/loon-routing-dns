@@ -44,33 +44,58 @@ MULTITENANT_ROOTS = set(SHARED_PLATFORM_ROOTS) | {
     "appspot.com", "blogspot.com", "github.io", "pages.dev", "workers.dev",
     "vercel.app", "netlify.app", "herokuapp.com", "azurewebsites.net"
 }
-MAX_RULE_LENGTH = 256
+MAX_RULE_LENGTH = 512
 
 
 def _validate_matcher(rule: str) -> str:
-    """Reject obviously unsafe matchers before they enter a candidate preview."""
+    """Reject malformed matchers, not merely broad but valid source assertions.
+
+    Risky *valid* matchers are retained as audit evidence and quarantined by
+    the publication gate. False positives from over-eager rejection matter.
+    """
     kind, value = fields(rule)
     if len(rule) > MAX_RULE_LENGTH:
         raise ValueError("oversized matcher")
     if kind in {"DOMAIN", "DOMAIN-SUFFIX"}:
         parts = value.split(".")
-        if (len(parts) < 2 or not HOST.fullmatch(value)
+        if (len(value) > 253 or not HOST.fullmatch(value)
                 or any(not x or len(x) > 63 or x.startswith("-")
-                       or x.endswith("-") for x in parts)
-                or parts[-1] in RESERVED_ROOTS):
-            raise ValueError("invalid or private/reserved domain matcher")
-        if kind == "DOMAIN-SUFFIX" and (
-            (len(parts) == 2 and len(parts[-1]) == 2
-             and parts[0] in COMMON_SECOND_LEVEL) or value in MULTITENANT_ROOTS):
-            raise ValueError("public-suffix or multi-tenant scope blocks unrelated domains")
+                       or x.endswith("-") for x in parts)):
+            raise ValueError("malformed domain matcher")
+    elif kind == "DOMAIN-KEYWORD" and "*" in value:
+        raise ValueError("wildcard is not a valid literal domain keyword")
+    return rule
+
+
+def _quality_flags(rule: str) -> list[str]:
+    """Advisory semantic risk classification, never a publication permission."""
+    kind, value = fields(rule)
+    flags: list[str] = []
+    if kind in {"DOMAIN", "DOMAIN-SUFFIX"}:
+        parts = value.split(".")
+        if len(parts) == 1:
+            flags.append("SINGLE_LABEL_OR_TLD_SCOPE_REVIEW")
+        if parts[-1] in RESERVED_ROOTS:
+            flags.append("PRIVATE_OR_RESERVED_DOMAIN_REVIEW")
+        if kind == "DOMAIN-SUFFIX":
+            if (len(parts) == 2 and len(parts[-1]) == 2
+                    and parts[0] in COMMON_SECOND_LEVEL):
+                flags.append("PUBLIC_SUFFIX_LIKE_SCOPE_REVIEW")
+            if value in MULTITENANT_ROOTS:
+                flags.append("MULTITENANT_ROOT_SCOPE_REVIEW")
     elif kind == "DOMAIN-KEYWORD":
-        if len(value) < 4 or "*" in value or value in {"http", "https", "cdn", "api"}:
-            raise ValueError("generic/unbounded keyword")
+        if len(value) < 4:
+            flags.append("SHORT_KEYWORD_SCOPE_REVIEW")
+        if value in {"http", "https", "cdn", "api", "login", "auth", "static"}:
+            flags.append("GENERIC_KEYWORD_SCOPE_REVIEW")
     elif kind in {"IP-CIDR", "IP-CIDR6"}:
         net = ipaddress.ip_network(value)
         if net.prefixlen < (8 if net.version == 4 else 24):
-            raise ValueError("IP match is excessively broad")
-    return rule
+            flags.append("WIDE_IP_SCOPE_REVIEW")
+        if net.is_private or net.is_loopback or net.is_link_local:
+            flags.append("NONPUBLIC_IP_RANGE_REVIEW")
+    return sorted(set(flags))
+
 
 
 def digest(data: bytes) -> str:
@@ -144,11 +169,19 @@ def parse_source(source: dict, blob: bytes) -> tuple[set[str], dict]:
     result: set[str] = set()
     issues: list[dict] = []
     invalid = 0
+    quality_review_count = 0
+    quality_samples: list[dict] = []
     for number, raw in enumerate(text.splitlines(), 1):
         try:
             rule = source_line(source, raw)
             if rule:
                 result.add(rule)
+                flags = _quality_flags(rule)
+                if flags:
+                    quality_review_count += 1
+                    if len(quality_samples) < 15:
+                        quality_samples.append({"line": number, "rule": rule,
+                                                "reasons": flags})
         except (ValueError, TypeError) as exc:
             invalid += 1
             if len(issues) < 15:
@@ -156,6 +189,8 @@ def parse_source(source: dict, blob: bytes) -> tuple[set[str], dict]:
     minimum = int(source.get("min_rules", 1))
     return result, {"rules": len(result), "invalid_count": invalid,
                     "invalid_samples": issues,
+                    "quality_review_count": quality_review_count,
+                    "quality_review_samples": quality_samples,
                     "minimum_satisfied": len(result) >= minimum,
                     "source_duplicates": max(0, sum(1 for x in text.splitlines()
                         if x.strip() and not x.lstrip().startswith(("#", ";", "//"))) - invalid - len(result))}
@@ -374,6 +409,7 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
                 # New suffixes can unexpectedly route every subdomain.
                 tags.append("NEW_SUFFIX_SCOPE_REVIEW")
             tags.extend(_domain_risk(rule, group, tuple(guarded)))
+            tags.extend(_quality_flags(rule))
             if len(cross_owner[rule]) > 1:
                 tags.append("CROSS_POLICY_EXACT_CONFLICT")
             other_groups = set(_semantic_expansion(rule, group, baseline, index, domains))
@@ -391,8 +427,15 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
                 tags.append("CROSS_POLICY_DOMAIN_COVERAGE")
             other_groups = sorted(other_groups)
             # Every added matcher remains quarantined, even without special risk flags.
+            # A routine new suffix or an AdBlock evidence requirement is not
+            # equivalent to a cross-policy conflict or a dangerously wide rule.
+            routine_tags = {"NEW_SUFFIX_SCOPE_REVIEW",
+                            "ADBLOCK_NEW_RULE_REQUIRES_EVIDENCE"}
+            review_tier = ("ELEVATED" if set(tags) - routine_tags
+                           else "STANDARD")
             detailed_risks["additions"].append({
                 "rule": rule,
+                "review_tier": review_tier,
                 "reasons": sorted(set(tags)) if tags else ["NEW_RULE_REQUIRES_APPROVAL"],
                 "source_ids": sorted(provenance.get((group, rule), ())),
                 "other_groups": other_groups
