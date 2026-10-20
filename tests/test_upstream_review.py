@@ -109,6 +109,15 @@ class HardeningTests(unittest.TestCase):
                                  report["quality_review_samples"][0]["reasons"]
                                  if report["quality_review_samples"] else [])
 
+    def test_mixed_risk_source_remains_parse_complete(self):
+        source = {"format": "loon", "min_rules": 2}
+        rules, report = review.parse_source(
+            source, b"DOMAIN,api.example.org\nDOMAIN-KEYWORD,api\n")
+        self.assertEqual(len(rules), 2)
+        self.assertEqual(report["invalid_count"], 0)
+        self.assertEqual(report["quality_review_count"], 1)
+        self.assertTrue(report["minimum_satisfied"])
+
     def test_ipv4_and_ipv6_cross_policy_overlap_both_directions(self):
         baseline = {
             "AI": {"IP-CIDR,10.20.0.0/16,no-resolve",
@@ -221,6 +230,10 @@ class CandidateWorkflow(unittest.TestCase):
                                 in details["AI"]["additions"]))
             self.assertTrue(all("source_ids" in row for row
                                 in details["AI"]["additions"]))
+            tiers = {entry["rule"]: entry["review_tier"]
+                     for entry in details["AI"]["additions"]}
+            self.assertEqual(tiers["DOMAIN-KEYWORD,tracker"], "ELEVATED")
+            self.assertEqual(tiers["DOMAIN-SUFFIX,updated.ai.org"], "STANDARD")
             self.assertTrue(details["AI"]["removals"])
             for group in result["groups"]:
                 name = "AnimeCrazy" if group == "動畫瘋" else group
