@@ -16,3 +16,9 @@ python3 scripts/phase07_source_update_review.py \
 确认合法授权与归属、可用来源 Commit、回归结果后，维护者可在 **新的 PR** 中物化新不可变快照，逐项更新 `engine_manifest.json` 与 `sources.lock.json` 的哈希、Git blob 以及来源描述。必须运行阶段 02/04/05/06/07 全套离线审计并生成新的候选差异报告；发布版本不得复用已经冻结的 `vNext-RC2` 目录或改写旧候选 SHA。受影响的真机验证须重新执行。
 
 新来源绝对不能从 `rules/generated/` 或 `rules/releases/` 生产输出中提取，不能直接从 `main` 或任何上游动态 URL 无审核同步到现役配置。CI 对新 PR **只读**，若许可未核实或测试证据未齐全即阻止正式发布。
+
+## 完整差异证明（阶段07发布门槛）
+
+`scripts/phase07_source_update_review.py` 生成的 JSON 同时包含 `full_change_set.added` 和 `full_change_set.removed` 的**全量规则清单**，不截断；`added_sample` / `removed_sample` 的 30 行仅用于快速浏览。 `change_set_sha256` 是对排序后的完整列表 JSON 采用 UTF-8、无多余空格编码的 SHA256，方便不同审查者对照同一份报告。 `high_risk_matcher_changes` 与 `risk_sample` 会提示 IP、ASN、DOMAIN-KEYWORD 等高风险新增或移除规则，但不会仅凭语法校验认定行为正确。
+
+上游候选应导出到**仓库外的文件路径**（例如 `/tmp/source-review.json`），不可通过 `--report` 覆盖规则、配置、版本锁或发布证据。 `--proposed` 仅用于读取新的候选来源，不能指向正式规则输出目录。所有变更仍由人工审查原始文件、完整 diff、许可与来源归属；`PENDING_REVIEW_NOT_PUBLISHED` 不构成通过。

@@ -126,6 +126,11 @@ class ReleaseBuildTests(unittest.TestCase):
             report=updates.review(source,proposed)
             self.assertEqual(report["status"],"PENDING_REVIEW_NOT_PUBLISHED")
             self.assertEqual(report["added_rule_count"],1)
+            self.assertEqual(report["full_change_set"]["added"],
+                             ["DOMAIN-SUFFIX,example-phase07.invalid"])
+            self.assertEqual(report["full_change_set"]["removed"],[])
+            self.assertEqual(len(report["change_set_sha256"]),64)
+            self.assertEqual(report["high_risk_matcher_changes"],0)
             self.assertFalse(report["release_write_performed"])
             self.assertEqual((ROOT/source).read_bytes(),original)
 
@@ -134,6 +139,22 @@ class ReleaseBuildTests(unittest.TestCase):
         self.assertEqual(result["status"],"BLOCKED_REVIEW")
         self.assertEqual(result["historical_records_checked"],87)
         self.assertEqual(result["line_level_license_attribution"],"NOT_VERIFIED")
+
+    def test_complete_source_diff_is_untruncated_and_flags_risky_matchers(self):
+        source="rules/snapshots/phase03/generated/Google.list"
+        original=(ROOT/source).read_bytes()
+        with tempfile.TemporaryDirectory() as temp:
+            proposed=Path(temp)/"review.list"
+            additions="".join("DOMAIN-SUFFIX,phase07-%d.invalid\n" % n
+                              for n in range(45))
+            proposed.write_bytes(original+b"\n"+additions.encode()+
+                                 b"DOMAIN-KEYWORD,phase07risk\n")
+            report=updates.review(source,proposed)
+            self.assertEqual(report["added_rule_count"],46)
+            self.assertEqual(len(report["full_change_set"]["added"]),46)
+            self.assertEqual(len(report["added_sample"]),30)
+            self.assertEqual(report["high_risk_matcher_changes"],1)
+            self.assertEqual(report["risk_sample"],["DOMAIN-KEYWORD,phase07risk"])
 
     def test_invalid_new_source_rule_rejected_without_touching_snapshot(self):
         src="rules/snapshots/phase03/generated/Google.list"

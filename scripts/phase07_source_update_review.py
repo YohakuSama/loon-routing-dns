@@ -53,6 +53,15 @@ def review(source: str, proposed: Path, root: Path=ROOT) -> dict:
             raise ValueError("missing newly proposed Loon matcher: "+line[:120])
         if line.split(",",1)[0].upper()=="GEOIP":
             raise ValueError("unexpected GEOIP in locked composite input: "+line[:120])
+    # Keep the complete, deterministic matcher-level change set, not merely
+    # the first thirty examples. Every removed or added line is reviewable.
+    # The digest protects the ordered change lists when exporting the report.
+    change_set = {"added": add, "removed": remove}
+    complete_delta = json.dumps(change_set, sort_keys=True, ensure_ascii=False,
+                                separators=(",", ":")).encode("utf-8")
+    risk_families = {"DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6", "IP-ASN"}
+    high_risk = [line for line in add+remove
+                 if line.split(",", 1)[0].upper() in risk_families]
     return {
         "schema_version":1, "status":"PENDING_REVIEW_NOT_PUBLISHED",
         "source_path":source, "historical_lineage":"NOT_RECOVERABLE_FROM_MERGED_SNAPSHOT",
@@ -63,6 +72,10 @@ def review(source: str, proposed: Path, root: Path=ROOT) -> dict:
         "added_by_kind":dict(sorted(Counter(x.split(",")[0] for x in add).items())),
         "removed_by_kind":dict(sorted(Counter(x.split(",")[0] for x in remove).items())),
         "added_sample":add[:30], "removed_sample":remove[:30],
+        "full_change_set":change_set,
+        "change_set_sha256":hashlib.sha256(complete_delta).hexdigest(),
+        "high_risk_matcher_changes":len(high_risk),
+        "risk_sample":high_risk[:30],
         "manual_legal_review":"REQUIRED",
         "manifest_and_source_lock_update":"REQUIRED_IN_REVIEWED_PR",
         "new_release_candidate_and_device_retest":"REQUIRED",
@@ -78,6 +91,18 @@ def main():
     a=p.parse_args()
     content=json.dumps(review(a.source,a.proposed),sort_keys=True,indent=2,ensure_ascii=False)+"\n"
     if a.report:
+        # A review report is not allowed to overwrite source, compiler inputs,
+        # published rules or critical metadata by supplying --report manually.
+        target=a.report.resolve()
+        protected=tuple((ROOT/p).resolve() for p in
+                        ("rules","refactor","scripts","tests","release",".github","baselines","audits","docs","icons","plugins"))
+        if any(target.is_relative_to(p) for p in protected) or target in {
+            (ROOT/"LoonKit.lcf").resolve(),(ROOT/"LoonKit.PrivacyDNS.lcf").resolve(),
+            (ROOT/"release/phase-07/RC_MANIFEST.json").resolve(),
+            (ROOT/"release/phase-07/RELEASE_GATE.json").resolve(),
+            (ROOT/"release/phase-07/release_spec.json").resolve(),
+        }:
+            raise ValueError("review report cannot overwrite locked sources or release artifacts")
         a.report.parent.mkdir(parents=True,exist_ok=True)
         a.report.write_text(content,encoding="utf-8")
     else:
