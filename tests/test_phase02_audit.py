@@ -140,6 +140,21 @@ class Phase02AuditTest(unittest.TestCase):
         self.assertFalse(d["published_exact_duplicates"])
         self.assertEqual(len(d["same_match_different_flags"]), 1)
 
+
+    def test_21_stage_ingestion_credits_are_distinct_from_published_attribution(self):
+        inventory = audit.source_inventory(self.index, self.rules)
+        self.assertEqual(len(inventory["sources"]), 87)
+        self.assertEqual(len(inventory["staged_zero_incremental_sources"]),
+                         inventory["source_recommendation_counts"].get("MERGE", 0))
+        self.assertEqual(sum(s["reported_intra_group_duplicates"] for s in inventory["sources"]),
+                         inventory["prepublication"]["duplicates_removed_within_group"])
+        for row in inventory["sources"]:
+            self.assertEqual(row["stage_unique_added_before_pruning"],
+                             row["input_count_reported"] - row["reported_intra_group_duplicates"])
+            self.assertIsNone(row["published_individual_contribution"])
+            if row["stage_unique_added_before_pruning"] == 0:
+                self.assertEqual(row["recommendation"], "MERGE")
+
     def test_19_geoip_final_local_rule_handling(self):
         local = audit.scan_local_rules(self.index)
         self.assertTrue(any(r["rule_type"] == "GEOIP" and r["no_resolve"]

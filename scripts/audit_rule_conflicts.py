@@ -226,6 +226,7 @@ def source_inventory(index, records):
     stats = {s["id"]: s for s in build.get("sources", [])}
     assert len(stats) == 87, "staged provenance summary incomplete"
     per_group = Counter(r["group"] for r in records)
+    group_source_count = Counter(x["group"] for x in catalog["sources"] if x["enabled"])
     # CURRENT_UPSTREAM_REFERENCE: upstream repository LICENSE files verified separately.
     # This is not a per-entry legal conclusion and does not substitute for source provenance.
     licenses = {
@@ -245,6 +246,18 @@ def source_inventory(index, records):
         org = url.split("/")[3] if url and "raw.githubusercontent.com/" in url else "YohakuSama"
         group = s["group"]
         historical = url in historical_urls if url else "UNVERIFIED_LOCAL_HISTORY"
+        parsed = stat.get("parsed")
+        duplicates = stat.get("duplicate_within_group")
+        if not isinstance(parsed, int) or not isinstance(duplicates, int) or not 0 <= duplicates <= parsed:
+            raise ValueError(f"invalid frozen source stats for {s['id']}")
+        stage_unique = parsed - duplicates
+        ratio = round(duplicates / parsed, 6) if parsed else 0.0
+        if stage_unique == 0:
+            decision, reason = "MERGE", "No incremental matcher in frozen staged ingestion; candidate for review, not safe-to-delete proof"
+        elif historical is True:
+            decision, reason = "KEEP", "Legacy subscription URL and positive staged contribution; business impact still needs verification"
+        else:
+            decision, reason = "INVESTIGATE", "Positive staged contribution; exact published output provenance unavailable"
         lines.append({
             "id": s["id"], "url": url, "path": s.get("path"), "maintainer_or_org": org,
             "original_license": (licenses[org][0] if org in licenses
@@ -255,24 +268,35 @@ def source_inventory(index, records):
             "format": s["format"], "group": group, "policy": s["policy"],
             "role": s.get("role"), "is_historical_remote_subscription": historical,
             "is_added_relative_to_historical_remotes": not historical if url else "UNKNOWN",
-            "input_count_reported": stat.get("parsed"),
-            "reported_intra_group_duplicates": stat.get("duplicate_within_group"),
+            "input_count_reported": parsed,
+            "reported_intra_group_duplicates": duplicates,
+            "stage_unique_added_before_pruning": stage_unique,
+            "stage_duplicate_ratio": ratio,
+            "stage_normalized_sha256": stat.get("normalized_sha256"),
+            "stage_updated_header": stat.get("upstream_updated"),
+            "same_group_source_count": group_source_count[group],
+            "contribution_evidence_scope": "FROZEN_GENERATOR_AGGREGATE_PRE_PRUNING",
+            "potential_zero_incremental_ingest": stage_unique == 0,
             "published_group_total": per_group.get(group, 0),
             "published_individual_contribution": None,
             "source_provenance": "SOURCE_PROVENANCE_INCOMPLETE",
             "shared_cdn_possible": (group in INTERNATIONAL or group == "AdBlock"),
             "high_risk_rules_verified_per_source": None,
-            "substantial_duplication_per_source": "UNKNOWN",
+            "substantial_duplication_per_source": (
+                "STAGED_RATIO_GE_80_PERCENT" if ratio >= 0.8 else "STAGED_RATIO_LT_80_PERCENT"),
             "evidence_quality": "CATALOG_AND_STAGED_AGGREGATE_ONLY",
-            "recommendation": ("KEEP" if historical is True else "INVESTIGATE"),
-            "recommendation_reason": ("Historical subscription still serving distinct policy purpose"
-                                      if historical is True else
-                                      "Exact per-source post-filter attribution unavailable"),
+            "recommendation": decision,
+            "recommendation_reason": reason,
         })
     assert len(lines) == 87
+    assert sum(x["reported_intra_group_duplicates"] for x in lines) == build["duplicates_removed_within_group"]
     return {"evidence_scope": "PUBLISHED_SNAPSHOT",
             "historical_remote_contents": "HISTORICAL_CONTENT_UNAVAILABLE",
             "source_provenance": "SOURCE_PROVENANCE_INCOMPLETE",
+            "source_recommendation_counts": dict(sorted(Counter(x["recommendation"] for x in lines).items())),
+            "staged_total_parsed": sum(x["input_count_reported"] for x in lines),
+            "staged_total_first_owner_credit": sum(x["stage_unique_added_before_pruning"] for x in lines),
+            "staged_zero_incremental_sources": [x["id"] for x in lines if x["potential_zero_incremental_ingest"]],
             "sources": lines, "inactive_candidates": catalog.get("candidates", []),
             "prepublication": {k: build.get(k) for k in (
                 "duplicates_removed_within_group", "cross_group_exact_pruned_count",
@@ -378,6 +402,13 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
         "README.md": "\n".join(index),
         "SOURCE_AUDIT.md": "\n".join([
             "# Source audit", "", "87 catalog sources; all recorded in data/source_inventory.json.",
+            f"Staged source recommendations: {encoded(inventory['source_recommendation_counts'])}",
+            f"Staged parsed rows: {inventory['staged_total_parsed']:,}, first-owner matcher credit: {inventory['staged_total_first_owner_credit']:,}",
+            f"Zero incremental sources in staged ingest: {len(inventory['staged_zero_incremental_sources'])}",
+            "## Zero-incremental source MERGE review candidates (all)",
+            *[f"- {x}" for x in inventory["staged_zero_incremental_sources"]],
+            "This is frozen staged first-ingestion credit, NOT independently verified final published contribution.",
+            "A zero count is order-dependent and does not prove a source can safely be removed.",
             "Staged per-source `parsed` counts are historical build-report claims, not retrievable raw inputs.",
             "No current upstream download was performed. Per-source final contribution cannot be reconstructed.",
             "Upstream repository-level licenses: blackmatrix7 GPL-2.0, v2fly MIT, felixonmars WTFPL-2.",
@@ -484,7 +515,9 @@ def markdown_reports(records, details, inventory, overlaps, risks, ip, output):
             "5. Replace broad DIRECT keywords only after domain ownership and false-positive review.",
             "6. In Stage 04 redesign priority with deliberate shared-CDN / auth / payment ownership rules.",
             "7. Preserve source line mappings at normalization, filter, prune and publication steps.",
-            "8. No source is recommended for removal solely because it is newly added or has many rules.",
+            "8. First-ingestion zero-contribution sources are MERGE review candidates, not deletion proof.",
+            "9. Do not remove sources until final surviving rules are attributable to immutable inputs.",
+            "10. No source is recommended for removal solely because it is newly added or has many rules.",
         ]),
     }
     for name, body in docs.items():
@@ -566,7 +599,9 @@ def build(output):
                    adblock_platform_ownership_risks=sum(
                        r["category"] == "ADBLOCK_PLATFORM_OWNERSHIP" for r in risks),
                    direct_broad_keywords=len(ip["direct_keywords"]),
-                   manual_source_review=sum(s["recommendation"] == "INVESTIGATE"
+                   source_recommendations=inventory["source_recommendation_counts"],
+                   staged_zero_incremental_source_count=len(inventory["staged_zero_incremental_sources"]),
+                   manual_source_review=sum(s["recommendation"] in ("INVESTIGATE", "MERGE")
                                             for s in inventory["sources"]),
                    provenance="SOURCE_PROVENANCE_INCOMPLETE",
                    runtime="RUNTIME_VERIFICATION_REQUIRED")
