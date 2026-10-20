@@ -148,7 +148,7 @@ check("automatic double-failure alerts only once per cooldown",()=>{
 });
 
 check("diagnostics switches default to privacy-preserving values",()=>{
-  const plugin=fs.readFileSync(path.join(ROOT,"release/phase-08/assets/Network_Diagnostics.plugin"),"utf8");
+  const plugin=fs.readFileSync(path.join(ROOT,"release/Network_Diagnostics.plugin"),"utf8");
   assert.match(plugin,/auto_check = switch,false/);
   assert.match(plugin,/compare_direct = switch,false/);
   assert.equal(plugin.split("\n").filter(x=>x.startsWith("generic then script(")).length,2);
