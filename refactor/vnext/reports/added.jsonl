@@ -1,0 +1,8 @@
+{"group": "AdBlock", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,admob.com"}
+{"group": "AdBlock", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,ads-twitter.com"}
+{"group": "AdBlock", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,app-measurement.com"}
+{"group": "AdBlock", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,doubleclick.com"}
+{"group": "ChinaDirect", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,aliyun.com"}
+{"group": "ChinaDirect", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,baidu.com"}
+{"group": "ChinaDirect", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,taobao.com"}
+{"group": "ChinaDirect", "reason": "NEW_OR_RECLASSIFIED", "rule": "DOMAIN-SUFFIX,weibo.com"}

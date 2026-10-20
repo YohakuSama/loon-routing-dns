@@ -1,0 +1,67 @@
+name: Phase 06 vNext RC read-only acceptance
+on:
+  push:
+    branches: [refactor/loonkit-vnext]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rc-integrity:
+    if: github.ref == 'refs/heads/refactor/loonkit-vnext'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Freeze and verify historical inputs
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Audit, source-lock, overlap and deterministic candidate
+        run: |
+          python3 scripts/audit_rule_conflicts.py --output audits/phase-02 --check
+          python3 scripts/vnext_source_lock.py --check
+          python3 scripts/vnext_conflict_resolver.py --check
+          python3 scripts/vnext_phase05_report.py --check
+          python3 scripts/vnext_rule_engine.py --check
+          python3 scripts/validate_repo.py
+          python3 scripts/build-appstore-icons.py --check-config
+      - name: Full JavaScript regressions
+        run: |
+          node --check scripts/v20261018r11/network-diagnostics.js
+          node --check scripts/v20261018r11/node-intelligence.js
+          node tests/test_node_copy.js
+          node tests/test_network_diagnostics.js
+          node tests/test_current_plugin.js
+      - name: Candidate structure and all 26 SHA256
+        run: python3 scripts/vnext_import_preflight.py --json-out /tmp/rc-preflight.json
+      - name: Pin immutable acceptance copy outside repository
+        run: |
+          python3 scripts/vnext_pin_candidate.py --commit "$GITHUB_SHA" --output /tmp/LoonKit.vNext.RC1.Test.lcf
+          python3 scripts/vnext_import_preflight.py --commit "$GITHUB_SHA" --config /tmp/LoonKit.vNext.RC1.Test.lcf --json-out /tmp/rc-pinned.json
+      - name: Validate all 26 immutable raw resources by GET
+        env:
+          RC_SHA: ${{ github.sha }}
+        run: |
+          python3 scripts/vnext_verify_raw_resources.py --commit "$RC_SHA" --json-out /tmp/rc-remote-http.json
+      - name: Protect production and DNS/TUN and ensure clean checkout
+        run: |
+          git diff --exit-code HEAD -- LoonKit.lcf LoonKit.PrivacyDNS.lcf rules/ baselines/
+          git status --porcelain
+          test -z "$(git status --porcelain)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vnext-rc1-immutable-maintainer-test
+          path: |
+            /tmp/LoonKit.vNext.RC1.Test.lcf
+            /tmp/rc-preflight.json
+            /tmp/rc-pinned.json
+            /tmp/rc-remote-http.json
+          retention-days: 30
+          if-no-files-found: error

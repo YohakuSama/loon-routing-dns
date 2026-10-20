@@ -1,0 +1,1869 @@
+{
+  "prepublication_input_stage_statistics": {
+    "cross_group_different_policy_exact": 159,
+    "cross_group_different_policy_samples": [
+      {
+        "rule": "DOMAIN-SUFFIX,admob.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,ads-twitter.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Twitter",
+            "Twitter"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,app-measurement.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,apps5.oingo.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,bam.nr-data.net",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Disney",
+            "Disney"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,conviva.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Disney",
+            "Disney"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,crashlytics.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,doubleclick.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,doubleclick.net",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,googlecommerce.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,googlesyndication.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,googletagservices.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,localytics.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Microsoft",
+            "Microsoft"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,msads.net",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Microsoft",
+            "Microsoft"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,optimizely.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Microsoft",
+            "Microsoft"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,panoramio.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,sentry.io",
+        "targets": [
+          [
+            "AI",
+            "AI"
+          ],
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Dazn",
+            "Dazn"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,tellapart.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Twitter",
+            "Twitter"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,uservoice.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Microsoft",
+            "Microsoft"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,appldnld.apple.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "AppleOTA",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,appldnld.g.aaplimg.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "AppleOTA",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,mesu-cdn.apple.com.akadns.net",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "AppleOTA",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,mesu.apple.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "AppleOTA",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,ocsp.apple.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "AppleOTA",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,steamcontent.com",
+        "targets": [
+          [
+            "Steam",
+            "Steam"
+          ],
+          [
+            "SteamCN",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,steamserver.net",
+        "targets": [
+          [
+            "Steam",
+            "Steam"
+          ],
+          [
+            "SteamCN",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,steamusercontent.com",
+        "targets": [
+          [
+            "Steam",
+            "Steam"
+          ],
+          [
+            "SteamCN",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,gvt1.com",
+        "targets": [
+          [
+            "YouTube",
+            "YouTube"
+          ],
+          [
+            "動畫瘋",
+            "動畫瘋"
+          ]
+        ]
+      },
+      {
+        "rule": "IP-CIDR,172.110.32.0/21,no-resolve",
+        "targets": [
+          [
+            "Google",
+            "Google"
+          ],
+          [
+            "YouTube",
+            "YouTube"
+          ]
+        ]
+      },
+      {
+        "rule": "IP-CIDR,216.73.80.0/20,no-resolve",
+        "targets": [
+          [
+            "Google",
+            "Google"
+          ],
+          [
+            "YouTube",
+            "YouTube"
+          ]
+        ]
+      },
+      {
+        "rule": "IP-CIDR6,2620:120:e000::/40,no-resolve",
+        "targets": [
+          [
+            "Google",
+            "Google"
+          ],
+          [
+            "YouTube",
+            "YouTube"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,execute-api.us-east-1.amazonaws.com",
+        "targets": [
+          [
+            "Disney",
+            "Disney"
+          ],
+          [
+            "HBO",
+            "HBO"
+          ]
+        ]
+      },
+      {
+        "rule": "USER-AGENT,TikTok*",
+        "targets": [
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ],
+          [
+            "TikTok",
+            "TikTok"
+          ]
+        ]
+      },
+      {
+        "rule": "USER-AGENT,*bili*",
+        "targets": [
+          [
+            "Bilibili",
+            "Bilibili"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "USER-AGENT,Bilibili*",
+        "targets": [
+          [
+            "Bilibili",
+            "Bilibili"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "USER-AGENT,bili*",
+        "targets": [
+          [
+            "Bilibili",
+            "Bilibili"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "USER-AGENT,bili-inter*",
+        "targets": [
+          [
+            "Bilibili",
+            "Bilibili"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,cdninstagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagr.am",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,grok.com",
+        "targets": [
+          [
+            "AI",
+            "AI"
+          ],
+          [
+            "Twitter",
+            "Twitter"
+          ]
+        ]
+      },
+      {
+        "rule": "IP-CIDR,119.235.236.0/23,no-resolve",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Line",
+            "Line"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,265.com",
+        "targets": [
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,deepmind.com",
+        "targets": [
+          [
+            "AI",
+            "AI"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,google-analytics-cn.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,google-analytics.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,googleoptimize-cn.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,googletagmanager-cn.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,googletagmanager.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,gvt2-cn.com",
+        "targets": [
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,qiao-cn.com",
+        "targets": [
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ],
+          [
+            "Google",
+            "Google"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,aaplimg.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,akadns.net",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "Microsoft",
+            "Microsoft"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,beatsbydre.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,digicert.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "動畫瘋",
+            "動畫瘋"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,me.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,mzstatic.com",
+        "targets": [
+          [
+            "Apple",
+            "Apple"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "USER-AGENT,Microsoft*",
+        "targets": [
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ],
+          [
+            "Microsoft",
+            "Microsoft"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,adsame.com",
+        "targets": [
+          [
+            "AdBlock",
+            "AdBlock"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,bilicomic.com",
+        "targets": [
+          [
+            "Bilibili",
+            "Bilibili"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,missevan.com",
+        "targets": [
+          [
+            "Bilibili",
+            "Bilibili"
+          ],
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,tiktokrow-cdn.com",
+        "targets": [
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ],
+          [
+            "TikTok",
+            "TikTok"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN,steamcommunity-a.akamaihd.net",
+        "targets": [
+          [
+            "ChinaDirect",
+            "DIRECT"
+          ],
+          [
+            "Steam",
+            "Steam"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,featuregates.org",
+        "targets": [
+          [
+            "AI",
+            "AI"
+          ],
+          [
+            "AdBlock",
+            "AdBlock"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,intercom.io",
+        "targets": [
+          [
+            "AI",
+            "AI"
+          ],
+          [
+            "Dazn",
+            "Dazn"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,segment.io",
+        "targets": [
+          [
+            "AI",
+            "AI"
+          ],
+          [
+            "AdBlock",
+            "AdBlock"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,whatsapp.biz",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Whatsapp",
+            "Whatsapp"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,whatsapp.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Whatsapp",
+            "Whatsapp"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,whatsapp.net",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Whatsapp",
+            "Whatsapp"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,achat-followers-instagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,acheter-followers-instagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,acheterdesfollowersinstagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,acheterfollowersinstagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,bookstagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,carstagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,chickstagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,ig.me",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,igcdn.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,igsonar.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,igtv.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,imstagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,imtagram.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instaadder.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instachecker.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instafallow.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instafollower.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagainer.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagda.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagify.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagmania.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagor.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagram-brand.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagram-engineering.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagram-help.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagram-press.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagram-press.net",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagramci.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagramcn.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagramdi.com",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      },
+      {
+        "rule": "DOMAIN-SUFFIX,instagramhashtags.net",
+        "targets": [
+          [
+            "Facebook",
+            "Facebook"
+          ],
+          [
+            "Instagram",
+            "Instagram"
+          ]
+        ]
+      }
+    ],
+    "cross_group_exact_pruned_count": 150,
+    "cross_group_exact_pruned_samples": [
+      {
+        "kept_in": "Disney",
+        "removed_from": "HBO",
+        "rule": "DOMAIN-SUFFIX,execute-api.us-east-1.amazonaws.com"
+      },
+      {
+        "kept_in": "YouTube",
+        "removed_from": "動畫瘋",
+        "rule": "DOMAIN-SUFFIX,gvt1.com"
+      },
+      {
+        "kept_in": "AI",
+        "removed_from": "Dazn",
+        "rule": "DOMAIN-SUFFIX,intercom.io"
+      },
+      {
+        "kept_in": "AI",
+        "removed_from": "Dazn",
+        "rule": "DOMAIN-SUFFIX,sentry.io"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp.net"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp.cc"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,oninstagram.com"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp-plus.me"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp.biz"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsappbrand.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramizlenme.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramtakiphilesi.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instaadder.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,acheterdesfollowersinstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagda.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramcn.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagram-brand.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,lnstagram-help.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagram-engineering.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagran.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,imstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagrampartners.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramn.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramsepeti.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,intgram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,cdninstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instafallow.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instafollower.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramtakipcisatinal.net"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,igtv.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagmania.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagram-press.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,carstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,igsonar.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramhashtags.net"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,wwwinstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instgram.com"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp-plus.net"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instachecker.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagram-press.net"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instanttelegram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramdi.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instangram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagranm.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagr.am"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp.tv"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagainer.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,acheter-followers-instagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramhilesi.org"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagor.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,chickstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagify.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramphoto.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,acheterfollowersinstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,achat-followers-instagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagtram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,theinstagramhack.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,imtagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,intagrm.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instamgram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramm.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramium.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramtips.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,bookstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instaplayer.net"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramq.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagram-help.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramkusu.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,igcdn.com"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,wa.me"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramlogin.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagrm.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,ig.me"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramhilecim.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramci.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,kingstagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagy.com"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp.org"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,online-instagram.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,intagram.com"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp.info"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagramtr.com"
+      },
+      {
+        "kept_in": "Whatsapp",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,whatsapp-plus.info"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instastyle.tv"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,web-instagram.net"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,instagrem.com"
+      },
+      {
+        "kept_in": "Instagram",
+        "removed_from": "Facebook",
+        "rule": "DOMAIN-SUFFIX,onlineinstagram.com"
+      },
+      {
+        "kept_in": "AI",
+        "removed_from": "Twitter",
+        "rule": "DOMAIN-SUFFIX,grok.com"
+      },
+      {
+        "kept_in": "Facebook",
+        "removed_from": "Line",
+        "rule": "IP-CIDR,119.235.236.0/23,no-resolve"
+      },
+      {
+        "kept_in": "AI",
+        "removed_from": "Google",
+        "rule": "DOMAIN-SUFFIX,deepmind.com"
+      },
+      {
+        "kept_in": "YouTube",
+        "removed_from": "Google",
+        "rule": "IP-CIDR,172.110.32.0/21,no-resolve"
+      },
+      {
+        "kept_in": "YouTube",
+        "removed_from": "Google",
+        "rule": "IP-CIDR,216.73.80.0/20,no-resolve"
+      },
+      {
+        "kept_in": "YouTube",
+        "removed_from": "Google",
+        "rule": "IP-CIDR6,2620:120:e000::/40,no-resolve"
+      },
+      {
+        "kept_in": "Google",
+        "removed_from": "Apple",
+        "rule": "DOMAIN-SUFFIX,crashlytics.com"
+      },
+      {
+        "kept_in": "Microsoft",
+        "removed_from": "Apple",
+        "rule": "DOMAIN-SUFFIX,akadns.net"
+      },
+      {
+        "kept_in": "動畫瘋",
+        "removed_from": "Apple",
+        "rule": "DOMAIN-SUFFIX,digicert.com"
+      },
+      {
+        "kept_in": "SteamCN",
+        "removed_from": "Steam",
+        "rule": "DOMAIN-SUFFIX,steamusercontent.com"
+      },
+      {
+        "kept_in": "SteamCN",
+        "removed_from": "Steam",
+        "rule": "DOMAIN-SUFFIX,steamcontent.com"
+      }
+    ],
+    "domain_suffix_ancestor_conflict_count": 7421,
+    "duplicates_removed_within_group": 1309,
+    "quarantined_by_reason": {
+      "AI broad ASN omitted": 1,
+      "AI shared-provider root omitted": 11,
+      "URL-REGEX excluded (may require MITM; separate review)": 2,
+      "adblock broad matcher omitted: DOMAIN-KEYWORD": 196,
+      "adblock broad matcher omitted: IP-CIDR": 239,
+      "adblock broad matcher omitted: IP-CIDR6": 1,
+      "protected diagnostic domain would route DIRECT": 3,
+      "v2fly include not expanded (explicit sources only)": 10,
+      "v2fly regexp excluded (manual review)": 5
+    },
+    "same_group_suffix_shadow_pruned": {
+      "AI": 7,
+      "Abema": 5,
+      "AdBlock": 554,
+      "Apple": 164,
+      "AppleOTA": 14,
+      "BBC": 0,
+      "Bilibili": 0,
+      "ChinaDirect": 3,
+      "Dazn": 0,
+      "Discord": 2,
+      "Disney": 1,
+      "DomesticCore": 0,
+      "Facebook": 1,
+      "Google": 0,
+      "HBO": 1,
+      "Instagram": 0,
+      "Line": 1,
+      "Linkedin": 0,
+      "Microsoft": 0,
+      "Netflix": 1,
+      "Paypal": 1,
+      "PrimeVideo": 3,
+      "Reddit": 0,
+      "Spotify": 2,
+      "Steam": 12,
+      "SteamCN": 0,
+      "Telegram": 0,
+      "TikTok": 1,
+      "Twitch": 0,
+      "Twitter": 0,
+      "Whatsapp": 0,
+      "YouTube": 0,
+      "動畫瘋": 3
+    }
+  },
+  "published_cross_policy_exact": [],
+  "published_exact_duplicates": [],
+  "same_match_different_flags": []
+}

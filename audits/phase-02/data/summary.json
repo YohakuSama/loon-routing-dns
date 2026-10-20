@@ -1,0 +1,40 @@
+{
+  "adblock_platform_ownership_risks": 5,
+  "direct_broad_keywords": 10,
+  "local_input_rules_covered_by_published_suffix": 5,
+  "local_input_rules_with_published_condition": 65,
+  "local_input_unexplained_conditions": 0,
+  "manual_source_review": 61,
+  "missing_no_resolve": 7,
+  "provenance": "SOURCE_PROVENANCE_INCOMPLETE",
+  "published_cross_policy_exact": 0,
+  "published_domain_ancestry_pairs": 7306,
+  "published_exact_duplicates": 0,
+  "published_ip_overlap_pairs": 168,
+  "published_keyword_conflict_pairs": 868,
+  "published_rules": 206505,
+  "risk_counts": {
+    "P1": 54,
+    "P2": 16
+  },
+  "runtime": "RUNTIME_VERIFICATION_REQUIRED",
+  "scanned_sources": 87,
+  "scanned_subscriptions": 34,
+  "snapshot_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
+  "source_recommendations": {
+    "INVESTIGATE": 52,
+    "KEEP": 26,
+    "MERGE": 9
+  },
+  "staged_zero_incremental_source_count": 9,
+  "type_counts": {
+    "DOMAIN": 23943,
+    "DOMAIN-KEYWORD": 54,
+    "DOMAIN-SUFFIX": 168604,
+    "IP-ASN": 7,
+    "IP-CIDR": 9459,
+    "IP-CIDR6": 4326,
+    "USER-AGENT": 112
+  },
+  "verified_local_source_file_count": 10
+}

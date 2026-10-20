@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "baseline_name": "LoonKit v5.10.0",
+  "source_repository": "https://github.com/YohakuSama/loonkit",
+  "source_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
+  "release": "v5.10.0",
+  "generator_version": "UNVERSIONED_AT_GIT_COMMIT",
+  "generator_source": "scripts/build_composite_rules.py",
+  "files": [
+    {
+      "path": "LoonKit.lcf",
+      "git_blob_sha1": "eb004152df11c94796d449b4206218910c8b9484",
+      "sha256": "6adcf617cc798e23761cbd8487c97ddf15c2f3564771b9818345c09ef2fe7da6",
+      "bytes": 13520
+    },
+    {
+      "path": "LoonKit.PrivacyDNS.lcf",
+      "git_blob_sha1": "5b10e6f2b0cf00e8a6aef1e0eefb299c745c7c9b",
+      "sha256": "aabad0c329a7224d241d5a08a0c53964eb60349beb8e53dc6f1b2dcf700acc3a",
+      "bytes": 13875
+    },
+    {
+      "path": "rules/verified-routing-baseline.json",
+      "git_blob_sha1": "2f160fab0253fad787dd6cb0e1f335465e6a2970",
+      "sha256": "dba05447087559b938864d1354521dbade31f14157cc5e34ab144ec425eea041",
+      "bytes": 7115
+    },
+    {
+      "path": "rules/sources.json",
+      "git_blob_sha1": "c2a8a27aa3cb6b2ea8bedc18b28102c0e345138d",
+      "sha256": "ec9690881dc510c863d920f45a1964c45efbcf47c14e9a02c12755e8fb05fa54",
+      "bytes": 28311
+    },
+    {
+      "path": "rules/active_profile.json",
+      "git_blob_sha1": "59fa9f49809f4aff84d8fcc19246e4bb41f8cc71",
+      "sha256": "89281c2cbda4bdc780f937626d4031532403da7b0c1c52179431c0e7eb93bbe9",
+      "bytes": 773
+    },
+    {
+      "path": "rules/routing_guardrails.json",
+      "git_blob_sha1": "b43d7c8c251211e6d60fd20d1bcc40fc78f2094c",
+      "sha256": "5190a1d64223e172d2e65353f8100aec8cbfce0781fba28dc14bb162b1114f81",
+      "bytes": 1051
+    },
+    {
+      "path": "rules/generated/audit.json",
+      "git_blob_sha1": "e4c8f77e9f7dd5046e279be057d1e862d06d45d7",
+      "sha256": "22f86b6f6e58b1aee57b891a582bb044f29cf96d8bd7f4ec25abd5cc9471c4c5",
+      "bytes": 82370
+    },
+    {
+      "path": "scripts/build_composite_rules.py",
+      "git_blob_sha1": "f182c4905929cee2c158105667ba6ecae6ac4fe2",
+      "sha256": "74a1eefcdc3e3d173602061bb0d54c2c70bcdfce4d7309c7ea577cebadf1b9bd",
+      "bytes": 22417
+    },
+    {
+      "path": ".github/workflows/composite-rules.yml",
+      "git_blob_sha1": "202cfe5956fb1424f444f48dcb05dd23053d0478",
+      "sha256": "0f607ee69e47bf0d06e3a36906bd5991fd4cb0bc1cd29d8058be53af8cacc284",
+      "bytes": 3372
+    },
+    {
+      "path": ".github/workflows/loon-ci.yml",
+      "git_blob_sha1": "4049d33b5ef06b6ab7f1309f05d38b9c554bc0ca",
+      "sha256": "65da3f5240af7cbc5b99b5d2e04dc0a080fa50e54992824f51e58af241018604",
+      "bytes": 2596
+    }
+  ],
+  "remote_subscription_count": 34,
+  "generated_group_count": 33,
+  "enabled_input_count": 87,
+  "candidate_input_count": 4,
+  "generated_rules_status": "VERIFIED_GIT_BLOBS",
+  "active_urls_are_mutable": true,
+  "unresolved_questions": [
+    "Remote historical bodies were not saved at the original observation time.",
+    "True on-device DNS behavior is unverified.",
+    "Current audit notes 159 cross-group policy exact matches.",
+    "Broad DIRECT, IP, no-resolve and rule precedence require later scrutiny.",
+    "Active remote URLs still reference mutable main."
+  ]
+}

@@ -1,0 +1,229 @@
+# LoonKit v6.0.0 / Mainland DNSPod DoH (optional; PrivacyDNS URL retained)
+# Maintainer: @YohakuSama
+# GitHub: https://github.com/YohakuSama/loonkit
+# X: https://x.com/yohakusama
+# Community configuration; not affiliated with Loon.
+
+[General]
+# OPTIONAL mainland-accessible encrypted DNS profile using Tencent DNSPod.
+# DoH: https://doh.pub/dns-query (Tencent's official Public DNS endpoint).
+# Plain DNS 119.29.29.29 is only an emergency compatibility entry.
+# IMPORTANT: in Loon > DNS Servers switch OFF encrypted DNS failure fallback
+# to standard DNS, otherwise an encrypted DNS failure may expose UDP queries.
+# Encrypted DoH does NOT mean the query follows the proxy exit. Seeing a CN
+# DNS resolver on a leak-test page is NOT automatically plaintext DNS leakage.
+# Network/ISP differences can still make this endpoint fail or rate-limit.
+dns-server = 119.29.29.29
+doh-server = https://doh.pub/dns-query
+hijack-dns = *:53
+# UDP/53 interception does not capture third-party DoH/DoT.
+ip-mode = dual
+ipv6-vif = auto
+interface-mode = auto
+skip-proxy = 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,localhost,*.local,captive.apple.com
+bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
+real-ip = *.apple.com,*.icloud.com,dns.msftncsi.com,*.srv.nintendo.net,*.xboxlive.com
+disable-stun = true
+udp-fallback-mode = REJECT
+domain-reject-mode = DNS
+dns-reject-mode = NOANSWER
+proxy-test-url = http://bing.com/generate_204
+internet-test-url = http://wifi.vivo.com.cn/generate_204
+test-timeout = 5
+allow-wifi-access = false
+
+[Proxy]
+
+[Remote Proxy]
+# Add your own subscription definitions here. Never publish private URLs.
+
+[Remote Filter]
+ALL_Filter = NameRegex, FilterKey = ".*"
+
+[Proxy Group]
+# Core
+# All strategy icons are self-hosted under icons/, reviewed for light and dark UI.
+Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Proxy.png
+Auto = url-test,ALL_Filter,url = http://bing.com/generate_204,interval = 600,tolerance = 50,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Auto.png
+Fallback = fallback,ALL_Filter,url = http://bing.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Fallback.png
+AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/AdBlock.png
+Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Final.png
+
+# AI and Platforms
+AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/AI.png
+Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Google.png
+Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Microsoft.png
+Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Apple.png
+
+# Streaming
+YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/YouTube.png
+Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Netflix.png
+Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Disney.png
+PrimeVideo = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/PrimeVideo.png
+Spotify = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Spotify.png
+TikTok = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/TikTok.png
+Twitch = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Twitch.png
+HBO = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r3/HBO.png
+Abema = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Abema.png
+動畫瘋 = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/AnimeCrazy.png
+Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Dazn.png
+BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/BBC.png
+Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Bilibili.png
+
+# Social — brand App Store artwork
+Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Telegram.png
+Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Whatsapp.png
+Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Instagram.png
+Facebook = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Facebook.png
+Twitter = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Twitter.png
+Discord = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Discord.png
+Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Line.png
+Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Reddit.png
+Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Linkedin.png
+
+# Games and Payments
+Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Steam.png
+Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Paypal.png
+
+[Remote Rule]
+# vNext-RC2 pinned content; not an auto-updating branch.
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AI.list, policy=AI, tag=Our-AI, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/SteamCN.list, policy=DIRECT, tag=Our-SteamCN, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/YouTube.list, policy=YouTube, tag=Our-YouTube, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Netflix.list, policy=Netflix, tag=Our-Netflix, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Disney.list, policy=Disney, tag=Our-Disney, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/PrimeVideo.list, policy=PrimeVideo, tag=Our-PrimeVideo, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/TikTok.list, policy=TikTok, tag=Our-TikTok, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Bilibili.list, policy=Bilibili, tag=Our-Bilibili, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/AnimeCrazy.list, policy=動畫瘋, tag=Our-AnimeCrazy, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Dazn.list, policy=Dazn, tag=Our-Dazn, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Telegram.list, policy=Telegram, tag=Our-Telegram, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Whatsapp.list, policy=Whatsapp, tag=Our-Whatsapp, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Instagram.list, policy=Instagram, tag=Our-Instagram, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Facebook.list, policy=Facebook, tag=Our-Facebook, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Twitter.list, policy=Twitter, tag=Our-Twitter, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Discord.list, policy=Discord, tag=Our-Discord, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/HBO.list, policy=HBO, tag=Our-HBO, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Google.list, policy=Google, tag=Our-Google, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Microsoft.list, policy=Microsoft, tag=Our-Microsoft, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Apple.list, policy=Apple, tag=Our-Apple, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Steam.list, policy=Steam, tag=Our-Steam, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/Paypal.list, policy=Paypal, tag=Our-Paypal, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/rules/releases/vNext-RC2/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
+
+[Rule]
+# Reviewed local service exceptions. No independent diagnostic proxy subscription.
+DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
+DOMAIN-SUFFIX,openai.com,AI
+DOMAIN-SUFFIX,chatgpt.com,AI
+DOMAIN-SUFFIX,oaistatic.com,AI
+DOMAIN-SUFFIX,oaiusercontent.com,AI
+DOMAIN-SUFFIX,anthropic.com,AI
+DOMAIN-SUFFIX,claude.ai,AI
+DOMAIN-SUFFIX,claude.com,AI
+DOMAIN-SUFFIX,perplexity.ai,AI
+DOMAIN-SUFFIX,perplexity.com,AI
+DOMAIN-SUFFIX,cursor.com,AI
+DOMAIN-SUFFIX,cursor.sh,AI
+DOMAIN-SUFFIX,grok.com,AI
+DOMAIN,gemini.google.com,AI
+DOMAIN,aistudio.google.com,AI
+DOMAIN,copilot.microsoft.com,AI
+DOMAIN-SUFFIX,chat.com,AI
+DOMAIN-SUFFIX,sora.com,AI
+DOMAIN-SUFFIX,cursorapi.com,AI
+DOMAIN-SUFFIX,x.ai,AI
+DOMAIN-SUFFIX,notebooklm.google,AI
+DOMAIN-SUFFIX,ai.google.dev,AI
+DOMAIN-SUFFIX,generativeai.googleapis.com,AI
+DOMAIN-SUFFIX,whatsapp.com,Whatsapp
+DOMAIN-SUFFIX,whatsapp.net,Whatsapp
+DOMAIN-SUFFIX,whatsapp.biz,Whatsapp
+DOMAIN-SUFFIX,wa.me,Whatsapp
+DOMAIN-SUFFIX,facebook.com,Facebook
+DOMAIN-SUFFIX,facebook.net,Facebook
+DOMAIN-SUFFIX,fb.com,Facebook
+DOMAIN-SUFFIX,fb.me,Facebook
+DOMAIN-SUFFIX,messenger.com,Facebook
+DOMAIN-SUFFIX,m.me,Facebook
+DOMAIN-SUFFIX,dazn.com,Dazn
+DOMAIN-SUFFIX,dazn-api.com,Dazn
+DOMAIN-SUFFIX,dazndn.com,Dazn
+DOMAIN-SUFFIX,indazn.com,Dazn
+DOMAIN-SUFFIX,indaznlab.com,Dazn
+DOMAIN-SUFFIX,hbo.com,HBO
+DOMAIN-SUFFIX,hbomax.com,HBO
+DOMAIN-SUFFIX,hbomaxcdn.com,HBO
+DOMAIN-SUFFIX,hbogo.com,HBO
+DOMAIN-SUFFIX,hboasia.com,HBO
+DOMAIN-SUFFIX,max.com,HBO
+DOMAIN-SUFFIX,gamer.com.tw,動畫瘋
+DOMAIN-SUFFIX,bahamut.com.tw,動畫瘋
+DOMAIN-SUFFIX,microsoft.com,Microsoft
+DOMAIN-SUFFIX,microsoftonline.com,Microsoft
+DOMAIN-SUFFIX,microsoft365.com,Microsoft
+DOMAIN-SUFFIX,office.com,Microsoft
+DOMAIN-SUFFIX,office365.com,Microsoft
+DOMAIN-SUFFIX,office.net,Microsoft
+DOMAIN-SUFFIX,outlook.com,Microsoft
+DOMAIN-SUFFIX,onedrive.com,Microsoft
+DOMAIN-SUFFIX,1drv.ms,Microsoft
+DOMAIN-SUFFIX,live.com,Microsoft
+DOMAIN-SUFFIX,windows.com,Microsoft
+DOMAIN-SUFFIX,windowsupdate.com,Microsoft
+DOMAIN-SUFFIX,xboxlive.com,Microsoft
+DOMAIN-SUFFIX,ccb.com,DIRECT
+DOMAIN-SUFFIX,abchina.com,DIRECT
+DOMAIN-SUFFIX,abchina.com.cn,DIRECT
+DOMAIN-SUFFIX,t3go.cn,DIRECT
+DOMAIN-SUFFIX,wo.cn,DIRECT
+# Minimal overseas service selector compatibility; candidate only.
+# Scoped AdBlock overrides precede local overseas service roots.
+DOMAIN,buttons.reddit.com,AdBlock
+DOMAIN,platform.linkedin.com,AdBlock
+DOMAIN-SUFFIX,a1.api.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,a1.api.bbc.com,AdBlock
+DOMAIN-SUFFIX,adeventtracker.spotify.com,AdBlock
+DOMAIN-SUFFIX,ads.linkedin.com,AdBlock
+DOMAIN-SUFFIX,alb.reddit.com,AdBlock
+DOMAIN-SUFFIX,analytics.m7g.twitch.tv,AdBlock
+DOMAIN-SUFFIX,analytics.pointdrive.linkedin.com,AdBlock
+DOMAIN-SUFFIX,analytics.spotify.com,AdBlock
+DOMAIN-SUFFIX,client-event-reporter.twitch.tv,AdBlock
+DOMAIN-SUFFIX,events.reddit.com,AdBlock
+DOMAIN-SUFFIX,fan.twitch.tv,AdBlock
+DOMAIN-SUFFIX,log.spotify.com,AdBlock
+DOMAIN-SUFFIX,pixel-static.spotify.com,AdBlock
+DOMAIN-SUFFIX,pixel.reddit.com,AdBlock
+DOMAIN-SUFFIX,pixel.spotify.com,AdBlock
+DOMAIN-SUFFIX,sa.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,spade.twitch.tv,AdBlock
+DOMAIN-SUFFIX,ssc.api.bbc.com,AdBlock
+DOMAIN-SUFFIX,stats.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,torimochi.line-apps.com,AdBlock
+DOMAIN-SUFFIX,trowel.twitch.tv,AdBlock
+DOMAIN-SUFFIX,visualscience.external.bbc.co.uk,AdBlock
+DOMAIN-SUFFIX,w3-reporting.reddit.com,AdBlock
+DOMAIN-SUFFIX,weblb-wg.gslb.spotify.com,AdBlock
+DOMAIN-SUFFIX,spotify.com,Spotify
+DOMAIN-SUFFIX,scdn.co,Spotify
+DOMAIN-SUFFIX,twitch.tv,Twitch
+DOMAIN-SUFFIX,ttvnw.net,Twitch
+DOMAIN-SUFFIX,abema.tv,Abema
+DOMAIN-SUFFIX,abema.io,Abema
+DOMAIN-SUFFIX,bbc.co.uk,BBC
+DOMAIN-SUFFIX,bbc.com,BBC
+DOMAIN-SUFFIX,line.me,Line
+DOMAIN-SUFFIX,line-apps.com,Line
+DOMAIN-SUFFIX,reddit.com,Reddit
+DOMAIN-SUFFIX,redd.it,Reddit
+DOMAIN-SUFFIX,linkedin.com,Linkedin
+DOMAIN-SUFFIX,licdn.com,Linkedin
+GEOIP,CN,DIRECT,no-resolve
+FINAL,Final
+
+[Plugin]
+https://raw.githubusercontent.com/YohakuSama/loonkit/d405e4be28c447b6e57a4790e965c89f342d6dd6/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true

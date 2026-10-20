@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "stage": "04",
+  "baseline_commit": "b982110a189b41b42e8562f7d10226071b0b2432",
+  "candidate_generation_commit": "252ae73d99704f6040d375bd68fc4f039116ac3b",
+  "engineering_status": "SUCCESS",
+  "release_readiness": "READY_FOR_NEXT_STAGE",
+  "production_readiness": "NOT_READY",
+  "ci": "https://github.com/YohakuSama/loonkit/actions/runs/39382796854",
+  "classification": "Offline static candidate; no iPhone validation",
+  "risks": [
+    {
+      "id": "R04-001",
+      "status": "FIXED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/reports/ip_no_resolve_changes.jsonl",
+      "scope": "Seven IP-ASN rules updated to single no-resolve flag",
+      "residual": "Device IP vs domain behavior unverified"
+    },
+    {
+      "id": "R04-002",
+      "status": "MITIGATED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/reports/adblock_changes.jsonl",
+      "scope": "Four advertising roots assigned to AdBlock; REJECT and DIRECT retained",
+      "residual": "Payment and anti-fraud collateral effects need device tests"
+    },
+    {
+      "id": "R04-003",
+      "status": "ISOLATED_FROM_CANDIDATE",
+      "evidence": "refactor/vnext/reports/direct_changes.jsonl",
+      "scope": "4 ChinaDirect keywords quarantined, 5 others scoped to domestic suffixes, 46 ambiguous single-label suffixes and 8061 too-broad IP ranges isolated",
+      "residual": "Domestic/IPv6 service compatibility needs testing"
+    },
+    {
+      "id": "R04-004",
+      "status": "MITIGATED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/engine_manifest.json",
+      "scope": "Seven overseas subscriptions disabled without removing existing UI groups",
+      "residual": "FINAL=DIRECT might route services directly"
+    },
+    {
+      "id": "R04-005",
+      "status": "MITIGATED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/LoonKit.vNext.Candidate.lcf",
+      "scope": "Independent 17-rule ProxyProtect subscription absent",
+      "residual": "Cannot promise test sites use proxy when FINAL=DIRECT"
+    },
+    {
+      "id": "R04-006",
+      "status": "ISOLATED_FROM_CANDIDATE",
+      "evidence": "refactor/vnext/reports/adblock_changes.jsonl",
+      "scope": "322 essential shared-service blocker predicates isolated",
+      "residual": "AdBlock effectiveness and privacy trade-off"
+    },
+    {
+      "id": "R04-007",
+      "status": "REQUIRES_RUNTIME_TEST",
+      "evidence": "https://nsloon.app/docs/Rule/ip_rule/",
+      "scope": "Loon local DNS resolution, ASN/no-resolve, IPv4 and IPv6 literal flows",
+      "residual": "No physical device result"
+    },
+    {
+      "id": "R04-008",
+      "status": "UNRESOLVED_RELEASE_BLOCKER",
+      "evidence": "refactor/vnext/reports/domain_parent_child_conflicts.jsonl",
+      "scope": "7350 cross-policy domain ancestry observations, 22 remaining keyword matchers; nested IP network clashes reduced from 64 to zero",
+      "residual": "Only true Loon matcher results and business-specific tests can accept unresolved parent-child cases"
+    },
+    {
+      "id": "R04-009",
+      "status": "UNRESOLVED_RELEASE_BLOCKER",
+      "evidence": "refactor/vnext/reports/sources.vnext.candidate.json",
+      "scope": "87 historic feeds accounted for; 65 verifiable local source line mappings, original upstream per-line owner still unknowable from merged snapshots",
+      "residual": "Do not imply original upstream source proof"
+    },
+    {
+      "id": "R04-010",
+      "status": "REQUIRES_RUNTIME_TEST",
+      "evidence": "tests/test_phase04_vnext.py",
+      "scope": "34 static domain-only business cases, AdBlock selector states, unknown FINAL selector states, and 6 queued IP-literal device scenarios",
+      "residual": "Domain-only simulator does not represent network flows"
+    },
+    {
+      "id": "R04-011",
+      "status": "VERIFIED_ACCEPTABLE",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39382796854",
+      "scope": "Stages 01-03, existing Python and Node suites passed; General section byte-identical",
+      "residual": "Static invariants only"
+    },
+    {
+      "id": "R04-012",
+      "status": "FIXED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/reports/ip_network_overlaps.jsonl",
+      "scope": "Cross-policy nested IP overlaps 64 => 0 after 56 ChinaDirect vs platform and 2 Whatsapp shared AWS root quarantines",
+      "residual": "Physical IP literal flows, CDN and region-unlock behavior still unverified"
+    },
+    {
+      "id": "R04-013",
+      "status": "VERIFIED_ACCEPTABLE",
+      "evidence": "refactor/vnext/reports/verified_local_provenance.tsv",
+      "scope": "44 immutable Git blobs verified before generation; 65 local-source line-level mappings independently confirmed",
+      "residual": "Merged raw upstream feeds remain unattributable"
+    },
+    {
+      "id": "R04-014",
+      "status": "MITIGATED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/reports/domain_keyword_risks.jsonl",
+      "scope": "20 brand substring matchers narrowed to owner suffixes, 2 shared-hosting keywords and 6 shared hosting/CDN roots isolated",
+      "residual": "22 remaining domain substring matchers need runtime business review"
+    }
+  ],
+  "rebuild_command": "python3 scripts/vnext_rule_engine.py",
+  "recheck_command": "python3 scripts/vnext_rule_engine.py --check",
+  "hold_release": true,
+  "next_stage": "05: device and service routing acceptance"
+}

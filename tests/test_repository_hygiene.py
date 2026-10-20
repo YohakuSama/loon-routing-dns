@@ -31,7 +31,7 @@ class RepositoryHygiene(unittest.TestCase):
         urls = re.findall(r"img-url\s*=\s*(https://\S+?\.png)", active)
         self.assertEqual(len(urls), 33)
         for url in urls:
-            rel = url.split("/main/", 1)[1]
+            rel = re.search(r"/YohakuSama/loonkit/(?:main|[0-9a-f]{40})/(icons/[^?]+)$", url)[1]
             with self.subTest(path=rel):
                 self.assertTrue((ROOT / rel).is_file())
         self.assertTrue((ROOT / "icons/v20261018r2/Console.png").is_file())

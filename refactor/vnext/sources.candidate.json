@@ -1,0 +1,2595 @@
+{
+  "schema_version": 3,
+  "candidate_only": true,
+  "non_runtime": true,
+  "source_of_truth": "rules/sources.json",
+  "frozen_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
+  "stage02_status": "PARTIAL",
+  "activation_allowed": false,
+  "removal_approved": false,
+  "sources": [
+    {
+      "source_id": "bm-advertising-lite",
+      "current_production_source": {
+        "id": "bm-advertising-lite",
+        "group": "AdBlock",
+        "policy": "AdBlock",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AdvertisingLite/AdvertisingLite.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 100,
+        "role": "baseline"
+      },
+      "design_decision": "DEFER",
+      "original_group": "AdBlock",
+      "group_target": "AdBlock",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-advertising-lite-domain",
+      "current_production_source": {
+        "id": "bm-advertising-lite-domain",
+        "group": "AdBlock",
+        "policy": "AdBlock",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AdvertisingLite/AdvertisingLite_Domain.list",
+        "format": "domainset",
+        "enabled": true,
+        "min_rules": 100,
+        "role": "baseline"
+      },
+      "design_decision": "DEFER",
+      "original_group": "AdBlock",
+      "group_target": "AdBlock",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-systemota",
+      "current_production_source": {
+        "id": "bm-systemota",
+        "group": "AppleOTA",
+        "policy": "DIRECT",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SystemOTA/SystemOTA.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_CORE",
+      "original_group": "AppleOTA",
+      "group_target": "AppleOTA",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-steamcn",
+      "current_production_source": {
+        "id": "bm-steamcn",
+        "group": "SteamCN",
+        "policy": "DIRECT",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/SteamCN/SteamCN.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_CORE",
+      "original_group": "SteamCN",
+      "group_target": "SteamCN",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-youtube",
+      "current_production_source": {
+        "id": "bm-youtube",
+        "group": "YouTube",
+        "policy": "YouTube",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "YouTube",
+      "group_target": "YouTube",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-netflix",
+      "current_production_source": {
+        "id": "bm-netflix",
+        "group": "Netflix",
+        "policy": "Netflix",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Netflix",
+      "group_target": "Netflix",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-disney",
+      "current_production_source": {
+        "id": "bm-disney",
+        "group": "Disney",
+        "policy": "Disney",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Disney/Disney.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Disney",
+      "group_target": "Disney",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-primevideo",
+      "current_production_source": {
+        "id": "bm-primevideo",
+        "group": "PrimeVideo",
+        "policy": "PrimeVideo",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PrimeVideo/PrimeVideo.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "PrimeVideo",
+      "group_target": "PrimeVideo",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-spotify",
+      "current_production_source": {
+        "id": "bm-spotify",
+        "group": "Spotify",
+        "policy": "Spotify",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Spotify/Spotify.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Spotify",
+      "group_target": "Spotify",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-tiktok",
+      "current_production_source": {
+        "id": "bm-tiktok",
+        "group": "TikTok",
+        "policy": "TikTok",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TikTok/TikTok.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "TikTok",
+      "group_target": "TikTok",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-twitch",
+      "current_production_source": {
+        "id": "bm-twitch",
+        "group": "Twitch",
+        "policy": "Twitch",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitch/Twitch.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Twitch",
+      "group_target": "Twitch",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-abematv",
+      "current_production_source": {
+        "id": "bm-abematv",
+        "group": "Abema",
+        "policy": "Abema",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AbemaTV/AbemaTV.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Abema",
+      "group_target": "Abema",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-bbc",
+      "current_production_source": {
+        "id": "bm-bbc",
+        "group": "BBC",
+        "policy": "BBC",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BBC/BBC.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "BBC",
+      "group_target": "BBC",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-bilibili",
+      "current_production_source": {
+        "id": "bm-bilibili",
+        "group": "Bilibili",
+        "policy": "Bilibili",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/BiliBili/BiliBili.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Bilibili",
+      "group_target": "Bilibili",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-telegram",
+      "current_production_source": {
+        "id": "bm-telegram",
+        "group": "Telegram",
+        "policy": "Telegram",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Telegram",
+      "group_target": "Telegram",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00007",
+        "P02-00008",
+        "P02-00009",
+        "P02-00010",
+        "P02-00011"
+      ]
+    },
+    {
+      "source_id": "bm-instagram",
+      "current_production_source": {
+        "id": "bm-instagram",
+        "group": "Instagram",
+        "policy": "Instagram",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Instagram/Instagram.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Instagram",
+      "group_target": "Instagram",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-twitter",
+      "current_production_source": {
+        "id": "bm-twitter",
+        "group": "Twitter",
+        "policy": "Twitter",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Twitter/Twitter.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Twitter",
+      "group_target": "Twitter",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00002"
+      ]
+    },
+    {
+      "source_id": "bm-discord",
+      "current_production_source": {
+        "id": "bm-discord",
+        "group": "Discord",
+        "policy": "Discord",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Discord/Discord.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Discord",
+      "group_target": "Discord",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-line",
+      "current_production_source": {
+        "id": "bm-line",
+        "group": "Line",
+        "policy": "Line",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Line/Line.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Line",
+      "group_target": "Line",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-linkedin",
+      "current_production_source": {
+        "id": "bm-linkedin",
+        "group": "Linkedin",
+        "policy": "Linkedin",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/LinkedIn/LinkedIn.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Linkedin",
+      "group_target": "Linkedin",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-reddit",
+      "current_production_source": {
+        "id": "bm-reddit",
+        "group": "Reddit",
+        "policy": "Reddit",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Reddit/Reddit.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Reddit",
+      "group_target": "Reddit",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-google",
+      "current_production_source": {
+        "id": "bm-google",
+        "group": "Google",
+        "policy": "Google",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Google/Google.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Google",
+      "group_target": "Google",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00001",
+        "P02-00003",
+        "P02-00006"
+      ]
+    },
+    {
+      "source_id": "bm-apple-domain",
+      "current_production_source": {
+        "id": "bm-apple-domain",
+        "group": "Apple",
+        "policy": "Apple",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple_Domain.list",
+        "format": "domainset",
+        "enabled": true,
+        "min_rules": 100,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Apple",
+      "group_target": "Apple",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-apple",
+      "current_production_source": {
+        "id": "bm-apple",
+        "group": "Apple",
+        "policy": "Apple",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Apple",
+      "group_target": "Apple",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-steam",
+      "current_production_source": {
+        "id": "bm-steam",
+        "group": "Steam",
+        "policy": "Steam",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Steam/Steam.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Steam",
+      "group_target": "Steam",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-paypal",
+      "current_production_source": {
+        "id": "bm-paypal",
+        "group": "Paypal",
+        "policy": "Paypal",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/PayPal/PayPal.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_SPECIALIZED",
+      "original_group": "Paypal",
+      "group_target": "Paypal",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-chinamaxnomedia",
+      "current_production_source": {
+        "id": "bm-chinamaxnomedia",
+        "group": "ChinaDirect",
+        "policy": "DIRECT",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 500,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_CORE",
+      "original_group": "ChinaDirect",
+      "group_target": "ChinaDirect",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00004",
+        "P02-00005",
+        "P02-00013",
+        "P02-00014",
+        "P02-00015",
+        "P02-00016",
+        "P02-00017",
+        "P02-00018",
+        "P02-00019",
+        "P02-00020",
+        "P02-00021",
+        "P02-00022",
+        "P02-00023",
+        "P02-00024",
+        "P02-00025",
+        "P02-00026",
+        "P02-00027",
+        "P02-00028",
+        "P02-00029",
+        "P02-00030",
+        "P02-00031",
+        "P02-00032",
+        "P02-00033",
+        "P02-00034",
+        "P02-00035",
+        "P02-00036",
+        "P02-00037",
+        "P02-00038",
+        "P02-00039",
+        "P02-00040",
+        "P02-00041",
+        "P02-00042",
+        "P02-00043",
+        "P02-00044",
+        "P02-00045",
+        "P02-00046",
+        "P02-00047",
+        "P02-00048",
+        "P02-00049",
+        "P02-00050",
+        "P02-00051",
+        "P02-00052",
+        "P02-00053",
+        "P02-00054",
+        "P02-00055",
+        "P02-00056",
+        "P02-00057",
+        "P02-00058",
+        "P02-00059",
+        "P02-00060",
+        "P02-00061",
+        "P02-00062",
+        "P02-00063",
+        "P02-00064",
+        "P02-00065",
+        "P02-00066",
+        "P02-00067",
+        "P02-00068",
+        "P02-00069",
+        "P02-00070"
+      ]
+    },
+    {
+      "source_id": "bm-chinamaxnomedia-domain",
+      "current_production_source": {
+        "id": "bm-chinamaxnomedia-domain",
+        "group": "ChinaDirect",
+        "policy": "DIRECT",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/ChinaMaxNoMedia/ChinaMaxNoMedia_Domain.list",
+        "format": "domainset",
+        "enabled": true,
+        "min_rules": 100,
+        "role": "baseline"
+      },
+      "design_decision": "KEEP_CORE",
+      "original_group": "ChinaDirect",
+      "group_target": "ChinaDirect",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00004",
+        "P02-00005",
+        "P02-00013",
+        "P02-00014",
+        "P02-00015",
+        "P02-00016",
+        "P02-00017",
+        "P02-00018",
+        "P02-00019",
+        "P02-00020",
+        "P02-00021",
+        "P02-00022",
+        "P02-00023",
+        "P02-00024",
+        "P02-00025",
+        "P02-00026",
+        "P02-00027",
+        "P02-00028",
+        "P02-00029",
+        "P02-00030",
+        "P02-00031",
+        "P02-00032",
+        "P02-00033",
+        "P02-00034",
+        "P02-00035",
+        "P02-00036",
+        "P02-00037",
+        "P02-00038",
+        "P02-00039",
+        "P02-00040",
+        "P02-00041",
+        "P02-00042",
+        "P02-00043",
+        "P02-00044",
+        "P02-00045",
+        "P02-00046",
+        "P02-00047",
+        "P02-00048",
+        "P02-00049",
+        "P02-00050",
+        "P02-00051",
+        "P02-00052",
+        "P02-00053",
+        "P02-00054",
+        "P02-00055",
+        "P02-00056",
+        "P02-00057",
+        "P02-00058",
+        "P02-00059",
+        "P02-00060",
+        "P02-00061",
+        "P02-00062",
+        "P02-00063",
+        "P02-00064",
+        "P02-00065",
+        "P02-00066",
+        "P02-00067",
+        "P02-00068",
+        "P02-00069",
+        "P02-00070"
+      ]
+    },
+    {
+      "source_id": "bm-openai",
+      "current_production_source": {
+        "id": "bm-openai",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/OpenAI/OpenAI.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-claude",
+      "current_production_source": {
+        "id": "bm-claude",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Claude/Claude.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-gemini",
+      "current_production_source": {
+        "id": "bm-gemini",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Gemini/Gemini.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-whatsapp",
+      "current_production_source": {
+        "id": "bm-whatsapp",
+        "group": "Whatsapp",
+        "policy": "Whatsapp",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Whatsapp/Whatsapp.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "Whatsapp",
+      "group_target": "Whatsapp",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-facebook",
+      "current_production_source": {
+        "id": "bm-facebook",
+        "group": "Facebook",
+        "policy": "Facebook",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Facebook/Facebook.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "Facebook",
+      "group_target": "Facebook",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00012"
+      ]
+    },
+    {
+      "source_id": "bm-dazn",
+      "current_production_source": {
+        "id": "bm-dazn",
+        "group": "Dazn",
+        "policy": "Dazn",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/DAZN/DAZN.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "Dazn",
+      "group_target": "Dazn",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-hbo",
+      "current_production_source": {
+        "id": "bm-hbo",
+        "group": "HBO",
+        "policy": "HBO",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/HBO/HBO.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "HBO",
+      "group_target": "HBO",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-bahamut",
+      "current_production_source": {
+        "id": "bm-bahamut",
+        "group": "動畫瘋",
+        "policy": "動畫瘋",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Bahamut/Bahamut.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "動畫瘋",
+      "group_target": "動畫瘋",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-microsoft",
+      "current_production_source": {
+        "id": "bm-microsoft",
+        "group": "Microsoft",
+        "policy": "Microsoft",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Microsoft/Microsoft.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "Microsoft",
+      "group_target": "Microsoft",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-amazonprimevideo",
+      "current_production_source": {
+        "id": "bm-amazonprimevideo",
+        "group": "PrimeVideo",
+        "policy": "PrimeVideo",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AmazonPrimeVideo/AmazonPrimeVideo.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "extension"
+      },
+      "design_decision": "DEFER",
+      "original_group": "PrimeVideo",
+      "group_target": "PrimeVideo",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-ai",
+      "current_production_source": {
+        "id": "local-ai",
+        "group": "AI",
+        "policy": "AI",
+        "path": "rules/custom/AI.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-whatsapp",
+      "current_production_source": {
+        "id": "local-whatsapp",
+        "group": "Whatsapp",
+        "policy": "Whatsapp",
+        "path": "rules/custom/Whatsapp.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "DEFER",
+      "original_group": "Whatsapp",
+      "group_target": "Whatsapp",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-facebook",
+      "current_production_source": {
+        "id": "local-facebook",
+        "group": "Facebook",
+        "policy": "Facebook",
+        "path": "rules/custom/Facebook.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "Facebook",
+      "group_target": "Facebook",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00012"
+      ]
+    },
+    {
+      "source_id": "local-dazn",
+      "current_production_source": {
+        "id": "local-dazn",
+        "group": "Dazn",
+        "policy": "Dazn",
+        "path": "rules/custom/Dazn.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "Dazn",
+      "group_target": "Dazn",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-hbo",
+      "current_production_source": {
+        "id": "local-hbo",
+        "group": "HBO",
+        "policy": "HBO",
+        "path": "rules/custom/HBO.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "HBO",
+      "group_target": "HBO",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-animecrazy",
+      "current_production_source": {
+        "id": "local-animecrazy",
+        "group": "動畫瘋",
+        "policy": "動畫瘋",
+        "path": "rules/custom/AnimeCrazy.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "動畫瘋",
+      "group_target": "動畫瘋",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-microsoft",
+      "current_production_source": {
+        "id": "local-microsoft",
+        "group": "Microsoft",
+        "policy": "Microsoft",
+        "path": "rules/custom/Microsoft.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "Microsoft",
+      "group_target": "Microsoft",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-chinadirect",
+      "current_production_source": {
+        "id": "local-chinadirect",
+        "group": "ChinaDirect",
+        "policy": "DIRECT",
+        "path": "rules/custom/ChinaDirect.list",
+        "format": "loon",
+        "enabled": true,
+        "min_rules": 1,
+        "role": "local"
+      },
+      "design_decision": "DEFER",
+      "original_group": "ChinaDirect",
+      "group_target": "ChinaDirect",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00004",
+        "P02-00005",
+        "P02-00013",
+        "P02-00014",
+        "P02-00015",
+        "P02-00016",
+        "P02-00017",
+        "P02-00018",
+        "P02-00019",
+        "P02-00020",
+        "P02-00021",
+        "P02-00022",
+        "P02-00023",
+        "P02-00024",
+        "P02-00025",
+        "P02-00026",
+        "P02-00027",
+        "P02-00028",
+        "P02-00029",
+        "P02-00030",
+        "P02-00031",
+        "P02-00032",
+        "P02-00033",
+        "P02-00034",
+        "P02-00035",
+        "P02-00036",
+        "P02-00037",
+        "P02-00038",
+        "P02-00039",
+        "P02-00040",
+        "P02-00041",
+        "P02-00042",
+        "P02-00043",
+        "P02-00044",
+        "P02-00045",
+        "P02-00046",
+        "P02-00047",
+        "P02-00048",
+        "P02-00049",
+        "P02-00050",
+        "P02-00051",
+        "P02-00052",
+        "P02-00053",
+        "P02-00054",
+        "P02-00055",
+        "P02-00056",
+        "P02-00057",
+        "P02-00058",
+        "P02-00059",
+        "P02-00060",
+        "P02-00061",
+        "P02-00062",
+        "P02-00063",
+        "P02-00064",
+        "P02-00065",
+        "P02-00066",
+        "P02-00067",
+        "P02-00068",
+        "P02-00069",
+        "P02-00070"
+      ]
+    },
+    {
+      "source_id": "v2-openai",
+      "current_production_source": {
+        "id": "v2-openai",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/openai",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-anthropic",
+      "current_production_source": {
+        "id": "v2-anthropic",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/anthropic",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-google-deepmind",
+      "current_production_source": {
+        "id": "v2-google-deepmind",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/google-deepmind",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-github-copilot",
+      "current_production_source": {
+        "id": "v2-github-copilot",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/github-copilot",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-perplexity",
+      "current_production_source": {
+        "id": "v2-perplexity",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/perplexity",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-cursor",
+      "current_production_source": {
+        "id": "v2-cursor",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/cursor",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-xai",
+      "current_production_source": {
+        "id": "v2-xai",
+        "group": "AI",
+        "policy": "AI",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/xai",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AI",
+      "group_target": "AI",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-netflix",
+      "current_production_source": {
+        "id": "v2-netflix",
+        "group": "Netflix",
+        "policy": "Netflix",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/netflix",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "Netflix",
+      "group_target": "Netflix",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-spotify",
+      "current_production_source": {
+        "id": "v2-spotify",
+        "group": "Spotify",
+        "policy": "Spotify",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/spotify",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Spotify",
+      "group_target": "Spotify",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-youtube",
+      "current_production_source": {
+        "id": "v2-youtube",
+        "group": "YouTube",
+        "policy": "YouTube",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/youtube",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "YouTube",
+      "group_target": "YouTube",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-whatsapp",
+      "current_production_source": {
+        "id": "v2-whatsapp",
+        "group": "Whatsapp",
+        "policy": "Whatsapp",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/whatsapp",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Whatsapp",
+      "group_target": "Whatsapp",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-telegram",
+      "current_production_source": {
+        "id": "v2-telegram",
+        "group": "Telegram",
+        "policy": "Telegram",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/telegram",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Telegram",
+      "group_target": "Telegram",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00007",
+        "P02-00008",
+        "P02-00009",
+        "P02-00010",
+        "P02-00011"
+      ]
+    },
+    {
+      "source_id": "v2-facebook",
+      "current_production_source": {
+        "id": "v2-facebook",
+        "group": "Facebook",
+        "policy": "Facebook",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/facebook",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Facebook",
+      "group_target": "Facebook",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00012"
+      ]
+    },
+    {
+      "source_id": "v2-tiktok",
+      "current_production_source": {
+        "id": "v2-tiktok",
+        "group": "TikTok",
+        "policy": "TikTok",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/tiktok",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "TikTok",
+      "group_target": "TikTok",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-bilibili",
+      "current_production_source": {
+        "id": "v2-bilibili",
+        "group": "Bilibili",
+        "policy": "Bilibili",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bilibili",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads",
+          "!cn"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Bilibili",
+      "group_target": "Bilibili",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-bilibili-cdn",
+      "current_production_source": {
+        "id": "v2-bilibili-cdn",
+        "group": "Bilibili",
+        "policy": "Bilibili",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bilibili-cdn",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads",
+          "!cn"
+        ]
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "Bilibili",
+      "group_target": "Bilibili",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-steam",
+      "current_production_source": {
+        "id": "v2-steam",
+        "group": "Steam",
+        "policy": "Steam",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/steam",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Steam",
+      "group_target": "Steam",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-paypal",
+      "current_production_source": {
+        "id": "v2-paypal",
+        "group": "Paypal",
+        "policy": "Paypal",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/paypal",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Paypal",
+      "group_target": "Paypal",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-twitch",
+      "current_production_source": {
+        "id": "v2-twitch",
+        "group": "Twitch",
+        "policy": "Twitch",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/twitch",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Twitch",
+      "group_target": "Twitch",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-discord",
+      "current_production_source": {
+        "id": "v2-discord",
+        "group": "Discord",
+        "policy": "Discord",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/discord",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Discord",
+      "group_target": "Discord",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-line",
+      "current_production_source": {
+        "id": "v2-line",
+        "group": "Line",
+        "policy": "Line",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/line",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Line",
+      "group_target": "Line",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-reddit",
+      "current_production_source": {
+        "id": "v2-reddit",
+        "group": "Reddit",
+        "policy": "Reddit",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/reddit",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Reddit",
+      "group_target": "Reddit",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-instagram",
+      "current_production_source": {
+        "id": "v2-instagram",
+        "group": "Instagram",
+        "policy": "Instagram",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/instagram",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Instagram",
+      "group_target": "Instagram",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-twitter",
+      "current_production_source": {
+        "id": "v2-twitter",
+        "group": "Twitter",
+        "policy": "Twitter",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/twitter",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Twitter",
+      "group_target": "Twitter",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00002"
+      ]
+    },
+    {
+      "source_id": "v2-hbo",
+      "current_production_source": {
+        "id": "v2-hbo",
+        "group": "HBO",
+        "policy": "HBO",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/hbo",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "HBO",
+      "group_target": "HBO",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-dazn",
+      "current_production_source": {
+        "id": "v2-dazn",
+        "group": "Dazn",
+        "policy": "Dazn",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/dazn",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Dazn",
+      "group_target": "Dazn",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-apple-update",
+      "current_production_source": {
+        "id": "v2-apple-update",
+        "group": "AppleOTA",
+        "policy": "DIRECT",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/apple-update",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads",
+          "!cn"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "AppleOTA",
+      "group_target": "AppleOTA",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "felix-apple-china",
+      "current_production_source": {
+        "id": "felix-apple-china",
+        "group": "Apple",
+        "policy": "Apple",
+        "url": "https://raw.githubusercontent.com/felixonmars/dnsmasq-china-list/master/apple.china.conf",
+        "format": "dnsmasq",
+        "role": "dnsmasq",
+        "enabled": true,
+        "min_rules": 15
+      },
+      "design_decision": "DEFER",
+      "original_group": "Apple",
+      "group_target": "Apple",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-hellobike",
+      "current_production_source": {
+        "id": "local-hellobike",
+        "group": "DomesticCore",
+        "policy": "DIRECT",
+        "path": "rules/custom/HelloBike.list",
+        "format": "loon",
+        "role": "local",
+        "enabled": true,
+        "min_rules": 3,
+        "reason": "HelloBike domains belong to mainland DIRECT policy; no app-specific strategy group."
+      },
+      "design_decision": "DEFER",
+      "original_group": "DomesticCore",
+      "group_target": "DomesticCore",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "local-domestic-core",
+      "current_production_source": {
+        "id": "local-domestic-core",
+        "group": "DomesticCore",
+        "policy": "DIRECT",
+        "path": "rules/custom/DomesticCore.list",
+        "format": "loon",
+        "role": "local",
+        "enabled": true,
+        "min_rules": 4
+      },
+      "design_decision": "DEFER",
+      "original_group": "DomesticCore",
+      "group_target": "DomesticCore",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-privacy",
+      "current_production_source": {
+        "id": "bm-privacy",
+        "group": "AdBlock",
+        "policy": "AdBlock",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Privacy/Privacy.list",
+        "format": "loon",
+        "role": "privacy",
+        "enabled": true,
+        "min_rules": 10
+      },
+      "design_decision": "DEFER",
+      "original_group": "AdBlock",
+      "group_target": "AdBlock",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-hijacking",
+      "current_production_source": {
+        "id": "bm-hijacking",
+        "group": "AdBlock",
+        "policy": "AdBlock",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Hijacking/Hijacking.list",
+        "format": "loon",
+        "role": "privacy",
+        "enabled": true,
+        "min_rules": 50
+      },
+      "design_decision": "DEFER",
+      "original_group": "AdBlock",
+      "group_target": "AdBlock",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-primevideo",
+      "current_production_source": {
+        "id": "v2-primevideo",
+        "group": "PrimeVideo",
+        "policy": "PrimeVideo",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/primevideo",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "PrimeVideo",
+      "group_target": "PrimeVideo",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-abema",
+      "current_production_source": {
+        "id": "v2-abema",
+        "group": "Abema",
+        "policy": "Abema",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/abema",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Abema",
+      "group_target": "Abema",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-bbc",
+      "current_production_source": {
+        "id": "v2-bbc",
+        "group": "BBC",
+        "policy": "BBC",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bbc",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "BBC",
+      "group_target": "BBC",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-linkedin",
+      "current_production_source": {
+        "id": "v2-linkedin",
+        "group": "Linkedin",
+        "policy": "Linkedin",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/linkedin",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "Linkedin",
+      "group_target": "Linkedin",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-threads",
+      "current_production_source": {
+        "id": "v2-threads",
+        "group": "Facebook",
+        "policy": "Facebook",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/threads",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Facebook",
+      "group_target": "Facebook",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": [
+        "P02-00012"
+      ]
+    },
+    {
+      "source_id": "v2-disney",
+      "current_production_source": {
+        "id": "v2-disney",
+        "group": "Disney",
+        "policy": "Disney",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/disney",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "Disney",
+      "group_target": "Disney",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-bilibili-game",
+      "current_production_source": {
+        "id": "v2-bilibili-game",
+        "group": "Bilibili",
+        "policy": "Bilibili",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bilibili-game",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads",
+          "!cn"
+        ]
+      },
+      "design_decision": "CONSOLIDATE",
+      "original_group": "Bilibili",
+      "group_target": "Bilibili",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "v2-bahamut",
+      "current_production_source": {
+        "id": "v2-bahamut",
+        "group": "動畫瘋",
+        "policy": "動畫瘋",
+        "url": "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/bahamut",
+        "format": "v2fly",
+        "role": "v2fly",
+        "enabled": true,
+        "min_rules": 1,
+        "skip_attrs": [
+          "ads"
+        ]
+      },
+      "design_decision": "DEFER",
+      "original_group": "動畫瘋",
+      "group_target": "動畫瘋",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    },
+    {
+      "source_id": "bm-privacy-domain",
+      "current_production_source": {
+        "id": "bm-privacy-domain",
+        "group": "AdBlock",
+        "policy": "AdBlock",
+        "url": "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Privacy/Privacy_Domain.list",
+        "format": "domainset",
+        "role": "privacy",
+        "enabled": true,
+        "min_rules": 30000
+      },
+      "design_decision": "DEFER",
+      "original_group": "AdBlock",
+      "group_target": "AdBlock",
+      "enabled_in_production": true,
+      "candidate_activation": "PRESERVE_PRODUCTION_UNCHANGED",
+      "legacy_compatibility": "PRESERVE_PENDING_REVIEW",
+      "replacement_policy": "NOT_APPROVED",
+      "regression_cases": [
+        "source_provenance_required",
+        "unchanged_published_sha256",
+        "policy_diff_approval"
+      ],
+      "linked_risk_ids": []
+    }
+  ]
+}

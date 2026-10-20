@@ -1,0 +1,936 @@
+{
+  "evidence": "FROZEN_LOCAL_INPUT_VS_PUBLISHED_MATCH",
+  "exclusive_attribution": "UNKNOWN",
+  "sources": [
+    {
+      "normalized_local_input_count": 22,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "openai.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "chatgpt.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "oaistatic.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "oaiusercontent.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 6
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "anthropic.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 7
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "claude.ai",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 8
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "claude.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 9
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "perplexity.ai",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 10
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "perplexity.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 11
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "cursor.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 12
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "cursor.sh",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 13
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "grok.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 14
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "SAME_GROUP_SUFFIX_COVERAGE",
+          "published_match_in_target_group": false,
+          "published_same_group_suffix_covers_condition": {
+            "group": "AI",
+            "no_resolve": false,
+            "policy": "AI",
+            "rule_type": "DOMAIN-SUFFIX",
+            "rule_value": "gemini.google.com",
+            "source_file": "rules/generated/AI.list",
+            "source_line": 75
+          },
+          "rule_type": "DOMAIN",
+          "rule_value": "gemini.google.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 15
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "SAME_GROUP_SUFFIX_COVERAGE",
+          "published_match_in_target_group": false,
+          "published_same_group_suffix_covers_condition": {
+            "group": "AI",
+            "no_resolve": false,
+            "policy": "AI",
+            "rule_type": "DOMAIN-SUFFIX",
+            "rule_value": "aistudio.google.com",
+            "source_file": "rules/generated/AI.list",
+            "source_line": 42
+          },
+          "rule_type": "DOMAIN",
+          "rule_value": "aistudio.google.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 16
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN",
+          "rule_value": "copilot.microsoft.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 17
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "chat.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 18
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "sora.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 19
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "cursorapi.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 20
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "x.ai",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 21
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "notebooklm.google",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 22
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "ai.google.dev",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 23
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "generativeai.googleapis.com",
+          "source_file": "rules/custom/AI.list",
+          "source_line": 24
+        }
+      ],
+      "published_condition_matches": 20,
+      "same_group_suffix_covered": 2,
+      "source_file": "rules/custom/AI.list",
+      "source_id": "local-ai",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 2
+    },
+    {
+      "normalized_local_input_count": 4,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "whatsapp.com",
+          "source_file": "rules/custom/Whatsapp.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "whatsapp.net",
+          "source_file": "rules/custom/Whatsapp.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "whatsapp.biz",
+          "source_file": "rules/custom/Whatsapp.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "wa.me",
+          "source_file": "rules/custom/Whatsapp.list",
+          "source_line": 6
+        }
+      ],
+      "published_condition_matches": 4,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/Whatsapp.list",
+      "source_id": "local-whatsapp",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    },
+    {
+      "normalized_local_input_count": 6,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "facebook.com",
+          "source_file": "rules/custom/Facebook.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "facebook.net",
+          "source_file": "rules/custom/Facebook.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "fb.com",
+          "source_file": "rules/custom/Facebook.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "fb.me",
+          "source_file": "rules/custom/Facebook.list",
+          "source_line": 6
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "messenger.com",
+          "source_file": "rules/custom/Facebook.list",
+          "source_line": 7
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "m.me",
+          "source_file": "rules/custom/Facebook.list",
+          "source_line": 8
+        }
+      ],
+      "published_condition_matches": 6,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/Facebook.list",
+      "source_id": "local-facebook",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    },
+    {
+      "normalized_local_input_count": 5,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "dazn.com",
+          "source_file": "rules/custom/Dazn.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "dazn-api.com",
+          "source_file": "rules/custom/Dazn.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "dazndn.com",
+          "source_file": "rules/custom/Dazn.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "indazn.com",
+          "source_file": "rules/custom/Dazn.list",
+          "source_line": 6
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "indaznlab.com",
+          "source_file": "rules/custom/Dazn.list",
+          "source_line": 7
+        }
+      ],
+      "published_condition_matches": 5,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/Dazn.list",
+      "source_id": "local-dazn",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    },
+    {
+      "normalized_local_input_count": 6,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "hbo.com",
+          "source_file": "rules/custom/HBO.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "hbomax.com",
+          "source_file": "rules/custom/HBO.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "hbomaxcdn.com",
+          "source_file": "rules/custom/HBO.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "hbogo.com",
+          "source_file": "rules/custom/HBO.list",
+          "source_line": 6
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "hboasia.com",
+          "source_file": "rules/custom/HBO.list",
+          "source_line": 7
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "max.com",
+          "source_file": "rules/custom/HBO.list",
+          "source_line": 8
+        }
+      ],
+      "published_condition_matches": 6,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/HBO.list",
+      "source_id": "local-hbo",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    },
+    {
+      "normalized_local_input_count": 2,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "gamer.com.tw",
+          "source_file": "rules/custom/AnimeCrazy.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "bahamut.com.tw",
+          "source_file": "rules/custom/AnimeCrazy.list",
+          "source_line": 4
+        }
+      ],
+      "published_condition_matches": 2,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/AnimeCrazy.list",
+      "source_id": "local-animecrazy",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    },
+    {
+      "normalized_local_input_count": 13,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "microsoft.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "microsoftonline.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "microsoft365.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "office.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 6
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "office365.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 7
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "office.net",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 8
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "outlook.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 9
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "onedrive.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 10
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "1drv.ms",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 11
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "live.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 12
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "windows.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 13
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "windowsupdate.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 14
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "xboxlive.com",
+          "source_file": "rules/custom/Microsoft.list",
+          "source_line": 15
+        }
+      ],
+      "published_condition_matches": 13,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/Microsoft.list",
+      "source_id": "local-microsoft",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    },
+    {
+      "normalized_local_input_count": 5,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "ccb.com",
+          "source_file": "rules/custom/ChinaDirect.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "abchina.com",
+          "source_file": "rules/custom/ChinaDirect.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "SAME_GROUP_SUFFIX_COVERAGE",
+          "published_match_in_target_group": false,
+          "published_same_group_suffix_covers_condition": {
+            "group": "ChinaDirect",
+            "no_resolve": false,
+            "policy": "DIRECT",
+            "rule_type": "DOMAIN-SUFFIX",
+            "rule_value": "cn",
+            "source_file": "rules/generated/ChinaDirect.list",
+            "source_line": 22952
+          },
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "abchina.com.cn",
+          "source_file": "rules/custom/ChinaDirect.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "SAME_GROUP_SUFFIX_COVERAGE",
+          "published_match_in_target_group": false,
+          "published_same_group_suffix_covers_condition": {
+            "group": "ChinaDirect",
+            "no_resolve": false,
+            "policy": "DIRECT",
+            "rule_type": "DOMAIN-SUFFIX",
+            "rule_value": "cn",
+            "source_file": "rules/generated/ChinaDirect.list",
+            "source_line": 22952
+          },
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "t3go.cn",
+          "source_file": "rules/custom/ChinaDirect.list",
+          "source_line": 6
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "SAME_GROUP_SUFFIX_COVERAGE",
+          "published_match_in_target_group": false,
+          "published_same_group_suffix_covers_condition": {
+            "group": "ChinaDirect",
+            "no_resolve": false,
+            "policy": "DIRECT",
+            "rule_type": "DOMAIN-SUFFIX",
+            "rule_value": "cn",
+            "source_file": "rules/generated/ChinaDirect.list",
+            "source_line": 22952
+          },
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "wo.cn",
+          "source_file": "rules/custom/ChinaDirect.list",
+          "source_line": 7
+        }
+      ],
+      "published_condition_matches": 2,
+      "same_group_suffix_covered": 3,
+      "source_file": "rules/custom/ChinaDirect.list",
+      "source_id": "local-chinadirect",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 3
+    },
+    {
+      "normalized_local_input_count": 3,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "hello-inc.com",
+          "source_file": "rules/custom/HelloBike.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "hellobike.com",
+          "source_file": "rules/custom/HelloBike.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "helloglobal.com",
+          "source_file": "rules/custom/HelloBike.list",
+          "source_line": 6
+        }
+      ],
+      "published_condition_matches": 3,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/HelloBike.list",
+      "source_id": "local-hellobike",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    },
+    {
+      "normalized_local_input_count": 4,
+      "note": "Cannot prove sole source ownership without immutable remote source contents",
+      "per_rule": [
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "amap.com",
+          "source_file": "rules/custom/DomesticCore.list",
+          "source_line": 3
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "autonavi.com",
+          "source_file": "rules/custom/DomesticCore.list",
+          "source_line": 4
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "alipay.com",
+          "source_file": "rules/custom/DomesticCore.list",
+          "source_line": 5
+        },
+        {
+          "no_resolve": false,
+          "provenance": "LOCAL_INPUT_AT_FROZEN_COMMIT_NONEXCLUSIVE_MATCH",
+          "publication_match_status": "EXACT_MATCH",
+          "published_match_in_target_group": true,
+          "published_same_group_suffix_covers_condition": null,
+          "rule_type": "DOMAIN-SUFFIX",
+          "rule_value": "alipayobjects.com",
+          "source_file": "rules/custom/DomesticCore.list",
+          "source_line": 6
+        }
+      ],
+      "published_condition_matches": 4,
+      "same_group_suffix_covered": 0,
+      "source_file": "rules/custom/DomesticCore.list",
+      "source_id": "local-domestic-core",
+      "unexplained_conditions": 0,
+      "unmatched_conditions": 0
+    }
+  ]
+}

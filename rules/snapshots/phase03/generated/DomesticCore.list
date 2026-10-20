@@ -1,0 +1,10 @@
+# Loon staged composite rules: DomesticCore
+# Sources: local-hellobike, local-domestic-core
+# Review rules/README.md before enabling; upstream licensing applies.
+DOMAIN-SUFFIX,alipay.com
+DOMAIN-SUFFIX,alipayobjects.com
+DOMAIN-SUFFIX,amap.com
+DOMAIN-SUFFIX,autonavi.com
+DOMAIN-SUFFIX,hello-inc.com
+DOMAIN-SUFFIX,hellobike.com
+DOMAIN-SUFFIX,helloglobal.com

@@ -1,0 +1,66 @@
+name: Phase 05 vNext source integrity and safe offline QA
+on:
+  push:
+    branches: [refactor/loonkit-vnext]
+    paths:
+      - 'scripts/vnext_source_lock.py'
+      - 'scripts/vnext_conflict_resolver.py'
+      - 'scripts/validate_device_results.py'
+      - 'scripts/vnext_rule_engine.py'
+      - 'scripts/vnext_raw_trace.py'
+      - 'scripts/vnext_phase05_report.py'
+      - 'tests/test_phase05_validation.py'
+      - 'validation/phase-05/**'
+      - 'refactor/vnext/sources.lock.json'
+      - 'refactor/vnext/reports/conflict_dispositions.part*.jsonl'
+      - 'refactor/vnext/reports/conflict_summary.phase05.json'
+      - 'refactor/vnext/reports/source_integrity.json'
+      - 'refactor/vnext/reports/source_provenance.jsonl'
+      - 'refactor/vnext/reports/routing_regression.json'
+      - 'refactor/vnext/reports/phase05_diff.json'
+      - 'refactor/vnext/business_regression_cases.json'
+      - 'refactor/vnext/business_regression_cases.phase04.snapshot.json'
+      - 'refactor/vnext/engine_manifest.json'
+      - 'refactor/vnext/LoonKit.vNext.Candidate.lcf'
+      - '.github/workflows/phase-05-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase05-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-offline:
+    if: github.ref == 'refs/heads/refactor/loonkit-vnext'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fail closed on missing or changed immutable source lock
+        run: python3 scripts/vnext_source_lock.py --check
+      - name: Independent phase 05 tests
+        run: python3 -m unittest discover -s tests -p test_phase05_validation.py -v
+      - name: Verify complete 7350-row committed conflict disposition shards
+        run: python3 scripts/vnext_conflict_resolver.py --check
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase05-classified-conflicts
+          path: |
+            refactor/vnext/reports/conflict_dispositions.part*.jsonl
+            refactor/vnext/reports/conflict_summary.phase05.json
+          if-no-files-found: error
+          retention-days: 7
+      - name: Verify committed source provenance and stage05 regression reports
+        run: python3 scripts/vnext_phase05_report.py --check
+      - name: Phase 04 candidate deterministic check
+        run: python3 scripts/vnext_rule_engine.py --check
+      - name: Verify repository was not rewritten
+        run: git diff --exit-code

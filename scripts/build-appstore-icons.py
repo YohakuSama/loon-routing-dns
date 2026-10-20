@@ -128,15 +128,18 @@ def check_config():
     for group, link in entries:
         filename=("AnimeCrazy" if group.strip()=="動畫瘋" else group.strip())+".png"
         expected_version="v20261018r3" if filename=="HBO.png" else "v20261018r2"
-        expected_icon="https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/"+expected_version+"/"+filename
+        expected_icon="https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/"+expected_version+"/"+filename
         if link.rstrip(",")!=expected_icon:
             raise RuntimeError(f"unexpected strategy icon link: {group} {link}")
     plugin=(ROOT/"plugins/Network_Diagnostics.plugin").read_text()
     pinned=(ROOT/"plugins/v20261018r11/Network_Diagnostics.plugin").read_text()
     if pinned!=plugin:
         raise RuntimeError("Published plugin differs from standalone entry")
-    if "#!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/main/icons/v20261018r2/Console.png" not in plugin:
-        raise RuntimeError("Console plugin icon link changed unexpectedly")
+    release_plugin=(ROOT/"release/phase-07/assets/Network_Diagnostics.plugin").read_text()
+    if "#!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/icons/v20261018r2/Console.png" not in release_plugin:
+        raise RuntimeError("RC2 console icon is not commit-pinned")
+    if "/main/scripts/" in release_plugin or "/main/icons/" in release_plugin:
+        raise RuntimeError("RC2 plugin contains dynamic script or icon dependencies")
 
 def main():
     parser=argparse.ArgumentParser()

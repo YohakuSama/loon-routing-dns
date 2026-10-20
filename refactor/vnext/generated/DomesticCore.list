@@ -1,0 +1,10 @@
+# LoonKit vNext candidate only - NOT a production subscription
+# frozen input: rules/generated/DomesticCore.list
+# reconstructed snapshot provenance: reports/provenance.tsv
+DOMAIN-SUFFIX,alipay.com
+DOMAIN-SUFFIX,alipayobjects.com
+DOMAIN-SUFFIX,amap.com
+DOMAIN-SUFFIX,autonavi.com
+DOMAIN-SUFFIX,hello-inc.com
+DOMAIN-SUFFIX,hellobike.com
+DOMAIN-SUFFIX,helloglobal.com

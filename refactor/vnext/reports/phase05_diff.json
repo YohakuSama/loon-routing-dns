@@ -1,0 +1,185 @@
+{
+  "adblock_stage04": 76895,
+  "adblock_stage05": 76895,
+  "candidate_only": true,
+  "candidate_profile_sha256": "5cea150eae653b5f8ddc540c562b6a32e81623f3681c9378ad355f4245540411",
+  "china_direct_stage04": 114837,
+  "china_direct_stage05": 114837,
+  "comparison": "STAGE04_OFFLINE_CANDIDATE_TO_STAGE05_OFFLINE_CANDIDATE",
+  "conflict_classification_counts": {
+    "ADBLOCK_OVERLAP": 6821,
+    "DIRECT_OVERLAP": 447,
+    "SAME_EFFECT_REDUNDANCY": 19,
+    "SHARED_CDN": 1,
+    "SHARED_INFRASTRUCTURE": 2,
+    "UNVERIFIED_RUNTIME_PRECEDENCE": 60
+  },
+  "cross_policy_parent_child_total": 7350,
+  "device_validation": "NOT_EXECUTED",
+  "input_kinds": {
+    "historical_catalog_ids": 87,
+    "original_upstream_lineage": "NOT_RECOVERABLE_FROM_MERGED_SNAPSHOT",
+    "verified_frozen_inputs": 44,
+    "verified_raw_inactive_inputs": 0
+  },
+  "net_new_inline_predicate_entries": 40,
+  "production_readiness": "NOT_READY",
+  "regression_case_count": 41,
+  "remote_groups": {
+    "AI": {
+      "rule_count": 111,
+      "sha256": "dd0175d4f1942f2100a662e99276a231ec33e87a45286bcc3a837c41ce38141a"
+    },
+    "AdBlock": {
+      "rule_count": 76895,
+      "sha256": "c3989f42cc76bf6b5e29dbaf5b53cd1a610dd873e47f69c2d7d9c7fb5109ad16"
+    },
+    "Apple": {
+      "rule_count": 1600,
+      "sha256": "cf655539ee6a5a48c4a999000505ecf12336fbcad1f0688255d1fe665d85a8b4"
+    },
+    "AppleOTA": {
+      "rule_count": 82,
+      "sha256": "cf8957d42168ae3331a99ff3d608f27dfef0563d0d983aed0feb894a175fa48c"
+    },
+    "Bilibili": {
+      "rule_count": 132,
+      "sha256": "8ab1dbad3da66b2a51bc3629c5fc5b13af7ce3dafb0e62fc84c7879bf3440bd8"
+    },
+    "ChinaDirect": {
+      "rule_count": 114837,
+      "sha256": "d92c4c4b30b3d27aad2941358a26991824e1a56be268bdb1bbd1f65f2e103f90"
+    },
+    "Dazn": {
+      "rule_count": 20,
+      "sha256": "1552a7057a54196061d26c3f57897c22d4645fb452a4ef4ab1c0bad55c35f4b2"
+    },
+    "Discord": {
+      "rule_count": 29,
+      "sha256": "1f33162c2b998f417fbba947e6f64878cbc0a8e1f179e0e84779d471a4a40e37"
+    },
+    "Disney": {
+      "rule_count": 186,
+      "sha256": "3fc62bd1f2d845809c1a26e7cfc6229608775e40c6934a1e496a719eecb73864"
+    },
+    "DomesticCore": {
+      "rule_count": 7,
+      "sha256": "2b706f4dc440bb88105bd275ec1e9339d7a39b865839a96b080feba61e8e2ae0"
+    },
+    "Facebook": {
+      "rule_count": 489,
+      "sha256": "f7dcd98f6bd87772e61bb736b761a5f26d5a2ea431ef5915f4521fb2f551e24d"
+    },
+    "Google": {
+      "rule_count": 684,
+      "sha256": "d3ac51a3db77df0b6f4cbd64100b7279d813745b347770f4c2f95dbfb0b6ba81"
+    },
+    "HBO": {
+      "rule_count": 90,
+      "sha256": "47897db3c9bfe3fa3c2d29fbcd61213b65ece73dc27f93c351024e644cfa45a3"
+    },
+    "Instagram": {
+      "rule_count": 73,
+      "sha256": "b2b4013ba68a35b4a046db5456b684b071a5ad11367236ba62716a0ab9556342"
+    },
+    "Microsoft": {
+      "rule_count": 665,
+      "sha256": "9c482847066292062866484dde877c4a2b7e131b30c3d46d3d2a6017720a67eb"
+    },
+    "Netflix": {
+      "rule_count": 1156,
+      "sha256": "1304f2f31d5089bc0e40dd82d3de59952614d0c7829d8158a5f425706757e477"
+    },
+    "Paypal": {
+      "rule_count": 247,
+      "sha256": "16a2cd853182bb7e7cd8a5c58a901390f533c51a3c639b7a7311f12f8087fa66"
+    },
+    "PrimeVideo": {
+      "rule_count": 33,
+      "sha256": "9c48cd7370192b5bbbc23b90ebe429354f6c2f3fd9e15b18a5ff0b1ab9b99714"
+    },
+    "Steam": {
+      "rule_count": 61,
+      "sha256": "ed4a80acfadef611511f8d35cadd4be1dec38f03034b9041147ea5b82d1fcfdc"
+    },
+    "SteamCN": {
+      "rule_count": 17,
+      "sha256": "16cf34e201427578a97cb144bf947a219228f2f8a94ad3170c89c7be0ad07e92"
+    },
+    "Telegram": {
+      "rule_count": 43,
+      "sha256": "f5b88823378aeba3623406a0e46c4c68c2b0bd544f574b8c4c6e89143bbd7e97"
+    },
+    "TikTok": {
+      "rule_count": 57,
+      "sha256": "5342461ef4f7040b8a1bf323ab522012c80f329f633e796ff869a75732e3970f"
+    },
+    "Twitter": {
+      "rule_count": 31,
+      "sha256": "519a95ff66fa131ebf7cef66eca5a65009d5aa741e97176a576e42ea71cb18a2"
+    },
+    "Whatsapp": {
+      "rule_count": 23,
+      "sha256": "c3b700b3c075caecedbe63bf31da5797d6d6b63683fb7c98698e79cca29b06dc"
+    },
+    "YouTube": {
+      "rule_count": 190,
+      "sha256": "4443fd6a2ff8fe8f7974b7871d95552a640bb8ce3ae54b74b22b25e3fa89e2b7"
+    },
+    "動畫瘋": {
+      "rule_count": 7,
+      "sha256": "fae58081052728ae9b1ab19bf77de04788c9c2eac2a0a837a1c1b2a91a46e53b"
+    }
+  },
+  "schema_version": 1,
+  "stage04_regression_case_count": 34,
+  "stage04_remote_predicate_group_count": 197765,
+  "stage05_new_local_adblock_precedence_guards": [
+    "DOMAIN,buttons.reddit.com,AdBlock",
+    "DOMAIN,platform.linkedin.com,AdBlock",
+    "DOMAIN-SUFFIX,a1.api.bbc.co.uk,AdBlock",
+    "DOMAIN-SUFFIX,a1.api.bbc.com,AdBlock",
+    "DOMAIN-SUFFIX,adeventtracker.spotify.com,AdBlock",
+    "DOMAIN-SUFFIX,ads.linkedin.com,AdBlock",
+    "DOMAIN-SUFFIX,alb.reddit.com,AdBlock",
+    "DOMAIN-SUFFIX,analytics.m7g.twitch.tv,AdBlock",
+    "DOMAIN-SUFFIX,analytics.pointdrive.linkedin.com,AdBlock",
+    "DOMAIN-SUFFIX,analytics.spotify.com,AdBlock",
+    "DOMAIN-SUFFIX,client-event-reporter.twitch.tv,AdBlock",
+    "DOMAIN-SUFFIX,events.reddit.com,AdBlock",
+    "DOMAIN-SUFFIX,fan.twitch.tv,AdBlock",
+    "DOMAIN-SUFFIX,log.spotify.com,AdBlock",
+    "DOMAIN-SUFFIX,pixel-static.spotify.com,AdBlock",
+    "DOMAIN-SUFFIX,pixel.reddit.com,AdBlock",
+    "DOMAIN-SUFFIX,pixel.spotify.com,AdBlock",
+    "DOMAIN-SUFFIX,sa.bbc.co.uk,AdBlock",
+    "DOMAIN-SUFFIX,spade.twitch.tv,AdBlock",
+    "DOMAIN-SUFFIX,ssc.api.bbc.com,AdBlock",
+    "DOMAIN-SUFFIX,stats.bbc.co.uk,AdBlock",
+    "DOMAIN-SUFFIX,torimochi.line-apps.com,AdBlock",
+    "DOMAIN-SUFFIX,trowel.twitch.tv,AdBlock",
+    "DOMAIN-SUFFIX,visualscience.external.bbc.co.uk,AdBlock",
+    "DOMAIN-SUFFIX,w3-reporting.reddit.com,AdBlock",
+    "DOMAIN-SUFFIX,weblb-wg.gslb.spotify.com,AdBlock"
+  ],
+  "stage05_new_local_overseas_routes": [
+    "DOMAIN-SUFFIX,spotify.com,Spotify",
+    "DOMAIN-SUFFIX,scdn.co,Spotify",
+    "DOMAIN-SUFFIX,twitch.tv,Twitch",
+    "DOMAIN-SUFFIX,ttvnw.net,Twitch",
+    "DOMAIN-SUFFIX,abema.tv,Abema",
+    "DOMAIN-SUFFIX,abema.io,Abema",
+    "DOMAIN-SUFFIX,bbc.co.uk,BBC",
+    "DOMAIN-SUFFIX,bbc.com,BBC",
+    "DOMAIN-SUFFIX,line.me,Line",
+    "DOMAIN-SUFFIX,line-apps.com,Line",
+    "DOMAIN-SUFFIX,reddit.com,Reddit",
+    "DOMAIN-SUFFIX,redd.it,Reddit",
+    "DOMAIN-SUFFIX,linkedin.com,Linkedin",
+    "DOMAIN-SUFFIX,licdn.com,Linkedin"
+  ],
+  "stage05_remote_predicate_group_count": 197765,
+  "stage05_static_routing_selector_scenarios": 328,
+  "unverified_overlap_count": 7331,
+  "warning": "Local AdBlock and overseas overrides are static Loon syntax only, not device results."
+}

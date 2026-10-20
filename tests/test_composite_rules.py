@@ -200,7 +200,7 @@ class CompositeRulesTests(unittest.TestCase):
 
     def test_composite_publish_order_matches_active_self_hosted_manifest(self):
         root = Path(__file__).resolve().parents[1]
-        profile = (root / "LoonKit.lcf").read_text(encoding="utf-8")
+        profile = (root / "refactor/vnext/templates/LoonKit.legacy-seed.lcf").read_text(encoding="utf-8")
         manifest = json.loads((root / "rules/active_profile.json").read_text(encoding="utf-8"))
         remote = profile.split("[Remote Rule]", 1)[1].split("[Rule]", 1)[0]
         active = [row.strip() for row in remote.splitlines() if row.strip().startswith("https://")]

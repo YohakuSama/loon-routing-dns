@@ -40,8 +40,8 @@ class DnsPrivacyProfileTests(unittest.TestCase):
         for old, new in zip(OLD_DNS, NEW_DNS):
             original_lines = [new if line == old else line for line in original_lines]
         self.assertEqual(original_lines, privacy_lines)
-        self.assertEqual(sum("/main/rules/" in line for line in privacy_lines),
-                         34)
+        self.assertEqual(sum("/rules/releases/vNext-RC2/" in line for line in privacy_lines),
+                         26)
 
     def test_no_overseas_dns_in_shipped_profiles(self):
         for profile in (BASE, PRIVATE):

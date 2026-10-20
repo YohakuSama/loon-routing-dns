@@ -42,7 +42,11 @@ check("all current scripts remain local versioned assets",()=>{
   assert(fs.existsSync(path.join(root,"scripts/v20261018r11/network-diagnostics.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
-  assert(profile.includes("/main/plugins/v20261018r11/Network_Diagnostics.plugin, enabled=true"));
+  const rc2 = read("release/phase-07/assets/Network_Diagnostics.plugin");
+  assert(profile.includes("/d405e4be28c447b6e57a4790e965c89f342d6dd6/release/phase-07/assets/Network_Diagnostics.plugin, enabled=true"));
+  assert(!rc2.includes("/main/scripts/"));
+  assert(!rc2.includes("/main/icons/"));
+  assert(read("refactor/vnext/templates/LoonKit.legacy-seed.lcf").includes("/main/plugins/v20261018r11/Network_Diagnostics.plugin, enabled=true"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));
   assert(profile.includes("doh-server = https://dns.alidns.com/dns-query"));
   assert(!profile.includes("dns.alidns.com = 223.5.5.5"));

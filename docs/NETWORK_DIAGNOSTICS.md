@@ -1,5 +1,7 @@
 # LoonKit · 网络辅助
 
+> vNext-RC2 采用固定 Git Commit 的插件封装和内部脚本；本页底部 main 链接仍是**历史稳定插件**，不应代替未发布 RC2 的固定资产。RC2 固定插件见 [发布资源](../release/phase-07/assets/Network_Diagnostics.plugin)。
+
 插件包含两个手动工具。使用时不会修改 Loon 的 DNS、代理模式或分流规则。
 
 ## 节点出口信息
@@ -26,7 +28,7 @@
 
 任一已执行的检测失败，总结会标注异常；如果当前版本不支持原生 DNS 查询，则显示「不支持」，不会算作通过。
 
-当前正式配置预期 DNS 为 `https://dns.alidns.com/dns-query`。这几项用于检查网络和**Loon 自身 DNS 解析路径**，但无法证明设备中的所有 App 都没有 DNS 泄漏。完整排查见 [DNS 隐私说明](./DNS_PRIVACY.md)。诊断失败时先查看 Loon 请求及 DNS 日志，再确认所选策略和检测服务是否可用。
+默认主配置预期 DNS 为 `https://dns.alidns.com/dns-query`，PrivacyDNS 入口则维持 `https://doh.pub/dns-query`。阶段07没有改变两份原始 DNS 参数。这几项用于检查网络和**Loon 自身 DNS 解析路径**，但无法证明设备中的所有 App 都没有 DNS 泄漏。完整排查见 [DNS 隐私说明](./DNS_PRIVACY.md)。诊断失败时先查看 Loon 请求及 DNS 日志，再确认所选策略和检测服务是否可用。
 
 ## 网络切换提醒
 

@@ -1,0 +1,1058 @@
+[
+  {
+    "no_resolve": false,
+    "policy": "Proxy",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "raw.githubusercontent.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 123
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "openai.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 124
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "chatgpt.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 125
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "oaistatic.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 126
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "oaiusercontent.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 127
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "anthropic.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 128
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "claude.ai",
+    "source_file": "LoonKit.lcf",
+    "source_line": 129
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "claude.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 130
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "perplexity.ai",
+    "source_file": "LoonKit.lcf",
+    "source_line": 131
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "perplexity.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 132
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "cursor.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 133
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "cursor.sh",
+    "source_file": "LoonKit.lcf",
+    "source_line": 134
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "grok.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 135
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN",
+    "rule_value": "gemini.google.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 136
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN",
+    "rule_value": "aistudio.google.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 137
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN",
+    "rule_value": "copilot.microsoft.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 138
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "chat.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 139
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "sora.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 140
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "cursorapi.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 141
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "x.ai",
+    "source_file": "LoonKit.lcf",
+    "source_line": 142
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "notebooklm.google",
+    "source_file": "LoonKit.lcf",
+    "source_line": 143
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "ai.google.dev",
+    "source_file": "LoonKit.lcf",
+    "source_line": 144
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "generativeai.googleapis.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 145
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "whatsapp.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 146
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "whatsapp.net",
+    "source_file": "LoonKit.lcf",
+    "source_line": 147
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "whatsapp.biz",
+    "source_file": "LoonKit.lcf",
+    "source_line": 148
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "wa.me",
+    "source_file": "LoonKit.lcf",
+    "source_line": 149
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "facebook.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 150
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "facebook.net",
+    "source_file": "LoonKit.lcf",
+    "source_line": 151
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "fb.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 152
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "fb.me",
+    "source_file": "LoonKit.lcf",
+    "source_line": 153
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "messenger.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 154
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "m.me",
+    "source_file": "LoonKit.lcf",
+    "source_line": 155
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "dazn.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 156
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "dazn-api.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 157
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "dazndn.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 158
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "indazn.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 159
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "indaznlab.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 160
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbo.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 161
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbomax.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 162
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbomaxcdn.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 163
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbogo.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 164
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hboasia.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 165
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "max.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 166
+  },
+  {
+    "no_resolve": false,
+    "policy": "動畫瘋",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "gamer.com.tw",
+    "source_file": "LoonKit.lcf",
+    "source_line": 167
+  },
+  {
+    "no_resolve": false,
+    "policy": "動畫瘋",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "bahamut.com.tw",
+    "source_file": "LoonKit.lcf",
+    "source_line": 168
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "microsoft.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 169
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "microsoftonline.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 170
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "microsoft365.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 171
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "office.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 172
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "office365.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 173
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "office.net",
+    "source_file": "LoonKit.lcf",
+    "source_line": 174
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "outlook.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 175
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "onedrive.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 176
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "1drv.ms",
+    "source_file": "LoonKit.lcf",
+    "source_line": 177
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "live.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 178
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "windows.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 179
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "windowsupdate.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 180
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "xboxlive.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 181
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "ccb.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 182
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "abchina.com",
+    "source_file": "LoonKit.lcf",
+    "source_line": 183
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "abchina.com.cn",
+    "source_file": "LoonKit.lcf",
+    "source_line": 184
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "t3go.cn",
+    "source_file": "LoonKit.lcf",
+    "source_line": 185
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "wo.cn",
+    "source_file": "LoonKit.lcf",
+    "source_line": 186
+  },
+  {
+    "no_resolve": true,
+    "policy": "DIRECT",
+    "rule_type": "GEOIP",
+    "rule_value": "CN",
+    "source_file": "LoonKit.lcf",
+    "source_line": 187
+  },
+  {
+    "no_resolve": false,
+    "policy": "Final",
+    "rule_type": "FINAL",
+    "rule_value": "",
+    "source_file": "LoonKit.lcf",
+    "source_line": 188
+  },
+  {
+    "no_resolve": false,
+    "policy": "Proxy",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "raw.githubusercontent.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 127
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "openai.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 128
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "chatgpt.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 129
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "oaistatic.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 130
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "oaiusercontent.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 131
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "anthropic.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 132
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "claude.ai",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 133
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "claude.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 134
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "perplexity.ai",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 135
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "perplexity.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 136
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "cursor.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 137
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "cursor.sh",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 138
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "grok.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 139
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN",
+    "rule_value": "gemini.google.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 140
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN",
+    "rule_value": "aistudio.google.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 141
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN",
+    "rule_value": "copilot.microsoft.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 142
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "chat.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 143
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "sora.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 144
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "cursorapi.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 145
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "x.ai",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 146
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "notebooklm.google",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 147
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "ai.google.dev",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 148
+  },
+  {
+    "no_resolve": false,
+    "policy": "AI",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "generativeai.googleapis.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 149
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "whatsapp.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 150
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "whatsapp.net",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 151
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "whatsapp.biz",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 152
+  },
+  {
+    "no_resolve": false,
+    "policy": "Whatsapp",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "wa.me",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 153
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "facebook.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 154
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "facebook.net",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 155
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "fb.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 156
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "fb.me",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 157
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "messenger.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 158
+  },
+  {
+    "no_resolve": false,
+    "policy": "Facebook",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "m.me",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 159
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "dazn.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 160
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "dazn-api.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 161
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "dazndn.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 162
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "indazn.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 163
+  },
+  {
+    "no_resolve": false,
+    "policy": "Dazn",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "indaznlab.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 164
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbo.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 165
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbomax.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 166
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbomaxcdn.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 167
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hbogo.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 168
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "hboasia.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 169
+  },
+  {
+    "no_resolve": false,
+    "policy": "HBO",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "max.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 170
+  },
+  {
+    "no_resolve": false,
+    "policy": "動畫瘋",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "gamer.com.tw",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 171
+  },
+  {
+    "no_resolve": false,
+    "policy": "動畫瘋",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "bahamut.com.tw",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 172
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "microsoft.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 173
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "microsoftonline.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 174
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "microsoft365.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 175
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "office.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 176
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "office365.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 177
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "office.net",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 178
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "outlook.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 179
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "onedrive.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 180
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "1drv.ms",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 181
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "live.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 182
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "windows.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 183
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "windowsupdate.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 184
+  },
+  {
+    "no_resolve": false,
+    "policy": "Microsoft",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "xboxlive.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 185
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "ccb.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 186
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "abchina.com",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 187
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "abchina.com.cn",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 188
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "t3go.cn",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 189
+  },
+  {
+    "no_resolve": false,
+    "policy": "DIRECT",
+    "rule_type": "DOMAIN-SUFFIX",
+    "rule_value": "wo.cn",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 190
+  },
+  {
+    "no_resolve": true,
+    "policy": "DIRECT",
+    "rule_type": "GEOIP",
+    "rule_value": "CN",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 191
+  },
+  {
+    "no_resolve": false,
+    "policy": "Final",
+    "rule_type": "FINAL",
+    "rule_value": "",
+    "source_file": "LoonKit.PrivacyDNS.lcf",
+    "source_line": 192
+  }
+]
