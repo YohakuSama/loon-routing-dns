@@ -111,7 +111,7 @@ def check(root: Path=ROOT) -> dict:
     if evidence.get("blackmatrix7_readme",{}).get("git_blob_sha1")!="ca61b7558a2d500716265e0c3ae076e77ed82524":
         raise ValueError("separate upstream special notice not preserved")
     clear=evidence.get("clearance",{})
-    if clear.get("status")=="NOT_EXECUTED" and evidence.get("status")=="NOT_CLEARED":
+    if clear.get("status")=="NOT_EXECUTED" and evidence.get("status")=="NOT_INDEPENDENTLY_REVIEWED":
         return {"license_artifacts":"VERIFIED_PRESERVED", "independent_clearance":"NOT_EXECUTED",
                 "redistribution_rights":"NOT_ATTESTED","upstream_families":3,
                 "historical_sources":len(catalog)}
