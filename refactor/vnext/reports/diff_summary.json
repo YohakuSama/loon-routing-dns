@@ -98,6 +98,7 @@
     "Netflix": 1156,
     "Paypal": 248,
     "PrimeVideo": 34,
+    "ProxyProtect": 17,
     "Reddit": 15,
     "Spotify": 33,
     "Steam": 61,
@@ -113,7 +114,10 @@
   "candidate_frozen_snapshot_input_count": 26,
   "candidate_only": true,
   "candidate_rule_count": 197842,
+  "cross_policy_nested_ip_networks": 64,
   "dns_tun_changed": false,
+  "domain_keyword_review_count": 39,
+  "domain_parent_child_ambiguities": 7197,
   "engine_status": "STATIC_CANDIDATE_GENERATED",
   "inactive_groups_fall_through_final": [
     "Spotify",
@@ -132,8 +136,10 @@
     "DIRECT_KEYWORD_UNPROVEN": 9,
     "DIRECT_SINGLE_LABEL_UNPROVEN": 46,
     "DIRECT_WIDE_IP_UNPROVEN": 8061,
+    "INDEPENDENT_PROXYPROTECT_RETIRED": 17,
     "SOURCE_DISABLED": 205
   },
+  "legacy_proxyprotect_rule_count": 17,
   "main_modified": false,
   "new_rules": [
     {
@@ -153,7 +159,7 @@
       "rule": "DOMAIN-SUFFIX,doubleclick.com"
     }
   ],
-  "ownership_changes": 8650,
+  "ownership_changes": 8667,
   "proxyprotect_independent_subscription": false,
   "release": "NOT_READY_FOR_PRODUCTION",
   "remaining_risks": [
@@ -565,8 +571,8 @@
       "rule": "DOMAIN,d1wi563t0137vz.cloudfront.net"
     }
   ],
-  "removed_or_modified_origin_lines": 8650,
-  "removed_predicate_group_count": 8650,
+  "removed_or_modified_origin_lines": 8667,
+  "removed_predicate_group_count": 8667,
   "source_count_comparison_warning": "87 upstream feeds vs active group snapshots are NOT equivalent provenance units",
   "source_status": "26 frozen group snapshots, not 26 independently verifiable upstream feeds",
   "status": "OFFLINE_CANDIDATE_NOT_DEVICE_VERIFIED"

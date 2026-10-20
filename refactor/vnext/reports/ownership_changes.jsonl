@@ -394,6 +394,7 @@
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["BBC"], "rule": "DOMAIN-SUFFIX,bidi.net.uk"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Linkedin"], "rule": "DOMAIN-SUFFIX,bizographics.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,blacktri-a.akamaihd.net"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,browserleaks.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Abema"], "rule": "DOMAIN-SUFFIX,bucketeer.jp"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Spotify"], "rule": "DOMAIN-SUFFIX,byspotify.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ChinaDirect"], "rule": "DOMAIN-SUFFIX,citic"}
@@ -410,6 +411,8 @@
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,d36eyd5j1kt1m6.cloudfront.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,d3v1lb83psg9di.cloudfront.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,d5nxst8fruw4z.cloudfront.net"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,dnscheck.tools"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,dnsleaktest.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Abema"], "rule": "DOMAIN-SUFFIX,dokusho-ojikan.jp"}
 {"candidate_groups": ["AdBlock"], "fallback": "FINAL if absent", "original_groups": ["Google"], "rule": "DOMAIN-SUFFIX,doubleclick.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,ds-aksb-a.akamaihd.net"}
@@ -427,8 +430,16 @@
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,hdsrc-a.akamaihd.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Spotify"], "rule": "DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,hydro-ma-proxy.akamaized.net"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,icanhazip.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ChinaDirect"], "rule": "DOMAIN-SUFFIX,icbc"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,iddu1vvb7sk8-a.akamaihd.net"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,ifconfig.co"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,ifconfig.me"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,ip.sb"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,ipify.org"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,ipinfo.io"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,ipleak.net"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,iplocation.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,jly24aw29n5m-a.akamaihd.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Twitch"], "rule": "DOMAIN-SUFFIX,jtvnw.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Linkedin"], "rule": "DOMAIN-SUFFIX,l-0005.dc-msedge.net"}
@@ -461,6 +472,7 @@
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Twitch"], "rule": "DOMAIN-SUFFIX,live-video.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Linkedin"], "rule": "DOMAIN-SUFFIX,lnkd.in"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ChinaDirect"], "rule": "DOMAIN-SUFFIX,ms"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,myip.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Line"], "rule": "DOMAIN-SUFFIX,naver.jp"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Line"], "rule": "DOMAIN-SUFFIX,nhncorp.jp"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,ninja.akamaized.net"}
@@ -505,7 +517,9 @@
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Spotify"], "rule": "DOMAIN-SUFFIX,spotifyjobs.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Spotify"], "rule": "DOMAIN-SUFFIX,spotifynewsroom.jp"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Spotify"], "rule": "DOMAIN-SUFFIX,spotilocal.com"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,stripe.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,t.paypal.com"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,test-ipv6.com"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ChinaDirect"], "rule": "DOMAIN-SUFFIX,tmall"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,toots-a.akamaihd.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Spotify"], "rule": "DOMAIN-SUFFIX,tospotify.com"}
@@ -519,6 +533,9 @@
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Abema"], "rule": "DOMAIN-SUFFIX,vod-abematv.akamaized.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["AdBlock"], "rule": "DOMAIN-SUFFIX,w4o7aea80ss3-a.akamaihd.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ChinaDirect"], "rule": "DOMAIN-SUFFIX,wang"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,whatismyip.com"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,whatismyipaddress.com"}
+{"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ProxyProtect"], "rule": "DOMAIN-SUFFIX,whoer.net"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["Abema"], "rule": "DOMAIN-SUFFIX,winticket.jp"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ChinaDirect"], "rule": "DOMAIN-SUFFIX,xihuan"}
 {"candidate_groups": [], "fallback": "FINAL if absent", "original_groups": ["ChinaDirect"], "rule": "DOMAIN-SUFFIX,xn--1qqw23a"}
