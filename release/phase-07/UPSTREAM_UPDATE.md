@@ -22,3 +22,15 @@ python3 scripts/phase07_source_update_review.py \
 `scripts/phase07_source_update_review.py` 生成的 JSON 同时包含 `full_change_set.added` 和 `full_change_set.removed` 的**全量规则清单**，不截断；`added_sample` / `removed_sample` 的 30 行仅用于快速浏览。 `change_set_sha256` 是对排序后的完整列表 JSON 采用 UTF-8、无多余空格编码的 SHA256，方便不同审查者对照同一份报告。 `high_risk_matcher_changes` 与 `risk_sample` 会提示 IP、ASN、DOMAIN-KEYWORD 等高风险新增或移除规则，但不会仅凭语法校验认定行为正确。
 
 上游候选应导出到**仓库外的文件路径**（例如 `/tmp/source-review.json`），不可通过 `--report` 覆盖规则、配置、版本锁或发布证据。 `--proposed` 仅用于读取新的候选来源，不能指向正式规则输出目录。所有变更仍由人工审查原始文件、完整 diff、许可与来源归属；`PENDING_REVIEW_NOT_PUBLISHED` 不构成通过。
+
+## 下一候选规则版本化构建（独立只读发布流程）
+
+新增 `scripts/phase07_next_release.py` 用于下一次**明确由维护者决定名称**的候选预构建。工具只使用已锁定的独立来源和当前 vNext 引擎，要求输出目录在仓库外且初始为空；绝不提交、下载、推送、修改 `rules/generated/`、覆盖 `rules/releases/vNext-RC2/` 或直接影响用户。
+
+```bash
+# 以下 RC3 仅为使用示例，不代表已批准 RC3 或正式版本号
+python3 scripts/phase07_next_release.py --version vNext-RC3 --output /tmp/loonkit-new-candidate --build
+python3 scripts/phase07_next_release.py --version vNext-RC3 --output /tmp/loonkit-new-candidate --check
+```
+
+该目录包含 26 份按版本命名的规则、`NEXT_RELEASE_MANIFEST.json`、`NEXT_RELEASE_DIFF.json`；清单列出每个输出的 SHA256、动态规则数、对 RC2 的基准 SHA256、全部增删 matcher 的精确 JSON 差异与摘要哈希。无需重新采用 RC2 的固定 197,765 断言来掩盖新版本的真实增减。只有经过合规审核、GitHub PR、规则差异审核和真机回归，才可把新版本资源固定在不可变 Commit，进一步构建新正式配置。此工具**不做最终公开发布或授权**，仍须由维护者明示决定稳定版本号及新资源引用。

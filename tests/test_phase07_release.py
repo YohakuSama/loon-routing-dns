@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import phase07_release as pr
 import phase07_gate as gate
 import phase07_source_update_review as updates
+import phase07_next_release as next_release
 import phase07_license_audit as license_audit
 import phase07_historical_attestation as historical_attestation
 import vnext_rule_engine as ve
@@ -139,6 +140,31 @@ class ReleaseBuildTests(unittest.TestCase):
         self.assertEqual(result["status"],"BLOCKED_REVIEW")
         self.assertEqual(result["historical_records_checked"],87)
         self.assertEqual(result["line_level_license_attribution"],"NOT_VERIFIED")
+
+    def test_future_release_stages_independently_and_rebuilds_exact_bytes(self):
+        with tempfile.TemporaryDirectory(prefix="loonkit-next-release-") as temp:
+            stage=Path(temp)/"candidate"
+            result=next_release.run("vNext-RC3",stage)
+            self.assertEqual(result["rule_file_count"],26)
+            self.assertFalse(result["formal_user_paths_modified"])
+            manifest=json.loads((stage/"NEXT_RELEASE_MANIFEST.json").read_text())
+            self.assertEqual(manifest["status"],"CANDIDATE_REVIEW_ONLY_NOT_PUBLISHED")
+            self.assertEqual(manifest["runtime_device_test"],"NOT_EXECUTED")
+            self.assertEqual(len(manifest["rules"]),26)
+            self.assertEqual(manifest["remote_matchers"],197765)
+            import hashlib
+            self.assertEqual(
+                hashlib.sha256((stage/"NEXT_RELEASE_DIFF.json").read_bytes()).hexdigest(),
+                manifest["diff_sha256"])
+            self.assertEqual(next_release.run("vNext-RC3",stage,check=True)["rule_file_count"],26)
+            with self.assertRaisesRegex(ValueError,"initially empty"):
+                next_release.run("vNext-RC3",stage,check=False)
+            with self.assertRaisesRegex(ValueError,"staged candidate differs"):
+                (stage/"rules/releases/vNext-RC3/AI.list").write_text("MALFORMED\\n")
+                next_release.run("vNext-RC3",stage,check=True)
+            for forbidden in ("vNext-RC2","../../main","main","v1"):
+                with self.assertRaises(ValueError):
+                    next_release.render(forbidden)
 
     def test_complete_source_diff_is_untruncated_and_flags_risky_matchers(self):
         source="rules/snapshots/phase03/generated/Google.list"
