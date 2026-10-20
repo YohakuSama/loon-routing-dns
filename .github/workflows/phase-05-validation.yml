@@ -14,6 +14,12 @@ on:
       - 'refactor/vnext/sources.lock.json'
       - 'refactor/vnext/reports/conflict_dispositions.part*.jsonl'
       - 'refactor/vnext/reports/conflict_summary.phase05.json'
+      - 'refactor/vnext/reports/source_integrity.json'
+      - 'refactor/vnext/reports/source_provenance.jsonl'
+      - 'refactor/vnext/reports/routing_regression.json'
+      - 'refactor/vnext/reports/phase05_diff.json'
+      - 'refactor/vnext/business_regression_cases.json'
+      - 'refactor/vnext/business_regression_cases.phase04.snapshot.json'
       - 'refactor/vnext/engine_manifest.json'
       - 'refactor/vnext/LoonKit.vNext.Candidate.lcf'
       - '.github/workflows/phase-05-validation.yml'
@@ -52,8 +58,8 @@ jobs:
             refactor/vnext/reports/conflict_summary.phase05.json
           if-no-files-found: error
           retention-days: 7
-      - name: Emit deterministic stage05 validation reports for developer review
-        run: python3 scripts/vnext_phase05_report.py --print
+      - name: Verify committed source provenance and stage05 regression reports
+        run: python3 scripts/vnext_phase05_report.py --check
       - name: Phase 04 candidate deterministic check
         run: python3 scripts/vnext_rule_engine.py --check
       - name: Verify repository was not rewritten
