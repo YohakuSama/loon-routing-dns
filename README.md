@@ -70,7 +70,9 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 [规则与来源](./rules/README.md) · [网络辅助](./docs/NETWORK_DIAGNOSTICS.md) · [DNS 说明](./docs/DNS_PRIVACY.md) · [更新记录](./docs/CHANGELOG.md)
 
-[维护说明](./docs/MAINTAINING.md) · [第三方声明](./docs/THIRD_PARTY_NOTICES.md) · [反馈问题](https://github.com/YohakuSama/loonkit/issues)
+[维护说明](./docs/MAINTAINING.md) · [第三方声明](./docs/THIRD_PARTY_NOTICES.md) · [发布准备与审核状态](./docs/RELEASE_READINESS.md) · [反馈问题](https://github.com/YohakuSama/loonkit/issues)
+
+> **发布说明：** 当前 v6.0.0 配置可从仓库直接获取；独立的 GitHub Release 暂未发布，第三方来源的再分发审核仍待完成。详见[发布准备清单](./docs/RELEASE_READINESS.md)。
 
 ---
 
