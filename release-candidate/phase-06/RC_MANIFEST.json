@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "rc_version": "vNext-RC1",
-  "candidate_commit_sha": "c565764b6d0d0ace1b367bc906102d73e2528b5f",
+  "candidate_commit_sha": "95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98",
   "candidate_profile_sha256": "5cea150eae653b5f8ddc540c562b6a32e81623f3681c9378ad355f4245540411",
   "remote_rules": {
     "AI": {
@@ -141,10 +141,10 @@
   "local_rule_count": 106,
   "source_lock": "PHASE05_LOCKED_FROZEN_SNAPSHOTS",
   "ci": {
-    "run_id": 39393170808,
-    "commit_sha": "c565764b6d0d0ace1b367bc906102d73e2528b5f",
+    "run_id": 39394995413,
+    "commit_sha": "95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98",
     "result": "SUCCESS",
-    "url": "https://github.com/YohakuSama/loonkit/actions/runs/39393170808"
+    "url": "https://github.com/YohakuSama/loonkit/actions/runs/39394995413"
   },
   "device_validation": "NOT_EXECUTED",
   "loon_import": "NOT_EXECUTED",
@@ -156,5 +156,11 @@
     "RC-FINAL"
   ],
   "rollback_reference": "release-candidate/phase-06/ROLLBACK_PLAN.md",
-  "note": "Attests immutable tested source commit, not this later metadata commit. Raw HTTP resource reachability not independently established."
+  "note": "Attests immutable tested source commit, not this later metadata commit. Raw HTTP resource reachability not independently established.",
+  "raw_resource_http_validation": "PASS_26_OF_26",
+  "test_artifact": {
+    "id": 12251641729,
+    "name": "vnext-rc1-immutable-maintainer-test",
+    "sha256_zip": "30ac1ae031d2b7325133f5aed2d3f6c66420e2c88d9852ade4905649dd8252b8"
+  }
 }
