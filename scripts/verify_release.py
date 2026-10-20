@@ -75,10 +75,10 @@ def verify(remote=False):
         links = LINK.findall(profile)
         rules = [(ref,path) for ref,path in links if path.startswith("rules/releases/")]
         icons = [(ref,path) for ref,path in links if path.startswith("icons/")]
-        plugins = [(ref,path) for ref,path in links if path.startswith("release/phase-07/assets/")]
+        plugins = [(ref,path) for ref,path in links if path.startswith("release/phase-08/assets/")]
         if len(rules)!=26 or len(set(path for _,path in rules))!=26 or len(icons)!=33:
             raise ValueError("wrong number of pinned rule/icon subscriptions")
-        if plugins != [(spec["plugin_assets_commit"],"release/phase-07/assets/Network_Diagnostics.plugin")]:
+        if plugins != [(spec["plugin_assets_commit"],"release/phase-08/assets/Network_Diagnostics.plugin")]:
             raise ValueError("plugin URL unexpectedly changed")
         for ref,path in links:
             if not (ROOT/path).is_file():
@@ -93,17 +93,18 @@ def verify(remote=False):
     # Inspect the embedded immutable URLs as well as the top-level plugin link.
     # The diagnostic path is versioned to avoid stale Loon script caches.
     embedded = LINK.findall(plugin.decode("utf-8"))
-    expected_script = "scripts/v20261020r2/network-diagnostics.js"
+    expected_script = "scripts/v20261021r1/network-diagnostics.js"
     if len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
         raise ValueError("expected immutable scripts or plugin icon missing")
     for ref,path in embedded:
-        if ref != spec["script_assets_commit"] or not path.startswith(("scripts/", "icons/")):
+        expected_ref = spec["diagnostics_script_commit"] if path == expected_script else spec["script_assets_commit"]
+        if ref != expected_ref or not path.startswith(("scripts/", "icons/")):
             raise ValueError("untrusted plugin script/icon reference: " + path)
         if not (ROOT / path).is_file():
             raise ValueError("missing plugin script/icon resource: " + path)
     if remote:
         for ref,path in sorted(set(LINK.findall(profile) + embedded)):
-            if not path.startswith(("icons/","rules/releases/","release/phase-07/assets/","scripts/")):
+            if not path.startswith(("icons/","rules/releases/","release/phase-08/assets/","scripts/")):
                 continue
             with request.urlopen(request.Request(RAW+ref+"/"+path,headers={"User-Agent":"LoonKit-Integrity/1"}),timeout=25) as response:
                 live=response.read()
