@@ -145,7 +145,7 @@ def validate_remote_file(path: Path, expected_sha: str, expected_count: int) -> 
     if len(rows) != expected_count or not rows:
         raise ValueError("candidate rule count mismatch: " + str(path))
     for row in rows:
-        validate_rule(row + ",DIRECT" if row.count(",") in (1, 2) else row, {"DIRECT"})
+        validate_rule(",".join(row.split(",")[:2]) + ",DIRECT" + (",no-resolve" if row.endswith(",no-resolve") else ""), {"DIRECT"})
         # Generated files have NO policy column. Above supplies one, retaining
         # optional IP no-resolve as a fourth field (not a policy).
     return {"path": str(path.relative_to(ROOT)), "sha256": digest,
@@ -219,11 +219,12 @@ def check(config: str | None = None, commit: str | None = None) -> dict:
     rules = {}
     actual_count = 0
     for r in rows:
-        group = r["policy"]
-        name = "AnimeCrazy" if group == "動畫瘋" else group
-        if group not in expected or r["filename"] != name + ".list" or r["tag"] != "vNext-" + name:
+        filename = r["filename"].removesuffix(".list")
+        group = "動畫瘋" if filename == "AnimeCrazy" else filename
+        name = filename
+        if group not in expected or r["policy"] != ("DIRECT" if group in {"DomesticCore", "AppleOTA", "SteamCN", "ChinaDirect"} else group) or r["tag"] != "vNext-" + name:
             raise ValueError("incorrect subscription filename/tag/policy: " + repr(r))
-        if group not in groups and group != "DIRECT":
+        if r["policy"] not in groups and r["policy"] != "DIRECT":
             raise ValueError("remote references missing selector: " + group)
         # Four DIRECT lists have policy=DIRECT but are retained by active group name.
         meta = expected[group] if group in expected else None
