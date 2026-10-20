@@ -1,21 +1,26 @@
-# 正式版维护
+# LoonKit v6.0.0 维护流程
 
-## 唯一的正式规则构建链
+唯一正式入口：`LoonKit.lcf`。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式图标和插件仍保留它们在配置里固定的 Git Raw URL 原路径。
 
-`rules/inputs/` + `rules/custom/` + `rules/ProxyProtect.list` → `build/engine_manifest.json` / `build/sources.lock.json` → `scripts/rule_engine.py` → `rules/releases/vNext-RC2/`。
+## 构建
 
-执行 `python3 scripts/source_lock.py --check` 和 `python3 scripts/verify_release.py --check` 验证 44 份源锁、26 份已发布规则、两份正式配置、插件、图标和资源哈希。执行 `python3 scripts/license_audit.py --check` 检查第三方许可正文和证据。CI 同时执行 Python/JavaScript 生产回归。
+`rules/inputs/`（33）+ `rules/custom/`（10）→ `build/engine_manifest.json` + `build/sources.lock.json` → `scripts/rule_engine.py` → 26 份正式规则。
 
-## 审核上游与准备新版本
+执行：
 
-`python3 scripts/review_source.py --source rules/inputs/Google.list --proposed /tmp/Google.list` 仅生成来源更新差异，不覆盖锁。
+```bash
+python3 scripts/source_lock.py --check
+python3 scripts/verify_release.py --check
+python3 scripts/license_audit.py --check
+python3 -m unittest discover -s tests -p 'test_production.py' -v
+```
 
-`python3 scripts/prepare_release.py --version v6.0.1-rc1 --output /tmp/loonkit-candidate --build` 在仓库外生成新规则候选、完整变更和校验文件。新增来源经单独核准、锁定后才能进入引擎。定期 `rules-update.yml` 只读获取上游数据摘要，正式发布前仍需审查许可证、行为测试、版本固定引用及实际设备运行。
+`scripts/review_source.py` 只生成上游差异；`scripts/prepare_release.py` 只在工作区外生成新候选。GitHub Actions 的 `ci.yml` 校验正式资源，`rules-update.yml` 生成上游审核附件，`release.yml` 供人工准备发布候选；不自动推送发布。
 
-`release.yml` 只做手工候选打包，**不自动推送、不改写用户配置、不创建 Release**。新正式版发布须单独批准。
+## 兼容性清理
 
-## 稳定订阅与历史
+维护者确认不再需要旧 DNSPod 完整配置、旧 v5 生成规则、ProxyProtect 和独立插件别名，已移除。原订阅这些已删除路径的用户会得到 404。现有标准配置引用的固定版本资源不变。
 
-两份正式配置中的 Raw 固定链接引用了 `d405e4be28c447b6e57a4790e965c89f342d6dd6`（规则及插件）、`95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98`（图标）。还必须保留 `release/phase-07/assets/Network_Diagnostics.plugin` 这个旧路径。旧 `rules/generated/`、`rules/ProxyProtect.list` 与诊断插件兼容 URL 保留。
+## Git 历史
 
-不删除 Git 历史对象、标签或远程分支。若将来单独批准独立新历史，应先用受保护可持续引用替换所有旧提交依赖，备份并在临时仓库验证完整资源和恢复路线。
+当前仍引用固定提交 `d405e4be28c447b6e57a4790e965c89f342d6dd6`（规则和插件）以及 `95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98`（图标及脚本）。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。

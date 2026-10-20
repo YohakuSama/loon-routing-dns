@@ -45,12 +45,14 @@ class ProductionTests(unittest.TestCase):
         return final_choice
 
     def test_locked_inputs_and_determinism(self):
-        self.assertEqual(lock.check_lock(ROOT)["verified_frozen_inputs"], 44)
+        self.assertEqual(lock.check_lock(ROOT)["verified_frozen_inputs"], 43)
         self.assertEqual(self.generated, engine.compile_rules(ROOT))
         self.assertEqual(len(self.groups), 26)
 
-    def test_all_published_rules_and_dual_profiles(self):
+    def test_all_published_rules_and_single_profile(self):
         self.assertEqual(release.verify()["matchers"], 197765)
+        self.assertEqual(release.verify()["profiles"], 1)
+        self.assertFalse((ROOT/"LoonKit.PrivacyDNS.lcf").exists())
         self.assertEqual(len(release.section(self.main, "Remote Rule").split("https://"))-1, 26)
 
     def test_ads_retained_and_user_selectable(self):

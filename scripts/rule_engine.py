@@ -177,11 +177,10 @@ def choose_exact_owners(candidates: dict[str, dict[str, set[tuple[str, int]]]],
 def verify_immutable_sources(root: Path, manifest: dict) -> None:
     """Reject altered frozen snapshots, without requiring network or rewriting baselines."""
     pinned = manifest.get("frozen_git_blob_sha1")
-    if not isinstance(pinned, dict) or len(pinned) < 44:
+    if not isinstance(pinned, dict) or len(pinned) < 43:
         raise ValueError("missing immutable snapshot attestations")
     for relative, expected in sorted(pinned.items()):
-        if not (relative.startswith("rules/inputs/") or relative.startswith("rules/custom/")
-                or relative == "rules/ProxyProtect.list"):
+        if not (relative.startswith("rules/inputs/") or relative.startswith("rules/custom/")):
             raise ValueError("untrusted frozen file path: " + relative)
         file = root / relative
         data = file.read_bytes()
@@ -309,28 +308,11 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
                               "replacement": replacement, "compatibility": "BEHAVIOR_MAY_CHANGE"})
                 reasons[reason] += 1
         old_rules_by_group[group] = old_set
-    # The legacy ProxyProtect list is a separate 17-rule subscription, outside
-    # the 33 generated snapshots. Record every retired rule individually.
-    proxy_path = root / "rules/ProxyProtect.list"
-    proxy_origin = proxy_path.relative_to(root).as_posix()
-    proxy_original = set()
-    for lineno, raw in enumerate(proxy_path.read_text(encoding="utf-8").splitlines(), 1):
-        rule = normalize(raw)
-        if not rule:
-            continue
-        proxy_original.add(rule)
-        before["ProxyProtect"] += 1
-        trace.append({"action": "REMOVED", "group": "ProxyProtect", "rule": rule,
-                      "origin": proxy_origin, "line": lineno,
-                      "reason": "INDEPENDENT_PROXYPROTECT_RETIRED",
-                      "replacement": "service owner or FINAL",
-                      "compatibility": "FINAL=DIRECT MAY NOW DIRECT THIS DESTINATION"})
-    old_rules_by_group["ProxyProtect"] = proxy_original
     # Explicit advertising classification, with reviewable virtual provenance.
     for domain in AD_ANCHORS:
         rule = "DOMAIN-SUFFIX," + domain
         if rule not in groups["AdBlock"]:
-            groups["AdBlock"][rule].add(("refactor/vnext/engine_manifest.json", 0))
+            groups["AdBlock"][rule].add(("build/engine_manifest.json", 0))
     choose_exact_owners(groups, trace, active)
     quarantine_ip_overlaps(groups, trace)
     # Drop within-group DOMAIN covered by suffix only if not explicitly contested.

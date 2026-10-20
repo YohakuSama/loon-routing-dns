@@ -5,15 +5,16 @@ const fs = require("node:fs");
 const path = require("node:path");
 const root = path.resolve(__dirname,"..");
 const read = file => fs.readFileSync(path.join(root,file),"utf8");
-const plugin = read("plugins/Network_Diagnostics.plugin");
+const plugin = read("release/phase-07/assets/Network_Diagnostics.plugin");
 const profile = read("LoonKit.lcf");
 let passed=0;
 function check(name,fn){
   try {fn();passed++;console.log("PASS",name);}
   catch(err){process.exitCode=1;console.error("FAIL",name,err);}
 }
-check("standalone and versioned plugin match",()=>{
-  assert.equal(plugin,read("plugins/v20261018r11/Network_Diagnostics.plugin"));
+check("only the shipped immutable plugin is present",()=>{
+  assert(!fs.existsSync(path.join(root,"plugins/")));
+  assert(plugin.includes("/95b6e0eb02d3cc6e82fc8e6998dd130a2c5b7a98/scripts/"));
 });
 check("exactly two manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));

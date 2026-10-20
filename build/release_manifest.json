@@ -8,7 +8,6 @@
   "plugin_path": "release/phase-07/assets/Network_Diagnostics.plugin",
   "plugin_sha256": "431a8d92dcb63864aecd3055f77e38cc0582d24925e2c2f4d833e0256e393d20",
   "profile_sha256": {
-    "LoonKit.PrivacyDNS.lcf": "cc277400ef7c6bdf7906ef5e0c507cc5da96c105710d88092cac8842a001d922",
     "LoonKit.lcf": "4617809066f32fd27ee7ca0e6ef1de1c5de09e2440622e603624a3a88523895e"
   },
   "remote_rule_count": 197765,
