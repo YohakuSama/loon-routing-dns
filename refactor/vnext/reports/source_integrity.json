@@ -1,0 +1,365 @@
+{
+  "evidence": "IMMUTABLE_FROZEN_BYTES_CHECKED_NOT_RAW_UPSTREAM",
+  "historical_catalog_ids": 87,
+  "original_raw_lineage_verified_count": 0,
+  "original_upstream_lineage": "NOT_RECOVERABLE_FROM_MERGED_SNAPSHOT",
+  "schema_version": 1,
+  "separate_stage04_verified_local_line_mappings": 65,
+  "source_records": [
+    {
+      "git_blob_sha1": "014b2d460a5ea89778a8e60be20c73822389689b",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/ProxyProtect.list",
+      "sha256": "d4f330006ddd2a39da0d98d4a4dd3501e534a1c3b35250f9d1a7a4bc56067c38",
+      "source_id": "frozen:rules/ProxyProtect.list"
+    },
+    {
+      "git_blob_sha1": "5764d74a87d7842c5fd4211272b8f61dcf2e2794",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/AI.list",
+      "sha256": "7242b03137852e24967cbcc0afea6f0bf866a3bd6f204be9bce5b63d029cdfda",
+      "source_id": "frozen:rules/custom/AI.list"
+    },
+    {
+      "git_blob_sha1": "b3909fe53f1996e2ee46d560cd5c81dd4ca2083f",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/AnimeCrazy.list",
+      "sha256": "736e09b1079b37b109c9b3cb27e3b0f91c0a094ee187f3ebe0c9cb6570de9046",
+      "source_id": "frozen:rules/custom/AnimeCrazy.list"
+    },
+    {
+      "git_blob_sha1": "d86a885667e86502c949b943ad5420b935b78dad",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/ChinaDirect.list",
+      "sha256": "345564297525eaeb81a350fc6189924e24cc2a74902b59a5f6b5f31eb5b89bc6",
+      "source_id": "frozen:rules/custom/ChinaDirect.list"
+    },
+    {
+      "git_blob_sha1": "94e726ebab224dff89363e918c438bb9215cdd63",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/Dazn.list",
+      "sha256": "2b95468626f11f96267ad783f578785f13ba1e367aab4e0698ea9b55cf24c86b",
+      "source_id": "frozen:rules/custom/Dazn.list"
+    },
+    {
+      "git_blob_sha1": "24de1240b040dc6d00b9bc16c845c454f0a8719b",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/DomesticCore.list",
+      "sha256": "ff9b43bab25cb33abca20b1f0d7a213a488586ceb34983621519aacfd700215c",
+      "source_id": "frozen:rules/custom/DomesticCore.list"
+    },
+    {
+      "git_blob_sha1": "7deef24d4e552c0b4d7b8aaf3e0037eea00efdae",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/Facebook.list",
+      "sha256": "34dff9cfb1b96c40858c47efc6c59ac56fc3caf6088d1ec70ee73bace0c7436e",
+      "source_id": "frozen:rules/custom/Facebook.list"
+    },
+    {
+      "git_blob_sha1": "b9c8586b578ed2f28b2342a75072dee361fc9db7",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/HBO.list",
+      "sha256": "347f8a6499c028b9aa5f48657a91f71650d7d43c6f2e628bf9b483679199c8c8",
+      "source_id": "frozen:rules/custom/HBO.list"
+    },
+    {
+      "git_blob_sha1": "2d743f12fcc529f1557912a956302eebb3c954e3",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/HelloBike.list",
+      "sha256": "83c592c880df18276ccc75075ce37c67c8169f811be6bd3dcaa1721df73848e8",
+      "source_id": "frozen:rules/custom/HelloBike.list"
+    },
+    {
+      "git_blob_sha1": "a6175919303923bf0fe0bf226e3f2447598e7fce",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/Microsoft.list",
+      "sha256": "88215e4fa1edf1e6434b289d6ee9617754ed08522cd6a6ddc7d0078fae46c130",
+      "source_id": "frozen:rules/custom/Microsoft.list"
+    },
+    {
+      "git_blob_sha1": "3b510d8ff570e2ba3d2c443fbcc4441c2dec9a5b",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/custom/Whatsapp.list",
+      "sha256": "122f199229f9aaab9298a7951da031d4ed62d2c4063a8c542b2a359d82c52a10",
+      "source_id": "frozen:rules/custom/Whatsapp.list"
+    },
+    {
+      "git_blob_sha1": "489390588bfdab1c034fd6fae8c1ccf255fa925a",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/AI.list",
+      "sha256": "ad508924957311602225dee0b6c51aae87091a4add32f7d3b9db7e6fe5abf192",
+      "source_id": "frozen:rules/generated/AI.list"
+    },
+    {
+      "git_blob_sha1": "f193b93a76335b02adfa3d6892d8da6c6542d71b",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Abema.list",
+      "sha256": "e80cfd19fddc31e3b077da5d092c9736767d55c29fd6c0963c9c16f87891762d",
+      "source_id": "frozen:rules/generated/Abema.list"
+    },
+    {
+      "git_blob_sha1": "13de0387558d1a82786605dbbdf96610630fbf44",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/AdBlock.list",
+      "sha256": "233ba8db7cd0de872aac0f9181c18b1f6b7fb548c6d049dfd1b36b11bc670ef0",
+      "source_id": "frozen:rules/generated/AdBlock.list"
+    },
+    {
+      "git_blob_sha1": "046b9445453320cb25646a8b7fbe1ee7809ca8d4",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/AnimeCrazy.list",
+      "sha256": "c95c03a8ecf74f98e05432a90eac729895f43c88e22a062e928c70662f1cbcca",
+      "source_id": "frozen:rules/generated/AnimeCrazy.list"
+    },
+    {
+      "git_blob_sha1": "5c8c7d281a9cc2bb89e1d19e9988cc457e15b024",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Apple.list",
+      "sha256": "e38f8da811ea4822ae020d9984dd8a46b82f208e2bfd27e4912c36c4ea3bf210",
+      "source_id": "frozen:rules/generated/Apple.list"
+    },
+    {
+      "git_blob_sha1": "66758d7e1dc77e0bff0fd4bdd6832a45084c2d52",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/AppleOTA.list",
+      "sha256": "da62c5e61d202b401841fb88e7727e60ea10ecad2d2e519c54900a6701dafd00",
+      "source_id": "frozen:rules/generated/AppleOTA.list"
+    },
+    {
+      "git_blob_sha1": "030f9aee31af94b445352bfb8784f60d79311b20",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/BBC.list",
+      "sha256": "06009e5f361a1fd95276ee419b2c70170181bac853dd45d911cac3db25bcc48f",
+      "source_id": "frozen:rules/generated/BBC.list"
+    },
+    {
+      "git_blob_sha1": "27852cb8376b3ecf90ef9b7d99c090b9d3deb167",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Bilibili.list",
+      "sha256": "4d65637e5a4e7ec5cb5db88e69354c72152b18d254d7b93b24d894ad9c870233",
+      "source_id": "frozen:rules/generated/Bilibili.list"
+    },
+    {
+      "git_blob_sha1": "9f3a04404546b6f13f767d960b3091cb413f2131",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/ChinaDirect.list",
+      "sha256": "bc9b702c001672a99c3f891cd7bca3a93a2af558ccfef7752f3276e0712e12b8",
+      "source_id": "frozen:rules/generated/ChinaDirect.list"
+    },
+    {
+      "git_blob_sha1": "6eed544f455a2380969b6f0cc3b49e2c34d7c88c",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Dazn.list",
+      "sha256": "d40bd2676ffa0757d78f112b46b865c481978e5cf394cdc1561f4f88c65c2e77",
+      "source_id": "frozen:rules/generated/Dazn.list"
+    },
+    {
+      "git_blob_sha1": "c8c0d2306bcd1c93b108de190d61c03f0365e97a",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Discord.list",
+      "sha256": "933ae81f3f4915c6af020e963cc9d7b629d33f98a593d482dd3032dee2bc3733",
+      "source_id": "frozen:rules/generated/Discord.list"
+    },
+    {
+      "git_blob_sha1": "cdfc7fbae68f55fb0fabc1c672db2f5a45ec1f2b",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Disney.list",
+      "sha256": "729d637df863e7cb892f20e330db8f8dbb83ff9cc637b86659e993b9c64d7965",
+      "source_id": "frozen:rules/generated/Disney.list"
+    },
+    {
+      "git_blob_sha1": "e8801aa8ad109f8429c071e8bc5817201d55bcbc",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/DomesticCore.list",
+      "sha256": "baa127efa878dc209d5d69d3f9245a17ec6db95c9347512d9ea98e94008b3ea9",
+      "source_id": "frozen:rules/generated/DomesticCore.list"
+    },
+    {
+      "git_blob_sha1": "54892b41eb7117fd8e061292a10590788dccb6c9",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Facebook.list",
+      "sha256": "cd067558c75ca4b19aa022f9529267e71fb9c7ce787af4b179984710bbaae017",
+      "source_id": "frozen:rules/generated/Facebook.list"
+    },
+    {
+      "git_blob_sha1": "1d3ad52fb69ed47f892e61684c0be5f1cbec85e7",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Google.list",
+      "sha256": "da934430ed349b932861068381f76a9ce5c592b15036c1aa8323a7cf0e2b034f",
+      "source_id": "frozen:rules/generated/Google.list"
+    },
+    {
+      "git_blob_sha1": "f01349db751bef5e7b0a11c2c1e6d81b3022895a",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/HBO.list",
+      "sha256": "b0754475821b5a3e21c6ce29cd5d96905a9ab3f3ea48365d9f5c835c9f267843",
+      "source_id": "frozen:rules/generated/HBO.list"
+    },
+    {
+      "git_blob_sha1": "538b9606fedd53f8cc123c180b39e6b081db1046",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Instagram.list",
+      "sha256": "053833cff62c34deca7314fb64b542e3d4b6c1b6efb1ffa742a129af315130e6",
+      "source_id": "frozen:rules/generated/Instagram.list"
+    },
+    {
+      "git_blob_sha1": "f52f0a4ef636a08a8301f491a1d3f7c2333d293f",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Line.list",
+      "sha256": "0ceeedaa50d93058b55654369742f86639cfd991a32a27e51ec3f05598a2f793",
+      "source_id": "frozen:rules/generated/Line.list"
+    },
+    {
+      "git_blob_sha1": "9716fc232a433e44c17f912a9a38e515d60aba6e",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Linkedin.list",
+      "sha256": "b8347ec2114922e37584c1918067bc646f92a5f79ba2f9fc98ea070a1fd74e7e",
+      "source_id": "frozen:rules/generated/Linkedin.list"
+    },
+    {
+      "git_blob_sha1": "15861f4ea55b78bf5f6851996cc6a7512d27e81f",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Microsoft.list",
+      "sha256": "ec85fddd6541374052652493487436be82418b37929667ad95e5a6317f6ca9a6",
+      "source_id": "frozen:rules/generated/Microsoft.list"
+    },
+    {
+      "git_blob_sha1": "df37b1abe2575ea5953e0fe5bee1d4a9b47abce9",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Netflix.list",
+      "sha256": "b63c4ca5e36be0d6bcba2444a6a6b21704ad25bf9b11aab909cbded0c2a1ab94",
+      "source_id": "frozen:rules/generated/Netflix.list"
+    },
+    {
+      "git_blob_sha1": "3cc5e19f902fa7cb957b8db01fd53c0bccee8d80",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Paypal.list",
+      "sha256": "d579f41f5d942f1d38a3ac88319f4738644c7078caa64256021457baa65ae257",
+      "source_id": "frozen:rules/generated/Paypal.list"
+    },
+    {
+      "git_blob_sha1": "5122b8f946e1df111e969a9c4038a4b611eb96fe",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/PrimeVideo.list",
+      "sha256": "32f18518b00e3ec72a58cb8fbe7c3bbd372419c14e8af0ff74bc5e88b7fe315a",
+      "source_id": "frozen:rules/generated/PrimeVideo.list"
+    },
+    {
+      "git_blob_sha1": "78b87b201ebf5282cd5b59ad6a86aee508edc031",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Reddit.list",
+      "sha256": "bec802f172f0692614fe60bd7f32078922d7cc10ff9bb46e38eb8700a7399e39",
+      "source_id": "frozen:rules/generated/Reddit.list"
+    },
+    {
+      "git_blob_sha1": "cd5fa538b425680d910eace1f30f9ba0ac79c2ba",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Spotify.list",
+      "sha256": "72f3547d76675c0cedda9ca50afc39f357cc8f705616139a75a44b18db5f7b54",
+      "source_id": "frozen:rules/generated/Spotify.list"
+    },
+    {
+      "git_blob_sha1": "3a0a14c46203503a97d75372ec411f5611a0aab7",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Steam.list",
+      "sha256": "982421d60f8008f7fa02b9a6efd49bb13122bd1a6fc3e1d28837c9aa980859aa",
+      "source_id": "frozen:rules/generated/Steam.list"
+    },
+    {
+      "git_blob_sha1": "13d09e7b3f61227451d32569244db5d759f962c7",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/SteamCN.list",
+      "sha256": "177a9f05dbd064862f4aa8067bb695f54a0296d9d38ae783bc1347848c63c3ff",
+      "source_id": "frozen:rules/generated/SteamCN.list"
+    },
+    {
+      "git_blob_sha1": "19c6231e9d5e62073ebedcec0e824ed54d137ca0",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Telegram.list",
+      "sha256": "018dd7ffef3e58c830ecd947743ccf28c88d6d8360f5e341f51b6141ebee06e0",
+      "source_id": "frozen:rules/generated/Telegram.list"
+    },
+    {
+      "git_blob_sha1": "87f2ca4477088ecc43f28bc04a26b8002598f336",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/TikTok.list",
+      "sha256": "32ef9151018d7a4a07900d845d7b4e26a0a162678f796e13be1a892d46599c9e",
+      "source_id": "frozen:rules/generated/TikTok.list"
+    },
+    {
+      "git_blob_sha1": "26c7c3a9a7fdaeec3902e68de7a369f51a675f0f",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Twitch.list",
+      "sha256": "c563233be0c9a991665f1afd9cf7c07958208eb5acf67aee36604ea51a01b525",
+      "source_id": "frozen:rules/generated/Twitch.list"
+    },
+    {
+      "git_blob_sha1": "f2433c7321419343d17b49a051a1adeb6596fae8",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Twitter.list",
+      "sha256": "739084a49270d3a27428554132d08e64fdd78d014c5a0e487e2b0aad2445f472",
+      "source_id": "frozen:rules/generated/Twitter.list"
+    },
+    {
+      "git_blob_sha1": "77cf92be11e62d1311e4332b434f0e9320ee0c3e",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/Whatsapp.list",
+      "sha256": "d227f534c7453dc8a56ca3e69b0f1865fb0222941fc0db6d4f1c89ffbdc494fd",
+      "source_id": "frozen:rules/generated/Whatsapp.list"
+    },
+    {
+      "git_blob_sha1": "110af55e7799c64b42980dfd05ef828cd86a84fd",
+      "kind": "FROZEN_MERGED_SNAPSHOT",
+      "original_upstream_provenance": "UNRECOVERABLE",
+      "path": "rules/generated/YouTube.list",
+      "sha256": "b677eff2eed115b945042b9391dc6450bf0f66395e56b6132ecea4a2470c10c1",
+      "source_id": "frozen:rules/generated/YouTube.list"
+    }
+  ],
+  "verified_frozen_inputs": 44,
+  "verified_input_count": 44,
+  "verified_raw_inactive_inputs": 0
+}
