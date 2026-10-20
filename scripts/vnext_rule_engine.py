@@ -135,7 +135,7 @@ def choose_exact_owners(candidates: dict[str, dict[str, set[tuple[str, int]]]],
             continue
         kind, value = fields(rule)
         owner = None
-        if kind in {"DOMAIN", "DOMAIN-SUFFIX"} and "AdBlock" in groups:
+        if kind in {"DOMAIN", "DOMAIN-SUFFIX"} and value in AD_ANCHORS and "AdBlock" in groups:
             owner = "AdBlock"
         elif kind in {"DOMAIN", "DOMAIN-SUFFIX"} and value in AI_EXCEPTION_HOSTS and "AI" in groups:
             owner = "AI"
@@ -152,8 +152,67 @@ def choose_exact_owners(candidates: dict[str, dict[str, set[tuple[str, int]]]],
                 del candidates[group][rule]
 
 
+
+def verify_immutable_sources(root: Path, manifest: dict) -> None:
+    """Reject altered frozen snapshots, without requiring network or rewriting baselines."""
+    pinned = manifest.get("frozen_git_blob_sha1")
+    if not isinstance(pinned, dict) or len(pinned) < 44:
+        raise ValueError("missing immutable snapshot attestations")
+    for relative, expected in sorted(pinned.items()):
+        if not (relative.startswith("rules/generated/") or relative.startswith("rules/custom/")
+                or relative == "rules/ProxyProtect.list"):
+            raise ValueError("untrusted frozen file path: " + relative)
+        file = root / relative
+        data = file.read_bytes()
+        actual = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+        if actual != expected:
+            raise ValueError(f"frozen input changed: {relative} (expected {expected}, got {actual})")
+
+
+def quarantine_ip_overlaps(groups: dict, trace: list[dict]) -> None:
+    """Mitigate confirmed broad provider collisions without assuming Loon IP precedence.
+
+    17/8 Apple, 74.125/16 Google: candidate ChinaDirect exceptions are
+    narrower but still collide with distinct platform selectors.
+    AWS multi-tenant supernets in Whatsapp overlap dedicated Netflix IPs.
+    Preserve dedicated small service IPs and log every isolated predicate.
+    """
+    platform_nets = []
+    for owner in ("Apple", "Google"):
+        for rule in groups.get(owner, {}):
+            if rule.startswith(("IP-CIDR,", "IP-CIDR6,")):
+                platform_nets.append((owner, ipaddress.ip_network(fields(rule)[1])))
+    netflix_nets = [ipaddress.ip_network(fields(rule)[1])
+                    for rule in groups.get("Netflix", {})
+                    if rule.startswith(("IP-CIDR,", "IP-CIDR6,"))]
+    removals = []
+    for rule in groups.get("ChinaDirect", {}):
+        if rule.startswith(("IP-CIDR,", "IP-CIDR6,")):
+            ip_net = ipaddress.ip_network(fields(rule)[1])
+            owners = sorted({owner for owner, outer in platform_nets
+                             if ip_net.version == outer.version and ip_net.subnet_of(outer)})
+            if owners:
+                removals.append(("ChinaDirect", rule, "DIRECT_IP_PLATFORM_OVERLAP",
+                                 "platform policy: " + "|".join(owners)))
+    for rule in groups.get("Whatsapp", {}):
+        if rule.startswith(("IP-CIDR,", "IP-CIDR6,")):
+            broad = ipaddress.ip_network(fields(rule)[1])
+            nested = any(n.version == broad.version and n.subnet_of(broad)
+                         and n != broad for n in netflix_nets)
+            if nested:
+                removals.append(("Whatsapp", rule, "MULTITENANT_IP_NET_OVERLAP",
+                                 "domain-scoped Whatsapp or FINAL"))
+    for group, rule, reason, fallback in removals:
+        for file, line in sorted(groups[group].pop(rule)):
+            trace.append({"action": "REMOVED", "group": group, "rule": rule,
+                          "origin": file, "line": line, "reason": reason,
+                          "replacement": fallback,
+                          "compatibility": "IP MATCH CHANGE REQUIRES DEVICE TEST"})
+
+
 def compile_rules(root: Path = ROOT) -> dict[str, str]:
     cfg = load_manifest(root / "refactor/vnext/engine_manifest.json")
+    verify_immutable_sources(root, cfg)
     active, inactive = cfg["active_groups"], cfg["inactive_groups"]
     guardrails = json.loads((root / "rules/routing_guardrails.json").read_text(encoding="utf-8"))
     protected = tuple(guardrails["protected_proxy_domains"])
@@ -224,6 +283,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
         if rule not in groups["AdBlock"]:
             groups["AdBlock"][rule].add(("refactor/vnext/engine_manifest.json", 0))
     choose_exact_owners(groups, trace, active)
+    quarantine_ip_overlaps(groups, trace)
     # Drop within-group DOMAIN covered by suffix only if not explicitly contested.
     for group, records in groups.items():
         suffixes = {fields(r)[1] for r in records if r.startswith("DOMAIN-SUFFIX,")}
