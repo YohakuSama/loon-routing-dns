@@ -1,0 +1,49 @@
+name: Phase 05 vNext source integrity and safe offline QA
+on:
+  push:
+    branches: [refactor/loonkit-vnext]
+    paths:
+      - 'scripts/vnext_source_lock.py'
+      - 'scripts/vnext_conflict_resolver.py'
+      - 'scripts/validate_device_results.py'
+      - 'scripts/vnext_rule_engine.py'
+      - 'tests/test_phase05_validation.py'
+      - 'validation/phase-05/**'
+      - 'refactor/vnext/sources.lock.json'
+      - 'refactor/vnext/reports/conflict_dispositions.jsonl'
+      - '.github/workflows/phase-05-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase05-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-offline:
+    if: github.ref == 'refs/heads/refactor/loonkit-vnext'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect frozen input pinning and emit reviewed lock candidates
+        run: |
+          if test -f refactor/vnext/sources.lock.json; then
+            python3 scripts/vnext_source_lock.py --check
+          else
+            echo "::warning::source lock not committed; bootstrap values are NOT a passed gate"
+            python3 scripts/vnext_source_lock.py --print-init-json
+          fi
+      - name: Independent phase 05 tests
+        run: python3 -m unittest discover -s tests -p test_phase05_validation.py -v
+      - name: Phase 04 candidate deterministic check
+        run: python3 scripts/vnext_rule_engine.py --check
+      - name: Verify repository was not rewritten
+        run: git diff --exit-code
