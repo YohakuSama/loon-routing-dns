@@ -222,4 +222,4 @@ GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loonkit/0f199add32277b24fff7b96608115326b6592daf/release/Network_Diagnostics.plugin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/5b115b5dd02836620597b2212b2b49c18c646bb7/release/Network_Diagnostics.plugin, enabled=true
