@@ -116,8 +116,16 @@ class ReleaseBuildTests(unittest.TestCase):
             self.assertEqual(evidence["open_blockers"],[])
             self.assertEqual(gate.check(require_ready=True)["release_status"],"APPROVED")
         else:
-            self.assertIn("maintainer_approval", evidence["open_blockers"])
+            self.assertTrue(evidence["open_blockers"])
             with self.assertRaisesRegex(ValueError, "release BLOCKED"):
+                gate.check(require_ready=True)
+
+    def test_published_status_cannot_overstate_unresolved_reviews(self):
+        evidence=gate.check()
+        if evidence["release_status"]=="PUBLISHED_WITH_OPEN_REVIEWS":
+            self.assertIn("licenses",evidence["open_blockers"])
+            self.assertNotIn("maintainer_approval",evidence["open_blockers"])
+            with self.assertRaisesRegex(ValueError,"release BLOCKED"):
                 gate.check(require_ready=True)
 
     def test_proposed_source_update_produces_review_only_diff(self):
