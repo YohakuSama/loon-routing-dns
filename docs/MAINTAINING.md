@@ -29,3 +29,7 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 主配置中的插件引用 `9fc773a08126207281a8431651577c1449641b8a` 的 `release/phase-07/assets/Network_Diagnostics.plugin`。插件内部使用 `a90e2fd7bc92b3cb37aa0cb0f84b23a177019ec1` 的 `scripts/v20261020r1/network-diagnostics.js`、节点出口脚本及图标。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
+
+## 网络诊断脚本维护
+
+现役诊断脚本版本为 `scripts/v20261020r2/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本保留以免破坏旧固定 URL。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
