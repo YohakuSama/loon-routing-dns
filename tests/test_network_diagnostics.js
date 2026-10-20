@@ -75,7 +75,7 @@ check("target 503 proves server responded but does not prove proxy failure",()=>
 check("Loon auto / https prefix is inconclusive, not a DNS leak",()=>{
   const r=run({protocol:"auto",server:"https://"});
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
-  assert.match(r.results[0].content,/DNS 协议信息不完整/);
+  assert.match(r.results[0].content,/Loon 未提供完整的 DNS 传输信息/);
   assert.doesNotMatch(r.results[0].content,/结果：检测到连接或解析失败|明文 DNS 查询/);
 });
 check("cached UDP metadata does not claim a new plaintext lookup",()=>{
@@ -165,11 +165,11 @@ check("auto with any valid HTTPS resolver is identified as DoH",()=>{
   const r=run({protocol:"auto",server:"https://dns.alidns.com/dns-query"});
   assert.match(r.results[0].content,/网络连接与 DNS 解析正常/);
   assert.match(r.results[0].content,/解析成功 · DoH/);
-  assert.doesNotMatch(r.results[0].content,/DNS 协议信息不完整/);
+  assert.doesNotMatch(r.results[0].content,/Loon 未提供完整的 DNS 传输信息/);
 });
 check("unknown or truncated auto HTTPS DNS does not certify DoH",()=>{
   const r=run({protocol:"auto",server:"https://"});
-  assert.match(r.results[0].content,/DNS 协议信息不完整/);
+  assert.match(r.results[0].content,/Loon 未提供完整的 DNS 传输信息/);
   assert.doesNotMatch(r.results[0].content,/解析成功 · DoH/);
 });
 check("user-selected ordinary DNS is not treated as a config violation",()=>{
@@ -181,7 +181,7 @@ check("user-selected ordinary DNS is not treated as a config violation",()=>{
 });
 check("an empty DNS address does not infer DoH or normal UDP",()=>{
   const r=run({protocol:"auto",server:""});
-  assert.match(r.results[0].content,/DNS 协议信息不完整/);
+  assert.match(r.results[0].content,/Loon 未提供完整的 DNS 传输信息/);
   assert.doesNotMatch(r.results[0].content,/解析成功 · DoH/);
 });
 check("no A or AAAA value is a DNS failure even with record type",()=>{
