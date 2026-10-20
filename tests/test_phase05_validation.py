@@ -66,7 +66,7 @@ class TestSourceIntegrity(unittest.TestCase):
         raw["path"] = "rules/ProxyProtect.list"
         raw["active_in_candidate"] = True
         tampered["inputs"].append(raw)
-        with self.assertRaisesRegex(ValueError, "raw source must be under"):
+        with self.assertRaisesRegex(ValueError, "repeated source path"):
             sl.check_lock(ROOT, tampered)
 
     def test_historical_origin_is_not_fabricated(self):
