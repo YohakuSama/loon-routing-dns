@@ -130,5 +130,45 @@
     "rules/generated/Whatsapp.list": "77cf92be11e62d1311e4332b434f0e9320ee0c3e",
     "rules/generated/YouTube.list": "110af55e7799c64b42980dfd05ef828cd86a84fd"
   },
-  "source_integrity": "VERIFY_ALL_33_PUBLISHED_GROUP_SNAPSHOTS_PROXYPROTECT_AND_10_LOCAL_SOURCES"
+  "source_integrity": "VERIFY_ALL_33_PUBLISHED_GROUP_SNAPSHOTS_PROXYPROTECT_AND_10_LOCAL_SOURCES",
+  "reviewed_keyword_narrowing": {
+    "AI": {
+      "openai": "DOMAIN-SUFFIX,openai.com"
+    },
+    "Google": {
+      "google": "DOMAIN-SUFFIX,google.com",
+      "gmail": "DOMAIN-SUFFIX,gmail.com",
+      "appspot": "DOMAIN-SUFFIX,appspot.com",
+      "blogspot": "DOMAIN-SUFFIX,blogspot.com",
+      "recaptcha": "DOMAIN-SUFFIX,recaptcha.net"
+    },
+    "Facebook": {
+      "facebook": "DOMAIN-SUFFIX,facebook.com",
+      "fbcdn": "DOMAIN-SUFFIX,fbcdn.net"
+    },
+    "Microsoft": {
+      "microsoft": "DOMAIN-SUFFIX,microsoft.com",
+      "onedrive": "DOMAIN-SUFFIX,onedrive.com",
+      "1drv": "DOMAIN-SUFFIX,1drv.ms"
+    },
+    "Whatsapp": {
+      "whatsapp": "DOMAIN-SUFFIX,whatsapp.com"
+    },
+    "Instagram": {
+      "instagram": "DOMAIN-SUFFIX,instagram.com"
+    },
+    "Twitter": {
+      "twitter": "DOMAIN-SUFFIX,twitter.com"
+    },
+    "Paypal": {
+      "paypal": "DOMAIN-SUFFIX,paypal.com"
+    },
+    "YouTube": {
+      "youtube": "DOMAIN-SUFFIX,youtube.com"
+    },
+    "TikTok": {
+      "tiktok": "DOMAIN-SUFFIX,tiktok.com"
+    }
+  },
+  "reviewed_keyword_narrowing_note": "Restrict unbounded brand-substring routing to listed owned DNS suffixes; nonmatching brands fall to other precise rules or FINAL. Existing suffix owners must remain subject to cross-policy auditing."
 }
