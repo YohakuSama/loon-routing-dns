@@ -19,16 +19,12 @@ jobs:
       - run: python3 scripts/verify_release.py --check
       - name: Validate immutable pinned resources on GitHub Raw
         run: python3 scripts/verify_release.py --check --remote
-      - name: Check upstream current bytes without updating production
-        run: python3 scripts/check_sources.py --output "$RUNNER_TEMP/upstream.json"
-      - name: Generate offline candidate difference
-        run: python3 scripts/prepare_release.py --version vNext-RC999999999 --output "$RUNNER_TEMP/candidate" --build
+      - name: Fetch, normalize, deduplicate and analyze upstream changes (review only)
+        run: python3 scripts/upstream_review.py --output "$RUNNER_TEMP/upstream-review"
       - uses: actions/upload-artifact@v4
         with:
-          name: upstream-review-only
+          name: upstream-safe-candidates-only
           path: |
-            ${{ runner.temp }}/upstream.json
-            ${{ runner.temp }}/candidate/NEXT_RELEASE_DIFF.json
-            ${{ runner.temp }}/candidate/NEXT_RELEASE_MANIFEST.json
-          retention-days: 14
+            ${{ runner.temp }}/upstream-review/
+          retention-days: 7
           if-no-files-found: error
