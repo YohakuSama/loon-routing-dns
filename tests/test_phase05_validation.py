@@ -140,7 +140,7 @@ class TestCandidateQuality(unittest.TestCase):
                 for root in roots:
                     if cr.suffix_cover(root, host):
                         blocked.append((group, root, rule))
-        self.assertEqual(blocked, [], "local overseas rule would shadow AdBlock: " + repr(blocked[:20]))
+        self.assertEqual(blocked, [], "local overseas rule would shadow AdBlock: " + repr(blocked))
 
     def test_china_direct_no_unbounded_keywords(self):
         self.assertFalse(any(x.startswith("DOMAIN-KEYWORD,")
