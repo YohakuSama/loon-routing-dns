@@ -130,7 +130,7 @@ class Phase04Tests(unittest.TestCase):
         ve.verify_immutable_sources(ROOT, manifest)
         altered = dict(manifest)
         altered["frozen_git_blob_sha1"] = dict(manifest["frozen_git_blob_sha1"])
-        altered["frozen_git_blob_sha1"]["rules/generated/Google.list"] = "0" * 40
+        altered["frozen_git_blob_sha1"]["rules/snapshots/phase03/generated/Google.list"] = "0" * 40
         with self.assertRaisesRegex(ValueError, "frozen input changed"):
             ve.verify_immutable_sources(ROOT, altered)
 

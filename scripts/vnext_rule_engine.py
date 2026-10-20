@@ -21,7 +21,7 @@ BASE = ROOT / "refactor" / "vnext"
 GENERATED = BASE / "generated"
 REPORTS = BASE / "reports"
 MANIFEST = BASE / "engine_manifest.json"
-SNAP = ROOT / "rules" / "generated"
+SNAP = ROOT / "rules" / "snapshots" / "phase03" / "generated"
 PRODUCTION_CONFIG = ROOT / "LoonKit.lcf"
 KINDS = {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6", "IP-ASN", "USER-AGENT"}
 DOMAIN_RX = re.compile(r"^[a-z0-9*._-]+$", re.I)
@@ -180,7 +180,7 @@ def verify_immutable_sources(root: Path, manifest: dict) -> None:
     if not isinstance(pinned, dict) or len(pinned) < 44:
         raise ValueError("missing immutable snapshot attestations")
     for relative, expected in sorted(pinned.items()):
-        if not (relative.startswith("rules/generated/") or relative.startswith("rules/custom/")
+        if not (relative.startswith("rules/snapshots/phase03/generated/") or relative.startswith("rules/custom/")
                 or relative == "rules/ProxyProtect.list"):
             raise ValueError("untrusted frozen file path: " + relative)
         file = root / relative
@@ -274,7 +274,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
 
     for group in active + inactive:
         filename = "AnimeCrazy" if group == "動畫瘋" else group
-        path = root / "rules/generated" / (filename + ".list")
+        path = root / "rules/snapshots/phase03/generated" / (filename + ".list")
         if not path.is_file():
             raise FileNotFoundError(path)
         old_set = set()
@@ -284,12 +284,12 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
                 continue
             raw_total += 1
             if rule.startswith(("IP-CIDR,", "IP-CIDR6,", "IP-ASN,")) and raw.strip() != rule:
-                flag_changes.append({"group": group, "snapshot_file": path.relative_to(root).as_posix(),
+                flag_changes.append({"group": group, "snapshot_file": "rules/generated/" + filename + ".list",
                                      "snapshot_line": n, "original": raw.strip(),
                                      "candidate": rule, "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE"})
             before[group] += 1
             old_set.add(rule)
-            origin = path.relative_to(root).as_posix()
+            origin = "rules/generated/" + filename + ".list"
             if group in inactive:
                 reason, replacement, outcome = "SOURCE_DISABLED", "FINAL", None
             else:
@@ -525,7 +525,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     }
     files["refactor/vnext/reports/diff_summary.json"] = json.dumps(
         report, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
-    profile = (root / "LoonKit.lcf").read_text(encoding="utf-8")
+    profile = (root / "refactor/vnext/templates/LoonKit.legacy-seed.lcf").read_text(encoding="utf-8")
     start = profile.index("[Remote Rule]")
     end = profile.index("\n[Rule]", start)
     rule_order = cfg["subscription_order"]

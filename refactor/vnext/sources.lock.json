@@ -699,11 +699,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/AI.list",
+      "path": "rules/snapshots/phase03/generated/AI.list",
       "policy": "AI",
       "rule_format": "loon",
       "sha256": "ad508924957311602225dee0b6c51aae87091a4add32f7d3b9db7e6fe5abf192",
-      "source_id": "frozen:rules/generated/AI.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/AI.list"
     },
     {
       "encoding": "utf-8",
@@ -714,11 +714,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Abema.list",
+      "path": "rules/snapshots/phase03/generated/Abema.list",
       "policy": "Abema",
       "rule_format": "loon",
       "sha256": "e80cfd19fddc31e3b077da5d092c9736767d55c29fd6c0963c9c16f87891762d",
-      "source_id": "frozen:rules/generated/Abema.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Abema.list"
     },
     {
       "encoding": "utf-8",
@@ -729,11 +729,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/AdBlock.list",
+      "path": "rules/snapshots/phase03/generated/AdBlock.list",
       "policy": "AdBlock",
       "rule_format": "loon",
       "sha256": "233ba8db7cd0de872aac0f9181c18b1f6b7fb548c6d049dfd1b36b11bc670ef0",
-      "source_id": "frozen:rules/generated/AdBlock.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/AdBlock.list"
     },
     {
       "encoding": "utf-8",
@@ -744,11 +744,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/AnimeCrazy.list",
+      "path": "rules/snapshots/phase03/generated/AnimeCrazy.list",
       "policy": "AnimeCrazy",
       "rule_format": "loon",
       "sha256": "c95c03a8ecf74f98e05432a90eac729895f43c88e22a062e928c70662f1cbcca",
-      "source_id": "frozen:rules/generated/AnimeCrazy.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/AnimeCrazy.list"
     },
     {
       "encoding": "utf-8",
@@ -759,11 +759,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Apple.list",
+      "path": "rules/snapshots/phase03/generated/Apple.list",
       "policy": "Apple",
       "rule_format": "loon",
       "sha256": "e38f8da811ea4822ae020d9984dd8a46b82f208e2bfd27e4912c36c4ea3bf210",
-      "source_id": "frozen:rules/generated/Apple.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Apple.list"
     },
     {
       "encoding": "utf-8",
@@ -774,11 +774,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/AppleOTA.list",
+      "path": "rules/snapshots/phase03/generated/AppleOTA.list",
       "policy": "AppleOTA",
       "rule_format": "loon",
       "sha256": "da62c5e61d202b401841fb88e7727e60ea10ecad2d2e519c54900a6701dafd00",
-      "source_id": "frozen:rules/generated/AppleOTA.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/AppleOTA.list"
     },
     {
       "encoding": "utf-8",
@@ -789,11 +789,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/BBC.list",
+      "path": "rules/snapshots/phase03/generated/BBC.list",
       "policy": "BBC",
       "rule_format": "loon",
       "sha256": "06009e5f361a1fd95276ee419b2c70170181bac853dd45d911cac3db25bcc48f",
-      "source_id": "frozen:rules/generated/BBC.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/BBC.list"
     },
     {
       "encoding": "utf-8",
@@ -804,11 +804,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Bilibili.list",
+      "path": "rules/snapshots/phase03/generated/Bilibili.list",
       "policy": "Bilibili",
       "rule_format": "loon",
       "sha256": "4d65637e5a4e7ec5cb5db88e69354c72152b18d254d7b93b24d894ad9c870233",
-      "source_id": "frozen:rules/generated/Bilibili.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Bilibili.list"
     },
     {
       "encoding": "utf-8",
@@ -819,11 +819,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/ChinaDirect.list",
+      "path": "rules/snapshots/phase03/generated/ChinaDirect.list",
       "policy": "ChinaDirect",
       "rule_format": "loon",
       "sha256": "bc9b702c001672a99c3f891cd7bca3a93a2af558ccfef7752f3276e0712e12b8",
-      "source_id": "frozen:rules/generated/ChinaDirect.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/ChinaDirect.list"
     },
     {
       "encoding": "utf-8",
@@ -834,11 +834,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Dazn.list",
+      "path": "rules/snapshots/phase03/generated/Dazn.list",
       "policy": "Dazn",
       "rule_format": "loon",
       "sha256": "d40bd2676ffa0757d78f112b46b865c481978e5cf394cdc1561f4f88c65c2e77",
-      "source_id": "frozen:rules/generated/Dazn.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Dazn.list"
     },
     {
       "encoding": "utf-8",
@@ -849,11 +849,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Discord.list",
+      "path": "rules/snapshots/phase03/generated/Discord.list",
       "policy": "Discord",
       "rule_format": "loon",
       "sha256": "933ae81f3f4915c6af020e963cc9d7b629d33f98a593d482dd3032dee2bc3733",
-      "source_id": "frozen:rules/generated/Discord.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Discord.list"
     },
     {
       "encoding": "utf-8",
@@ -864,11 +864,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Disney.list",
+      "path": "rules/snapshots/phase03/generated/Disney.list",
       "policy": "Disney",
       "rule_format": "loon",
       "sha256": "729d637df863e7cb892f20e330db8f8dbb83ff9cc637b86659e993b9c64d7965",
-      "source_id": "frozen:rules/generated/Disney.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Disney.list"
     },
     {
       "encoding": "utf-8",
@@ -879,11 +879,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/DomesticCore.list",
+      "path": "rules/snapshots/phase03/generated/DomesticCore.list",
       "policy": "DomesticCore",
       "rule_format": "loon",
       "sha256": "baa127efa878dc209d5d69d3f9245a17ec6db95c9347512d9ea98e94008b3ea9",
-      "source_id": "frozen:rules/generated/DomesticCore.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/DomesticCore.list"
     },
     {
       "encoding": "utf-8",
@@ -894,11 +894,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Facebook.list",
+      "path": "rules/snapshots/phase03/generated/Facebook.list",
       "policy": "Facebook",
       "rule_format": "loon",
       "sha256": "cd067558c75ca4b19aa022f9529267e71fb9c7ce787af4b179984710bbaae017",
-      "source_id": "frozen:rules/generated/Facebook.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Facebook.list"
     },
     {
       "encoding": "utf-8",
@@ -909,11 +909,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Google.list",
+      "path": "rules/snapshots/phase03/generated/Google.list",
       "policy": "Google",
       "rule_format": "loon",
       "sha256": "da934430ed349b932861068381f76a9ce5c592b15036c1aa8323a7cf0e2b034f",
-      "source_id": "frozen:rules/generated/Google.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Google.list"
     },
     {
       "encoding": "utf-8",
@@ -924,11 +924,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/HBO.list",
+      "path": "rules/snapshots/phase03/generated/HBO.list",
       "policy": "HBO",
       "rule_format": "loon",
       "sha256": "b0754475821b5a3e21c6ce29cd5d96905a9ab3f3ea48365d9f5c835c9f267843",
-      "source_id": "frozen:rules/generated/HBO.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/HBO.list"
     },
     {
       "encoding": "utf-8",
@@ -939,11 +939,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Instagram.list",
+      "path": "rules/snapshots/phase03/generated/Instagram.list",
       "policy": "Instagram",
       "rule_format": "loon",
       "sha256": "053833cff62c34deca7314fb64b542e3d4b6c1b6efb1ffa742a129af315130e6",
-      "source_id": "frozen:rules/generated/Instagram.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Instagram.list"
     },
     {
       "encoding": "utf-8",
@@ -954,11 +954,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Line.list",
+      "path": "rules/snapshots/phase03/generated/Line.list",
       "policy": "Line",
       "rule_format": "loon",
       "sha256": "0ceeedaa50d93058b55654369742f86639cfd991a32a27e51ec3f05598a2f793",
-      "source_id": "frozen:rules/generated/Line.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Line.list"
     },
     {
       "encoding": "utf-8",
@@ -969,11 +969,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Linkedin.list",
+      "path": "rules/snapshots/phase03/generated/Linkedin.list",
       "policy": "Linkedin",
       "rule_format": "loon",
       "sha256": "b8347ec2114922e37584c1918067bc646f92a5f79ba2f9fc98ea070a1fd74e7e",
-      "source_id": "frozen:rules/generated/Linkedin.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Linkedin.list"
     },
     {
       "encoding": "utf-8",
@@ -984,11 +984,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Microsoft.list",
+      "path": "rules/snapshots/phase03/generated/Microsoft.list",
       "policy": "Microsoft",
       "rule_format": "loon",
       "sha256": "ec85fddd6541374052652493487436be82418b37929667ad95e5a6317f6ca9a6",
-      "source_id": "frozen:rules/generated/Microsoft.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Microsoft.list"
     },
     {
       "encoding": "utf-8",
@@ -999,11 +999,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Netflix.list",
+      "path": "rules/snapshots/phase03/generated/Netflix.list",
       "policy": "Netflix",
       "rule_format": "loon",
       "sha256": "b63c4ca5e36be0d6bcba2444a6a6b21704ad25bf9b11aab909cbded0c2a1ab94",
-      "source_id": "frozen:rules/generated/Netflix.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Netflix.list"
     },
     {
       "encoding": "utf-8",
@@ -1014,11 +1014,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Paypal.list",
+      "path": "rules/snapshots/phase03/generated/Paypal.list",
       "policy": "Paypal",
       "rule_format": "loon",
       "sha256": "d579f41f5d942f1d38a3ac88319f4738644c7078caa64256021457baa65ae257",
-      "source_id": "frozen:rules/generated/Paypal.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Paypal.list"
     },
     {
       "encoding": "utf-8",
@@ -1029,11 +1029,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/PrimeVideo.list",
+      "path": "rules/snapshots/phase03/generated/PrimeVideo.list",
       "policy": "PrimeVideo",
       "rule_format": "loon",
       "sha256": "32f18518b00e3ec72a58cb8fbe7c3bbd372419c14e8af0ff74bc5e88b7fe315a",
-      "source_id": "frozen:rules/generated/PrimeVideo.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/PrimeVideo.list"
     },
     {
       "encoding": "utf-8",
@@ -1044,11 +1044,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Reddit.list",
+      "path": "rules/snapshots/phase03/generated/Reddit.list",
       "policy": "Reddit",
       "rule_format": "loon",
       "sha256": "bec802f172f0692614fe60bd7f32078922d7cc10ff9bb46e38eb8700a7399e39",
-      "source_id": "frozen:rules/generated/Reddit.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Reddit.list"
     },
     {
       "encoding": "utf-8",
@@ -1059,11 +1059,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Spotify.list",
+      "path": "rules/snapshots/phase03/generated/Spotify.list",
       "policy": "Spotify",
       "rule_format": "loon",
       "sha256": "72f3547d76675c0cedda9ca50afc39f357cc8f705616139a75a44b18db5f7b54",
-      "source_id": "frozen:rules/generated/Spotify.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Spotify.list"
     },
     {
       "encoding": "utf-8",
@@ -1074,11 +1074,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Steam.list",
+      "path": "rules/snapshots/phase03/generated/Steam.list",
       "policy": "Steam",
       "rule_format": "loon",
       "sha256": "982421d60f8008f7fa02b9a6efd49bb13122bd1a6fc3e1d28837c9aa980859aa",
-      "source_id": "frozen:rules/generated/Steam.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Steam.list"
     },
     {
       "encoding": "utf-8",
@@ -1089,11 +1089,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/SteamCN.list",
+      "path": "rules/snapshots/phase03/generated/SteamCN.list",
       "policy": "SteamCN",
       "rule_format": "loon",
       "sha256": "177a9f05dbd064862f4aa8067bb695f54a0296d9d38ae783bc1347848c63c3ff",
-      "source_id": "frozen:rules/generated/SteamCN.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/SteamCN.list"
     },
     {
       "encoding": "utf-8",
@@ -1104,11 +1104,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Telegram.list",
+      "path": "rules/snapshots/phase03/generated/Telegram.list",
       "policy": "Telegram",
       "rule_format": "loon",
       "sha256": "018dd7ffef3e58c830ecd947743ccf28c88d6d8360f5e341f51b6141ebee06e0",
-      "source_id": "frozen:rules/generated/Telegram.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Telegram.list"
     },
     {
       "encoding": "utf-8",
@@ -1119,11 +1119,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/TikTok.list",
+      "path": "rules/snapshots/phase03/generated/TikTok.list",
       "policy": "TikTok",
       "rule_format": "loon",
       "sha256": "32ef9151018d7a4a07900d845d7b4e26a0a162678f796e13be1a892d46599c9e",
-      "source_id": "frozen:rules/generated/TikTok.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/TikTok.list"
     },
     {
       "encoding": "utf-8",
@@ -1134,11 +1134,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Twitch.list",
+      "path": "rules/snapshots/phase03/generated/Twitch.list",
       "policy": "Twitch",
       "rule_format": "loon",
       "sha256": "c563233be0c9a991665f1afd9cf7c07958208eb5acf67aee36604ea51a01b525",
-      "source_id": "frozen:rules/generated/Twitch.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Twitch.list"
     },
     {
       "encoding": "utf-8",
@@ -1149,11 +1149,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Twitter.list",
+      "path": "rules/snapshots/phase03/generated/Twitter.list",
       "policy": "Twitter",
       "rule_format": "loon",
       "sha256": "739084a49270d3a27428554132d08e64fdd78d014c5a0e487e2b0aad2445f472",
-      "source_id": "frozen:rules/generated/Twitter.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Twitter.list"
     },
     {
       "encoding": "utf-8",
@@ -1164,11 +1164,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/Whatsapp.list",
+      "path": "rules/snapshots/phase03/generated/Whatsapp.list",
       "policy": "Whatsapp",
       "rule_format": "loon",
       "sha256": "d227f534c7453dc8a56ca3e69b0f1865fb0222941fc0db6d4f1c89ffbdc494fd",
-      "source_id": "frozen:rules/generated/Whatsapp.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/Whatsapp.list"
     },
     {
       "encoding": "utf-8",
@@ -1179,11 +1179,11 @@
       "license": "UNKNOWN_MERGED_PROVENANCE",
       "original_line_provenance": "HISTORICAL_PROVENANCE_UNRECOVERABLE",
       "original_url": null,
-      "path": "rules/generated/YouTube.list",
+      "path": "rules/snapshots/phase03/generated/YouTube.list",
       "policy": "YouTube",
       "rule_format": "loon",
       "sha256": "b677eff2eed115b945042b9391dc6450bf0f66395e56b6132ecea4a2470c10c1",
-      "source_id": "frozen:rules/generated/YouTube.list"
+      "source_id": "frozen:rules/snapshots/phase03/generated/YouTube.list"
     }
   ],
   "schema_version": 1,
