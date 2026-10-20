@@ -13,7 +13,11 @@ def load(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 def sha256(path):
-    return hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
+    # This phase tests hashes of historical version-frozen publication inputs,
+    # not those of RC2 production entry points.
+    archived = {"LoonKit.lcf": "refactor/vnext/templates/LoonKit.legacy-seed.lcf",
+                "LoonKit.PrivacyDNS.lcf": "refactor/vnext/templates/LoonKit.PrivacyDNS.legacy-seed.lcf"}
+    return hashlib.sha256((ROOT / archived.get(path, path)).read_bytes()).hexdigest()
 
 def decisions_valid(entries):
     ids = [x.get("source_id") for x in entries]

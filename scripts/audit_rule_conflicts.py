@@ -50,7 +50,11 @@ def validate_snapshot():
     index = read_json("baselines/current/rule-index.json")
     assert manifest["source_commit"] == index["source_commit"] == SOURCE_COMMIT
     for item in manifest["files"]:
-        data = (ROOT / item["path"]).read_bytes()
+        # Phase 01 snapshot hashes remain anchored to the archived publication,
+        # even after the root production configs migrate to RC2.
+        historical = {"LoonKit.lcf": "refactor/vnext/templates/LoonKit.legacy-seed.lcf",
+                      "LoonKit.PrivacyDNS.lcf": "refactor/vnext/templates/LoonKit.PrivacyDNS.legacy-seed.lcf"}
+        data = (ROOT / historical.get(item["path"], item["path"])).read_bytes()
         assert hashlib.sha256(data).hexdigest() == item["sha256"], item["path"]
         assert len(data) == item["bytes"], item["path"]
     assert len(index["subscriptions"]) == manifest["remote_subscription_count"], "subscription count"
