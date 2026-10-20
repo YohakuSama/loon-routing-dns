@@ -1,6 +1,6 @@
 # vNext-RC2 生产迁移预案与回滚演练
 
-状态：`DRY_RUN_REQUIRED`。此文档中的人工操作**尚未执行**，不是 GitHub main 的合并授权。
+状态：**Git worktree main 合并与撤销预演已由 CI 验证成功**（参见 https://github.com/YohakuSama/loonkit/actions/runs/39405301038）；**Loon 真机远程规则缓存回滚仍 NOT_EXECUTED**。本文手工发布步骤未实施，不构成 GitHub main 合并授权。
 
 ## 准备与旧用户兼容性
 

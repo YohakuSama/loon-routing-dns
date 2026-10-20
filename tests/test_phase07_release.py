@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import phase07_release as pr
 import phase07_gate as gate
 import phase07_source_update_review as updates
+import phase07_license_audit as license_audit
 import vnext_rule_engine as ve
 
 
@@ -101,6 +102,22 @@ class ReleaseBuildTests(unittest.TestCase):
             self.assertEqual(report["added_rule_count"],1)
             self.assertFalse(report["release_write_performed"])
             self.assertEqual((ROOT/source).read_bytes(),original)
+
+    def test_license_catalog_87_historical_records_is_explicitly_blocked(self):
+        result=license_audit.audit()
+        self.assertEqual(result["status"],"BLOCKED_REVIEW")
+        self.assertEqual(result["historical_records_checked"],87)
+        self.assertEqual(result["line_level_license_attribution"],"NOT_VERIFIED")
+
+    def test_invalid_new_source_rule_rejected_without_touching_snapshot(self):
+        src="rules/snapshots/phase03/generated/Google.list"
+        original=(ROOT/src).read_bytes()
+        with tempfile.TemporaryDirectory() as tmp:
+            proposed=Path(tmp)/"Google.proposed.list"
+            proposed.write_bytes(original+b"\nIP-ASN,NONNUMERIC\n")
+            with self.assertRaisesRegex(ValueError,"invalid newly proposed Loon matcher"):
+                updates.review(src,proposed)
+            self.assertEqual((ROOT/src).read_bytes(),original)
 
     def test_release_gate_remains_explicitly_blocked(self):
         gate=json.loads((ROOT/"release/phase-07/RELEASE_GATE.json").read_text())
