@@ -11,6 +11,7 @@ import phase07_release as pr
 import phase07_gate as gate
 import phase07_source_update_review as updates
 import phase07_next_release as next_release
+import phase07_device_attestation as device_attestation
 import phase07_license_audit as license_audit
 import phase07_historical_attestation as historical_attestation
 import vnext_rule_engine as ve
@@ -140,6 +141,10 @@ class ReleaseBuildTests(unittest.TestCase):
         self.assertEqual(result["status"],"BLOCKED_REVIEW")
         self.assertEqual(result["historical_records_checked"],87)
         self.assertEqual(result["line_level_license_attribution"],"NOT_VERIFIED")
+
+    def test_runtime_gate_cannot_pass_without_real_bound_device_records(self):
+        with self.assertRaisesRegex(ValueError,"cannot lack structured"):
+            device_attestation.inspect({"device_import"},ROOT)
 
     def test_future_release_stages_independently_and_rebuilds_exact_bytes(self):
         with tempfile.TemporaryDirectory(prefix="loonkit-next-release-") as temp:

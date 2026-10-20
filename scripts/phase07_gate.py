@@ -25,6 +25,14 @@ def check(require_ready=False):
                 raise ValueError("PASS lacks immutable evidence "+name)
         if row["blocks_release"] and row["status"]!="PASS":
             blockers.append(name)
+    # Runtime PASS is invalid unless the redacted record proves both tested
+    # profiles and frozen rule Git blobs match the exact reviewed RC2 bytes.
+    runtime={"device_import","domestic_business","overseas_business",
+             "adblock","final","dns_egress","ipv4_ipv6"}
+    passed={name for name in runtime if d["checks"][name]["status"]=="PASS"}
+    if passed:
+        from phase07_device_attestation import inspect as check_device
+        check_device(passed,ROOT)
     if d["release_status"]=="APPROVED" and blockers:
         raise ValueError("APPROVED contradicts open blockers")
     if require_ready and (blockers or d["release_status"]!="APPROVED"):

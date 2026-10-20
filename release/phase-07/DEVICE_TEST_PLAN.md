@@ -26,3 +26,17 @@ python3 scripts/validate_device_results.py /path/to/redacted-device-results.json
 校验器验证结构和敏感数据匿名化，不等价于自动通过业务验收。结果至少记录测试编号、配置 Commit SHA、规则版本、时间、设备/网络/节点别名、客户端版本、受控 DNS/TUN 哈希、Loon 实际命中、策略、出口、解析器、IPv4/IPv6 结果和来源证据。相同用例每种配置需一致控制变量。出现故障应保存已匿名化证据和复现步骤，再定位规则归属并更新候选；变更已测试文件后必须重测受影响项。
 
 完整测试尚未获得，不可把 Release Gate 的相关测试状态修改为 PASS。
+
+## 发布门槛的文件哈希绑定（不可虚构通过）
+
+当维护者准备把机器发布门槛中的 `device_import`、`domestic_business`、`overseas_business`、`adblock`、`final`、`dns_egress`、`ipv4_ipv6` 任一项设为 `PASS`，必须先提供**真实运行后匿名化**的 `validation/phase-07/device-results.redacted.json`（当前未提供且未执行）。文件必须符合阶段05 `validate_device_results.py` 结构，每行另需：
+
+- `test_scope`：上述机器门槛的准确类别名。
+- `profile_file`：`LoonKit.lcf` 或 `LoonKit.PrivacyDNS.lcf`；两个配置均须独立具备该项 PASS 结果。
+- `profile_sha256`：与 `release/phase-07/RC_MANIFEST.json` 中同名配置 SHA256 一致。
+- `config_commit_sha`：测试时完整配置所在的真实 Git Commit，且其中对应配置的 Git Blob 内容与上述 SHA256 一致。
+- `rule_file_version`：该候选固定的 40 位远程规则资源 Commit，而非浮动分支或单纯文字版本号。
+- `adblock_choice`：AdBlock 测试分别包含 `REJECT` 与 `DIRECT`。
+- `final_choice`：Final 测试分别包含 `Proxy`、`Auto`、`Fallback`、`DIRECT`。
+
+DNS PASS 记录不得缺少实际解析器观测；IPv4/IPv6 PASS 必须具备双栈观测字段。机器门槛运行 `scripts/phase07_device_attestation.py` 的相应函数时会验证文件存在、隐私字段脱敏、以上 SHA / Commit 匹配、对应 scope 和策略选择完整；**即便机器验证成功，仍仅表示结构化结果收到、需要维护者人工核对真实性，不能自动放行许可证与最终批准。**
