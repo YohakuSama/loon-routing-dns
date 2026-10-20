@@ -89,7 +89,8 @@ def covers_domain(rule: str, host: str) -> bool:
             or (kind == "DOMAIN-KEYWORD" and value in host))
 
 
-def filter_rule(group: str, rule: str, protected: tuple[str, ...]) -> tuple[str | None, str | None, str]:
+def filter_rule(group: str, rule: str, protected: tuple[str, ...],
+                keywords: dict | None = None) -> tuple[str | None, str | None, str]:
     kind, value = fields(rule)
     if group in {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}:
         if any(covers_domain(rule, x) for x in protected):
@@ -107,6 +108,11 @@ def filter_rule(group: str, rule: str, protected: tuple[str, ...]) -> tuple[str 
                 minimum = 24 if net.version == 4 else 48
                 if net.prefixlen < minimum:
                     return None, "DIRECT_WIDE_IP_UNPROVEN", "GEOIP CN for IP destinations or FINAL"
+    if kind == "DOMAIN-KEYWORD" and keywords and value in keywords.get(group, {}):
+        scoped = keywords[group][value]
+        if not scoped.startswith("DOMAIN-SUFFIX,") or normalize(scoped) != scoped:
+            raise ValueError("invalid reviewed keyword decision " + repr(scoped))
+        return scoped, "BRAND_KEYWORD_SCOPED_TO_SUFFIX", scoped
     if group == "AdBlock":
         if kind not in {"DOMAIN", "DOMAIN-SUFFIX"}:
             return None, "ADBLOCK_NON_DOMAIN_MATCH", "FINAL"
@@ -271,7 +277,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
             if group in inactive:
                 reason, replacement, outcome = "SOURCE_DISABLED", "FINAL", None
             else:
-                outcome, reason, replacement = filter_rule(group, rule, protected)
+                outcome, reason, replacement = filter_rule(group, rule, protected, cfg.get("reviewed_keyword_narrowing", {}))
             if outcome:
                 groups[group][outcome].add((origin, n))
                 if outcome != rule:
@@ -477,6 +483,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
         "adblock_anchors": list(AD_ANCHORS),
         "domain_parent_child_ambiguities": len(ancestry),
         "domain_keyword_review_count": len(kw_risks),
+        "reviewed_keyword_narrowing_count": sum(1 for x in trace if x["reason"] == "BRAND_KEYWORD_SCOPED_TO_SUFFIX"),
         "cross_policy_nested_ip_networks": len(ip_overlap),
         "removed_or_modified_origin_lines": len(trace),
         "isolation_causes": dict(sorted(Counter(item["reason"] for item in trace).items())),
