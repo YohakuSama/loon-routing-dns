@@ -161,6 +161,7 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     trace: list[dict] = []
     before, reasons = Counter(), Counter()
     raw_total = 0
+    flag_changes: list[dict] = []
     old_rules_by_group: dict[str, set[str]] = {}
     source_catalog = json.loads((root / "rules/sources.json").read_text(encoding="utf-8"))["sources"]
     source_groups = defaultdict(list)
@@ -177,6 +178,10 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
             if not rule:
                 continue
             raw_total += 1
+            if rule.startswith(("IP-CIDR,", "IP-CIDR6,", "IP-ASN,")) and raw.strip() != rule:
+                flag_changes.append({"group": group, "snapshot_file": path.relative_to(root).as_posix(),
+                                     "snapshot_line": n, "original": raw.strip(),
+                                     "candidate": rule, "effect": "IP_LITERAL_MATCH_ONLY_NO_DNS_PRE_RESOLVE"})
             before[group] += 1
             old_set.add(rule)
             origin = path.relative_to(root).as_posix()
@@ -244,6 +249,33 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
     candidate = {(group, rule) for group, records in groups.items() for rule in records}
     added = sorted(candidate - original)
     removed = sorted(original - candidate)
+    files["refactor/vnext/reports/ip_no_resolve_changes.jsonl"] = "".join(
+        json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in flag_changes)
+    # Full classification-specific ledgers accompany the complete removal ledger.
+    for key, selected in (
+        ("direct_changes", [x for x in trace if x["group"] in {"ChinaDirect", "DomesticCore", "AppleOTA", "SteamCN"}]),
+        ("adblock_changes", [x for x in trace if x["group"] == "AdBlock" or x["reason"] == "ADVERTISING_REASSIGNED"]),
+        ("proxyprotect_impact", [{"source": "rules/ProxyProtect.list",
+                                  "old_policy": "Proxy",
+                                  "candidate_replacement": "ordinary service owner or FINAL",
+                                  "compatibility": "FINAL=DIRECT MAY CHANGE BEHAVIOR",
+                                  "message": "No 17-rule diagnostic whitelist copied into vNext"}]),
+    ):
+        files["refactor/vnext/reports/" + key + ".jsonl"] = "".join(
+            json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in selected)
+    old_owners, new_owners = defaultdict(set), defaultdict(set)
+    for group, rule in original:
+        old_owners[rule].add(group)
+    for group, rule in candidate:
+        new_owners[rule].add(group)
+    ownership = []
+    for rule in sorted(set(old_owners) | set(new_owners)):
+        old_groups, new_groups = sorted(old_owners[rule]), sorted(new_owners[rule])
+        if old_groups != new_groups:
+            ownership.append({"rule": rule, "original_groups": old_groups,
+                              "candidate_groups": new_groups, "fallback": "FINAL if absent"})
+    files["refactor/vnext/reports/ownership_changes.jsonl"] = "".join(
+        json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in ownership)
     files["refactor/vnext/reports/added.jsonl"] = "".join(
         json.dumps({"group": g, "rule": r, "reason": "NEW_OR_RECLASSIFIED"},
                    ensure_ascii=False, sort_keys=True) + "\n" for g, r in added)
@@ -258,6 +290,10 @@ def compile_rules(root: Path = ROOT) -> dict[str, str]:
         "active_groups": active, "inactive_groups_fall_through_final": inactive,
         "before_groups": dict(sorted(before.items())), "after_groups": result,
         "added_predicate_group_count": len(added), "removed_predicate_group_count": len(removed),
+        "ownership_changes": len(ownership), "ip_no_resolve_changes": len(flag_changes),
+        "active_remote_upstream_sources": 0,
+        "source_status": "26 frozen group snapshots, not 26 independently verifiable upstream feeds",
+        "adblock_anchors": list(AD_ANCHORS),
         "removed_or_modified_origin_lines": len(trace),
         "isolation_causes": dict(sorted(Counter(item["reason"] for item in trace).items())),
         "new_rules": [{"group": g, "rule": r} for g, r in added[:100]],
