@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "stage": "04",
+  "baseline_commit": "b982110a189b41b42e8562f7d10226071b0b2432",
+  "candidate_generation_commit": "0eeb7c7f9084a22a885c24a80a47eae0cfde784d",
+  "engineering_status": "SUCCESS",
+  "release_readiness": "READY_FOR_NEXT_STAGE",
+  "production_readiness": "NOT_READY",
+  "ci": "https://github.com/YohakuSama/loonkit/actions/runs/39377869413",
+  "classification": "Offline static candidate; no iPhone validation",
+  "risks": [
+    {
+      "id": "R04-001",
+      "status": "FIXED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/reports/ip_no_resolve_changes.jsonl",
+      "scope": "Seven IP-ASN rules updated to single no-resolve flag",
+      "residual": "Device IP vs domain behavior unverified"
+    },
+    {
+      "id": "R04-002",
+      "status": "MITIGATED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/reports/adblock_changes.jsonl",
+      "scope": "Four advertising roots assigned to AdBlock; REJECT and DIRECT retained",
+      "residual": "Payment and anti-fraud collateral effects need device tests"
+    },
+    {
+      "id": "R04-003",
+      "status": "ISOLATED_FROM_CANDIDATE",
+      "evidence": "refactor/vnext/reports/direct_changes.jsonl",
+      "scope": "9 unproven DIRECT keywords, 46 single-label suffixes and 8061 broad IP prefixes",
+      "residual": "Domestic/IPv6 service compatibility needs testing"
+    },
+    {
+      "id": "R04-004",
+      "status": "MITIGATED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/engine_manifest.json",
+      "scope": "Seven overseas subscriptions disabled without removing existing UI groups",
+      "residual": "FINAL=DIRECT might route services directly"
+    },
+    {
+      "id": "R04-005",
+      "status": "MITIGATED_IN_CANDIDATE",
+      "evidence": "refactor/vnext/LoonKit.vNext.Candidate.lcf",
+      "scope": "Independent 17-rule ProxyProtect subscription absent",
+      "residual": "Cannot promise test sites use proxy when FINAL=DIRECT"
+    },
+    {
+      "id": "R04-006",
+      "status": "ISOLATED_FROM_CANDIDATE",
+      "evidence": "refactor/vnext/reports/adblock_changes.jsonl",
+      "scope": "322 essential shared-service blocker predicates isolated",
+      "residual": "AdBlock effectiveness and privacy trade-off"
+    },
+    {
+      "id": "R04-007",
+      "status": "REQUIRES_RUNTIME_TEST",
+      "evidence": "https://nsloon.app/docs/Rule/ip_rule/",
+      "scope": "Loon local DNS resolution, ASN/no-resolve, IPv4 and IPv6 literal flows",
+      "residual": "No physical device result"
+    },
+    {
+      "id": "R04-008",
+      "status": "UNRESOLVED_RELEASE_BLOCKER",
+      "evidence": "refactor/vnext/reports/ownership_changes.jsonl",
+      "scope": "Cross-type suffix and keyword overlaps and shared CDNs outside exact collisions",
+      "residual": "Business signoff and device priority evidence"
+    },
+    {
+      "id": "R04-009",
+      "status": "UNRESOLVED_RELEASE_BLOCKER",
+      "evidence": "refactor/vnext/reports/provenance.tsv",
+      "scope": "Historic upstream per-line attribution unavailable; published snapshot file/line recovered",
+      "residual": "Do not imply original upstream source proof"
+    },
+    {
+      "id": "R04-010",
+      "status": "REQUIRES_RUNTIME_TEST",
+      "evidence": "tests/test_phase04_vnext.py",
+      "scope": "AdBlock selector choices, international payment, Apple CDN, banks and video unlock",
+      "residual": "Domain-only simulator does not represent network flows"
+    },
+    {
+      "id": "R04-011",
+      "status": "VERIFIED_ACCEPTABLE",
+      "evidence": "https://github.com/YohakuSama/loonkit/actions/runs/39377869413",
+      "scope": "Stages 01-03, existing Python and Node suites passed; General section byte-identical",
+      "residual": "Static invariants only"
+    }
+  ],
+  "rebuild_command": "python3 scripts/vnext_rule_engine.py",
+  "recheck_command": "python3 scripts/vnext_rule_engine.py --check",
+  "hold_release": true,
+  "next_stage": "05: device and service routing acceptance"
+}
