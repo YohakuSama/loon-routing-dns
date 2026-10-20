@@ -101,6 +101,11 @@ def filter_rule(group: str, rule: str, protected: tuple[str, ...],
             if kind == "DOMAIN-KEYWORD":
                 if value == ".tmall.com":
                     return "DOMAIN-SUFFIX,tmall.com", "DIRECT_KEYWORD_NARROWED", "DIRECT (scoped suffix)"
+                if keywords and value in keywords.get("ChinaDirect", {}):
+                    scoped = keywords["ChinaDirect"][value]
+                    if not scoped.startswith("DOMAIN-SUFFIX,") or normalize(scoped) != scoped:
+                        raise ValueError("unsafe ChinaDirect business suffix: " + repr(scoped))
+                    return scoped, "BRAND_KEYWORD_SCOPED_TO_SUFFIX", scoped
                 return None, "DIRECT_KEYWORD_UNPROVEN", "GEOIP CN or FINAL"
             if kind == "DOMAIN-SUFFIX" and "." not in value and value != "cn":
                 return None, "DIRECT_SINGLE_LABEL_UNPROVEN", "GEOIP CN or FINAL"
