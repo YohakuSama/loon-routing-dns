@@ -98,6 +98,8 @@ class CandidateWorkflow(unittest.TestCase):
                              ["BROAD_KEYWORD_OR_IP_REVIEW"], 1)
             self.assertGreaterEqual(result["groups"]["ChinaDirect"]["risk_categories"]
                                     ["DIRECT_PROTECTED_DOMAIN"], 1)
+            self.assertGreaterEqual(result["groups"]["AI"]["risk_categories"]
+                                    ["NEW_SUFFIX_SCOPE_REVIEW"], 1)
             self.assertGreaterEqual(result["groups"]["AI"]["removed"], 1)
             before = (root/"rules/releases/vNext-RC2/AI.list").read_bytes()
             output = Path(td)/"candidate-output"
