@@ -16,6 +16,7 @@ REPORT = Path("refactor/vnext/reports/domain_parent_child_conflicts.jsonl")
 PROVENANCE = Path("refactor/vnext/reports/provenance.tsv")
 DISPOSITIONS = Path("refactor/vnext/reports/conflict_dispositions.jsonl")
 SUMMARY = Path("refactor/vnext/reports/conflict_summary.phase05.json")
+SHARD_SIZE = 950
 DIRECT = {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}
 ADVERTISING = "AdBlock"
 SHARED_CDN = ("cloudfront.net", "akamaized.net", "akamaihd.net", "edgesuite.net",
@@ -151,10 +152,17 @@ def generate(root: Path = ROOT) -> tuple[dict[str, str], dict]:
         "release_claim": "NOT_READY_FOR_PRODUCTION",
         "warning": "Machine-classified observations, not adjudicated Loon routing results.",
     }
-    files = {
-        str(DISPOSITIONS): "".join(out),
-        str(SUMMARY): json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-    }
+    shard_entries = []
+    files = {}
+    for offset in range(0, len(out), SHARD_SIZE):
+        part = offset // SHARD_SIZE + 1
+        relative = DISPOSITIONS.with_name(f"conflict_dispositions.part{part:02d}.jsonl")
+        block = out[offset:offset + SHARD_SIZE]
+        files[str(relative)] = "".join(block)
+        shard_entries.append({"path": str(relative), "rows": len(block)})
+    summary["shards"] = shard_entries
+    summary["shard_size"] = SHARD_SIZE
+    files[str(SUMMARY)] = json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     return files, summary
 
 
@@ -174,6 +182,10 @@ def main() -> None:
     if a.generate:
         for relative, content in files.items():
             (ROOT / relative).write_text(content, encoding="utf-8")
+        # The single combined ledger is an optional untracked maintainer export;
+        # committed and checked source of truth is the complete numbered shard set.
+        combined = "".join(files[item["path"]] for item in summary["shards"])
+        (ROOT / DISPOSITIONS).write_text(combined, encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
 
 
