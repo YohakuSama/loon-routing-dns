@@ -11,7 +11,7 @@
   var node=nonempty(ctx.node)||nonempty(info.name)||nonempty(info.tag)||
     nonempty(ctx.policyGroup)||nonempty(args.target_policy)||"Proxy";
   var full=args.full_scan===true||args.full_scan==="true";
-  var budget=full?21000:13500,started=Date.now(),ended=false;
+  var budget=full?23000:16500,started=Date.now(),ended=false;
   var serviceList=[
     ["netflix","Netflix","流媒体"],["disney","Disney+","流媒体"],
     ["youtube","YouTube Premium","流媒体"],["spotify","Spotify","流媒体"],
@@ -24,7 +24,7 @@
     ["bbc","BBC iPlayer","其他"],["abema","Abema","其他"]
   ]);
   var result=new Array(serviceList.length),queue=[],inFlight=0,finished=0,idx=0,running=0,flushing=false;
-  var MAX_HTTP=6,MAX_SERVICES=6;
+  var MAX_HTTP=5,MAX_SERVICES=5;
   function state(code,extra){return {code:code,extra:extra||""};}
   function done(payload){if(ended)return;ended=true;$done(payload);}
   if(node.length>220||/[\u0000-\u001f\u007f]/.test(node)){done({title:"解锁检测",content:"节点名称无效"});return;}
@@ -38,6 +38,8 @@
     return "";
   }
   function country(s){var x=String(s||"").toUpperCase();return /^[A-Z]{2,3}$/.test(x)?x:"";}
+  function knownResponse(r){var c=httpStatus(r);return c>=200&&c<400;}
+  function actionable(err,r){return err&&!httpStatus(r);}
   function extract(body,re){var m=body.match(re);return m?country(m[1]):"";}
   function traceRegion(body){return extract(body,/^loc=([A-Za-z]{2})\s*$/m);}
   function restricted(body){return /unsupported_country|forbidden.location|not available in your (?:country|region)|not supported in your (?:country|region)|this service is not available in your (?:country|region)/i.test(body);}
@@ -54,7 +56,7 @@
       (function(task){
         inFlight++;
         var finishedTask=false,opts={
-          url:task.url,node:node,timeout:4800,
+          url:task.url,node:node,timeout:5600,
           "auto-cookie":false,"auto-redirect":task.follow!==false,insecure:false,
           headers:{"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124 Safari/537.36","Accept-Language":"en-US,en;q=0.8"}
         };
@@ -62,7 +64,7 @@
           if(finishedTask)return;
           finishedTask=true;
           inFlight--;
-          if(!ended)task.cb(err,res||{},cleanBody(body));
+          if(!ended)task.cb(err&&httpStatus(res)>=400?null:err,res||{},cleanBody(body));
           if(!ended)send();
         }
         try{$httpClient.get(opts,complete);}catch(e){complete(e,null,"");}
@@ -74,7 +76,7 @@
   function reliable(url,cb,follow){
     var tried=false;
     function once(err,r,body){
-      if(err && !tried && timeLeft()>5500){
+      if(err && !tried && timeLeft()>7200){
         tried=true;get(url,once,follow);return;
       }
       cb(err,r,body);
@@ -94,18 +96,19 @@
           valid[n]=!err&&((httpStatus(r)===200&&/netflix/i.test(b)&&b.indexOf(film)!==-1)||
             ((httpStatus(r)===301||httpStatus(r)===302)&&/netflix\.com/i.test(loc)&&loc.indexOf(film)!==-1));
           if(++seen!==2)return;
-          if(valid[0]||valid[1])return finish("available","片库有响应（初步）");
+          if(valid[0]||valid[1])return finish("available","片库标题");
           if(statuses[0]===451||statuses[1]===451)return finish("blocked","地区限制");
-          if(statuses[0]===404&&statuses[1]===404){
-            reliable("https://www.netflix.com/title/80018499",function(e,re,body){
-              if(!e&&httpStatus(re)===200&&/netflix/i.test(body)&&body.indexOf("80018499")>=0)
-                finish("partial","可能仅自制剧");
-              else finish("unknown","片库未确认");
-            },false);
-            return;
-          }
-          if(errors[0]&&errors[1])return finish(errors[0]==="timeout"||errors[1]==="timeout"?"timeout":"failed");
-          finish("unknown",statuses[0]===403||statuses[1]===403?"访问被拒绝（非地区证据）":"片库未确认");
+          // The CDN endpoint is a secondary indicator, not proof of playback rights.
+          get("https://api.fast.com/netflix/speedtest/v2?https=true&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=5",function(e,re,body){
+            var code="";
+            if(!e&&httpStatus(re)===200){
+              try{var data=JSON.parse(body);code=country(data.targets&&data.targets[0]&&data.targets[0].location&&data.targets[0].location.country);}catch(ignore){}
+            }
+            if(code)return finish("region",code+"（Netflix CDN，非片库证明）");
+            if(statuses[0]===404&&statuses[1]===404)return finish("unknown","片库标题不可见");
+            if(errors[0]&&errors[1])return finish(errors[0]==="timeout"||errors[1]==="timeout"?"timeout":"failed");
+            finish("unknown",statuses[0]===403||statuses[1]===403?"访问被拒绝":"无片库证据");
+          },false);
         },false);
       });
     } else if(id==="disney"){
@@ -117,7 +120,7 @@
           return finish("blocked",region);
         var support=/"inSupportedLocation"\s*:\s*(true|false)/i.exec(b);
         if(support)return finish(support[1].toLowerCase()==="true"?"available":"blocked",region||"接口");
-        finish(region?"region":"unknown",region||"无地区接口结果");
+        finish(region?"region":knownResponse(r)?"reachable":"unknown",region||((knownResponse(r))?"主页可访问":"无地区接口结果"));
       },true);
     } else if(id==="youtube"){
       reliable("https://www.youtube.com/premium?hl=en",function(err,r,b){
@@ -128,29 +131,32 @@
           extract(b,/id=["']country-code["'][^>]*>\s*([A-Za-z]{2})/i);
         var confirmed=/"isPremiumAvailable"\s*:\s*true/i.test(b)||
           /premium is available in your country/i.test(b);
-        if(httpStatus(r)===200&&confirmed)return finish("available",countryCode||"订阅地区");
-        if(countryCode)return finish("region",countryCode+"（非 Premium 认证）");
-        finish("unknown",httpStatus(r)===200?"未发现地区开放标志":"页面无有效信号");
+        if(httpStatus(r)===200&&confirmed)return finish("available",countryCode||"Premium 页面");
+        if(countryCode)return finish("region",countryCode+"（不能证明 Premium）");
+        finish(knownResponse(r)?"reachable":"unknown",httpStatus(r)===200?"无 Premium 开放信号":"页面无有效信号");
       },true);
     } else if(id==="spotify"){
       reliable("https://www.spotify.com/api/content/v1/country-selector?platform=web&format=json",function(err,r,b){
         if(err)return finish(statusError(err));
         if(httpStatus(r)===451||restricted(b))return finish("blocked");
         var code=extract(b,/"countryCode"\s*:\s*"([A-Za-z]{2})"/i);
-        var redirect=header(r,"location"),m=redirect.match(/(?:spotify\.com\/|^\/)([a-z]{2})(?:[-/]|$)/i);
+        var redirect=header(r,"location"),url=String(r&&r.url||"");
+        var m=(redirect||url).match(/spotify\.com\/([a-z]{2})(?:[-/]|$)/i);
         if(!code&&m)code=country(m[1]);
-        if(code&&(httpStatus(r)===200||httpStatus(r)===301||httpStatus(r)===302))
-          return finish("available",code+"（地区接口）");
-        finish("unknown",httpStatus(r)===429?"请求被限流":"地区接口无有效响应");
+        if(code&&knownResponse(r))return finish("available",code+"（地区接口）");
+        // Country-selector frequently responds with a generic landing page.
+        // Such a response only proves that the site answered.
+        if(knownResponse(r))return finish("reachable","地区接口未提供区域");
+        finish("unknown",httpStatus(r)===429?"接口限流":"地区接口无有效响应");
       },false);
     } else if(id==="tiktok"){
       reliable("https://www.tiktok.com/cdn-cgi/trace",function(err,r,b){
         if(!err && httpStatus(r)===451)return finish("blocked");
         var code=!err?traceRegion(b):"";
-        if(code)return finish("region",code+"（CDN 出口）");
+        if(code)return finish("region",code+"（CDN 出口，非 TikTok 解锁）");
         reliable("https://www.tiktok.com/",function(e,resp,page){
           if(!e&&(httpStatus(resp)===451||restricted(page)))return finish("blocked");
-          if(!e&&httpStatus(resp)===200)return finish("reachable","页面可访问，解锁未证实");
+          if(!e&&httpStatus(resp)===200)return finish("reachable","主页可访问，地区未确认");
           finish(err&&e?(statusError(err)==="timeout"?"timeout":"failed"):"unknown");
         },true);
       },false);
@@ -159,7 +165,7 @@
       function each(n,s,type){
         parts[n]=s;kind[n]=type;
         if(--remaining)return;
-        var detail="Web "+parts[0]+" · iOS "+parts[1];
+        var detail="Web "+parts[0]+" / iOS "+parts[1];
         if(kind.indexOf("blocked")>=0)return finish("blocked",detail);
         if(kind[0]==="reachable"&&kind[1]==="reachable")return finish("reachable",detail);
         if(kind[0]==="timeout"&&kind[1]==="timeout")return finish("timeout",detail);
@@ -184,8 +190,8 @@
         if(err)return finish(statusError(err));
         if(httpStatus(r)===451||restricted(b))return finish("blocked");
         var code=extract(b,/,2,1,200,"([A-Z]{3})"/);
-        if(code)return finish("region",code+"（页面标记）");
-        if(httpStatus(r)===200)return finish("reachable","网页可访问，地区未验证");
+        if(code)return finish("region",code+"（Gemini 页面地区，不代表登录）");
+        if(knownResponse(r))return finish("reachable","网页可访问，地区未验证");
         finish("unknown",httpStatus(r)===429?"请求被限流":"地区信息未获取");
       },true);
     } else if(id==="claude"){
@@ -193,7 +199,7 @@
       function completeClaude(){
         if(--pending)return;
         if(pageResult==="blocked")return finish("blocked");
-        if(regionCode)return finish("region",regionCode+"（仅出口识别）");
+        if(regionCode)return finish("region",regionCode+"（CDN 出口，非 Claude 解锁）");
         if(pageResult==="reachable")return finish("reachable","网页可访问，地区未验证");
         finish(pageResult==="timeout"?"timeout":"unknown");
       }
@@ -245,7 +251,7 @@
     return (names[r.code]||names.unknown)+(r.extra?" · "+r.extra:"");
   }
   function output(){
-    var ms=elapsed(),display=node.length>30?node.slice(0,19)+"…"+node.slice(-7):node;
+    var ms=elapsed(),display=node.length>70?node.slice(0,39)+"…"+node.slice(-19):node;
     var lines=["节点："+display,"耗时："+(ms/1000).toFixed(1)+" 秒"];
     var last="";
     serviceList.forEach(function(s,i){
@@ -256,7 +262,7 @@
     result.forEach(function(r){if(!r)return;if(r.code==="failed"||r.code==="timeout")errors++;
       else if(r.code!=="unknown")answered++;});
     if(errors>=5&&answered<=1)lines.push("","多项请求连接异常，请检查节点状态或稍后重试。");
-    lines.push("","检测结果仅反映当前地区信号，不能保证账号或播放可用。");
+    lines.push("","网络与地区信号不等于实际播放权益。","检测器 v6.3.4");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function pumpService(){
