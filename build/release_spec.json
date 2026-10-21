@@ -11,10 +11,10 @@
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "Manual fast streaming and AI region check uses one selected node, bounded execution; no account or playback claims. DNS and routing rules unchanged.",
-  "plugin_assets_commit": "fe4be3bae1c98d7bd3d3b400c6a87c7ef6e06adf",
+  "plugin_assets_commit": "8d15db975fb7f17c0216086458c9c4705aec6c8e",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "d26caa23d3dac34ecb350ee835bc9ba78a0170b7",
+  "unified_service_diagnostics_script_commit": "04fc9be5ea0df5b42e7ffcb4b5366766859ce189",
   "node_script_commit": "db05de1c1df0648d999bf96aab292fd50dc02419"
 }
