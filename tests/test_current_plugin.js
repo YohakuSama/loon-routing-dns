@@ -17,7 +17,7 @@ check("only the shipped immutable plugin is present",()=>{
   for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
     assert(!fs.existsSync(path.join(root,dir)),dir);
   assert(plugin.includes("/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js"));
-  assert(plugin.includes("/cc9342285f1c0a0b19c9c06d88b14c8c4d1e868f/scripts/v20261022r3/media-unlock.js"));
+  assert(plugin.includes("/a500c1b6bbc56c39eac6987b16c0b9a29e31c06c/scripts/v20261022r4/media-unlock.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
   
 });
@@ -50,14 +50,14 @@ check("all current scripts remain local versioned assets",()=>{
   assert.equal(s.length,4);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/node-intelligence.js")).length,1);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/network-diagnostics.js")).length,2);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261022r3/media-unlock.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261022r4/media-unlock.js")).length,1);
   assert(fs.existsSync(path.join(root,"scripts/v20261021r3/node-intelligence.js")));
   assert(fs.existsSync(path.join(root,"scripts/v20261021r3/network-diagnostics.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261022r3/media-unlock.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261022r4/media-unlock.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/aed716d50ce411f93ce9637c1c7fa1977c8b06e8/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/ee5e5269d2003471fe720048a68a779d0678b279/release/Network_Diagnostics.plugin, enabled=true"));
   assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
   assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
