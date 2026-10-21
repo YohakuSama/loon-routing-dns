@@ -11,9 +11,10 @@
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "One network helper with manual, explicitly selected service checks. Existing 26 pinned rule subscriptions, DNS/TUN and icon assets unchanged.",
-  "plugin_assets_commit": "bc1abb8ba78f4cc671168c63eb2fa7b21050a3f1",
+  "plugin_assets_commit": "f45f86696a493c561ccc04cfa0659e3e54e85bf1",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
-  "diagnostics_script_commit": "af78ebb6b75bdbb341996db446d87cb2be719af4",
+  "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "0746301e41bca9b0832ebcece9f10cc68e8a63cb"
+  "unified_service_diagnostics_script_commit": "0746301e41bca9b0832ebcece9f10cc68e8a63cb",
+  "node_script_commit": "db05de1c1df0648d999bf96aab292fd50dc02419"
 }
