@@ -45,3 +45,7 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 正式规则上游审核附加 [完整安全规范](./RULE_SAFETY.md)。上游审阅除了全量新增/删除差异外，还必须输出每条新增的来源和具体风险、跨策略的 IPv4/IPv6 以及域名覆盖检查，防范 AdBlock 与登录/支付/CDN 误杀。所有候选 `*.list` 一律保留发布基线；未审核的匹配只允许存在于差异与风险 JSON 中。
 
 每周任务下载上游快照，生成全量增删差异、规范化候选及跨策略冲突审阅报告。来源不可用、未知格式、规则数量不符均标记为不完整，不能当成可发布候选。只对同策略内的精确重复及被该策略 `DOMAIN-SUFFIX` 明确覆盖的 `DOMAIN` 作候选去重；不自动合并 IP 网段或把宽关键字猜测为精确域名。**所有来源变更均不自动修改正式规则、输入锁、策略归属或用户配置**；新规则发布需要审核与回归测试。
+
+## 完整上游审计（2026-10-21）
+
+`upstream-live-audit.yml` 使用 GitHub Actions Runner 下载全部 87 个登记来源并生成审阅附件。V2Fly 的 `include:` 受递归深度、输入格式和仓库白名单约束，额外保留引用文件快照。`URL-REGEX` 与 V2Fly 主机名 `regexp:` 不会泛化成 `DOMAIN-SUFFIX`：当前 8 条表达式有明确排除来源、哈希和理由。`verify_upstream_coverage.py` 单独检查来源分类完整性与转换完整性；发布许可永远是另一个审核步骤。参见[审计结果](./UPSTREAM_COVERAGE_2026-10-21.md)。

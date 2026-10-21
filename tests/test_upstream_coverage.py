@@ -49,6 +49,35 @@ class UpstreamCoverageTests(unittest.TestCase):
         report["sources"][0]["id"] = "unknown"
         self.assertFalse(assess(report, catalog)["coverage_complete"])
 
+    def test_known_regex_exclusions_count_as_reviewed_not_translated(self):
+        import hashlib
+        catalog, report = sample()
+        expression = "URL-REGEX,^https?://ads.example.org/.*$"
+        evidence = {"line": 42, "expression": expression,
+                    "sha256": hashlib.sha256(expression.encode()).hexdigest(),
+                    "kind": "URL-REGEX",
+                    "reason": "MITM_URL_REGEX_NOT_DOMAIN_RULE"}
+        report["sources"][0]["status"] = "PARSED_WITH_DOCUMENTED_EXCLUSIONS"
+        report["sources"][0]["excluded_count"] = 1
+        report["sources"][0]["excluded_expressions"] = [evidence]
+        report["excluded_expressions"] = 1
+        report["sources_with_exclusions"] = 1
+        result = assess(report, catalog)
+        self.assertTrue(result["coverage_complete"])
+        self.assertFalse(result["translation_complete"])
+        self.assertEqual(result["excluded_expressions"], 1)
+
+        bad = copy.deepcopy(report)
+        bad["sources"][0]["excluded_expressions"][0]["sha256"] = "0"*64
+        self.assertFalse(assess(bad, catalog)["coverage_complete"])
+        bad = copy.deepcopy(report)
+        bad["sources"][0]["excluded_expressions"][0]["reason"] = (
+            "HOST_REGEX_CANNOT_SAFELY_WIDEN_TO_SUFFIX")
+        self.assertFalse(assess(bad, catalog)["coverage_complete"])
+        bad = copy.deepcopy(report)
+        bad["sources"][0]["excluded_expressions"].clear()
+        self.assertFalse(assess(bad, catalog)["coverage_complete"])
+
     def test_never_confuse_source_review_with_release_permission(self):
         catalog, report = sample()
         report["publication_allowed"] = True
