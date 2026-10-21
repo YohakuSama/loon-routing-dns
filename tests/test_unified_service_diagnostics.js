@@ -4,7 +4,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const source=fs.readFileSync(path.join(root,"scripts/v20261021r14/media-unlock.js"),"utf8");
+const source=fs.readFileSync(path.join(root,"scripts/v20261021r15/media-unlock.js"),"utf8");
 
 function mock(options={}){
   const sent=[],pending=[],out=[],timers=[],attempts={};
@@ -64,7 +64,7 @@ assert.match(resultOf(generic.out[0],"ChatGPT"),/未取得有效响应/);
 assert.match(resultOf(generic.out[0],"Claude"),/网站可访问/);
 assert.doesNotMatch(generic.out[0].content,/解锁成功|全部解锁/);
 assert(!generic.out[0].content.includes("Bilibili"));
-assert(generic.out[0].content.includes("检测器 v6.3.8"));
+assert(generic.out[0].content.includes("检测器 v6.3.9"));
 assert(!/可能可用|开放信号|非片库证明|非 Claude 解锁/.test(generic.out[0].content));
 
 const signals=mock({order:"reverse",reply:url=>{
@@ -90,7 +90,7 @@ assert.match(resultOf(b,"Disney+"),/地区支持 · JP/);
 assert.match(resultOf(b,"YouTube Premium"),/出口地区 JP · 服务未验证/);
 assert.match(resultOf(b,"Spotify"),/地区接口支持 · JP/);
 assert.match(resultOf(b,"TikTok"),/网站可访问 · 出口 JP/);
-assert.match(resultOf(b,"ChatGPT"),/Web \/ iOS 接口可访问/);
+assert.match(resultOf(b,"ChatGPT"),/部分接口可访问/);
 assert.match(resultOf(b,"Gemini"),/网站可访问/);
 assert.match(resultOf(b,"Claude"),/网站可访问 · 出口 JP/);
 
@@ -174,10 +174,10 @@ assert(!/可能可用|开放信号/.test(orderProof.out[0].content));
 // should never be collapsed to proof of subscription/media playback.
 const geminiSupport=mock({reply:url=>url.includes("gemini.google.com")?
   {status:200,body:',2,1,200,"JPN"'}:{status:200,body:"generic"}});
-assert.match(resultOf(geminiSupport.out[0],"Gemini"),/地区支持 · JPN/);
+assert.match(resultOf(geminiSupport.out[0],"Gemini"),/页面识别地区 JPN · 使用权限未验证/);
 const geminiBlocked=mock({reply:url=>url.includes("gemini.google.com")?
   {status:200,body:',2,1,200,"CHN"'}:{status:200,body:"generic"}});
-assert.match(resultOf(geminiBlocked.out[0],"Gemini"),/地区受限 · CHN/);
+assert.match(resultOf(geminiBlocked.out[0],"Gemini"),/页面识别地区 CHN · 使用权限未验证/);
 const premiumOffer=mock({reply:url=>url.includes("youtube.com/premium")?
   {status:200,body:"<html>YouTube Premium Individual plan Start trial</html>"}:
   {status:200,body:"generic"}});
@@ -236,6 +236,10 @@ const disneyTokenBlocked=mock({reply:url=>{
 }});
 assert.match(resultOf(disneyTokenBlocked.out[0],"Disney+"),/地区受限/);
 assert.equal(disneyTokenBlocked.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,0);
+const disneyGeneric403=mock({reply:url=>url.endsWith("/devices")?
+  {status:403,body:"403 ERROR - API access denied"}:{status:200,body:"generic"}});
+assert.doesNotMatch(resultOf(disneyGeneric403.out[0],"Disney+"),/地区受限/);
+assert.match(resultOf(disneyGeneric403.out[0],"Disney+"),/未取得有效响应/);
 const disneyMalformed=mock({reply:url=>url.endsWith("/devices")?
   {status:200,body:'{"not_assertion":"placeholder"}'}:{status:200,body:"generic"}});
 assert.match(resultOf(disneyMalformed.out[0],"Disney+"),/未取得有效响应/);
@@ -265,6 +269,47 @@ const netflixOriginating=mock({reply:url=>{
 }});
 assert.match(resultOf(netflixOriginating.out[0],"Netflix"),/片库可访问/);
 
+
+// Regional decisions must come from the platform session, not unrelated fields.
+const disneyDecoy=mock({reply:url=>{
+  if(url.endsWith("/devices"))return {status:200,body:'{"assertion":"device"}'};
+  if(url.endsWith("/token"))return {status:200,body:'{"refresh_token":"refresh"}'};
+  if(url.includes("/graph/v1/device/graphql"))return {status:200,
+    body:'{"data":{"countryCode":"JP","inSupportedLocation":true},"extensions":{"sdk":{"session":null}}}'};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(disneyDecoy.out[0],"Disney+"),/未取得有效响应/);
+assert.doesNotMatch(resultOf(disneyDecoy.out[0],"Disney+"),/地区支持/);
+const disneyBrokenSession=mock({reply:url=>{
+  if(url.endsWith("/devices"))return {status:200,body:'{"assertion":"device"}'};
+  if(url.endsWith("/token"))return {status:200,body:'{"refresh_token":"refresh"}'};
+  if(url.includes("/graph/v1/device/graphql"))return {status:200,
+    body:'{"extensions":{"sdk":{"session":{"location":{"countryCode":"JP"}}}},"data":{"inSupportedLocation":true}}'};
+  return {status:200,body:"generic"};
+}});
+assert.doesNotMatch(resultOf(disneyBrokenSession.out[0],"Disney+"),/地区支持/);
+// Cloudflare/WAF access denied is NOT equivalent to an OpenAI region ban.
+const chatWaf=mock({reply:url=>{
+  if(url.includes("api.openai.com"))return {status:403,body:"Request forbidden"};
+  if(url.includes("ios.chat.openai.com"))return {status:403,body:"Sorry, you have been blocked by security checks"};
+  return {status:200,body:"generic"};
+}});
+assert.doesNotMatch(resultOf(chatWaf.out[0],"ChatGPT"),/地区受限/);
+assert.match(resultOf(chatWaf.out[0],"ChatGPT"),/未取得有效响应/);
+const chatUnsupported=mock({reply:url=>{
+  if(url.includes("api.openai.com"))return {status:403,body:"unsupported_country"};
+  if(url.includes("ios.chat.openai.com"))return {status:403,body:"Sorry, you have been blocked"};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(chatUnsupported.out[0],"ChatGPT"),/地区受限/);
+// An application region marker is not a supported/blocked policy response.
+for(const locale of ["USA","JPN","CHN","HKG"]){
+  const sample=mock({reply:url=>url.includes("gemini.google.com")?
+    {status:200,body:',2,1,200,"'+locale+'"'}:{status:200,body:"generic"}});
+  assert.match(resultOf(sample.out[0],"Gemini"),new RegExp("页面识别地区 "+locale+" · 使用权限未验证"));
+  assert.doesNotMatch(resultOf(sample.out[0],"Gemini"),/地区受限|地区支持/);
+}
+
 const full=mock({full:true,policy:"Manual-node"});
 assert.equal(full.out.length,1);
 assert.equal(full.timers[0].ms,26000);
@@ -286,7 +331,7 @@ assert.match(invalid.out[0].content,/节点名称无效/);
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
 const profile=fs.readFileSync(path.join(root,"LoonKit.lcf"),"utf8");
 assert(plugin.includes('tag="解锁检测"'));
-assert(plugin.includes("scripts/v20261021r14/media-unlock.js"));
+assert(plugin.includes("scripts/v20261021r15/media-unlock.js"));
 assert(plugin.includes('img_url="play.rectangle.system"'));
 assert(!plugin.includes("service = select"));
 assert(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length===1);

@@ -135,19 +135,19 @@
       var auth="Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84";
       var hdr={"authorization":auth,"Content-Type":"application/json"};
       function interpret(body){
-        var data=decodeJSON(body),session=data&&data.extensions&&data.extensions.sdk&&data.extensions.sdk.session;
+        var data=decodeJSON(body);
+        // Only a returned service session can prove a supported location.
+        // Matching arbitrary countryCode and inSupportedLocation fields from
+        // elsewhere in the response would pair unrelated evidence.
+        var session=data&&data.extensions&&data.extensions.sdk&&data.extensions.sdk.session;
         var code=session&&session.location&&country(session.location.countryCode);
         var supported=session&&session.inSupportedLocation;
-        if(!code)code=extract(body,/"countryCode"\s*:\s*"([A-Za-z]{2})"/i);
-        if(typeof supported!=="boolean"){
-          var m=/"inSupportedLocation"\s*:\s*(true|false)/i.exec(body);
-          if(m)supported=m[1].toLowerCase()==="true";
-        }
-        if(typeof supported==="boolean"&&code)finish(supported?"available":"blocked",code);
-        else finish(code?"region":"unknown",code);
+        if(code&&typeof supported==="boolean")
+          return finish(supported?"available":"blocked",code);
+        finish("unknown","地区会话未返回有效状态");
       }
       function failure(err,r,body){
-        if(/forbidden.location|forbidden-location|unsupported.country|403 ERROR/i.test(body)||
+        if(/forbidden[-_.]location|unsupported_country|unsupported.country/i.test(body)||
            httpStatus(r)===451)return finish("blocked");
         if(err)return finish(statusError(err));
         if(httpStatus(r)===403)return finish("unknown","服务拒绝检测请求");
@@ -263,11 +263,13 @@
       },true);
       reliable("https://ios.chat.openai.com/",function(err,r,b){
         if(err){parts[1]="连接失败";kind[1]=statusError(err);return finishBoth();}
-        if(/disallowed isp|have been blocked|unsupported_country/i.test(b)||httpStatus(r)===451){
+        if(/disallowed isp|unsupported_country|not supported in your (?:country|region)/i.test(b)||httpStatus(r)===451){
           parts[1]="地区受限";kind[1]="blocked";return finishBoth();
         }
         if(b.toLowerCase().indexOf("request is not allowed. please try again later.")>=0){
-          parts[1]="可访问";kind[1]="reachable";
+          parts[1]="请求被拒绝";kind[1]="unknown";
+        }else if(httpStatus(r)===403||/have been blocked/i.test(b)){
+          parts[1]="安全验证拦截";kind[1]="unknown";
         }
         finishBoth();
       },true);
@@ -276,10 +278,9 @@
         if(err)return finish(statusError(err));
         if(httpStatus(r)===451||restricted(b))return finish("blocked","");
         var code=extract(b,/,2,1,200,"([A-Z]{3})"/);
-        var barred={CHN:1,RUS:1,BLR:1,CUB:1,IRN:1,PRK:1,SYR:1,HKG:1,MAC:1};
-        // The app's own region marker is stronger than a CDN trace.
-        if(code&&barred[code])return finish("blocked",code);
-        if(code&&httpStatus(r)===200)return finish("available",code);
+        // A region marker is not a live policy decision. Never infer denial
+        // from a hard-coded country list or success from country code alone.
+        if(code&&httpStatus(r)===200)return finish("region",code);
         if(httpStatus(r)===200)return finish("reachable","");
         finish("unknown",httpStatus(r)===429?"接口限流":"");
       },true);
@@ -352,10 +353,13 @@
     }
     if(r.code==="blocked")return "地区受限"+(region?" · "+region:"");
     if(r.code==="reachable"){
-      if(id==="chatgpt")return "Web / iOS 接口可访问";
+      if(id==="chatgpt")return "Web / iOS 接口已响应 · 功能未验证";
       return "网站可访问"+(region?" · 出口 "+region:"");
     }
-    if(r.code==="region")return "出口地区 "+(region||"已识别")+" · 服务未验证";
+    if(r.code==="region"){
+      if(id==="gemini")return "页面识别地区 "+(region||"未知")+" · 使用权限未验证";
+      return "出口地区 "+(region||"已识别")+" · 服务未验证";
+    }
     if(r.code==="partial")return "部分接口可访问 · "+r.extra;
     if(r.code==="timeout")return "检测超时";
     if(r.code==="failed")return "连接失败";
@@ -375,8 +379,8 @@
     if(errors>=5&&answered<=1)lines.push("","多项请求连接异常，请检查节点状态或稍后重试。");
     var useful=0;
     result.forEach(function(r){if(r&&(/^(?:available|blocked|reachable|partial|region)$/.test(r.code)))useful++;});
-    if(!useful)lines.push("","全部请求未取得有效结果，请确认节点及插件设置。");
-    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.3.8");
+    if(!useful)lines.push("","各平台没有返回可判定信息，请检查网络或稍后重试。");
+    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.3.9");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function pumpService(){
