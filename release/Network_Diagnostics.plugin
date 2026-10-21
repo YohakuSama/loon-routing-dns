@@ -13,10 +13,9 @@
 auto_check = switch,false,tag=网络切换提醒,desc=默认关闭；网络切换后连续检测失败才提醒
 target_policy = input,"Proxy",tag=检测策略,desc=从节点菜单运行使用选定节点；否则使用此策略
 compare_direct = switch,false,tag=直连 IP 对照,desc=开启后额外显示当前网络的公网 IP
-full_scan = switch,false,tag=完整检测,desc=默认快速检测，开启后增加其他地区与流媒体项目
 
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/edac8c9f51de9ad6e2a9a969752a31490c4cfd44/scripts/v20261021r3/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with tag="网络检测", img_url="network.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/78a7c5129495f33efccb5364145fb4042091c5c2/scripts/v20261022r1/media-unlock.js", {${target_policy}, ${full_scan}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=30
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/67249c58f40a99d3d034acc7934aa1de03d3d72d/scripts/v20261022r2/media-unlock.js", {${target_policy}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=30
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
