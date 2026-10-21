@@ -15,7 +15,7 @@ class ReleaseChecksumTests(unittest.TestCase):
         spec=json.loads((ROOT/"build/release_spec.json").read_text(encoding="utf-8"))
         manifest=json.loads((ROOT/"build/release_manifest.json").read_text(encoding="utf-8"))
         version=spec["stable_release_version"]
-        self.assertEqual(version,"v6.4.3")
+        self.assertEqual(version,"v6.4.4")
         self.assertEqual(version,manifest["label"])
         actual=hashlib.sha256((ROOT/"LoonKit.lcf").read_bytes()).hexdigest()
         self.assertEqual(actual,manifest["profile_sha256"]["LoonKit.lcf"])
