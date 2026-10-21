@@ -23,7 +23,7 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标及脚本引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；当前正式插件引用 `f45f86696a493c561ccc04cfa0659e3e54e85bf1`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；当前正式插件引用 `f45f86696a493c561ccc04cfa0659e3e54e85bf1`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
@@ -38,7 +38,7 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## 网络诊断脚本维护
 
-现役诊断脚本版本为 `scripts/v20261021r3/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本从主分支删除，但对应固定提交仍可通过历史访问，不重写已发布 Git 历史。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
+现役网络诊断脚本版本为 `scripts/v20261021r3/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本从主分支删除，但对应固定提交仍可通过历史访问，不重写已发布 Git 历史。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
 
 ## 新版 Git 历史
 
