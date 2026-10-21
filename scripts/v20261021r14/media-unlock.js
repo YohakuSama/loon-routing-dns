@@ -11,7 +11,7 @@
   var node=nonempty(ctx.node)||nonempty(info.name)||nonempty(info.tag)||
     nonempty(ctx.policyGroup)||nonempty(args.target_policy)||"Proxy";
   var full=args.full_scan===true||args.full_scan==="true";
-  var budget=full?20000:13000,started=Date.now(),ended=false;
+  var budget=full?26000:19000,started=Date.now(),ended=false;
   var serviceList=[
     ["netflix","Netflix","流媒体"],["disney","Disney+","流媒体"],
     ["youtube","YouTube Premium","流媒体"],["spotify","Spotify","流媒体"],
@@ -56,10 +56,12 @@
       (function(task){
         inFlight++;
         var finishedTask=false,opts={
-          url:task.url,node:node,timeout:4300,
+          url:task.url,node:node,timeout:5100,
           "auto-cookie":false,"auto-redirect":task.follow!==false,insecure:false,
           headers:{"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124 Safari/537.36","Accept-Language":"en-US,en;q=0.8"}
         };
+        if(task.headers)Object.keys(task.headers).forEach(function(k){opts.headers[k]=task.headers[k];});
+        if(task.method==="POST")opts.body=task.body;
         function complete(err,res,body){
           if(finishedTask)return;
           finishedTask=true;
@@ -67,12 +69,20 @@
           if(!ended)task.cb(err&&httpStatus(res)>=400?null:err,res||{},cleanBody(body));
           if(!ended)send();
         }
-        try{$httpClient.get(opts,complete);}catch(e){complete(e,null,"");}
+        try{var requester=task.method==="POST"?$httpClient.post:$httpClient.get;
+          if(typeof requester!=="function")throw new Error("HTTP method unavailable");
+          requester.call($httpClient,opts,complete);
+        }catch(e){complete(e,null,"");}
       })(queue.shift());
     }
     flushing=false;
   }
-  function get(url,cb,follow){if(ended)return;queue.push({url:url,cb:cb,follow:follow});send();}
+  function get(url,cb,follow){if(ended)return;queue.push({url:url,cb:cb,follow:follow,method:"GET"});send();}
+  function post(url,body,headers,cb){
+    if(ended)return;
+    queue.push({url:url,body:body,headers:headers,cb:cb,follow:false,method:"POST"});send();
+  }
+  function decodeJSON(body){try{return JSON.parse(body);}catch(e){return null;}}
   function reliable(url,cb,follow){
     var tried=false;
     function once(err,r,body){
@@ -102,7 +112,9 @@
         reliable("https://www.netflix.com/title/"+film,function(err,r,b){
           codes[n]=httpStatus(r);fail[n]=statusError(err);
           var loc=header(r,"location");
-          valid[n]=!err&&((codes[n]===200&&/netflix/i.test(b)&&b.indexOf(film)>=0)||
+          var canonical=header(r,"x-originating-url");
+          valid[n]=!err&&((codes[n]===200&&/netflix/i.test(b)&&
+            (b.indexOf(film)>=0||canonical.indexOf("/title/"+film)>=0))||
             ((codes[n]===301||codes[n]===302)&&/netflix\.com/i.test(loc)&&loc.indexOf(film)>=0));
           titlesDone++;netflixResult();
         },false);
@@ -118,16 +130,61 @@
         cdnDone=true;netflixResult();
       },false);
     } else if(id==="disney"){
-      reliable("https://www.disneyplus.com/",function(err,r,b){
+      // Service-specific anonymous device session, not a generic homepage check.
+      var root="https://disney.api.edge.bamgrid.com";
+      var auth="Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84";
+      var hdr={"authorization":auth,"Content-Type":"application/json"};
+      function interpret(body){
+        var data=decodeJSON(body),session=data&&data.extensions&&data.extensions.sdk&&data.extensions.sdk.session;
+        var code=session&&session.location&&country(session.location.countryCode);
+        var supported=session&&session.inSupportedLocation;
+        if(!code)code=extract(body,/"countryCode"\s*:\s*"([A-Za-z]{2})"/i);
+        if(typeof supported!=="boolean"){
+          var m=/"inSupportedLocation"\s*:\s*(true|false)/i.exec(body);
+          if(m)supported=m[1].toLowerCase()==="true";
+        }
+        if(typeof supported==="boolean"&&code)finish(supported?"available":"blocked",code);
+        else finish(code?"region":"unknown",code);
+      }
+      function failure(err,r,body){
+        if(/forbidden.location|forbidden-location|unsupported.country|403 ERROR/i.test(body)||
+           httpStatus(r)===451)return finish("blocked");
         if(err)return finish(statusError(err));
-        var region=extract(b,/"countryCode"\s*:\s*"([A-Za-z]{2})"/i)||
-          extract(b,/"region"\s*:\s*"([A-Za-z]{2})"/i);
-        if(httpStatus(r)===451||restricted(b)||/\/(?:preview|unavailable)(?:\/|$)/i.test(header(r,"location")))
-          return finish("blocked",region);
-        var support=/"inSupportedLocation"\s*:\s*(true|false)/i.exec(b);
-        if(support&&httpStatus(r)===200)return finish(support[1].toLowerCase()==="true"?"available":"blocked",region);
-        finish(region?"region":knownResponse(r)?"reachable":"unknown",region||"");
-      },true);
+        if(httpStatus(r)===403)return finish("unknown","服务拒绝检测请求");
+        if(httpStatus(r)===429)return finish("unknown","地区接口暂时限流");
+        finish("unknown","地区接口无有效结果");
+      }
+      function graphRefresh(token){
+        var payload=JSON.stringify({query:"mutation refreshToken($input: RefreshTokenInput!) { refreshToken(refreshToken: $input) { activeSession { sessionId } } }",
+          variables:{input:{refreshToken:token}}});
+        post(root+"/graph/v1/device/graphql",payload,hdr,function(err,r,b){
+          if(err||httpStatus(r)!==200)return failure(err,r,b);
+          interpret(b);
+        });
+      }
+      function exchange(assertion){
+        var form=["grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Atoken-exchange",
+          "latitude=0","longitude=0","platform=browser",
+          "subject_token="+encodeURIComponent(assertion),
+          "subject_token_type=urn%3Abamtech%3Aparams%3Aoauth%3Atoken-type%3Adevice"].join("&");
+        post(root+"/token",form,{"authorization":auth,"Content-Type":"application/x-www-form-urlencoded"},
+        function(err,r,b){
+          if(err||httpStatus(r)!==200)return failure(err,r,b);
+          var data=decodeJSON(b),token=data&&data.refresh_token;
+          if(typeof token!=="string"||!token||token.length>5000)
+            return finish("unknown","地区接口令牌无效");
+          graphRefresh(token);
+        });
+      }
+      post(root+"/devices",JSON.stringify({deviceFamily:"browser",applicationRuntime:"chrome",
+        deviceProfile:"windows",attributes:{}}),hdr,function(err,r,b){
+        if(err||httpStatus(r)!==200)return failure(err,r,b);
+        var data=decodeJSON(b),assertion=data&&data.assertion;
+        if(!assertion&&data&&data.data)assertion=data.data.assertion;
+        if(typeof assertion!=="string"||!assertion||assertion.length>5000)
+          return finish("unknown","地区接口设备注册失败");
+        exchange(assertion);
+      });
     } else if(id==="youtube"){
       reliable("https://www.youtube.com/premium?hl=en",function(err,r,b){
         if(err)return finish(statusError(err));
@@ -319,7 +376,7 @@
     var useful=0;
     result.forEach(function(r){if(r&&(/^(?:available|blocked|reachable|partial|region)$/.test(r.code)))useful++;});
     if(!useful)lines.push("","全部请求未取得有效结果，请确认节点及插件设置。");
-    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.3.6");
+    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.3.8");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function pumpService(){
