@@ -275,8 +275,10 @@ def main():
             router = Router()
             result = coverage(router) if args.command == "coverage" else router.match(args.hostname_or_ip)
         print(json.dumps(result, ensure_ascii=False, indent=2))
-    except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
-        parser.exit(2, "无法分析输入或规则资料：" + str(exc) + "\n")
+    except OSError:
+        parser.exit(2, "无法读取输入文件；请检查路径、权限和文件大小。\n")
+    except (ValueError, KeyError, UnicodeError):
+        parser.exit(2, "无法分析输入或规则资料，请检查文件格式和命令参数。\n")
 
 
 if __name__ == "__main__":

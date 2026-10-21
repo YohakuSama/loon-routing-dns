@@ -1,5 +1,6 @@
 """Offline service coverage, routing and redacted log summary regressions."""
 import json
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -54,6 +55,14 @@ class ParserAndPrivacy(unittest.TestCase):
             diag.sanitized_log_summary(b"x"*(diag.MAX_LOG_SIZE+1),diag.known_services())
         with self.assertRaises(ValueError):
             diag.sanitized_log_summary(b"{}",diag.known_services())
+
+    def test_missing_log_path_does_not_expose_private_filename(self):
+        marker = "PRIVATE_SECRET_LOCAL_PATH_4519"
+        result = subprocess.run([sys.executable, str(ROOT/"scripts/route_diagnostics.py"),
+                                 "logs", "/tmp/"+marker+".har"],
+                                capture_output=True, text=True, check=False)
+        self.assertEqual(result.returncode, 2)
+        self.assertNotIn(marker, result.stdout + result.stderr)
 
     def test_host_never_accepts_urls_as_rule_query(self):
         self.assertIsNone(diag._host("file:///private/secret"))
