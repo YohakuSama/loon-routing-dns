@@ -11,9 +11,9 @@
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "Single built-in network helper, manually invoked HTTPS/DNS service check; do not assume geo, playback or complete DNS/UDP coverage.",
-  "plugin_assets_commit": "f26e0ca041ae43496bb89cfc4945284f169cdc69",
+  "plugin_assets_commit": "8122c6993e3f13a3152449d3d4ec62717a96cded",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "af78ebb6b75bdbb341996db446d87cb2be719af4",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "942cd69bf1b89190933f69a65c9cf82464ae0211"
+  "unified_service_diagnostics_script_commit": "17ca5380fc24e4950bc5a5f5bcc8237853119f97"
 }
