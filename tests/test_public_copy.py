@@ -95,7 +95,7 @@ class PublicCopyChecks(unittest.TestCase):
         self.assertIn("# LoonKit v6.3.1",profile)
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertFalse((ROOT/"release/Service_Diagnostics.plugin").exists())
-        self.assertIn('service = select,"请选择服务"',plugin)
+        self.assertNotIn("service = select,",plugin)
         self.assertIn('tag="节点信息"',plugin)
         self.assertIn('tag="网络检测"',plugin)
         self.assertIn('tag="服务检测"',plugin)
