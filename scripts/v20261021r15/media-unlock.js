@@ -147,7 +147,7 @@
         finish("unknown","地区会话未返回有效状态");
       }
       function failure(err,r,body){
-        if(/forbidden.location|forbidden-location|unsupported.country|403 ERROR/i.test(body)||
+        if(/forbidden[-_.]location|unsupported_country|unsupported.country/i.test(body)||
            httpStatus(r)===451)return finish("blocked");
         if(err)return finish(statusError(err));
         if(httpStatus(r)===403)return finish("unknown","服务拒绝检测请求");
