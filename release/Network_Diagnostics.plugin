@@ -18,5 +18,5 @@ service = select,"请选择服务","Spotify（音乐）","Twitch（直播）","A
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/scripts/v20261021r1/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/af78ebb6b75bdbb341996db446d87cb2be719af4/scripts/v20261021r2/network-diagnostics.js", {${auto_check}}) with tag="网络检测", img_url="network.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/83e4afc4773a40df460f95b6a152a6766fdec00e/scripts/v20261021r7/service-diagnostics.js", {${service}}) with tag="服务检测", img_url="network", timeout=22
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/0746301e41bca9b0832ebcece9f10cc68e8a63cb/scripts/v20261021r7/service-diagnostics.js", {${service}}) with tag="服务检测", img_url="network", timeout=22
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/af78ebb6b75bdbb341996db446d87cb2be719af4/scripts/v20261021r2/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
