@@ -17,7 +17,7 @@ check("only the shipped immutable plugin is present",()=>{
   for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
     assert(!fs.existsSync(path.join(root,dir)),dir);
   assert(plugin.includes("/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js"));
-  assert(plugin.includes("/81fea9e2ff8947cee8576297e1a5e7cc1747248c/scripts/v20261021r11/media-unlock.js"));
+  assert(plugin.includes("/abe866f58e560e1ad3ce7c52e634d515b79dce8b/scripts/v20261021r11/media-unlock.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
   
 });
@@ -57,7 +57,7 @@ check("all current scripts remain local versioned assets",()=>{
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/3b17ab0e9cecbd4dc319362c48f604c6c1910abf/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/ff64680c0911371864b418c765b8ca7fa3097a3a/release/Network_Diagnostics.plugin, enabled=true"));
   assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
   assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
