@@ -78,7 +78,7 @@ const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"
 const profile=fs.readFileSync(path.join(root,"LoonKit.lcf"),"utf8");
 assert.match(plugin,/tag="服务检测"/);
 assert.match(plugin,/scripts\/v20261021r8\/service-diagnostics\.js/);
-assert.match(plugin,/(\$\{target_policy\})\}\) with tag="服务检测"/);
+assert(plugin.includes('{${target_policy}}) with tag="服务检测"'));
 assert.doesNotMatch(plugin,/service = select|请选择服务|Spotify（音乐）/);
 assert.equal(profile.split("\n").filter(s=>s.includes(".plugin, enabled=true")).length,1);
 console.log("Selected-node, all-service, timeout and result-classification tests passed");
