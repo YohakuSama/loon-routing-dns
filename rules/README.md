@@ -1,4 +1,4 @@
-# v6.2.0 正式规则
+# v6.3.0 正式规则
 
 正式配置 `LoonKit.lcf` 使用 `rules/releases/vNext-RC2/` 的 26 份固定版本规则，远程资源引用提交 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`。v6.1.0 起还在配置内包含七项服务的 62 条精选域名规则，来源和范围见 [服务覆盖清单](./service_coverage_v6.1.0.json)。
 

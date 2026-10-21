@@ -1,4 +1,4 @@
-# LoonKit v6.2.0 — DNS 设置与检查
+# LoonKit v6.3.0 — DNS 设置与检查
 
 当前配置及 DNS 设置详见 [LoonKit.lcf](../LoonKit.lcf)。
 

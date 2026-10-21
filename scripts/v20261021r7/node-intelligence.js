@@ -189,7 +189,7 @@
   function done(msg){
     if(finished)return;
     finished=true;
-    $done({title:"节点出口信息",content:msg});
+    $done({title:"节点信息",content:msg});
   }
   if(route.length>200 || /[\r\n\u0000-\u001f]/.test(route)) {
     done("节点或策略名称无效。");return;

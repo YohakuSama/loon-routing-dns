@@ -13,7 +13,7 @@
   var finished = false;
 
   setTimeout(function () {
-    finish("检测超时：请检查 Loon 的请求日志和 DNS 日志。");
+    finish("检测超时，请稍后重试或查看 Loon 连接记录。");
   }, 34000);
 
   function finish(message) {
@@ -21,7 +21,7 @@
     finished = true;
     // Loon does not guarantee a clearTimeout API. Guard against late callbacks.
     if (automatic) $done();
-    else $done({title:"网络与 DNS 诊断",content:message});
+    else $done({title:"网络检测",content:message});
   }
   function errorText(error) {
     var msg = String(error && (error.message || error) || "").toLowerCase();
@@ -42,14 +42,14 @@
         "auto-redirect":false,"auto-cookie":false},function(error,response){
         if (error) return done(false,errorText(error));
         var status=Number(response && response.status);
-        if (status===204) return done(true,"HTTP 204");
+        if (status===204) return done(true,"正常");
         // This is a generate_204 endpoint. HTTP 200 might be a captive portal.
-        if (status===200) return done(null,"HTTP 200（目标未返回预期 204，可能为认证页面）");
+        if (status===200) return done(null,"响应异常（HTTP 200），可能需要网络认证");
         // A redirect proves a response, not a broken proxy; do not follow it.
         if (status>=300 && status<400)
-          return done(null,"HTTP "+status+"（目标重定向，代理状态待确认）");
+          return done(null,"HTTP "+status+"（页面跳转，连接状态待确认）");
         if (status>=400 && status<=599)
-          return done(null,"HTTP "+status+"（目标站点响应，不代表代理故障）");
+          return done(null,"HTTP "+status+"（目标站点已响应，连接状态待确认）");
         done(null,"HTTP "+(status || "未知")+"（无法确认）");
       });
     } catch (error) {done(false,errorText(error));}
@@ -57,7 +57,7 @@
   function nativeDns(cb) {
     var label="DNS 解析";
     if (typeof $dns === "undefined" || !$dns || typeof $dns.query !== "function") {
-      cb({label:label,ok:null,detail:"当前 Loon 不支持 DNS 查询 API（需 Build 988+）"});
+      cb({label:label,ok:null,detail:"当前 Loon 版本不支持 DNS 检测"});
       return;
     }
     var called=false;
@@ -71,7 +71,7 @@
         }
         var answers=Array.isArray(reply.answers)?reply.answers:[];
         if (!answers.some(function(item){return item && (item.type==="A" || item.type==="AAAA") && item.value;})) {
-          cb({label:label,ok:false,detail:"未获得有效的 A/AAAA 地址"});
+          cb({label:label,ok:false,detail:"没有获得有效的解析地址"});
           return;
         }
 
@@ -97,7 +97,7 @@
           cb({label:label,ok:true,detail:"解析成功 · Loon 报告加密 DNS"});
         } else {
           cb({label:label,ok:true,detail:"解析成功",
-            notice:"Loon 未提供完整的 DNS 传输信息；不影响本次解析结果。"});
+            notice:"已解析，但无法确认所用 DNS 传输方式。"});
         }
       });
     } catch (error) {
@@ -118,12 +118,12 @@
         var all=[results.direct,results.proxy,dns];
         var failure=all.some(function(x){return x.ok===false;});
         var unknown=all.some(function(x){return x.ok===null;});
-        var summary=failure?"结果：检测到连接或解析失败"
-          :unknown?"结果：部分检测尚未确认"
-          :"结果：网络连接与 DNS 解析正常";
+        var summary=failure?"连接或解析失败"
+          :unknown?"部分项目待确认"
+          :"网络与 DNS 检测正常";
         var notes=[];
         if (dns.notice) notes.push("提示："+dns.notice);
-        if (dns.ok===false) notes.push("建议检查 Loon 的 DNS 日志及回退设置。");
+        if (dns.ok===false) notes.push("建议：查看 Loon 的 DNS 日志。");
         finish([summary].concat(all.map(resultLine),notes).join("\n"));
       });
     }
@@ -137,7 +137,7 @@
     if (last && Date.now()-Number(last.at||0)<COOLDOWN) return;
     try {$persistentStore.write(JSON.stringify({at:Date.now()}),ALERT_KEY);}catch(e){}
     try {$notification.post("Loon 网络切换提醒","直连连接连续失败",
-      "网络切换后两次检测均未成功，请检查当前网络连接。此结果不能判断 DNS 是否泄漏。");}catch(e){}
+      "网络切换后连续两次连接失败，请检查当前网络。");}catch(e){}
   }
   if (!automatic) {manual();return;}
   // Never send unsolicited DNS requests to an unrelated public resolver.

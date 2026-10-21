@@ -85,11 +85,11 @@ def verify(remote=False):
 
         if plugins != [(spec["plugin_assets_commit"],"release/Network_Diagnostics.plugin")]:
             raise ValueError("network plugin URL unexpectedly changed")
-        if spec["stable_release_version"] == "v6.2.0":
+        if spec["stable_release_version"] == "v6.3.0":
             if spec.get("optional_service_plugin_commit") is not None:
                 raise ValueError("obsolete secondary plugin still declared")
             if sum(line.startswith(RAW) and line.endswith(".plugin, enabled=true") for line in section(profile, "Plugin").splitlines()) != 1:
-                raise ValueError("v6.2.0 must load exactly one network helper")
+                raise ValueError("v6.3.0 must load exactly one network helper")
             if any(path == "release/Service_Diagnostics.plugin" for _, path in links):
                 raise ValueError("second service plugin still active")
         for ref,path in links:
@@ -105,27 +105,35 @@ def verify(remote=False):
     # Inspect the embedded immutable URLs as well as the top-level plugin link.
     # The diagnostic path is versioned to avoid stale Loon script caches.
     embedded = LINK.findall(plugin.decode("utf-8"))
-    expected_script = "scripts/v20261021r2/network-diagnostics.js"
-    service_script = "scripts/v20261021r6/service-diagnostics.js"
-    if spec["stable_release_version"] == "v6.2.0":
-        if len(embedded) != 5 or sum(path == expected_script for _,path in embedded) != 2 or sum(path == service_script for _,path in embedded) != 1:
+    expected_script = "scripts/v20261021r3/network-diagnostics.js"
+    node_script = "scripts/v20261021r2/node-intelligence.js"
+    service_script = "scripts/v20261021r7/service-diagnostics.js"
+    if spec["stable_release_version"] == "v6.3.0":
+        if len(embedded) != 5 or sum(path == expected_script for _,path in embedded) != 2 or sum(path == service_script for _,path in embedded) != 1 or sum(path == node_script for _,path in embedded) != 1:
             raise ValueError("unified plugin must contain icon, node, network x2 and service scripts")
     elif len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
         raise ValueError("unexpected scripts in network helper")
     for ref,path in embedded:
         expected_ref = (spec["diagnostics_script_commit"] if path == expected_script else
+                        spec["node_script_commit"] if path == node_script else
                         spec["unified_service_diagnostics_script_commit"] if path == service_script else
                         spec["script_assets_commit"])
         if ref != expected_ref or not path.startswith(("scripts/", "icons/")):
             raise ValueError("untrusted plugin script/icon reference: " + path)
         if not (ROOT / path).is_file():
             raise ValueError("missing plugin script/icon resource: " + path)
-    if spec["stable_release_version"] == "v6.2.0":
+    if spec["stable_release_version"] == "v6.3.0":
         source = plugin.decode("utf-8")
         if source.count("generic then script(") != 3 or source.count("network-changed then script(") != 1:
             raise ValueError("unexpected unified plugin entrypoints")
-        if "service = select," not in source or "auto_check = switch,false" not in source:
+        if 'service = select,"请选择服务"' not in source or "auto_check = switch,false" not in source:
             raise ValueError("missing service selection or opt-in reminder")
+    if spec["stable_release_version"] == "v6.3.0":
+        if (ROOT/"release/Service_Diagnostics.plugin").exists():
+            raise ValueError("obsolete standalone service plugin remains")
+        for obsolete in ("v20261021r3","v20261021r4","v20261021r5","v20261021r6"):
+            if (ROOT/"scripts"/obsolete/"service-diagnostics.js").exists():
+                raise ValueError("retired standalone service diagnostic script remains")
     if remote:
         for ref,path in sorted(set(LINK.findall(profile) + embedded)):
             if not path.startswith(("icons/","rules/releases/","release/","scripts/")):
