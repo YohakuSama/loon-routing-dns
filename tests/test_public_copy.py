@@ -109,6 +109,20 @@ class PublicCopyChecks(unittest.TestCase):
         self.assertIn("## 更新内容",notes)
         self.assertIn("## 升级方法",notes)
 
+    def test_changelog_versions_are_unique_and_current_first(self):
+        text=(ROOT/"docs/CHANGELOG.md").read_text(encoding="utf-8")
+        headings=re.findall(r"^## (v\\d+\\.\\d+\\.\\d+)$",text,re.M)
+        self.assertGreater(len(headings),0)
+        self.assertEqual(headings[0],"v6.3.9")
+        self.assertEqual(len(headings),len(set(headings)),
+                         "historical update headings must not all be rewritten to current version")
+
+    def test_unlock_docs_do_not_claim_waf_or_country_marker_is_geo_ban(self):
+        docs=(ROOT/"docs/NETWORK_DIAGNOSTICS.md").read_text(encoding="utf-8")
+        self.assertIn("安全验证拦截",docs)
+        self.assertIn("Gemini",docs)
+        self.assertNotIn("Gemini 等平台返回服务自身的地区支持信息",docs)
+
     def test_landing_page_has_setup_and_support(self):
         readme=(ROOT/"README.md").read_text(encoding="utf-8")
         self.assertIn("快速开始",readme)
