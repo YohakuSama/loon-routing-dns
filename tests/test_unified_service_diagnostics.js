@@ -56,6 +56,18 @@ assert.match(base.finished[0].content,/ChatGPT：/);
 assert.doesNotMatch(base.finished[0].content,/Prime Video|Bilibili|BBC iPlayer|Abema/);
 assert.doesNotMatch(base.finished[0].content,/地区可用.*Netflix|Netflix：地区可用/);
 assert.equal(base.timers[0].ms,11500);
+
+const confirmedTitle=simulate({reply:url=>{
+  if(url.includes("/title/81280792"))return {status:200,body:"<title>Netflix</title> netflix.com/title/81280792"};
+  if(url.includes("/title/70143836"))return {status:404,body:""};
+  return {status:200,body:"generic response"};
+}});
+assert.match(confirmedTitle.finished[0].content,/Netflix：地区可用 · 片库/);
+const noTitle=simulate({reply:url=>url.includes("/title/")?
+  {status:200,body:"generic HTTP 200 page"}:{status:200,body:""}});
+assert.match(noTitle.finished[0].content,/Netflix：未确认/);
+assert.doesNotMatch(noTitle.finished[0].content,/Netflix：地区可用/);
+
 const extended=simulate({full:true,policy:"Dedicated",async:true});
 assert.equal(extended.finished.length,1);
 assert(extended.requests.length>base.requests.length);
