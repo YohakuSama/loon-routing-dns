@@ -3,7 +3,7 @@ const assert=require("node:assert/strict");
 const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
-const code=fs.readFileSync(path.join(__dirname,"../scripts/v20261021r3/service-diagnostics.js"),"utf8");
+const code=fs.readFileSync(path.join(__dirname,"../scripts/v20261021r4/service-diagnostics.js"),"utf8");
 function run(service="Spotify",options={}) {
   const requests=[],answers=[],scheduled=[];
   const ctx={
@@ -30,6 +30,7 @@ for(const [name,hostname] of Object.entries(EXPECTED)){
   assert.equal(r.requests[0].node,name);
   assert.equal(new URL(r.requests[0].url).hostname,hostname);
   assert.equal(r.requests[0]["auto-cookie"],false);
+  assert.equal(r.requests[0].insecure,false,"TLS certificate validation must be enabled");
   assert.equal(r.requests[0]["auto-redirect"],false);
   assert.equal(r.answers.length,1,name);
   assert.match(r.answers[0].content,/不代表登录、播放或地区权限正常/);
@@ -55,6 +56,6 @@ assert.equal(r.answers.length,1,"timeout after a result must not report twice");
 const plugin=fs.readFileSync(path.join(__dirname,"../release/Service_Diagnostics.plugin"),"utf8");
 assert.match(plugin,/#!name = LoonKit · 服务连通性诊断/);
 assert.match(plugin,/service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin"/);
-assert.match(plugin,/scripts\/v20261021r3\/service-diagnostics\.js/);
+assert.match(plugin,/scripts\/v20261021r4\/service-diagnostics\.js/);
 assert.doesNotMatch(plugin,/network-changed|cron |push |http-request/);
 console.log("Optional service diagnostic tests passed");
