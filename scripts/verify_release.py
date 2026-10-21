@@ -89,7 +89,7 @@ def verify(remote=False):
             if spec.get("optional_service_plugin_commit") is not None:
                 raise ValueError("obsolete secondary plugin still declared")
             if sum(line.startswith(RAW) and line.endswith(".plugin, enabled=true") for line in section(profile, "Plugin").splitlines()) != 1:
-                raise ValueError("v6.3.0 must load exactly one network helper")
+                raise ValueError("current version must load exactly one network helper")
             if any(path == "release/Service_Diagnostics.plugin" for _, path in links):
                 raise ValueError("second service plugin still active")
         for ref,path in links:
