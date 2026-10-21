@@ -8,7 +8,7 @@ import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-RAW = re.compile(r"https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/[a-f0-9]{40}/([^,\\s\"')]+)")
+RAW = re.compile(r"https://raw[.]githubusercontent[.]com/YohakuSama/loonkit/[a-f0-9]{40}/([^,\s\"')]+)")
 MARKDOWN_LINK = re.compile(r"\]\((\.{1,2}/[^)#?]+)(?:#[^)]*)?\)")
 
 
