@@ -55,3 +55,9 @@ jobs:
             ${{ runner.temp }}/upstream-review/
           retention-days: 7
           if-no-files-found: error
+      - name: Require complete upstream source coverage after uploading evidence
+        if: always()
+        run: |
+          python3 scripts/verify_upstream_coverage.py \
+            --catalog rules/sources.json \
+            --report "$RUNNER_TEMP/upstream-review/UPSTREAM_REVIEW.json"
