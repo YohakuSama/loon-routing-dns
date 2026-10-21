@@ -1,6 +1,6 @@
 # LoonKit v6.0.0 — DNS 设置与检查
 
-当前唯一的正式配置是 [LoonKit.lcf](../LoonKit.lcf)。本次清理未修改配置中的任何 DNS、DoH、TUN、IPv4 或 IPv6 参数。
+当前配置及 DNS 设置详见 [LoonKit.lcf](../LoonKit.lcf)。
 
 | 项目 | 现有配置 |
 | --- | --- |

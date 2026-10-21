@@ -44,6 +44,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_repository_consistency.py' -v
       - name: Original icon byte preservation and release guards
         run: python3 -m unittest discover -s tests -p 'test_icon_integrity_and_publish.py' -v
+      - name: User-facing copy quality and Release description consistency
+        run: python3 -m unittest discover -s tests -p 'test_public_copy.py' -v
       - name: JavaScript plugin regressions
         run: |
           node --check scripts/v20261021r2/network-diagnostics.js
