@@ -89,7 +89,7 @@ def verify(remote=False):
             if spec.get("optional_service_plugin_commit") is not None:
                 raise ValueError("obsolete secondary plugin still declared")
             if sum(line.startswith(RAW) and line.endswith(".plugin, enabled=true") for line in section(profile, "Plugin").splitlines()) != 1:
-                raise ValueError("v6.2.0 must load exactly one network helper")
+                raise ValueError("v6.3.0 must load exactly one network helper")
             if any(path == "release/Service_Diagnostics.plugin" for _, path in links):
                 raise ValueError("second service plugin still active")
         for ref,path in links:
@@ -107,7 +107,7 @@ def verify(remote=False):
     embedded = LINK.findall(plugin.decode("utf-8"))
     expected_script = "scripts/v20261021r2/network-diagnostics.js"
     service_script = "scripts/v20261021r7/service-diagnostics.js"
-    if spec["stable_release_version"] == "v6.2.0":
+    if spec["stable_release_version"] == "v6.3.0":
         if len(embedded) != 5 or sum(path == expected_script for _,path in embedded) != 2 or sum(path == service_script for _,path in embedded) != 1:
             raise ValueError("unified plugin must contain icon, node, network x2 and service scripts")
     elif len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
@@ -120,7 +120,7 @@ def verify(remote=False):
             raise ValueError("untrusted plugin script/icon reference: " + path)
         if not (ROOT / path).is_file():
             raise ValueError("missing plugin script/icon resource: " + path)
-    if spec["stable_release_version"] == "v6.2.0":
+    if spec["stable_release_version"] == "v6.3.0":
         source = plugin.decode("utf-8")
         if source.count("generic then script(") != 3 or source.count("network-changed then script(") != 1:
             raise ValueError("unexpected unified plugin entrypoints")
