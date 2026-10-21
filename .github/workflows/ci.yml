@@ -54,8 +54,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_portable_release_checksum.py' -v
       - name: JavaScript plugin regressions
         run: |
-          node --check scripts/v20261021r2/network-diagnostics.js
-          node --check scripts/v20261021r1/node-intelligence.js
+          node --check scripts/v20261021r3/network-diagnostics.js
+          node --check scripts/v20261021r2/node-intelligence.js
           node tests/test_node_copy.js
           node tests/test_network_diagnostics.js
           node tests/test_current_plugin.js
