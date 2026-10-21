@@ -26,7 +26,7 @@
   var result=new Array(serviceList.length),queue=[],inFlight=0,finished=0,idx=0,running=0,flushing=false;
   var MAX_HTTP=6,MAX_SERVICES=8;
   // Start time-sensitive Gemini checks early rather than behind all media probes.
-  var serviceOrder=[0,1,6,2,3,5,4,7];
+  var serviceOrder=[6,0,2,1,3,5,4,7];
   for(var si=8;si<serviceList.length;si++)serviceOrder.push(si);
   function state(code,extra){return {code:code,extra:extra||""};}
   function done(payload){if(ended)return;ended=true;$done(payload);}
@@ -107,11 +107,10 @@
         if(err)return false;
         var status=httpStatus(r),loc=header(r,"location"),canonical=header(r,"x-originating-url");
         var titlePage=/netflix/i.test(b)&&
-          (b.indexOf(film)>=0||canonical.indexOf("/title/"+film)>=0||
-           (/<title[^>]*>/i.test(b)&&!/not available in your (country|region)/i.test(b)));
+          (b.indexOf(film)>=0||canonical.indexOf("/title/"+film)>=0);
         return (status===200&&titlePage)||
           ((status===301||status===302)&&/netflix\.com/i.test(loc)&&
-           (/\/title\//i.test(loc)||loc.indexOf(film)>=0));
+           (loc.indexOf("/title/"+film)>=0));
       }
       function netflixResult(){
         if(called)return;
@@ -304,7 +303,7 @@
           parts[1]="地区受限";kind[1]="blocked";return finishBoth();
         }
         if(b.toLowerCase().indexOf("request is not allowed. please try again later.")>=0){
-          parts[1]="可访问";kind[1]="reachable";
+          parts[1]="接口可响应";kind[1]="reachable";
         }else if(httpStatus(r)===403||/have been blocked/i.test(b)){
           parts[1]="安全验证拦截";kind[1]="unknown";
         }
@@ -407,9 +406,9 @@
       if(id==="gemini")return "Gemini 页面可访问";
       return "网站可访问"+(region?" · 出口 "+region:"");
     }
-    if(r.code==="cdn")return "地区可用 · "+(region||"未知")+"（Netflix CDN）";
-    if(r.code==="site_region")return "地区入口可用 · "+(region||"未知")+"（Disney+ 页面）";
-    if(r.code==="api_reachable")return "Gemini API 可连接";
+    if(r.code==="cdn")return "Netflix CDN 地区 · "+(region||"未知");
+    if(r.code==="site_region")return "Disney+ 页面地区 · "+(region||"未知");
+    if(r.code==="api_reachable")return "Google AI 接口可达";
     if(r.code==="region"){
       if(id==="gemini")return "页面地区 "+(region||"未知")+" · 功能未验证";
       if(id==="disney")return "页面地区 "+(region||"未知")+" · 解锁未确认";
