@@ -400,7 +400,7 @@
       return "出口地区 "+(region||"已识别")+" · 服务未验证";
     }
     if(r.code==="partial"){
-      if(id==="netflix")return "仅自制剧可访问（抽样）"+(region?" · "+region:"");
+      if(id==="netflix")return "部分测试影片可访问"+(region?" · "+region:"");
       return "部分接口可访问 · "+r.extra;
     }
     if(r.code==="timeout")return "检测超时";
