@@ -189,27 +189,24 @@
         finish("unknown",httpStatus(r)===429?"请求被限流":"地区信息未获取");
       },true);
     } else if(id==="claude"){
-      var found="",statusSeen=0,errored="";
+      var regionCode="",pageResult="",pending=2;
+      function completeClaude(){
+        if(--pending)return;
+        if(pageResult==="blocked")return finish("blocked");
+        if(regionCode)return finish("region",regionCode+"（仅出口识别）");
+        if(pageResult==="reachable")return finish("reachable","网页可访问，地区未验证");
+        finish(pageResult==="timeout"?"timeout":"unknown");
+      }
       reliable("https://claude.ai/cdn-cgi/trace",function(err,r,b){
-        if(!err)found=traceRegion(b);
-        else errored=statusError(err);
-        if(++statusSeen===2)combine();
+        if(!err)regionCode=traceRegion(b);
+        completeClaude();
       },false);
       reliable("https://claude.ai/",function(err,r,b){
-        if(err)errored=statusError(err);
-        else if(httpStatus(r)===451||restricted(b))statusSeen=100;
-        else if(httpStatus(r)===200)statusSeen+=10;
-        if(statusSeen===100)return finish("blocked");
-        statusSeen++;
-        if(statusSeen===2||statusSeen===12)combine();
+        if(err)pageResult=statusError(err);
+        else if(httpStatus(r)===451||restricted(b))pageResult="blocked";
+        else pageResult=httpStatus(r)===200?"reachable":"unknown";
+        completeClaude();
       },true);
-      function combine(){
-        if(called)return;
-        if(statusSeen===100)return finish("blocked");
-        if(found)return finish("region",found+"（仅出口识别）");
-        if(statusSeen>=12)return finish("reachable","网页可访问，地区未验证");
-        finish(errored==="timeout"?"timeout":"unknown");
-      }
     } else if(id==="prime"){
       reliable("https://www.primevideo.com/",function(err,r,b){
         if(err)return finish(statusError(err));
