@@ -16,7 +16,7 @@
 
 从节点菜单运行「解锁检测」，所有请求使用选中的节点；从插件菜单运行则使用「检测策略」。
 
-仅检测 DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium 七项。检测接口、地区读取、状态判断及结果文字按原参考脚本执行。
+仅检测 DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium 七项。不包含 Gemini 等额外检测。检测接口、地区读取、状态判断及结果文字按原参考脚本执行。
 
 DAZN 从启动接口读取地区；Discovery+ 通过令牌查询所属地区；Paramount+ 依据 HTTP 200/302 判断；Disney+ 依据 BAMTech 地区会话判断；Netflix 依据 HTTP 200/403/404 判断；ChatGPT 根据首页响应和地区列表判断；YouTube Premium 根据页面地区限制提示和地区信息判断。
 
