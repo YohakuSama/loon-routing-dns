@@ -169,6 +169,22 @@ def source_line(source: dict, line: str) -> str | None:
     raise ValueError("unknown source format")
 
 
+def unsupported_expression(source: dict, raw: str) -> dict | None:
+    """Recognize only known non-translatable source syntax; never widen it.
+
+    These are evidence records, NOT normalized domain matchers. They remain
+    absent from candidate proposals and cannot enter the production rule set.
+    """
+    line = re.split(r"\s+#", raw.strip(), maxsplit=1)[0].strip()
+    if source["format"] == "loon" and line.upper().startswith("URL-REGEX,"):
+        if len(line.split(",", 1)[1]) >= 2:
+            return {"kind": "URL-REGEX", "reason": "MITM_URL_REGEX_NOT_DOMAIN_RULE"}
+    if source["format"] == "v2fly" and line.startswith("regexp:"):
+        if len(line[len("regexp:"):]) >= 2:
+            return {"kind": "regexp", "reason": "HOST_REGEX_CANNOT_SAFELY_WIDEN_TO_SUFFIX"}
+    return None
+
+
 def parse_source(source: dict, blob: bytes) -> tuple[set[str], dict]:
     if source.get("format") not in FORMAT_NAMES:
         raise ValueError("unknown format")
@@ -177,6 +193,7 @@ def parse_source(source: dict, blob: bytes) -> tuple[set[str], dict]:
     text = blob.decode("utf-8-sig")
     result: set[str] = set()
     issues: list[dict] = []
+    excluded: list[dict] = []
     invalid = 0
     quality_review_count = 0
     quality_samples: list[dict] = []
@@ -192,19 +209,27 @@ def parse_source(source: dict, blob: bytes) -> tuple[set[str], dict]:
                         quality_samples.append({"line": number, "rule": rule,
                                                 "reasons": flags})
         except (ValueError, TypeError) as exc:
-            invalid += 1
-            if len(issues) < 15:
-                issues.append({"line": number, "reason": str(exc), "snippet": raw[:120]})
+            ignored = unsupported_expression(source, raw)
+            if ignored is not None:
+                excluded.append({"line": number, "expression": raw.strip(),
+                                 "sha256": digest(raw.strip().encode("utf-8")),
+                                 **ignored})
+            else:
+                invalid += 1
+                if len(issues) < 15:
+                    issues.append({"line": number, "reason": str(exc), "snippet": raw[:120]})
     minimum = int(source.get("min_rules", 1))
     kinds = dict(sorted(Counter(fields(rule)[0] for rule in result).items()))
     return result, {"rules": len(result), "rule_kinds": kinds,
+                    "excluded_count": len(excluded),
+                    "excluded_expressions": excluded,
                     "invalid_count": invalid,
                     "invalid_samples": issues,
                     "quality_review_count": quality_review_count,
                     "quality_review_samples": quality_samples,
                     "minimum_satisfied": len(result) >= minimum,
                     "source_duplicates": max(0, sum(1 for x in text.splitlines()
-                        if x.strip() and not x.lstrip().startswith(("#", ";", "//"))) - invalid - len(result))}
+                        if x.strip() and not x.lstrip().startswith(("#", ";", "//"))) - invalid - len(excluded) - len(result))}
 
 
 def _local_path(root: Path, rel: str) -> Path:
@@ -436,6 +461,8 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             if parse["invalid_count"] or not parse["minimum_satisfied"]:
                 row["status"] = "INCOMPLETE_NEEDS_MANUAL_REVIEW"
                 invalid_groups.add(source["group"])
+            elif parse["excluded_count"]:
+                row["status"] = "PARSED_WITH_DOCUMENTED_EXCLUSIONS"
             if source["group"] in groups and row["enabled"]:
                 groups[source["group"]].update(rules)
                 for rule in rules:
@@ -547,7 +574,11 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
         "source_count": len(sources), "active_groups": len(active),
         "snapshot_count": len(snapshots),
         "included_snapshot_count": len(included_snapshots),
-        "incomplete_sources": sum(x["status"] != "PARSED_FOR_REVIEW" for x in records),
+        "incomplete_sources": sum(x["status"] in
+            {"INCOMPLETE_NEEDS_MANUAL_REVIEW", "UNAVAILABLE_OR_INVALID"} for x in records),
+        "sources_with_exclusions": sum(x["status"] ==
+            "PARSED_WITH_DOCUMENTED_EXCLUSIONS" for x in records),
+        "excluded_expressions": sum(x.get("excluded_count", 0) for x in records),
         "incomplete_groups": sorted(invalid_groups & set(active)),
         "full_delta_sha256": digest(full), "sources": records,
         "groups": group_report,
