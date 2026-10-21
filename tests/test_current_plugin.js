@@ -92,6 +92,7 @@ check("no retired standalone plugin or script assets remain",()=>{
     "scripts/v20261021r8/service-diagnostics.js",
     "scripts/v20261021r9/media-unlock.js",
     "scripts/v20261021r10/media-unlock.js",
+    "scripts/v20261021r11/media-unlock.js",
     "scripts/v20261021r7/node-intelligence.js",
     "scripts/v20261021r7/network-diagnostics.js"
   ];
