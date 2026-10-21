@@ -29,8 +29,8 @@ class SourceSyntax(unittest.TestCase):
             "openai.com\nfull:api.openai.com\nfull:ads.openai.com @ads\nregexp:^*.invalid\ninclude:cloud",
             skip_attrs=["ads"])
         self.assertEqual(rules, {"DOMAIN-SUFFIX,openai.com", "DOMAIN,api.openai.com"})
-        self.assertEqual(info["invalid_count"], 2)
-        self.assertFalse(info["invalid_count"] == 0)
+        self.assertEqual(info["invalid_count"], 1)  # unresolved include
+        self.assertEqual(info["excluded_count"], 1)  # non-equivalent regex preserved
 
     def test_domainset_exact_vs_suffix_is_not_widened(self):
         rules, info = self.parse("domainset",
@@ -213,8 +213,29 @@ class IncludeResolutionTests(unittest.TestCase):
         self.assertIn("hotstar", captured)
         rules, status = review.parse_source(src, actual)
         self.assertEqual(rules, {"DOMAIN-SUFFIX,example.org"})
-        self.assertEqual(status["invalid_count"], 1)
+        self.assertEqual(status["invalid_count"], 0)
+        self.assertEqual(status["excluded_count"], 1)
+        self.assertEqual(status["excluded_expressions"][0]["kind"], "regexp")
 
+
+class DocumentedExclusionsTests(unittest.TestCase):
+    def test_known_regex_retained_as_hashed_exclusion_without_domain_widening(self):
+        import hashlib
+        for src, text, kind in (
+            ({"format":"loon","min_rules":1},
+             "DOMAIN,example.org\\nURL-REGEX,^https?://ads.example.org/.*$\\n",
+             "URL-REGEX"),
+            ({"format":"v2fly","min_rules":1},
+             "example.org\\nregexp:^prefix-.+\\\\.example\\\\.org$\\n",
+             "regexp"),
+        ):
+            rules, report = review.parse_source(src, text.encode())
+            self.assertEqual(report["invalid_count"], 0)
+            self.assertEqual(report["excluded_count"], 1)
+            self.assertEqual(report["excluded_expressions"][0]["kind"], kind)
+            self.assertEqual(len(report["excluded_expressions"][0]["sha256"]), 64)
+            self.assertTrue(report["minimum_satisfied"])
+            self.assertFalse(any("ads.example.org" in rule for rule in rules))
 
 class CandidateWorkflow(unittest.TestCase):
     @staticmethod
