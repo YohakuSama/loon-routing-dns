@@ -1,19 +1,34 @@
-# 正式版文件与依赖
+# 正式版依赖与固定版本引用
 
-清理后的唯一完整配置为 `LoonKit.lcf`。固定 Raw URL 引用的 26 份正式规则位于 `rules/releases/vNext-RC2/`，图标位于 `icons/v20261018r2/` 和 `icons/v20261018r3/`，插件固定路径为 `release/phase-07/assets/Network_Diagnostics.plugin`，插件使用 `scripts/v20261018r11/`。
+> 本文描述当前 `main` 的 **LoonKit v6.0.0**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
 
-正式构建仅需 `rules/inputs/`、`rules/custom/`、`build/engine_manifest.json`、`build/sources.lock.json`、`rules/sources.json`、`rules/routing_guardrails.json` 和 `scripts/rule_engine.py`。43 份规则输入均经校验，输出不得作为自己的输入。许可证位于 `rules/LICENSE.*`，证明材料位于 `build/legal_evidence.json`、`build/license_sources.json` 和 `docs/THIRD_PARTY_NOTICES.md`。
+## 正式运行链
 
-测试位于 `tests/`，工作流仅为 `ci.yml`、`rules-update.yml` 与 `release.yml`。
+| 类型 | 现役文件 | 固定资源提交 |
+| --- | --- | --- |
+| 唯一完整配置 | [`LoonKit.lcf`](../LoonKit.lcf) | 通过 `main` 下载或导入 |
+| 26 份远程规则 | [`rules/releases/vNext-RC2/`](../rules/README.md) | `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` |
+| 33 个策略图标 + 1 个插件图标 | [`icons/v20261021r1/`](../icons/README.md) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
+| 网络辅助插件 | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `5b115b5dd02836620597b2212b2b49c18c646bb7` |
+| 节点出口脚本 | [`scripts/v20261021r1/node-intelligence.js`](../scripts/v20261021r1/node-intelligence.js) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
+| 网络与 DNS 诊断脚本 | [`scripts/v20261021r2/network-diagnostics.js`](../scripts/v20261021r2/network-diagnostics.js) | `af78ebb6b75bdbb341996db446d87cb2be719af4` |
 
-按维护者明确要求，不再保留 DNSPod 的完整配置、旧 `rules/generated/`（34 文件）、`ProxyProtect.list`、`rules/active_profile.json`，以及重复的两个 `plugins/` 插件别名。删除旧 Raw 路径会中断对此类旧资源的订阅；正式标准版从未读取这些被清理的兼容资源。
+调用关系为 `LoonKit.lcf` → 固定提交的 `release/Network_Diagnostics.plugin` → 版本化节点出口、网络诊断脚本和插件图标。Loon 中更新正式配置后，还应刷新远程插件及脚本缓存。
 
-现有 Git 历史仍被保留。正式配置使用旧提交固定 Raw URL；若希望在同一仓库建立全新历史，必须先改动这些 URL 并完成发布验证，再单独批准强制更新主分支及清理分支/标签。
+新装用户必须自行添加代理节点或订阅。配置不包含节点；`AdBlock` 可由用户在 `REJECT` 与 `DIRECT` 之间选择。
 
-## 当前诊断插件运行时链
+## 规则构建与发布验证
 
-`LoonKit.lcf` → 固定提交 `a2409b2d470e36ad0fa92f1fe424c37ae9543927` 中的 `release/phase-07/assets/Network_Diagnostics.plugin` → 固定提交 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` 中的 `scripts/v20261020r1/network-diagnostics.js`、节点出口脚本及插件图标。老版 `scripts/v20261018r11/network-diagnostics.js` 保留为已发布历史路径；正式插件不再使用它。
+冻结规则输入由 `rules/inputs/`（33 份）和 `rules/custom/`（10 份）构成，`build/engine_manifest.json` 与 `build/sources.lock.json` 固定其输入，`scripts/rule_engine.py` 构建 26 份正式规则。**正式输出不能作为自己的输入**。
 
-## 诊断插件当前版本
+校验入口：`scripts/source_lock.py --check`、`scripts/verify_release.py --check`；需要逐个检查固定远程链接时另外执行 `scripts/verify_release.py --check --remote`。对应测试位于 `tests/`，主 CI 为 [`ci.yml`](../.github/workflows/ci.yml)。
 
-`scripts/v20261020r2/network-diagnostics.js` 是正式插件当前版本，已固定提交引用；旧版本脚本不是正式插件输入。正式配置引用、插件引用、测试和 SHA256 由发布校验器与 CI 检查。
+远程上游目录 `rules/sources.json` 记录 87 个历史来源，`scripts/upstream_review.py` 仅生成待审快照和差异，不覆盖冻结输入或正式规则。每周 [`rules-update.yml`](../.github/workflows/rules-update.yml) 负责只读候选审核，[`upstream-live-audit.yml`](../.github/workflows/upstream-live-audit.yml) 用于真实上游完整性复核；[`release.yml`](../.github/workflows/release.yml) **只生成手动候选，不自动发布**。
+
+## 历史兼容与权利声明
+
+旧 DNSPod 完整配置、旧版 `rules/generated/`、`ProxyProtect.list`、`rules/active_profile.json` 及旧插件别名已从主分支清理。引用**已删除的动态路径**的旧配置可能无法更新；使用历史固定提交 URL 的资源仍可访问。清理主分支文件不等于改写 Git 历史。
+
+项目自有可授权部分采用 [GPL-2.0-only](../LICENSE)，第三方素材沿用各自许可证与版权；详见 [第三方声明](./THIRD_PARTY_NOTICES.md)。发布验收还应区分 CI 完整性检查、Loon 真机验证和正式 GitHub Release，不能把任一项混为全部完成。
+
+[维护流程](./MAINTAINING.md) · [DNS 说明](./DNS_PRIVACY.md) · [规则安全机制](./RULE_SAFETY.md) · [回到 README](../README.md)
