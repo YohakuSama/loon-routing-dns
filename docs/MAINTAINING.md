@@ -23,11 +23,11 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标引用 `d9333b47b1a0361d911fc57e3dc5808683d416d5`，节点出口脚本仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；正式插件引用 `5b115b5dd02836620597b2212b2b49c18c646bb7`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标引用 `d9333b47b1a0361d911fc57e3dc5808683d416d5`，节点出口脚本仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；正式插件引用 `a338f2ef8b4a56c7bf46785040a8118d0be1485a`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
-主配置中的现役插件引用 `5b115b5dd02836620597b2212b2b49c18c646bb7` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `af78ebb6b75bdbb341996db446d87cb2be719af4` 的 `scripts/v20261021r2/network-diagnostics.js`；节点出口脚本仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，插件和各策略图标引用 `d9333b47b1a0361d911fc57e3dc5808683d416d5`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `a338f2ef8b4a56c7bf46785040a8118d0be1485a` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `af78ebb6b75bdbb341996db446d87cb2be719af4` 的 `scripts/v20261021r2/network-diagnostics.js`；节点出口脚本仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，插件和各策略图标引用 `d9333b47b1a0361d911fc57e3dc5808683d416d5`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 网络诊断脚本维护
