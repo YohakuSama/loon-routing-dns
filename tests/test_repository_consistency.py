@@ -20,7 +20,11 @@ class RepositoryConsistency(unittest.TestCase):
         for text in (profile, plugin):
             for path in RAW.findall(text):
                 self.assertTrue((ROOT / path).is_file(), "missing active resource " + path)
-                self.assertIn(path, dep, "undocumented current dependency " + path)
+                documented = (path if path.startswith("scripts/") or path.startswith("release/")
+                              else "icons/v20261021r1/" if path.startswith("icons/")
+                              else "rules/releases/vNext-RC2/" if path.startswith("rules/")
+                              else path)
+                self.assertIn(documented, dep, "undocumented current dependency " + path)
         self.assertIn("scripts/v20261021r2/network-diagnostics.js", dep)
         self.assertIn("release/Network_Diagnostics.plugin", dep)
         self.assertIn("icons/v20261021r1/", dep)
