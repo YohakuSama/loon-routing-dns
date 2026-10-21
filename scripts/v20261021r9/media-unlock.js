@@ -114,11 +114,11 @@
       // Only affirmative fields/anonymous-region errors count; a successful homepage load never counts.
       get("https://www.disneyplus.com/",function(err,r,b) {
         if (err) return settle("failed","");
-        if (status(r)===451 || deny(b) || /\/(?:unavailable|preview)(?:\/|$)/i.test(String(r.url||"")))
-          return settle("blocked","");
-        var supported=/"inSupportedLocation"\s*:\s*(true|false)/i.exec(b);
         var country=countryFrom(b,/"countryCode"\s*:\s*"([A-Za-z]{2})"/i) ||
           countryFrom(b,/"region"\s*:\s*"([A-Za-z]{2})"/i);
+        if (status(r)===451 || deny(b) || /\/(?:unavailable|preview)(?:\/|$)/i.test(String(r.url||"")))
+          return settle("blocked",country);
+        var supported=/"inSupportedLocation"\s*:\s*(true|false)/i.exec(b);
         if (supported) return settle(supported[1].toLowerCase()==="true"?"available":"blocked",country);
         // A country on the generic landing page is only a location hint.
         settle(country?"region":"unknown",country);
