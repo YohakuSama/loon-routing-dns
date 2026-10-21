@@ -14,7 +14,8 @@
     Linkedin: {host:"www.linkedin.com", path:"/favicon.ico"}
   };
   var args = typeof $argument === "object" && $argument ? $argument : {};
-  var raw = typeof args.service === "string" ? args.service.trim() : "Spotify";
+  var raw = typeof args.service === "undefined" ? "Spotify"
+    : (typeof args.service === "string" ? args.service.trim() : "");
   var selected = Object.prototype.hasOwnProperty.call(catalog, raw) ? raw : null;
   var finished = false;
   function finish(msg) {
