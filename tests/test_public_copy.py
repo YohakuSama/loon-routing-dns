@@ -92,14 +92,14 @@ class PublicCopyChecks(unittest.TestCase):
         plugin=(ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         workflow=(ROOT/".github/workflows/publish-v63.yml").read_text(encoding="utf-8")
         notes=(ROOT/"docs/RELEASE_NOTES_v6.3.0.md").read_text(encoding="utf-8")
-        self.assertIn("# LoonKit v6.4.0",profile)
+        self.assertIn("# LoonKit v6.4.1",profile)
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertFalse((ROOT/"release/Service_Diagnostics.plugin").exists())
         self.assertNotIn("service = select,",plugin)
         self.assertIn('tag="节点信息"',plugin)
         self.assertIn('tag="网络检测"',plugin)
         self.assertIn('tag="解锁检测"',plugin)
-        self.assertIn("scripts/v20261021r16/media-unlock.js",plugin)
+        self.assertIn("scripts/v20261021r17/media-unlock.js",plugin)
         for guard in ("workflow_run:", "conclusion == 'success'", "head_branch == 'main'",
                       "head_repository.full_name == github.repository", "fetch-depth: 0",
                       "git merge-base --is-ancestor", "scripts/verify_release.py --check",
@@ -113,7 +113,7 @@ class PublicCopyChecks(unittest.TestCase):
         text=(ROOT/"docs/CHANGELOG.md").read_text(encoding="utf-8")
         headings=re.findall(r"^## (v\d+\.\d+\.\d+)$",text,re.M)
         self.assertGreater(len(headings),0)
-        self.assertEqual(headings[0],"v6.4.0")
+        self.assertEqual(headings[0],"v6.4.1")
         self.assertEqual(len(headings),len(set(headings)),
                          "historical update headings must not all be rewritten to current version")
 
