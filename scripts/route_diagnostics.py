@@ -185,7 +185,11 @@ def _host(url: str):
     except ValueError:
         return None
     if host and VALID_HOST.fullmatch(host):
-        return host.lower()
+        try:
+            ipaddress.ip_address(host)
+        except ValueError:
+            return host.lower()
+        return None
     return None
 
 
