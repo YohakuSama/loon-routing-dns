@@ -46,6 +46,12 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 每周任务下载上游快照，生成全量增删差异、规范化候选及跨策略冲突审阅报告。来源不可用、未知格式、规则数量不符均标记为不完整，不能当成可发布候选。只对同策略内的精确重复及被该策略 `DOMAIN-SUFFIX` 明确覆盖的 `DOMAIN` 作候选去重；不自动合并 IP 网段或把宽关键字猜测为精确域名。**所有来源变更均不自动修改正式规则、输入锁、策略归属或用户配置**；新规则发布需要审核与回归测试。
 
+## 真机验收与测速端点
+
+自动化 CI 不能证明真实网络上的测速网址始终返回 204。正式配置当前用 `http://bing.com/generate_204` 进行代理测速，插件另对 `https://www.gstatic.com/generate_204`（代理）与 `http://wifi.vivo.com.cn/generate_204`（直连）执行探测。**发布前要在 Loon 真机和至少两种网络环境下确认这些 URL 返回预期状态**；若返回重定向、门户页面或其他状态，先记录响应和运行环境，再在独立版本变更中替换，避免只凭某一时刻的网页抓取结果大范围改变测速行为。
+
+插件的最低声明为 `3.5.1(983)`，而 `$dns.query` 需要 Build 988+，因此兼容性验收应分别覆盖插件加载、节点出口和 DNS 诊断。现有 `build/release_manifest.json` 的 `device_test` 仍为 `NOT_EXECUTED`，不应把 CI 绿灯描述为已完成真机验收。
+
 ## 完整上游审计（2026-10-21）
 
 `upstream-live-audit.yml` 使用 GitHub Actions Runner 下载全部 87 个登记来源并生成审阅附件。V2Fly 的 `include:` 受递归深度、输入格式和仓库白名单约束，额外保留引用文件快照。`URL-REGEX` 与 V2Fly 主机名 `regexp:` 不会泛化成 `DOMAIN-SUFFIX`：当前 8 条表达式有明确排除来源、哈希和理由。`verify_upstream_coverage.py` 单独检查来源分类完整性与转换完整性；发布许可永远是另一个审核步骤。参见[审计结果](./UPSTREAM_COVERAGE_2026-10-21.md)。

@@ -20,7 +20,11 @@ jobs:
           python-version: '3.12'
       - run: python3 scripts/verify_release.py --check
       - run: python3 scripts/license_audit.py --check
-      - run: python3 scripts/prepare_release.py --version "${{ inputs.version }}" --output "$RUNNER_TEMP/candidate" --build
+      - name: Build immutable-input release preview
+        env:
+          # Never interpolate workflow_dispatch input inside a shell script.
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: python3 scripts/prepare_release.py --version "$RELEASE_VERSION" --output "$RUNNER_TEMP/candidate" --build
       - uses: actions/upload-artifact@v4
         with:
           name: reviewed-release-candidate
