@@ -1,4 +1,4 @@
-"""v6.3.0 scoped service routing and unified plugin release contracts."""
+"""Scoped service routing and unified plugin release contracts."""
 import json
 from pathlib import Path
 import re
