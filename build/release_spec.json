@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "rc_label": "vNext-RC2",
-  "stable_release_version": "v6.3.6",
+  "stable_release_version": "v6.3.7",
   "status": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
   "release_rules_dir": "rules/releases/vNext-RC2",
   "release_assets_dir": "release",
@@ -10,11 +10,11 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Service outcomes distinguish platform-specific regional support, site/API reachability, and blocked responses; no paid playback claim. Routing/DNS unchanged.",
-  "plugin_assets_commit": "9acec62db32f2981019dcf3c24776b2fdaf8bbb1",
+  "warning": "Configured Loon server entrance differs from observed node exit IP. Optional direct comparison is parallel; no media playback claim. DNS and routing unchanged.",
+  "plugin_assets_commit": "4ff27e265bc07fde23935a75d3deef216c605642",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
   "unified_service_diagnostics_script_commit": "40da0ac592c8dba34a65548826a8ca2e7104ad76",
-  "node_script_commit": "db05de1c1df0648d999bf96aab292fd50dc02419"
+  "node_script_commit": "edac8c9f51de9ad6e2a9a969752a31490c4cfd44"
 }
