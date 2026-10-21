@@ -4,7 +4,12 @@ on:
     paths:
       - 'scripts/upstream_review.py'
       - 'scripts/verify_upstream_coverage.py'
-      - 'tests/test_upstream_live.py'
+      - 'tests/test_upstream_review.py'
+      - 'tests/test_upstream_coverage.py'
+      - 'tests/test_rule_stress.py'
+      - 'scripts/rule_engine.py'
+      - 'rules/routing_guardrails.json'
+      - '.github/workflows/rules-update.yml'
       - '.github/workflows/upstream-live-audit.yml'
       - 'rules/sources.json'
   workflow_dispatch:
