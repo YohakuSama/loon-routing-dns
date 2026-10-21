@@ -59,13 +59,13 @@ const positive=run(req=>{
   return {status:200};
 });
 const pass=rows(positive);
-assert.equal(pass["DAZN"],"支持 ⟦🇯🇵⟧");
-assert.equal(pass["Discovery+"],"支持");
-assert.equal(pass["Paramount+"],"支持");
-assert.equal(pass["Disney+"],"支持 ⟦🇯🇵⟧");
-assert.equal(pass["Netflix"],"完整支持 ⟦🇯🇵⟧");
-assert.equal(pass["ChatGPT"],"支持 ⟦🇯🇵⟧");
-assert.equal(pass["YouTube Premium"],"支持 ⟦🇯🇵⟧");
+assert.equal(pass["DAZN"],"支持 ➟ ⟦🇯🇵⟧ 🎉");
+assert.equal(pass["Discovery+"],"支持 🎉");
+assert.equal(pass["Paramount+"],"支持 🎉");
+assert.equal(pass["Disney+"],"支持 ➟ ⟦🇯🇵⟧ 🎉");
+assert.equal(pass["Netflix"],"完整支持 ➟ ⟦🇯🇵⟧ 🎉");
+assert.equal(pass["ChatGPT"],"支持 ➟ ⟦🇯🇵⟧ 🎉");
+assert.equal(pass["YouTube Premium"],"支持 ➟ ⟦🇯🇵⟧ 🎉");
 assert(positive.maxActive<=7);
 assert(positive.sent.every(req=>req.node==="JP-selected"&&req["auto-cookie"]===false&&!req.insecure));
 assert.equal(positive.sent.filter(r=>r.url.includes("bamgrid")).length,1);
@@ -78,45 +78,45 @@ const discoveryCookie=positive.sent.find(r=>r.url.endsWith("/users/me")).headers
 assert(discoveryCookie.includes("st=token123"));
 
 const daznNoGeo=run(req=>req.url.includes("indazn")?{body:"{}"}:{status:503});
-assert.equal(rows(daznNoGeo)["DAZN"],"未支持");
+assert.equal(rows(daznNoGeo)["DAZN"],"未支持 🚫");
 const discoveryNotUS=run(req=>req.url.includes("/token?")?{body:'{"data":{"attributes":{"token":"x"}}}'}:
   req.url.includes("/users/me")?{body:'{"data":{"attributes":{"currentLocationTerritory":"jp"}}}'}:{status:503});
-assert.equal(rows(discoveryNotUS)["Discovery+"],"未支持");
+assert.equal(rows(discoveryNotUS)["Discovery+"],"未支持 🚫");
 const paramount302=run(req=>req.url.includes("paramountplus")?{status:302}:{status:503});
-assert.equal(rows(paramount302)["Paramount+"],"未支持");
+assert.equal(rows(paramount302)["Paramount+"],"未支持 🚫");
 const disneyComing=run(req=>req.url.includes("bamgrid")?
   {body:'{"extensions":{"sdk":{"session":{"inSupportedLocation":false,"location":{"countryCode":"JP"}}}}}'}:{status:503});
-assert.equal(rows(disneyComing)["Disney+"],"即将登陆 ⟦🇯🇵⟧");
+assert.equal(rows(disneyComing)["Disney+"],"即将登陆 ➟ ⟦🇯🇵⟧ ⚠️");
 const disneyNoSession=run(req=>req.url.includes("bamgrid")?{body:'{"extensions":{"sdk":{}}}'}:{status:503});
-assert.equal(rows(disneyNoSession)["Disney+"],"未支持");
+assert.equal(rows(disneyNoSession)["Disney+"],"未支持 🚫");
 const disneyUnknownBool=run(req=>req.url.includes("bamgrid")?
   {body:'{"extensions":{"sdk":{"session":{"location":{"countryCode":"JP"}}}}}'}:{status:503});
-assert.equal(rows(disneyUnknownBool)["Disney+"],"支持 ⟦🇯🇵⟧");
+assert.equal(rows(disneyUnknownBool)["Disney+"],"支持 ➟ ⟦🇯🇵⟧ 🎉");
 
-for(const [status,expected] of [[403,"未支持"],[404,"支持自制剧集"],[200,"完整支持 ⟦未知地区⟧"],[503,"检测失败"]]){
+for(const [status,expected] of [[403,"未支持 🚫"],[404,"支持自制剧集 ⚠️"],[200,"完整支持 ➟ ⟦未知地区⟧ 🎉"],[503,"检测失败 ❗️"]]){
   const t=run(req=>req.url.includes("netflix.com/title")?{status}:{status:503});
   assert.equal(rows(t)["Netflix"],expected);
 }
 for(const [body,expected] of [
-  ["Premium is not available in your country","未支持"],
-  ['{"GL":"JP"}',"支持 ⟦🇯🇵⟧"],
-  ["www.google.cn","支持 ⟦🇨🇳⟧"],
-  ["normal page","支持 ⟦🇺🇸⟧"]]){
+  ["Premium is not available in your country","未支持 🚫"],
+  ['{"GL":"JP"}',"支持 ➟ ⟦🇯🇵⟧ 🎉"],
+  ["www.google.cn","支持 ➟ ⟦🇨🇳⟧ 🎉"],
+  ["normal page","支持 ➟ ⟦🇺🇸⟧ 🎉"]]){
   const t=run(req=>req.url.includes("youtube.com/premium")?{body}:{status:503});
   assert.equal(rows(t)["YouTube Premium"],expected);
 }
 const chatUnsupported=run(req=>req.url==="https://chat.openai.com/"?
   {status:200,headers:{"Content-Type":"text/plain"}}:{status:503});
-assert.equal(rows(chatUnsupported)["ChatGPT"],"未支持");
+assert.equal(rows(chatUnsupported)["ChatGPT"],"未支持 🚫");
 assert(!chatUnsupported.sent.some(r=>r.url.includes("cdn-cgi/trace")));
 const chatDenied=run(req=>req.url.includes("cdn-cgi/trace")?{body:"loc=CN\n"}:{status:308});
-assert.equal(rows(chatDenied)["ChatGPT"],"未支持");
+assert.equal(rows(chatDenied)["ChatGPT"],"未支持 🚫");
 const chatFailure=run(req=>req.url.includes("cdn-cgi/trace")?{error:"timeout",status:0}:{status:308});
-assert.equal(rows(chatFailure)["ChatGPT"],"检测失败");
+assert.equal(rows(chatFailure)["ChatGPT"],"检测失败 ❗️");
 const error=run(()=>({status:503}));
-for(const verdict of Object.values(rows(error)))assert.equal(verdict,"检测失败");
+for(const verdict of Object.values(rows(error)))assert.equal(verdict,"检测失败 ❗️");
 const stall=run(()=>({status:503}),{stall:true,fireTimeout:true});
-for(const verdict of Object.values(rows(stall)))assert.equal(verdict,"检测失败");
+for(const verdict of Object.values(rows(stall)))assert.equal(verdict,"检测失败 ❗️");
 while(stall.pending.length)stall.next();
 assert.equal(stall.output.length,1);
 const malformed=run(()=>({status:200}),{params:{node:"bad\nnode"}});
