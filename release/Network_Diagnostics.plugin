@@ -1,5 +1,5 @@
 #!name = LoonKit · 网络辅助
-#!desc = 查看节点信息、网络连接与服务可用性
+#!desc = 查看节点信息、网络状态和流媒体与 AI 地区可用性
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loonkit
 #!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png
@@ -11,11 +11,12 @@
 
 [Argument]
 auto_check = switch,false,tag=网络切换提醒,desc=默认关闭；网络切换后连续检测失败才提醒
-target_policy = input,"Proxy",tag=检测策略,desc=节点信息与服务检测使用此策略；从节点菜单运行时使用所选节点
+target_policy = input,"Proxy",tag=检测策略,desc=节点信息与解锁检测使用此策略；从节点菜单运行时使用所选节点
 compare_direct = switch,false,tag=直连 IP 对照,desc=开启后额外显示当前网络的公网 IP
+full_scan = switch,false,tag=完整检测,desc=默认快速检测，开启后增加其他地区与流媒体项目
 
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/db05de1c1df0648d999bf96aab292fd50dc02419/scripts/v20261021r2/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with tag="网络检测", img_url="network.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/d09953faf50f90925cf06c096339a154a6fc04e5/scripts/v20261021r8/service-diagnostics.js", {${target_policy}}) with tag="服务检测", img_url="network", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/3d72b8814dffa541fa1a26c8cdf252184b026edf/scripts/v20261021r9/media-unlock.js", {${target_policy}, ${full_scan}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=22
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
