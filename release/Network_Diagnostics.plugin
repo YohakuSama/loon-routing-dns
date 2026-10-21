@@ -1,5 +1,5 @@
 #!name = LoonKit · 网络辅助
-#!desc = 节点出口查询、网络连通性和 DNS 解析检查
+#!desc = 节点出口、网络与 DNS 检测、七项服务连通性查询
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loonkit
 #!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png
@@ -13,8 +13,10 @@
 auto_check = switch,false,tag=网络切换提醒,desc=开启后在网络切换时检测连接，异常时提醒
 target_policy = input,"Proxy",tag=查询策略,desc=默认 Proxy；从节点菜单运行时使用所选节点
 compare_direct = switch,false,tag=直连 IP 对照,desc=可选；会向查询服务提供直连公网 IP
+service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin",tag=检测服务,desc=手动选择需要检测的服务
 
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/scripts/v20261021r1/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点出口信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/af78ebb6b75bdbb341996db446d87cb2be719af4/scripts/v20261021r2/network-diagnostics.js", {${auto_check}}) with tag="网络与 DNS 诊断", img_url="network.system", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/942cd69bf1b89190933f69a65c9cf82464ae0211/scripts/v20261021r6/service-diagnostics.js", {${service}}) with tag="服务连通性诊断", img_url="network", timeout=22
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/af78ebb6b75bdbb341996db446d87cb2be719af4/scripts/v20261021r2/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
