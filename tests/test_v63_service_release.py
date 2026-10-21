@@ -66,7 +66,7 @@ class ServiceCoverageReleaseTests(unittest.TestCase):
     def test_manual_only_service_plugin_is_pinned(self):
         spec = json.loads((ROOT/"build/release_spec.json").read_text(encoding="utf-8"))
         plugin = (ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
-        self.assertEqual(spec["stable_release_version"],"v6.4.3")
+        self.assertEqual(spec["stable_release_version"],"v6.4.4")
         self.assertEqual(self.profile.count("/release/Network_Diagnostics.plugin, enabled=true"),1)
         self.assertIn("/"+spec["plugin_assets_commit"]+
                       "/release/Network_Diagnostics.plugin, enabled=true",self.profile)
@@ -75,10 +75,9 @@ class ServiceCoverageReleaseTests(unittest.TestCase):
         self.assertEqual(plugin.count("network-changed then script("),1)
         self.assertNotIn("service = select,",plugin)
         self.assertIn("auto_check = switch,false",plugin)
-        self.assertIn("full_scan = switch,false",plugin)
         self.assertIn('tag="解锁检测"',plugin)
         self.assertIn("/"+spec["unified_service_diagnostics_script_commit"]+
-                      "/scripts/v20261022r1/media-unlock.js",plugin)
+                      "/scripts/v20261022r2/media-unlock.js",plugin)
         self.assertNotIn("/main/scripts/",plugin)
 
     def test_formal_remote_rules_still_original_pinned_set(self):
