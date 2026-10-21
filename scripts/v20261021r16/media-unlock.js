@@ -392,7 +392,7 @@
       if(id==="chatgpt")return "Web / iOS 接口已响应 · 功能未验证";
       if(id==="youtube")return region?"Premium 页面可访问 · "+region:"网站可访问";
       if(id==="disney")return "网站可访问 · "+(r.extra||"地区未确认");
-      return "网站可访问"+(region?" · "+region:"");
+      return "网站可访问"+(region?" · 出口 "+region:"");
     }
     if(r.code==="region"){
       if(id==="gemini")return "页面地区 "+(region||"未知")+" · 功能未验证";
