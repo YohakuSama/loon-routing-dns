@@ -25,6 +25,11 @@ jobs:
         run: |
           python3 scripts/source_lock.py --check
           python3 scripts/verify_release.py --check
+      - name: Verify rule rebuild is independent of Python hash seed
+        run: |
+          for seed in 0 1 42 2026; do
+            PYTHONHASHSEED="$seed" python3 scripts/verify_release.py --check
+          done
       - name: Third-party license evidence
         run: python3 scripts/license_audit.py --check
       - name: Formal Python regressions
