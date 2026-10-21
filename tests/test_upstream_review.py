@@ -223,10 +223,10 @@ class DocumentedExclusionsTests(unittest.TestCase):
         import hashlib
         for src, text, kind in (
             ({"format":"loon","min_rules":1},
-             "DOMAIN,example.org\\nURL-REGEX,^https?://ads.example.org/.*$\\n",
+             "DOMAIN,example.org\nURL-REGEX,^https?://ads.example.org/.*$\n",
              "URL-REGEX"),
             ({"format":"v2fly","min_rules":1},
-             "example.org\\nregexp:^prefix-.+\\\\.example\\\\.org$\\n",
+             "example.org\nregexp:^prefix-.+\\.example\\.org$\n",
              "regexp"),
         ):
             rules, report = review.parse_source(src, text.encode())
