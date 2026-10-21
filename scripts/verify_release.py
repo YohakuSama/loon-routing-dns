@@ -78,7 +78,7 @@ def verify(remote=False):
         plugins = [(ref,path) for ref,path in links if path=="release/Network_Diagnostics.plugin"]
         if len(rules)!=26 or len(set(path for _,path in rules))!=26 or len(icons)!=33:
             raise ValueError("wrong number of pinned rule/icon subscriptions")
-        if any(not path.startswith("icons/v20261021r1/") for _,path in icons) or len({path for _,path in icons})!=33:
+        if any(not path.startswith("icons/v20261021r2/") for _,path in icons) or len({path for _,path in icons})!=33:
             raise ValueError("strategy icons are not consolidated or contain duplicates")
 
         if plugins != [(spec["plugin_assets_commit"],"release/Network_Diagnostics.plugin")]:
@@ -100,7 +100,9 @@ def verify(remote=False):
     if len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
         raise ValueError("expected immutable scripts or plugin icon missing")
     for ref,path in embedded:
-        expected_ref = spec["diagnostics_script_commit"] if path == expected_script else spec["script_assets_commit"]
+        expected_ref = (spec["diagnostics_script_commit"] if path == expected_script
+                        else spec["reviewed_auxiliary_commit"] if path.startswith("icons/")
+                        else spec["script_assets_commit"])
         if ref != expected_ref or not path.startswith(("scripts/", "icons/")):
             raise ValueError("untrusted plugin script/icon reference: " + path)
         if not (ROOT / path).is_file():
