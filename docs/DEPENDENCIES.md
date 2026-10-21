@@ -12,8 +12,9 @@
 | 网络辅助插件 | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `5b115b5dd02836620597b2212b2b49c18c646bb7` |
 | 节点出口脚本 | [`scripts/v20261021r1/node-intelligence.js`](../scripts/v20261021r1/node-intelligence.js) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
 | 网络与 DNS 诊断脚本 | [`scripts/v20261021r2/network-diagnostics.js`](../scripts/v20261021r2/network-diagnostics.js) | `af78ebb6b75bdbb341996db446d87cb2be719af4` |
+| 手动服务连通性诊断插件 | [`release/Service_Diagnostics.plugin`](../release/Service_Diagnostics.plugin) | `7cb02a4be5db739d74266536fefbc54b720ec35b` |
 
-**服务诊断工具：** v6.1.0 正式配置新增 [服务连通性诊断插件](../release/Service_Diagnostics.plugin)，固定引用已合入 main 的提交 `7cb02a4be5db739d74266536fefbc54b720ec35b`，执行 [服务诊断脚本](../scripts/v20261021r5/service-diagnostics.js)。此插件仅提供手动动作；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 在用户电脑上运行，不自动读取真机数据。
+**服务诊断工具：** 插件随 v6.1.0 正式配置提供，执行 [服务诊断脚本](../scripts/v20261021r5/service-diagnostics.js)。此插件仅提供手动动作；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 在用户电脑上运行，不自动读取真机数据。
 
 调用关系为 `LoonKit.lcf` → 固定提交的 `release/Network_Diagnostics.plugin` → 版本化节点出口、网络诊断脚本和插件图标。Loon 中更新正式配置后，还应刷新远程插件及脚本缓存。
 
