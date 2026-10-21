@@ -62,7 +62,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 插件仅用于查询和提醒，不会自动更改节点、DNS 或分流设置。
 
-> 地区检测会区分平台证据与普通网络连接，不能保证账号、订阅或播放实际可用。检测结果与注意事项见 [网络辅助说明](./docs/NETWORK_DIAGNOSTICS.md)。
+> 解锁检测区分平台响应、CDN 出口地区和普通网页连通；检测结果不能代替实际账号和播放验证。检测结果与注意事项见 [网络辅助说明](./docs/NETWORK_DIAGNOSTICS.md)。
 
 更新配置后，请在 Loon 中刷新插件与脚本。
 
@@ -90,7 +90,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[历史版本](https://github.com/YohakuSama/loonkit/releases) · [当前配置校验](./docs/RELEASE_CHECKSUM_v6.3.3.md)
+[历史版本](https://github.com/YohakuSama/loonkit/releases) · [当前配置校验](./docs/RELEASE_CHECKSUM_v6.3.4.md)
 
 ---
 
