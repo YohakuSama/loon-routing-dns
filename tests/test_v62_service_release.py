@@ -65,7 +65,7 @@ class ServiceCoverageReleaseTests(unittest.TestCase):
 
     def test_manual_only_service_plugin_is_pinned(self):
         spec = json.loads((ROOT/"build/release_spec.json").read_text(encoding="utf-8"))
-        plugin = (ROOT/"release/Service_Diagnostics.plugin").read_text(encoding="utf-8")
+        plugin = (ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         self.assertEqual(spec["stable_release_version"],"v6.2.0")
         self.assertEqual(self.profile.count("/release/Network_Diagnostics.plugin, enabled=true"),1)
         self.assertIn("/"+spec["plugin_assets_commit"]+
