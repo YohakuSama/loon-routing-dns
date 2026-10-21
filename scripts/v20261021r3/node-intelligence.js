@@ -136,12 +136,11 @@
     return {geo:call("geoip"),asn:call("ipasn"),org:call("ipaso")};
   }
   function configuredEntrance() {
-    // Loon exposes the proxy's configured server address through nodeInfo.
-    // This is not necessarily the actual first-hop public IP of a relay chain.
+    // This is the proxy server configured in Loon, not a verified relay-chain first hop.
     var input=choose(info.address);
-    if(!input||input.length>253||/[\\/\\?\\#@\\s\\u0000-\\u001f]/.test(input))return "";
+    if(!input||input.length>253||/[\/?#@\s\x00-\x1f]/.test(input))return "";
     var host=input;
-    var bracket=input.match(/^\\[([0-9a-f:]+)\\](?::[0-9]{1,5})?$/i);
+    var bracket=input.match(/^\[([0-9a-f:]+)\](?::[0-9]{1,5})?$/i);
     if(bracket) {
       if(!validIP(bracket[1]))return "";
       host=bracket[1];
