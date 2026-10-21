@@ -36,6 +36,7 @@ LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整�
 | **灵活选路** | 手动选择、延迟测试和故障回退相结合，满足不同网络需求。 |
 | **广告拦截** | 通过 `AdBlock` 策略组快速切换拦截与放行。 |
 | **网络辅助** | 集成节点出口查询、连通性与 DNS 诊断，以及可选的网络切换提醒。 |
+| **服务问题排查** | 提供七个服务的主域名覆盖检查、离线规则命中分析、脱敏日志汇总及可选手动连接诊断。 |
 | **稳定的规则版本** | 正式配置固定引用 26 份规则，规则变更经过审核后再发布。 |
 
 ### 常用策略组
@@ -64,6 +65,14 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 更新旧配置后，请在 Loon 内刷新远程插件与脚本；缓存旧版本时可能仍显示原来的提示。详见 [网络辅助说明](./docs/NETWORK_DIAGNOSTICS.md)。
 
+## 服务与分流问题排查
+
+- [服务与分流排查指南](./docs/ROUTE_DIAGNOSTICS.md)：检查 Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn 的已有主域名是否进入正确策略；输入域名查看预计规则命中。
+- [可选服务诊断插件](./release/Service_Diagnostics.plugin)：在 Loon 中手动测试指定服务的 HTTPS 连接；与内置「网络辅助」分开安装，**不会自动运行**。
+- 对自己导出的 HAR 或文本日志，可在电脑上离线生成仅包含服务类别、状态码区间和数量的汇总。**不会上传原始日志**。
+
+上述工具仅辅助排查。预计规则命中不代表真机实际命中，连接端点有响应也不等于 App 登录或播放成功。这些工具位于 main 分支，**不改变 v6.0.0 已发布的正式配置及资源**。
+
 ## DNS 与规则更新
 
 默认提供 AliDNS DoH，并支持在 Loon 中使用自选 DNS。相关选项和常见问题见 [DNS 设置说明](./docs/DNS_PRIVACY.md)。
@@ -72,7 +81,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 ## 文档与支持
 
-[规则与来源](./rules/README.md) · [网络辅助](./docs/NETWORK_DIAGNOSTICS.md) · [DNS 说明](./docs/DNS_PRIVACY.md) · [更新记录](./docs/CHANGELOG.md)
+[规则与来源](./rules/README.md) · [服务与分流排查](./docs/ROUTE_DIAGNOSTICS.md) · [网络辅助](./docs/NETWORK_DIAGNOSTICS.md) · [DNS 说明](./docs/DNS_PRIVACY.md) · [更新记录](./docs/CHANGELOG.md)
 
 [维护说明](./docs/MAINTAINING.md) · [正式资源依赖](./docs/DEPENDENCIES.md) · [开源许可与来源](./docs/THIRD_PARTY_NOTICES.md) · [发布指引](./docs/RELEASE_READINESS.md) · [反馈问题](https://github.com/YohakuSama/loonkit/issues)
 

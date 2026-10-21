@@ -1,0 +1,15 @@
+#!name = LoonKit · 服务连通性诊断
+#!desc = 手动测试七个服务的连接端点，不改变分流、DNS 或节点
+#!author = YohakuSama
+#!homepage = https://github.com/YohakuSama/loonkit
+#!system = iOS,iPadOS
+#!loon_version = 3.5.1(983)
+#!tag = 服务,诊断
+#!date = 2026-10-21
+#!type = normal
+
+[Argument]
+service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin",tag=检测服务,desc=选择要检查的服务
+
+[Script]
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/28847c083aa5f9521545cc3103f1cda2bc23287c/scripts/v20261021r3/service-diagnostics.js", {${service}}) with tag="服务连通性检测", img_url="network", timeout=20
