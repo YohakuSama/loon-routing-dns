@@ -25,7 +25,7 @@ class RepositoryConsistency(unittest.TestCase):
                               else "rules/releases/vNext-RC2/" if path.startswith("rules/")
                               else path)
                 self.assertIn(documented, dep, "undocumented current dependency " + path)
-        self.assertIn("scripts/v20261021r2/network-diagnostics.js", dep)
+        self.assertIn("scripts/v20261021r3/network-diagnostics.js", dep)
         self.assertIn("release/Network_Diagnostics.plugin", dep)
         self.assertIn("icons/v20261021r1/", dep)
         for stale in ("release/phase-07/", "release/phase-08/",
