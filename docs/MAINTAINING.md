@@ -48,7 +48,7 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## 真机验收与测速端点
 
-自动化 CI 不能证明真实网络上的测速网址始终返回 204。正式配置当前用 `http://bing.com/generate_204` 进行代理测速，插件另对 `https://www.gstatic.com/generate_204`（代理）与 `http://wifi.vivo.com.cn/generate_204`（直连）执行探测。**发布前要在 Loon 真机和至少两种网络环境下确认这些 URL 返回预期状态**；若返回重定向、门户页面或其他状态，先记录响应和运行环境，再在独立版本变更中替换，避免只凭某一时刻的网页抓取结果大范围改变测速行为。
+自动化 CI 不能证明真实网络上的测速网址始终返回 204。正式配置当前用 `http://bing.com/generate_204` 进行代理测速，插件另对 `https://www.gstatic.com/generate_204`（代理）与 `http://wifi.vivo.com.cn/generate_204`（直连）执行探测。**发布前要在 Loon 真机和至少两种网络环境下确认这些 URL 返回预期状态**；GitHub Runner 实测中 Bing 的 HTTP 地址两次返回 301，插件的 Gstatic 与 Vivo 两次返回 204，详见 [测速记录](./PROBE_ENDPOINTS_2026-10-21.md)。使用者确认真机正常，所以保留所有现有测速 URL；只在真实客户端出现问题并有证据时单独评估替换。
 
 插件的最低声明为 `3.5.1(983)`，而 `$dns.query` 需要 Build 988+，因此兼容性验收应分别覆盖插件加载、节点出口和 DNS 诊断。项目使用者已明确反馈真机测试通过，发布清单标记为 `USER_REPORTED_PASS`，详情见 [真机反馈记录](./DEVICE_TEST_STATUS.md)。尚未提供可独立复核的 Loon 日志，不应把用户反馈误表述成自动化真机测试。
 
