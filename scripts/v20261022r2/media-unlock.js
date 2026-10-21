@@ -67,12 +67,7 @@
         if(s===404)return finish(verdict("partial"));
         if(s===200){
           var origin=header(r,"x-originating-url");
-          var valid=/netflix/i.test(body)&&body.indexOf(film)>=0||
-            /netflix\.com/i.test(origin)&&origin.indexOf("/title/"+film)>=0;
-          if(valid){
-            var geo=regionFrom(origin,/netflix\.com\/([a-z]{2})\/title\//i);
-            return finish(verdict("unlocked",geo));
-          }
+          return finish(verdict("unlocked",regionFrom(origin,/netflix\.com\/([a-z]{2})\/title\//i)));
         }
         finish(verdict("failed"));
       });
