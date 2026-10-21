@@ -161,7 +161,7 @@
         function settle(){
           if(homepage.blocked)return finish("blocked");
           if(homepage.region)return finish("region",homepage.region);
-          if(homepage.reachable)return finish("reachable","");
+          if(homepage.reachable)return finish("reachable",reason||"地区接口无有效结果");
           finish("unknown",reason||"地区接口无有效结果");
         }
         if(homepage.ready)return settle();
@@ -391,6 +391,7 @@
     if(r.code==="reachable"){
       if(id==="chatgpt")return "Web / iOS 接口已响应 · 功能未验证";
       if(id==="youtube")return "Premium 页面可访问"+(region?" · "+region:"");
+      if(id==="disney")return "网站可访问 · "+(r.extra||"地区未确认");
       return "网站可访问"+(region?" · "+region:"");
     }
     if(r.code==="region"){
