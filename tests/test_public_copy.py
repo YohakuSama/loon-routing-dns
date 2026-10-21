@@ -85,7 +85,7 @@ class PublicCopyChecks(unittest.TestCase):
         self.assertIn("## 主要更新",notes)
         self.assertIn("## 安装",notes)
         self.assertIn("一个插件",notes)
-        self.assertIn("服务检测", (ROOT/"README.md").read_text(encoding="utf-8"))
+        self.assertIn("解锁检测", (ROOT/"README.md").read_text(encoding="utf-8"))
 
     def test_v63_official_version_and_human_readable_plugin(self):
         profile=(ROOT/"LoonKit.lcf").read_text(encoding="utf-8")
