@@ -143,6 +143,12 @@ class DifferentialIndexTests(unittest.TestCase):
                                            "v2fly", "dnsmasq"]), "min_rules": 1}
             payload = "".join(rng.choice(alphabet) for _ in range(rng.randrange(0, 85)))
             with self.subTest(n=number, fmt=source["format"]):
+                # Empty source blobs are a genuine source error, not a
+                # malformed line silently accepted by the parser.
+                if not payload:
+                    with self.assertRaises(ValueError):
+                        review.parse_source(source, payload.encode())
+                    continue
                 rules, status = review.parse_source(source, payload.encode())
                 self.assertLessEqual(len(rules), 1)
                 self.assertEqual(status["rules"], len(rules))
