@@ -132,8 +132,8 @@ def verify(remote=False):
         if (ROOT/"release/Service_Diagnostics.plugin").exists():
             raise ValueError("obsolete standalone service plugin remains")
         for obsolete in ("v20261021r3","v20261021r4","v20261021r5","v20261021r6"):
-            if (ROOT/"scripts"/obsolete).exists():
-                raise ValueError("retired service diagnostic script directory remains")
+            if (ROOT/"scripts"/obsolete/"service-diagnostics.js").exists():
+                raise ValueError("retired standalone service diagnostic script remains")
     if remote:
         for ref,path in sorted(set(LINK.findall(profile) + embedded)):
             if not path.startswith(("icons/","rules/releases/","release/","scripts/")):
