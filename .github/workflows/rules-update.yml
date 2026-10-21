@@ -58,33 +58,6 @@ jobs:
       - name: Require complete upstream source coverage after uploading evidence
         if: always()
         run: |
-          python3 - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-
-          report_path = Path(os.environ["RUNNER_TEMP"]) / "upstream-review/UPSTREAM_REVIEW.json"
-          if not report_path.is_file():
-              raise SystemExit("INCOMPLETE: upstream report missing; no claim of full coverage.")
-          report = json.loads(report_path.read_text(encoding="utf-8"))
-          bad = [source for source in report["sources"]
-                 if source.get("status") != "PARSED_FOR_REVIEW"]
-          required = 87
-          complete = (report["source_count"] == required
-                      and report["snapshot_count"] == required
-                      and not bad and report["incomplete_sources"] == 0)
-          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as fd:
-              fd.write("\\n## Coverage verdict\\n")
-              fd.write(f"Sources cataloged: {report['source_count']}/{required}\\n")
-              fd.write(f"Raw snapshots: {report['snapshot_count']}/{required}\\n")
-              fd.write(f"Sources incomplete or unsupported: {len(bad)}\\n")
-              fd.write("Published rules were not modified.\\n")
-              if bad:
-                  fd.write("\\n### Incomplete source IDs\\n")
-                  for row in bad:
-                      fd.write(f"- {row['id']}: {row['status']} "
-                               f"(invalid lines: {row.get('invalid_count', 'unknown')})\\n")
-          if not complete:
-              raise SystemExit("INCOMPLETE UPSTREAM COVERAGE: inspect uploaded review artifact and source IDs.")
-          print("All 87 sources read and parsed for review; publication remains blocked.")
-          PY
+          python3 scripts/verify_upstream_coverage.py \
+            --catalog rules/sources.json \
+            --report "$RUNNER_TEMP/upstream-review/UPSTREAM_REVIEW.json"
