@@ -263,7 +263,7 @@
       timeout:"检测超时",failed:"连接异常"};
     if(r.code==="available"&&id==="netflix")return "片库可访问";
     if(r.code==="available"&&(id==="bili_hk"||id==="bili_cn"))return "视频地址可获取";
-    if(r.code==="reachable")return "无法确认 · 网站可访问";
+    if(r.code==="reachable")return id==="chatgpt"?"接口可访问 · 网页、iOS":"无法确认 · 网站可访问";
     if(r.code==="region")return "无法确认"+(r.extra?" · 出口 "+r.extra:"");
     if(r.code==="available")return "地区支持"+(r.extra?" · "+r.extra:"");
     if(r.code==="unknown")return "无法确认"+(r.extra?" · "+r.extra:"");
