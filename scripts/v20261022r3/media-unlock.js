@@ -138,7 +138,7 @@
           return finish(verdict("full",geo));
         }
         finish(verdict("failed"));
-      },{timeout:6000});
+      },{timeout:6000,headers:{"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Safari/605.1.15"}});
     }else if(id==="youtube"){
       get("https://www.youtube.com/premium",function(err,res,body){
         if(err||status(res)!==200)return finish(verdict("failed"));
@@ -169,14 +169,14 @@
     return String.fromCodePoint(127397+c.charCodeAt(0),127397+c.charCodeAt(1));
   }
   function present(v,id){
-    if(!v)return "检测失败";
-    if(v.state==="failed")return "检测失败";
-    if(v.state==="unsupported")return "未支持";
-    if(v.state==="originals")return "支持自制剧集";
-    if(v.state==="full")return "完整支持 ⟦"+flag(v.geo)+"⟧";
-    if(v.state==="coming")return "即将登陆 ⟦"+flag(v.geo)+"⟧";
-    if(v.state==="supported")return "支持"+(v.geo?" ⟦"+flag(v.geo)+"⟧":"");
-    return "检测失败";
+    if(!v)return "检测失败 ❗️";
+    if(v.state==="failed")return "检测失败 ❗️";
+    if(v.state==="unsupported")return "未支持 🚫";
+    if(v.state==="originals")return "支持自制剧集 ⚠️";
+    if(v.state==="full")return "完整支持 ➟ ⟦"+flag(v.geo)+"⟧ 🎉";
+    if(v.state==="coming")return "即将登陆 ➟ ⟦"+flag(v.geo)+"⟧ ⚠️";
+    if(v.state==="supported")return "支持"+(v.geo?" ➟ ⟦"+flag(v.geo)+"⟧":"")+" 🎉";
+    return "检测失败 ❗️";
   }
   function output(){
     var showNode=node.length>32?node.slice(0,24)+"…"+node.slice(-5):node;
