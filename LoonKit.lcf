@@ -1,4 +1,4 @@
-# LoonKit v6.1.0
+# LoonKit v6.2.0
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loonkit
 # X: https://x.com/yohakusama
@@ -293,6 +293,4 @@ GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loonkit/5b115b5dd02836620597b2212b2b49c18c646bb7/release/Network_Diagnostics.plugin, enabled=true
-# Optional manual-only service connectivity tool: no cron, network-change or auto-poll.
-https://raw.githubusercontent.com/YohakuSama/loonkit/7cb02a4be5db739d74266536fefbc54b720ec35b/release/Service_Diagnostics.plugin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/f26e0ca041ae43496bb89cfc4945284f169cdc69/release/Network_Diagnostics.plugin, enabled=true
