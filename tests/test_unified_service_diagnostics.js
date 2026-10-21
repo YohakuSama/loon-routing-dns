@@ -4,7 +4,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const source=fs.readFileSync(path.join(root,"scripts/v20261021r16/media-unlock.js"),"utf8");
+const source=fs.readFileSync(path.join(root,"scripts/v20261021r17/media-unlock.js"),"utf8");
 
 function mock(options={}){
   const sent=[],pending=[],out=[],timers=[],attempts={};
@@ -64,7 +64,7 @@ assert.match(resultOf(generic.out[0],"ChatGPT"),/未取得有效响应/);
 assert.match(resultOf(generic.out[0],"Claude"),/网站可访问/);
 assert.doesNotMatch(generic.out[0].content,/解锁成功|全部解锁/);
 assert(!generic.out[0].content.includes("Bilibili"));
-assert(generic.out[0].content.includes("检测器 v6.4.0"));
+assert(generic.out[0].content.includes("检测器 v6.4.1"));
 assert(!/可能可用|开放信号|非片库证明|非 Claude 解锁/.test(generic.out[0].content));
 
 const signals=mock({order:"reverse",reply:url=>{
@@ -90,8 +90,8 @@ assert.match(resultOf(b,"Disney+"),/地区支持 · JP/);
 assert.match(resultOf(b,"YouTube Premium"),/YouTube 地区 JP · Premium 未确认/);
 assert.match(resultOf(b,"Spotify"),/地区接口支持 · JP/);
 assert.match(resultOf(b,"TikTok"),/网站可访问 · 出口 JP/);
-assert.match(resultOf(b,"ChatGPT"),/部分接口可访问/);
-assert.match(resultOf(b,"Gemini"),/网站可访问/);
+assert.match(resultOf(b,"ChatGPT"),/Web \/ iOS 接口已响应/);
+assert.match(resultOf(b,"Gemini"),/Gemini 页面可访问/);
 assert.match(resultOf(b,"Claude"),/网站可访问 · 出口 JP/);
 
 const geo=mock({reply:url=>{
@@ -134,7 +134,7 @@ const cdn=mock({reply:url=>{
   if(url.includes("/title/"))return {status:404,body:""};
   return {status:200,body:"generic"};
 }});
-assert.match(resultOf(cdn.out[0],"Netflix"),/出口地区 JP · 服务未验证/);
+assert.match(resultOf(cdn.out[0],"Netflix"),/Netflix CDN 地区 · JP/);
 // Loon returns HTTP status in response even with network error: preserve evidence.
 const httpEvidence=mock({reply:url=>{
   if(url.includes("youtube.com/premium"))return {error:"HTTP failure",status:451,body:""};
@@ -330,7 +330,7 @@ const disneyPageRegion=mock({reply:url=>{
   if(url.includes("disneyplus.com"))return {status:200,body:'{"region":"JP"}'};
   return {status:200,body:"generic"};
 }});
-assert.match(resultOf(disneyPageRegion.out[0],"Disney+"),/页面地区 JP · 解锁未确认/);
+assert.match(resultOf(disneyPageRegion.out[0],"Disney+"),/Disney\+ 页面地区 · JP/);
 assert.doesNotMatch(resultOf(disneyPageRegion.out[0],"Disney+"),/地区支持/);
 const disneyLandingBlocked=mock({reply:url=>{
   if(url.endsWith("/devices"))return {status:200,body:"unexpected"};
@@ -346,14 +346,31 @@ assert.doesNotMatch(resultOf(youtubeRegionalPage.out[0],"YouTube Premium"),/Prem
 const geminiRoot=mock({reply:url=>url.includes("gemini.google.com")?
   {status:200,body:',2,1,200,"JPN"'}:{status:200,body:"generic"}});
 assert(geminiRoot.sent.some(x=>x.url==="https://gemini.google.com/"));
-assert(!geminiRoot.sent.some(x=>x.url==="https://gemini.google.com/app"));
+assert(!geminiRoot.sent.some(x=>x.url.includes("generativelanguage.googleapis.com")));
 assert.match(resultOf(geminiRoot.out[0],"Gemini"),/页面地区 JPN/);
 const geminiFallback=mock({reply:url=>{
   if(url==="https://gemini.google.com/")return {error:"timeout"};
-  if(url==="https://gemini.google.com/app")return {status:200,body:',2,1,200,"JPN"'};
+  if(url.includes("generativelanguage.googleapis.com"))return {status:403,body:'{"error":{"status":"INVALID_ARGUMENT","message":"API key is invalid"}}'};
   return {status:200,body:"generic"};
 }});
-assert.match(resultOf(geminiFallback.out[0],"Gemini"),/页面地区 JPN/);
+assert.match(resultOf(geminiFallback.out[0],"Gemini"),/Google AI 接口可达/);
+assert(geminiFallback.sent.some(x=>x.url==="https://gemini.google.com/"));
+assert(geminiFallback.sent.some(x=>x.url.includes("generativelanguage.googleapis.com")));
+assert(!geminiFallback.sent.some(x=>x.url==="https://gemini.google.com/app"));
+// Netflix generic login / title HTML and redirects must not imply catalog playback.
+const netflixLogin=mock({reply:url=>{
+  if(url.includes("/title/81280792"))return {status:200,body:"<html><title>Netflix Login</title></html>"};
+  if(url.includes("/title/70143836"))return {status:302,headers:{Location:"https://www.netflix.com/login"}};
+  return {status:200,body:"generic"};
+}});
+assert.doesNotMatch(resultOf(netflixLogin.out[0],"Netflix"),/片库可访问|部分测试影片可访问/);
+const netflixCdnOnly=mock({reply:url=>{
+  if(url.includes("api.fast.com"))return {status:200,body:'{"targets":[{"location":{"country":"JP"}}]}'};
+  if(url.includes("/title/"))return {status:200,body:"<html><title>Netflix Login</title></html>"};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(netflixCdnOnly.out[0],"Netflix"),/Netflix CDN 地区 · JP/);
+assert.doesNotMatch(resultOf(netflixCdnOnly.out[0],"Netflix"),/片库可访问/);
 
 const full=mock({full:true,policy:"Manual-node"});
 assert.equal(full.out.length,1);
@@ -376,7 +393,7 @@ assert.match(invalid.out[0].content,/节点名称无效/);
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
 const profile=fs.readFileSync(path.join(root,"LoonKit.lcf"),"utf8");
 assert(plugin.includes('tag="解锁检测"'));
-assert(plugin.includes("scripts/v20261021r16/media-unlock.js"));
+assert(plugin.includes("scripts/v20261021r17/media-unlock.js"));
 assert(plugin.includes('img_url="play.rectangle.system"'));
 assert(!plugin.includes("service = select"));
 assert(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length===1);

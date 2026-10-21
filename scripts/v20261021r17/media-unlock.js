@@ -24,7 +24,10 @@
     ["bbc","BBC iPlayer","其他"],["abema","Abema","其他"]
   ]);
   var result=new Array(serviceList.length),queue=[],inFlight=0,finished=0,idx=0,running=0,flushing=false;
-  var MAX_HTTP=6,MAX_SERVICES=6;
+  var MAX_HTTP=6,MAX_SERVICES=8;
+  // Start time-sensitive Gemini checks early rather than behind all media probes.
+  var serviceOrder=[6,0,2,1,3,5,4,7];
+  for(var si=8;si<serviceList.length;si++)serviceOrder.push(si);
   function state(code,extra){return {code:code,extra:extra||""};}
   function done(payload){if(ended)return;ended=true;$done(payload);}
   if(node.length>220||/[\u0000-\u001f\u007f]/.test(node)){done({title:"解锁检测",content:"节点名称无效"});return;}
@@ -103,9 +106,11 @@
       function realTitle(err,r,b,film){
         if(err)return false;
         var status=httpStatus(r),loc=header(r,"location"),canonical=header(r,"x-originating-url");
-        return (status===200&&/netflix/i.test(b)&&
-          (b.indexOf(film)>=0||canonical.indexOf("/title/"+film)>=0))||
-          ((status===301||status===302)&&/netflix\.com/i.test(loc)&&loc.indexOf(film)>=0);
+        var titlePage=/netflix/i.test(b)&&
+          (b.indexOf(film)>=0||canonical.indexOf("/title/"+film)>=0);
+        return (status===200&&titlePage)||
+          ((status===301||status===302)&&/netflix\.com/i.test(loc)&&
+           (loc.indexOf("/title/"+film)>=0));
       }
       function netflixResult(){
         if(called)return;
@@ -124,7 +129,7 @@
         if(originalsRequested&&!originalsDone)return;
         if(originalsProof)return finish("partial",cdnRegion);
         if(!cdnDone)return;
-        if(cdnRegion)return finish("region",cdnRegion);
+        if(cdnRegion)return finish("cdn",cdnRegion);
         if(errs[0]&&errs[1])return finish(errs.indexOf("timeout")>=0?"timeout":"failed");
         finish("unknown","影片页面无有效信息");
       }
@@ -160,7 +165,7 @@
       function fallback(reason){
         function settle(){
           if(homepage.blocked)return finish("blocked");
-          if(homepage.region)return finish("region",homepage.region);
+          if(homepage.region)return finish("site_region",homepage.region);
           if(homepage.reachable)return finish("reachable",reason||"地区接口无有效结果");
           finish("unknown",reason||"地区接口无有效结果");
         }
@@ -223,7 +228,7 @@
           extract(b,/id=["']country-code["'][^>]*>\s*([A-Za-z]{2})/i);
         var confirmed=/"isPremiumAvailable"\s*:\s*true/i.test(b)||
           /premium is available in your country/i.test(b)||
-          (/"browseId"\s*:\s*"SPunlimited"/i.test(b)&&/youtube premium/i.test(b));
+          /"browseId"\s*:\s*"SPunlimited"/i.test(b);
         if(httpStatus(r)===200&&confirmed)return finish("available",countryCode);
         // Public Premium page: recognizable purchase/plan area is a usable
         // regional product signal, but a generic brand mention is not.
@@ -298,27 +303,33 @@
           parts[1]="地区受限";kind[1]="blocked";return finishBoth();
         }
         if(b.toLowerCase().indexOf("request is not allowed. please try again later.")>=0){
-          parts[1]="请求被拒绝";kind[1]="unknown";
+          parts[1]="接口可响应";kind[1]="reachable";
         }else if(httpStatus(r)===403||/have been blocked/i.test(b)){
           parts[1]="安全验证拦截";kind[1]="unknown";
         }
         finishBoth();
       },true);
     } else if(id==="gemini"){
-      // Try the lightweight landing page before requesting the app shell.
-      // Avoid retrying the same slow URL twice under the global deadline.
-      function parseGemini(err,r,b){
-        if(err)return finish(statusError(err));
+      // Application homepage first; a valid Google API auth response can
+      // establish API reachability even when the app frontend times out.
+      function fallbackGemini(err) {
+        get("https://generativelanguage.googleapis.com/v1beta/models",function(apiErr,r,b){
+          if(!apiErr&&httpStatus(r)===451)return finish("blocked","");
+          if(!apiErr&&httpStatus(r)===200&&/models|google/i.test(b))
+            return finish("api_reachable","");
+          if(!apiErr&&httpStatus(r)>=400&&httpStatus(r)<500&&
+            /api.key|API_KEY|UNAUTHENTICATED|INVALID_ARGUMENT/i.test(b))
+            return finish("api_reachable","");
+          finish(statusError(err)==="timeout"?"timeout":statusError(apiErr)||"unknown","");
+        },false);
+      }
+      get("https://gemini.google.com/",function(err,r,b){
+        if(err)return fallbackGemini(err);
         if(httpStatus(r)===451||restricted(b))return finish("blocked","");
         var code=extract(b,/,2,1,200,"([A-Z]{3})"/);
         if(code&&httpStatus(r)===200)return finish("region",code);
         if(httpStatus(r)===200)return finish("reachable","");
-        finish("unknown",httpStatus(r)===429?"接口限流":"");
-      }
-      get("https://gemini.google.com/",function(err,r,b){
-        if(err&&timeLeft()>6000)
-          return get("https://gemini.google.com/app",parseGemini,true);
-        parseGemini(err,r,b);
+        fallbackGemini(null);
       },true);
     } else if(id==="claude"){
       var edge="",pageResult="",pageError="",pending=2;
@@ -392,8 +403,12 @@
       if(id==="chatgpt")return "Web / iOS 接口已响应 · 功能未验证";
       if(id==="youtube")return region?"Premium 页面可访问 · "+region:"网站可访问";
       if(id==="disney")return "网站可访问 · "+(r.extra||"地区未确认");
+      if(id==="gemini")return "Gemini 页面可访问";
       return "网站可访问"+(region?" · 出口 "+region:"");
     }
+    if(r.code==="cdn")return "Netflix CDN 地区 · "+(region||"未知");
+    if(r.code==="site_region")return "Disney+ 页面地区 · "+(region||"未知");
+    if(r.code==="api_reachable")return "Google AI 接口可达";
     if(r.code==="region"){
       if(id==="gemini")return "页面地区 "+(region||"未知")+" · 功能未验证";
       if(id==="disney")return "页面地区 "+(region||"未知")+" · 解锁未确认";
@@ -421,9 +436,9 @@
       else if(r.code!=="unknown")answered++;});
     if(errors>=5&&answered<=1)lines.push("","多项请求连接异常，请检查节点状态或稍后重试。");
     var useful=0;
-    result.forEach(function(r){if(r&&(/^(?:available|blocked|reachable|partial|region)$/.test(r.code)))useful++;});
+    result.forEach(function(r){if(r&&(/^(?:available|blocked|reachable|partial|region|cdn|site_region|api_reachable)$/.test(r.code)))useful++;});
     if(!useful)lines.push("","各平台没有返回可判定信息，请检查网络或稍后重试。");
-    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.4.0");
+    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.4.1");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function pumpService(){
@@ -439,7 +454,7 @@
           pumpService();
         }
         try{run(serviceList[i],release);}catch(e){release(state("unknown","脚本异常"));}
-      })(idx++);
+      })(serviceOrder[idx++]);
     }
   }
   setTimeout(function(){done(output());},budget);
