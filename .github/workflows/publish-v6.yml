@@ -62,7 +62,7 @@ jobs:
           python3 scripts/verify_release.py --check
           mkdir -p release-output
           cp LoonKit.lcf release-output/LoonKit.lcf
-          sha256sum release-output/LoonKit.lcf | tee release-output/SHA256SUMS
+          (cd release-output && sha256sum LoonKit.lcf > SHA256SUMS)
           cat >release-output/RELEASE_NOTES.md <<'NOTES'
           # LoonKit v6.0.0
 
