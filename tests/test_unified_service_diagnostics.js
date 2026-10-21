@@ -91,7 +91,7 @@ assert.match(resultOf(b,"YouTube Premium"),/YouTube 地区 JP · Premium 未确�
 assert.match(resultOf(b,"Spotify"),/地区接口支持 · JP/);
 assert.match(resultOf(b,"TikTok"),/网站可访问 · 出口 JP/);
 assert.match(resultOf(b,"ChatGPT"),/Web \/ iOS 接口已响应/);
-assert.match(resultOf(b,"Gemini"),/网站可访问/);
+assert.match(resultOf(b,"Gemini"),/Gemini 页面可访问/);
 assert.match(resultOf(b,"Claude"),/网站可访问 · 出口 JP/);
 
 const geo=mock({reply:url=>{
