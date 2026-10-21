@@ -4,132 +4,142 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const source=fs.readFileSync(path.join(root,"scripts/v20261021r9/media-unlock.js"),"utf8");
+const source=fs.readFileSync(path.join(root,"scripts/v20261021r10/media-unlock.js"),"utf8");
 
-function simulate(options={}) {
-  const requests=[],queue=[],finished=[],timers=[];
+function mock(options={}){
+  const sent=[],pending=[],out=[],timers=[],attempts={};
   let active=0,maxActive=0;
-  function transport(method,req,cb){
-    requests.push({method,...req});
-    active++;
-    maxActive=Math.max(maxActive,active);
-    const entry={method,req,cb};
-    if(options.async){queue.push(entry);return;}
-    respond(entry);
-  }
+  const runtime={
+    $argument:{target_policy:options.policy||"Proxy",full_scan:!!options.full},
+    $environment:{params:options.environment||{}},
+    $done(x){out.push(x);},
+    setTimeout(fn,ms){timers.push({fn,ms});},
+    $httpClient:{get(req,callback){
+      attempts[req.url]=(attempts[req.url]||0)+1;
+      sent.push(req);active++;maxActive=Math.max(active,maxActive);
+      pending.push({req,callback,attempt:attempts[req.url]});
+    }}
+  };
+  vm.runInNewContext(source,runtime,{timeout:2000});
   function respond(entry){
     active--;
-    const response=options.reply ? options.reply(entry.req.url,entry.method) : null;
-    const obj=response || {status:200,body:"<html>OK</html>"};
-    entry.cb(obj.error||null,obj.error?null:{status:obj.status,url:obj.url||entry.req.url},obj.body||"");
+    const reply=options.reply?options.reply(entry.req.url,entry.attempt):null;
+    const r=reply||{status:200,body:"<html>Generic homepage</html>"};
+    entry.callback(r.error||null,{status:r.status||200,headers:r.headers||{}},r.body||"");
   }
-  const ctx={
-    $argument:{target_policy:options.policy||"Proxy",full_scan:options.full||false},
-    $environment:{params:options.environment||{}},
-    $done(x){finished.push(x);},
-    setTimeout(fn,ms){timers.push({fn,ms});return timers.length;},
-    $httpClient:{get(req,cb){transport("GET",req,cb);},post(req,cb){transport("POST",req,cb);}}
-  };
-  vm.runInNewContext(source,ctx,{timeout:1800});
-  if(options.async&&!options.stall){
+  function drain(order){
     let n=0;
-    while(queue.length){
-      assert(++n<50,"request loop");
-      respond(queue.shift());
+    while(pending.length){
+      assert(++n<80,"unbounded requests");
+      const e=order==="reverse"?pending.pop():pending.shift();
+      respond(e);
     }
   }
-  if(options.fireTimeout)timers.forEach(t=>t.fn());
-  return {requests,queue,finished,timers,maxActive,respond};
+  if(!options.stall)drain(options.order);
+  if(options.fireTimeout)timers.forEach(x=>x.fn());
+  return {sent,pending,out,timers,drain,respond,maxActive,attempts};
 }
-const base=simulate({async:true,environment:{node:"JMS-chosen"}});
-assert.equal(base.finished.length,1);
-assert(base.requests.length>=9&&base.requests.length<=15,base.requests.length);
-assert(base.maxActive<=6);
-assert(base.maxActive>=4);
-assert(base.requests.every(r=>r.node==="JMS-chosen"));
-assert(base.requests.every(r=>r["auto-cookie"]===false&&r["auto-redirect"]===false&&r.insecure===false));
-assert(base.requests.every(r=>r.timeout<=3200));
-assert.match(base.finished[0].title,/解锁检测/);
-assert.match(base.finished[0].content,/Netflix：/);
-assert.match(base.finished[0].content,/Disney\+：/);
-assert.match(base.finished[0].content,/ChatGPT：/);
-assert.doesNotMatch(base.finished[0].content,/Prime Video|Bilibili|BBC iPlayer|Abema/);
-assert.doesNotMatch(base.finished[0].content,/地区可用.*Netflix|Netflix：地区可用/);
-assert.equal(base.timers[0].ms,11500);
+function resultOf(output,name){
+  const lines=output.content.split("\n");
+  const row=lines.find(line=>line.startsWith(name+"："));
+  assert(row,"missing service "+name);
+  return row;
+}
+const generic=mock({environment:{node:"JP-node"},order:"reverse"});
+assert.equal(generic.out.length,1);
+assert.match(generic.out[0].content,/节点：JP-node/);
+assert(generic.maxActive<=6,"HTTP semaphore must hold including Netflix and ChatGPT");
+assert(generic.maxActive>=4,"parallel scan expected");
+assert(generic.sent.every(x=>x.node==="JP-node"),"all requests use selected node");
+assert(generic.sent.every(x=>x.timeout<=4800 && x["auto-cookie"]===false && x.insecure===false));
+assert.equal(generic.timers[0].ms,13500);
+assert.match(resultOf(generic.out[0],"Netflix"),/未确认/);
+assert.match(resultOf(generic.out[0],"YouTube Premium"),/未确认/);
+assert.match(resultOf(generic.out[0],"Spotify"),/未确认/);
+assert.match(resultOf(generic.out[0],"ChatGPT"),/未确认/);
+assert.match(resultOf(generic.out[0],"Claude"),/未确认|仅可访问/);
+assert.doesNotMatch(generic.out[0].content,/解锁成功|全部解锁/);
+assert(!generic.out[0].content.includes("Bilibili"));
 
-const confirmedTitle=simulate({reply:url=>{
-  if(url.includes("/title/81280792"))return {status:200,body:"<title>Netflix</title> netflix.com/title/81280792"};
-  if(url.includes("/title/70143836"))return {status:404,body:""};
-  return {status:200,body:"generic response"};
-}});
-assert.match(confirmedTitle.finished[0].content,/Netflix：地区可用 · 片库/);
-const noTitle=simulate({reply:url=>url.includes("/title/")?
-  {status:200,body:"generic HTTP 200 page"}:{status:200,body:""}});
-assert.match(noTitle.finished[0].content,/Netflix：未确认/);
-assert.doesNotMatch(noTitle.finished[0].content,/Netflix：地区可用/);
-
-const extended=simulate({full:true,policy:"Dedicated",async:true});
-assert.equal(extended.finished.length,1);
-assert(extended.requests.length>base.requests.length);
-assert(extended.requests.every(r=>r.node==="Dedicated"));
-assert.match(extended.finished[0].content,/Prime Video：/);
-assert.match(extended.finished[0].content,/Bilibili 港澳台：/);
-assert.match(extended.finished[0].content,/Bilibili 大陆：/);
-assert.match(extended.finished[0].content,/Apple 地区：/);
-assert.match(extended.finished[0].content,/BBC iPlayer：/);
-assert.equal(extended.timers[0].ms,19000);
-const replies=url=>{
-  if(url.includes("/title/81280792"))return {status:404,body:""};
-  if(url.includes("/title/70143836"))return {status:404,body:""};
-  if(url.includes("youtube.com/premium"))return {status:200,body:'{"browseId":"SPunlimited","GL":"JP"}'};
-  if(url.includes("spotify.com/api/"))return {status:200,body:'{"countryCode":"US"}'};
-  if(url.includes("tiktok.com/cdn-cgi/trace"))return {status:200,body:"loc=JP\n"};
+const signals=mock({order:"reverse",reply:url=>{
+  if(url.includes("/title/81280792"))return {status:200,body:"Netflix title 81280792"};
+  if(url.includes("/title/70143836"))return {status:404};
   if(url.includes("disneyplus.com"))return {status:200,body:'{"inSupportedLocation":true,"countryCode":"JP"}'};
-  if(url.includes("gemini.google.com"))return {status:200,body:',2,1,200,"CHN"'};
-  if(url.includes("claude.ai/cdn-cgi/trace"))return {status:200,body:"loc=US\n"};
-  if(url.includes("compliance/cookie_requirements"))return {status:200,body:'{"required":false}'};
+  if(url.includes("youtube.com/premium"))return {status:200,body:'{"GL":"JP"}'};
+  if(url.includes("spotify.com/api"))return {status:200,body:'{"countryCode":"JP"}'};
+  if(url.includes("tiktok.com/cdn-cgi/trace"))return {status:200,body:"loc=JP\n"};
+  if(url.includes("api.openai.com"))return {status:200,body:'{"required":false}'};
   if(url.includes("ios.chat.openai.com"))return {status:403,body:"request is not allowed. please try again later."};
-  return {status:200,body:""};
-};
-const judged=simulate({reply:replies});
-const lines=judged.finished[0].content;
-assert.match(lines,/Netflix：仅部分可用 · 仅自制剧/);
-assert.match(lines,/Disney\+：地区可用 · JP/);
-assert.match(lines,/YouTube Premium：地区可用 · JP/);
-assert.match(lines,/Spotify：地区可用 · US/);
-assert.match(lines,/TikTok：地区识别 · JP/);
-assert.match(lines,/ChatGPT：地区可用 · Web \+ iOS/);
-assert.match(lines,/Gemini：地区受限 · CHN/);
-assert.match(lines,/Claude：地区识别 · US/);
-const denied=simulate({reply:url=>{
- if(url.includes("disneyplus.com"))return {status:200,body:'{"inSupportedLocation":false,"countryCode":"JP"}'};
- if(url.includes("youtube.com"))return {status:200,body:"YouTube Premium is not available in your country"};
- if(url.includes("api.openai.com"))return {status:403,body:"unsupported_country"};
- if(url.includes("ios.chat.openai.com"))return {status:200,body:"sorry, you have been blocked"};
- return {status:200,body:"Generic homepage and navbar mentioning Netflix Spotify."};
+  if(url.includes("gemini.google.com"))return {status:200,body:"generic gemini HTML"};
+  if(url.includes("claude.ai/cdn-cgi/trace"))return {status:200,body:"loc=JP\n"};
+  if(url.includes("claude.ai/"))return {status:200,body:"generic page"};
+  return {status:200,body:"generic"};
 }});
-assert.match(denied.finished[0].content,/Disney\+：地区受限/);
-assert.match(denied.finished[0].content,/YouTube Premium：地区受限/);
-assert.match(denied.finished[0].content,/ChatGPT：地区受限/);
-assert.doesNotMatch(denied.finished[0].content,/Spotify：地区可用/);
-const error=simulate({reply:url=>url.includes("spotify.com")?{error:"PRIVATE_PASSWORD"}:{status:200,body:""}});
-assert.match(error.finished[0].content,/Spotify：连接失败/);
-assert.doesNotMatch(error.finished[0].content,/PRIVATE_PASSWORD/);
-const pending=simulate({async:true,stall:true,fireTimeout:true});
-assert(pending.requests.length<=6);
-assert.equal(pending.finished.length,1);
-assert.match(pending.finished[0].content,/未确认/);
-while(pending.queue.length)pending.respond(pending.queue.shift());
-assert.equal(pending.finished.length,1,"late callbacks must not produce duplicate result");
-const invalid=simulate({environment:{node:"bad\nnode"}});
-assert.equal(invalid.requests.length,0);
-assert.match(invalid.finished[0].content,/节点名称无效/);
+const b=signals.out[0];
+assert.match(resultOf(b,"Netflix"),/可能可用/);
+assert.match(resultOf(b,"Disney+"),/可能可用 · JP/);
+assert.match(resultOf(b,"YouTube Premium"),/识别地区 · JP（非 Premium 认证）/);
+assert.match(resultOf(b,"Spotify"),/可能可用 · JP/);
+assert.match(resultOf(b,"TikTok"),/识别地区 · JP/);
+assert.match(resultOf(b,"ChatGPT"),/仅可访问/);
+assert.match(resultOf(b,"Gemini"),/仅可访问/);
+assert.match(resultOf(b,"Claude"),/识别地区 · JP/);
+
+const geo=mock({reply:url=>{
+  if(url.includes("disneyplus.com"))return {status:200,body:'{"inSupportedLocation":false,"countryCode":"JP"}'};
+  if(url.includes("youtube.com/premium"))return {status:200,body:"Premium is not available in your country"};
+  if(url.includes("api.openai.com"))return {status:403,body:"unsupported_country"};
+  if(url.includes("ios.chat.openai.com"))return {status:403,body:"sorry, you have been blocked"};
+  if(url.includes("claude.ai/")&&!url.includes("cdn-cgi"))return {status:451,body:""};
+  return {status:403,body:"Access forbidden"};
+}});
+const g=geo.out[0];
+assert.match(resultOf(g,"Disney+"),/地区受限 · JP/);
+assert.match(resultOf(g,"YouTube Premium"),/地区受限/);
+assert.match(resultOf(g,"ChatGPT"),/地区受限/);
+assert.match(resultOf(g,"Claude"),/地区受限/);
+assert.doesNotMatch(resultOf(g,"Netflix"),/地区受限/);
+assert.doesNotMatch(resultOf(g,"Spotify"),/地区受限/);
+
+const retry=mock({reply:(url,attempt)=>{
+  if(url.includes("spotify.com")&&attempt===1)return {error:"timeout PRIVATE_TOKEN"};
+  if(url.includes("spotify.com"))return {status:200,body:'{"countryCode":"US"}'};
+  return {status:200,body:"generic"};
+}});
+assert.equal(retry.attempts[Object.keys(retry.attempts).find(x=>x.includes("spotify.com"))],2);
+assert.match(resultOf(retry.out[0],"Spotify"),/可能可用 · US/);
+assert(!retry.out[0].content.includes("PRIVATE_TOKEN"));
+
+const partial=mock({reply:url=>{
+  if(url.includes("/title/81280792")||url.includes("/title/70143836"))return {status:404,body:""};
+  if(url.includes("/title/80018499"))return {status:200,body:"Netflix title 80018499"};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(partial.out[0],"Netflix"),/部分可用（初步）/);
+
+const full=mock({full:true,policy:"Manual-node"});
+assert.equal(full.out.length,1);
+assert.equal(full.timers[0].ms,21000);
+assert(full.sent.every(x=>x.node==="Manual-node"));
+assert(full.sent.length>generic.sent.length);
+assert(resultOf(full.out[0],"Apple 地区"));
+assert(resultOf(full.out[0],"Bilibili 港澳台"));
+assert(resultOf(full.out[0],"Prime Video"));
+
+const stall=mock({stall:true,fireTimeout:true});
+assert.equal(stall.out.length,1);
+assert.match(stall.out[0].content,/请求超时 · 超过总等待时间/);
+stall.drain();
+assert.equal(stall.out.length,1,"no second report from late callbacks");
+const invalid=mock({environment:{node:"illegal\nnode"}});
+assert.equal(invalid.sent.length,0);
+assert.match(invalid.out[0].content,/节点名称无效/);
+
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
 const profile=fs.readFileSync(path.join(root,"LoonKit.lcf"),"utf8");
-assert.match(plugin,/tag="解锁检测"/);
-assert.match(plugin,/img_url="play\.rectangle\.system"/);
-assert(!plugin.includes('tag="服务检测"'));
-assert.match(plugin,/scripts\/v20261021r9\/media-unlock\.js/);
-assert.match(plugin,/full_scan = switch,false/);
-assert.equal(profile.split("\n").filter(s=>s.includes(".plugin, enabled=true")).length,1);
-console.log("Media unlock probing, node binding, status, concurrency and deadline: PASS");
+assert(plugin.includes('tag="解锁检测"'));
+assert(plugin.includes("scripts/v20261021r10/media-unlock.js"));
+assert(plugin.includes('img_url="play.rectangle.system"'));
+assert(!plugin.includes("service = select"));
+assert(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length===1);
+console.log("Accuracy, media-specific evidence, concurrent HTTP, retry, timeout, node routing: PASS");
