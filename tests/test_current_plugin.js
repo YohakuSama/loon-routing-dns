@@ -17,16 +17,16 @@ check("only the shipped immutable plugin is present",()=>{
   for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
     assert(!fs.existsSync(path.join(root,dir)),dir);
   assert(plugin.includes("/af78ebb6b75bdbb341996db446d87cb2be719af4/scripts/v20261021r2/network-diagnostics.js"));
-  assert(plugin.includes("/17ca5380fc24e4950bc5a5f5bcc8237853119f97/scripts/v20261021r6/service-diagnostics.js"));
+  assert(plugin.includes("/0746301e41bca9b0832ebcece9f10cc68e8a63cb/scripts/v20261021r7/service-diagnostics.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
-  assert(plugin.includes("/17ca5380fc24e4950bc5a5f5bcc8237853119f97/scripts/v20261021r6/service-diagnostics.js"));
+  assert(plugin.includes("/17ca5380fc24e4950bc5a5f5bcc8237853119f97/scripts/v20261021r7/service-diagnostics.js"));
 });
 check("three integrated manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
   assert.equal(entries.length,3);
-  assert(entries.some(x=>x.includes('tag="节点出口信息"')));
-  assert(entries.some(x=>x.includes('tag="网络与 DNS 诊断"')));
-  assert(entries.some(x=>x.includes('tag="服务连通性诊断"')));
+  assert(entries.some(x=>x.includes('tag="节点信息"')));
+  assert(entries.some(x=>x.includes('tag="网络检测"')));
+  assert(entries.some(x=>x.includes('tag="服务检测"')));
 });
 check("only the current network-change event is opt-in",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("network-changed then script("));
@@ -39,6 +39,8 @@ check("four settings, private comparison and automation off",()=>{
     .filter(x=>/^[a-z_]+\s*=/.test(x)).map(x=>x.split("=")[0].trim());
   assert.deepEqual(args,["auto_check","target_policy","compare_direct","service"]);
   assert(plugin.includes("compare_direct = switch,false"));
+  assert(plugin.includes('service = select,"请选择服务","Spotify（音乐）"'));
+  assert(!plugin.includes('service = select,"Spotify"'));
 });
 check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
@@ -52,7 +54,7 @@ check("all current scripts remain local versioned assets",()=>{
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/8122c6993e3f13a3152449d3d4ec62717a96cded/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/bc1abb8ba78f4cc671168c63eb2fa7b21050a3f1/release/Network_Diagnostics.plugin, enabled=true"));
   assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
   assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
