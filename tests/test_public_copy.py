@@ -85,21 +85,21 @@ class PublicCopyChecks(unittest.TestCase):
         self.assertIn("## 主要更新",notes)
         self.assertIn("## 安装",notes)
         self.assertIn("一个插件",notes)
-        self.assertIn("服务检测", (ROOT/"README.md").read_text(encoding="utf-8"))
+        self.assertIn("解锁检测", (ROOT/"README.md").read_text(encoding="utf-8"))
 
     def test_v63_official_version_and_human_readable_plugin(self):
         profile=(ROOT/"LoonKit.lcf").read_text(encoding="utf-8")
         plugin=(ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         workflow=(ROOT/".github/workflows/publish-v63.yml").read_text(encoding="utf-8")
         notes=(ROOT/"docs/RELEASE_NOTES_v6.3.0.md").read_text(encoding="utf-8")
-        self.assertIn("# LoonKit v6.3.1",profile)
+        self.assertIn("# LoonKit v6.3.2",profile)
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertFalse((ROOT/"release/Service_Diagnostics.plugin").exists())
         self.assertNotIn("service = select,",plugin)
         self.assertIn('tag="节点信息"',plugin)
         self.assertIn('tag="网络检测"',plugin)
-        self.assertIn('tag="服务检测"',plugin)
-        self.assertIn("scripts/v20261021r8/service-diagnostics.js",plugin)
+        self.assertIn('tag="解锁检测"',plugin)
+        self.assertIn("scripts/v20261021r9/media-unlock.js",plugin)
         for guard in ("workflow_run:", "conclusion == 'success'", "head_branch == 'main'",
                       "head_repository.full_name == github.repository", "fetch-depth: 0",
                       "git merge-base --is-ancestor", "scripts/verify_release.py --check",

@@ -59,7 +59,7 @@ jobs:
           node tests/test_node_copy.js
           node tests/test_network_diagnostics.js
           node tests/test_current_plugin.js
-          node --check scripts/v20261021r8/service-diagnostics.js
+          node --check scripts/v20261021r9/media-unlock.js
           node tests/test_unified_service_diagnostics.js
       - name: No mutation of production content
         run: |
