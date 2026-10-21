@@ -54,7 +54,7 @@ const r=run("Line",{timeout:true});
 assert.equal(r.answers.length,1,"timeout after a result must not report twice");
 const plugin=fs.readFileSync(path.join(__dirname,"../release/Service_Diagnostics.plugin"),"utf8");
 assert.match(plugin,/#!name = LoonKit · 服务连通性诊断/);
-assert.match(plugin,/service = input,"Spotify"/);
+assert.match(plugin,/service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin"/);
 assert.match(plugin,/scripts\/v20261021r3\/service-diagnostics\.js/);
 assert.doesNotMatch(plugin,/network-changed|cron |push |http-request/);
 console.log("Optional service diagnostic tests passed");

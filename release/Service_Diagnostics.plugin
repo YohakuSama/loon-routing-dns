@@ -9,7 +9,7 @@
 #!type = normal
 
 [Argument]
-service = input,"Spotify",tag=检测服务,desc=填写 Spotify/Twitch/Abema/BBC/Line/Reddit/Linkedin 之一
+service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin",tag=检测服务,desc=选择要检查的服务
 
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/28847c083aa5f9521545cc3103f1cda2bc23287c/scripts/v20261021r3/service-diagnostics.js", {${service}}) with tag="服务连通性检测", img_url="network", timeout=20
