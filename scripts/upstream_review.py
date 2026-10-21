@@ -121,16 +121,25 @@ def source_line(source: dict, line: str) -> str | None:
         # Raw Loon rule source (not a Loon config with a third policy column).
         return _validate_matcher(canonical(raw))
     if fmt == "domainset":
+        # Upstream DOMAIN-SET uses plain host = exact DOMAIN, leading dot
+        # = DOMAIN-SUFFIX. Converting both to suffix widens AdBlock rules.
+        kind = "DOMAIN"
         if raw.startswith("+."):
             raw = raw[2:]
+            kind = "DOMAIN-SUFFIX"
         elif raw.startswith("."):
-            # Strip exactly one documented domain-set prefix; do not hide
-            # malformed inputs such as '..example.org' by lstrip().
+            # Strip exactly one prefix. A second dot remains invalid.
             raw = raw[1:]
+            kind = "DOMAIN-SUFFIX"
         if "," in raw or " " in raw or not HOST.fullmatch(raw):
             raise ValueError("unrecognized domain set entry")
-        return _validate_matcher(canonical("DOMAIN-SUFFIX," + raw))
+        return _validate_matcher(canonical(kind + "," + raw))
     if fmt == "v2fly":
+        # A v2fly data line can contain a human comment after a whitespace
+        # followed by '#'; do not confuse that with a domain attribute.
+        raw = re.split(r"\s+#", raw, maxsplit=1)[0].strip()
+        if not raw:
+            return None
         parts = raw.split()
         if len(parts) > 2 or not parts:
             raise ValueError("unexpected v2fly tokens")
@@ -187,7 +196,9 @@ def parse_source(source: dict, blob: bytes) -> tuple[set[str], dict]:
             if len(issues) < 15:
                 issues.append({"line": number, "reason": str(exc), "snippet": raw[:120]})
     minimum = int(source.get("min_rules", 1))
-    return result, {"rules": len(result), "invalid_count": invalid,
+    kinds = dict(sorted(Counter(fields(rule)[0] for rule in result).items()))
+    return result, {"rules": len(result), "rule_kinds": kinds,
+                    "invalid_count": invalid,
                     "invalid_samples": issues,
                     "quality_review_count": quality_review_count,
                     "quality_review_samples": quality_samples,

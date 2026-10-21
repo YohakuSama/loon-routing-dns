@@ -20,7 +20,7 @@ class SourceSyntax(unittest.TestCase):
         self.assertEqual(rules, {"DOMAIN-SUFFIX,example.org", "IP-CIDR,8.8.8.0/24,no-resolve"})
         self.assertEqual(info["invalid_count"], 0)
         rules, info = self.parse("domainset", ".example.org\nexample.net\n.example.org")
-        self.assertEqual(rules, {"DOMAIN-SUFFIX,example.org", "DOMAIN-SUFFIX,example.net"})
+        self.assertEqual(rules, {"DOMAIN-SUFFIX,example.org", "DOMAIN,example.net"})
         self.assertEqual(info["source_duplicates"], 1)
         rules, info = self.parse("dnsmasq", "server=/cdn.example.org/114.114.114.114\n")
         self.assertEqual(rules, {"DOMAIN-SUFFIX,cdn.example.org"})
@@ -31,6 +31,22 @@ class SourceSyntax(unittest.TestCase):
         self.assertEqual(rules, {"DOMAIN-SUFFIX,openai.com", "DOMAIN,api.openai.com"})
         self.assertEqual(info["invalid_count"], 2)
         self.assertFalse(info["invalid_count"] == 0)
+
+    def test_domainset_exact_vs_suffix_is_not_widened(self):
+        rules, info = self.parse("domainset",
+            "api.example.org\n.example.org\n+.service.example.net\n")
+        self.assertEqual(info["invalid_count"], 0)
+        self.assertEqual(rules, {"DOMAIN,api.example.org",
+                                 "DOMAIN-SUFFIX,example.org",
+                                 "DOMAIN-SUFFIX,service.example.net"})
+        self.assertNotIn("DOMAIN-SUFFIX,api.example.org", rules)
+
+    def test_v2fly_inline_comment_is_not_an_invalid_domain(self):
+        rules, info = self.parse("v2fly",
+            "antspace.dev # source: provider\nfull:cdn.example.com # exact\n")
+        self.assertEqual(info["invalid_count"], 0)
+        self.assertEqual(rules, {"DOMAIN-SUFFIX,antspace.dev",
+                                 "DOMAIN,cdn.example.com"})
 
     def test_same_policy_dedup_does_not_change_other_groups(self):
         kept, removed = review._same_policy_reduce({
