@@ -11,10 +11,10 @@
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "Seven services check platform responses with correct Loon redirect and cookie defaults and evidence-based regional verdicts. DNS/TUN/routing unchanged.",
-  "plugin_assets_commit": "ee5e5269d2003471fe720048a68a779d0678b279",
+  "plugin_assets_commit": "2c0b7aa835e075ab9764b92ba9d43b3544c04685",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "a500c1b6bbc56c39eac6987b16c0b9a29e31c06c",
+  "unified_service_diagnostics_script_commit": "bd3ddfbee6b9588d70c14bc762c57bc3739921a9",
   "node_script_commit": "edac8c9f51de9ad6e2a9a969752a31490c4cfd44"
 }
