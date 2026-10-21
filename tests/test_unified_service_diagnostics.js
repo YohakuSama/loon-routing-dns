@@ -38,7 +38,7 @@ function mock(reply=()=>({status:200,body:"generic page"}), options={}){
   return {requests,pending,output,timers,next,maxActive};
 }
 function value(test,service){
-  const row=test.output[0].content.split("\\n").find(x=>x.startsWith(service+"："));
+  const row=test.output[0].content.split("\n").find(x=>x.startsWith(service+"："));
   assert(row,"missing service "+service);
   return row.split("：")[1];
 }
@@ -52,8 +52,8 @@ for(const name of ["Netflix","Disney+","YouTube Premium","Spotify","TikTok","Cha
   assert.equal(value(defaultCase,name),"待确认");
 }
 assert(!defaultCase.requests.some(x=>x.url.includes("api.fast.com")));
-assert(!defaultCase.requests.some(x=>/bamgrid.com\\/(?:devices|token)$/.test(x.url)));
-assert.match(defaultCase.output[0].content,/检测器 v6\\.4\\.3/);
+assert(!defaultCase.requests.some(x=>/bamgrid.com\/(?:devices|token)$/.test(x.url)));
+assert.match(defaultCase.output[0].content,/检测器 v6\.4\.3/);
 assert(!/可连接|解锁成功/.test(defaultCase.output[0].content));
 
 const positive=mock(req=>{
@@ -63,7 +63,7 @@ const positive=mock(req=>{
   if(u.includes("bamgrid.com"))return {status:200,body:'{"extensions":{"sdk":{"session":{"inSupportedLocation":true,"location":{"countryCode":"JP"}}}}}'};
   if(u.includes("youtube.com/premium"))return {status:200,body:'{"GL":"JP"} YouTube Premium individual plan'};
   if(u.includes("spotify.com/api"))return {status:200,body:'{"countryCode":"JP"}'};
-  if(u.includes("/cdn-cgi/trace"))return {status:200,body:"loc=JP\\n"};
+  if(u.includes("/cdn-cgi/trace"))return {status:200,body:"loc=JP\n"};
   if(u.includes("tiktok.com/"))return {status:200,body:"TikTok webapp"};
   if(u.includes("chatgpt.com/"))return {status:308,headers:{Location:"https://chatgpt.com/auth/login"}};
   if(u.includes("gemini.google.com"))return {status:200,body:"Google Gemini"};
@@ -93,7 +93,7 @@ for(const name of ["Netflix","Disney+","YouTube Premium","Spotify","TikTok","Cha
   assert.match(value(blocked,name),/^不支持/,"expected block: "+name);
 }
 const netflixPartial=mock(req=>{
-  if(/netflix\\.com\\/title\\/(81280792|70143836)/.test(req.url))return {status:404};
+  if(/netflix\.com\/title\/(81280792|70143836)/.test(req.url))return {status:404};
   if(req.url.includes("netflix.com/title/80018499"))return {status:200,body:"Netflix /title/80018499"};
   return {status:200,body:"generic"};
 });
@@ -116,12 +116,12 @@ assert.equal(stalled.output.length,1);
 assert.match(value(stalled,"Netflix"),/检测失败/);
 while(stalled.pending.length)stalled.next();
 assert.equal(stalled.output.length,1);
-const bad=mock(()=>({status:200}),{params:{node:"node\\ninvalid"}});
+const bad=mock(()=>({status:200}),{params:{node:"node\ninvalid"}});
 assert.equal(bad.requests.length,0);
 assert.match(bad.output[0].content,/节点名称无效/);
 
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
 const profile=fs.readFileSync(path.join(root,"LoonKit.lcf"),"utf8");
 assert(plugin.includes("scripts/v20261022r1/media-unlock.js"));
-assert.equal(profile.split("\\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
+assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
 console.log("Simple media checks: routing, positive/negative results, no false positives, concurrency, timeouts, full scan: PASS");
