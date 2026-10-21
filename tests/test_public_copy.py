@@ -92,7 +92,7 @@ class PublicCopyChecks(unittest.TestCase):
         plugin=(ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         workflow=(ROOT/".github/workflows/publish-v63.yml").read_text(encoding="utf-8")
         notes=(ROOT/"docs/RELEASE_NOTES_v6.3.0.md").read_text(encoding="utf-8")
-        self.assertIn("# LoonKit v6.3.6",profile)
+        self.assertIn("# LoonKit v6.3.7",profile)
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertFalse((ROOT/"release/Service_Diagnostics.plugin").exists())
         self.assertNotIn("service = select,",plugin)
