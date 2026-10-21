@@ -1,6 +1,6 @@
 # 正式版依赖与固定版本引用
 
-> 本文描述当前 `main` 的 **LoonKit v6.1.0**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
+> 本文描述当前 `main` 的 **LoonKit v6.2.0**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
 
 ## 正式运行链
 
@@ -9,14 +9,14 @@
 | 唯一完整配置 | [`LoonKit.lcf`](../LoonKit.lcf) | 通过 `main` 下载或导入 |
 | 26 份远程规则 | [`rules/releases/vNext-RC2/`](../rules/README.md) | `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` |
 | 33 个策略图标 + 1 个插件图标 | [`icons/v20261021r1/`](../icons/README.md) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
-| 网络辅助插件 | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `5b115b5dd02836620597b2212b2b49c18c646bb7` |
+| 网络辅助插件（内含服务诊断） | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `8122c6993e3f13a3152449d3d4ec62717a96cded` |
 | 节点出口脚本 | [`scripts/v20261021r1/node-intelligence.js`](../scripts/v20261021r1/node-intelligence.js) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
 | 网络与 DNS 诊断脚本 | [`scripts/v20261021r2/network-diagnostics.js`](../scripts/v20261021r2/network-diagnostics.js) | `af78ebb6b75bdbb341996db446d87cb2be719af4` |
-| 手动服务连通性诊断插件 | [`release/Service_Diagnostics.plugin`](../release/Service_Diagnostics.plugin) | `7cb02a4be5db739d74266536fefbc54b720ec35b` |
+| 手动服务诊断脚本 | [`scripts/v20261021r6/service-diagnostics.js`](../scripts/v20261021r6/service-diagnostics.js) | `17ca5380fc24e4950bc5a5f5bcc8237853119f97` |
 
-**服务诊断工具：** 插件随 v6.1.0 正式配置提供，执行 [服务诊断脚本](../scripts/v20261021r5/service-diagnostics.js)。此插件仅提供手动动作；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 在用户电脑上运行，不自动读取真机数据。
+**服务诊断工具：** 现有网络辅助插件已加入第三个手动工具，使用上述版本化服务诊断脚本，无需单独添加第二个插件。旧的 [独立插件](../release/Service_Diagnostics.plugin) 仅用于历史版本，不在当前配置中启用；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 仍在用户电脑上运行。
 
-调用关系为 `LoonKit.lcf` → 固定提交的 `release/Network_Diagnostics.plugin` → 版本化节点出口、网络诊断脚本和插件图标。Loon 中更新正式配置后，还应刷新远程插件及脚本缓存。
+调用关系为 `LoonKit.lcf` → 固定提交的 `release/Network_Diagnostics.plugin` → 版本化节点出口、网络/DNS、服务诊断脚本与插件图标。Loon 中更新正式配置后，还应刷新远程插件及脚本缓存。
 
 新装用户必须自行添加代理节点或订阅。配置不包含节点；`AdBlock` 可由用户在 `REJECT` 与 `DIRECT` 之间选择。
 
