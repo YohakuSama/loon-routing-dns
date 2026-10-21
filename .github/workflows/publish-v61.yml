@@ -52,22 +52,27 @@ jobs:
           python3 scripts/verify_release.py --check
           python3 -c 'import json; from pathlib import Path; s=json.loads(Path("build/release_spec.json").read_text()); assert s["stable_release_version"]=="v6.1.0"; assert s["optional_service_plugin_commit"]=="7cb02a4be5db739d74266536fefbc54b720ec35b"'
           if gh release view v6.1.0 --repo "$GH_REPO" >/dev/null 2>&1; then
+            # This release is immutable. Later documentation or tool commits on
+            # main must not compare the historic tag to today's commit SHA.
             published_tag="$(gh api "repos/$GH_REPO/git/ref/tags/v6.1.0" --jq '.object.sha')"
-            test "$published_tag" = "$CHECKED_SHA" || {
-              echo "Existing tag differs from reviewed commit. Refusing to overwrite."
+            test "$published_tag" = "b82fb2b61a6fc95f29dfb2b48dbf36885545c219" || {
+              echo "v6.1.0 tag moved; refusing to edit a published release."
               exit 1
             }
             mkdir -p existing-release
             gh release download v6.1.0 --repo "$GH_REPO" --pattern LoonKit.lcf --dir existing-release
-            cmp -s LoonKit.lcf existing-release/LoonKit.lcf || {
-              echo "Release attachment differs from tested profile."
+            actual_digest="$(sha256sum existing-release/LoonKit.lcf | cut -d ' ' -f 1)"
+            test "$actual_digest" = "19de1c36ee747ea76512af3bf5b2d62475e77175db09a2568ce8de43a82e480b" || {
+              echo "Published v6.1.0 asset changed; refusing to proceed."
               exit 1
             }
-            current_notes="$(gh release view v6.1.0 --repo "$GH_REPO" --json body --jq '.body')"
-            desired_notes="$(cat docs/RELEASE_NOTES_v6.1.0.md)"
-            if [ "$current_notes" != "$desired_notes" ]; then
-              gh release edit v6.1.0 --repo "$GH_REPO" --notes-file docs/RELEASE_NOTES_v6.1.0.md
-            fi
+            # A modified current profile must become a new version, never silently
+            # overwrite the v6.1.0 attachment or edit its historic release notes.
+            cmp -s LoonKit.lcf existing-release/LoonKit.lcf || {
+              echo "Current main profile differs from published v6.1.0; a new release version is required."
+              exit 1
+            }
+            echo "Immutable v6.1.0 release verified; no update needed."
             exit 0
           fi
           if gh api "repos/$GH_REPO/git/ref/tags/v6.1.0" >/dev/null 2>&1; then

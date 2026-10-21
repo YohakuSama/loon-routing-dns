@@ -90,6 +90,39 @@ class ParserAndPrivacy(unittest.TestCase):
         self.assertEqual(result["findings"][0]["recorded_policy"], "未知")
         self.assertNotIn("SENSITIVE_TXT", json.dumps(result))
 
+    def test_published_curated_domains_are_classified_and_redacted(self):
+        roots = diag.known_services()
+        curated = json.loads(
+            (ROOT / "rules/service_coverage_v6.1.0.json").read_text(encoding="utf-8")
+        )["reviewed_services"]
+        self.assertEqual(sum(len(v) for v in curated.values()), 62)
+        for group, domains in curated.items():
+            for domain in domains:
+                with self.subTest(service=group, domain=domain):
+                    self.assertEqual(diag.service_for("cdn." + domain, roots), group)
+
+        har = json.dumps({"log": {"entries": [
+            {"request": {"url": "https://cdn.spotifycdn.com/path?token=PRIVATE_S1"},
+             "response": {"status": 200}, "_policy": "Spotify"},
+            {"request": {"url": "https://preview.redditmedia.com/?secret=PRIVATE_R2"},
+             "response": {"status": 403}, "_policy": "Reddit"},
+            {"request": {"url": "https://static.line-cdn.net/a?code=PRIVATE_L3"},
+             "response": {"status": 503}, "_policy": "PrivateNodeSecret"},
+        ]}}).encode()
+        summary = diag.sanitized_log_summary(har, roots)
+        self.assertEqual(
+            {row["service"] for row in summary["groups"]},
+            {"Spotify", "Reddit", "Line"})
+        report = diag.private_triage(har, roots, diag.Router(ROOT))
+        self.assertEqual(
+            {row["service"] for row in report["findings"]},
+            {"Spotify", "Reddit", "Line"})
+        for secret in ("PRIVATE_S1", "PRIVATE_R2", "PRIVATE_L3",
+                       "spotifycdn.com", "redditmedia.com", "line-cdn.net",
+                       "PrivateNodeSecret"):
+            self.assertNotIn(secret, json.dumps(report))
+            self.assertNotIn(secret, json.dumps(summary))
+
     def test_missing_log_path_does_not_expose_private_filename(self):
         marker = "PRIVATE_SECRET_LOCAL_PATH_4519"
         result = subprocess.run([sys.executable, str(ROOT/"scripts/route_diagnostics.py"),
