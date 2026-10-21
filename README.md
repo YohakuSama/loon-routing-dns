@@ -78,7 +78,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 [规则与来源](./rules/README.md) · [网络辅助](./docs/NETWORK_DIAGNOSTICS.md) · [DNS 说明](./docs/DNS_PRIVACY.md) · [更新记录](./docs/CHANGELOG.md)
 
-[维护说明](./docs/MAINTAINING.md) · [开源许可与来源](./docs/THIRD_PARTY_NOTICES.md) · [发布指引](./docs/RELEASE_READINESS.md) · [反馈问题](https://github.com/YohakuSama/loonkit/issues)
+[维护说明](./docs/MAINTAINING.md) · [正式资源依赖](./docs/DEPENDENCIES.md) · [开源许可与来源](./docs/THIRD_PARTY_NOTICES.md) · [发布指引](./docs/RELEASE_READINESS.md) · [反馈问题](https://github.com/YohakuSama/loonkit/issues)
 
 ## 开源许可
 
