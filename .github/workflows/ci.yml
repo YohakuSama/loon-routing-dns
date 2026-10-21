@@ -31,6 +31,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_production.py' -v
       - name: Upstream candidate safety regressions
         run: python3 -m unittest discover -s tests -p 'test_upstream_review.py' -v
+      - name: Independent routing and matcher stress audit
+        run: python3 -m unittest discover -s tests -p 'test_rule_stress.py' -v
       - name: JavaScript plugin regressions
         run: |
           node --check scripts/v20261021r2/network-diagnostics.js
