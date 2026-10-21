@@ -48,16 +48,16 @@ check("four settings, private comparison and automation off",()=>{
 check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
   assert.equal(s.length,4);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261021r2/node-intelligence.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/node-intelligence.js")).length,1);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/network-diagnostics.js")).length,2);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r13/media-unlock.js")).length,1);
-  assert(fs.existsSync(path.join(root,"scripts/v20261021r2/node-intelligence.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261021r3/node-intelligence.js")));
   assert(fs.existsSync(path.join(root,"scripts/v20261021r3/network-diagnostics.js")));
   assert(fs.existsSync(path.join(root,"scripts/v20261021r13/media-unlock.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/9acec62db32f2981019dcf3c24776b2fdaf8bbb1/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/4ff27e265bc07fde23935a75d3deef216c605642/release/Network_Diagnostics.plugin, enabled=true"));
   assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
   assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
