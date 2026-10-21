@@ -4,6 +4,10 @@ LoonKit 正式配置已内置 **网络辅助插件**，无需重复添加。最�
 
 [查看当前插件](../release/Network_Diagnostics.plugin) · [返回首页](../README.md)
 
+## 七个服务的可选诊断
+
+如果需要检查 Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn 的单个连接端点，或离线查看规则预计命中和日志汇总，请使用 [服务与分流排查](./ROUTE_DIAGNOSTICS.md)。这项功能独立于现有插件，需要按需安装，不会自动运行。
+
 ## 节点出口信息
 
 查看所选节点或策略的公网 IP、地区、ASN、ISP 等。默认查询 `Proxy`；可选的「直连 IP 对照」默认关闭，开启后会额外请求直连公网 IP。
