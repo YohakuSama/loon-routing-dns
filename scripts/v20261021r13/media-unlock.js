@@ -11,7 +11,7 @@
   var node=nonempty(ctx.node)||nonempty(info.name)||nonempty(info.tag)||
     nonempty(ctx.policyGroup)||nonempty(args.target_policy)||"Proxy";
   var full=args.full_scan===true||args.full_scan==="true";
-  var budget=full?19500:12000,started=Date.now(),ended=false;
+  var budget=full?20000:13000,started=Date.now(),ended=false;
   var serviceList=[
     ["netflix","Netflix","流媒体"],["disney","Disney+","流媒体"],
     ["youtube","YouTube Premium","流媒体"],["spotify","Spotify","流媒体"],
@@ -56,7 +56,7 @@
       (function(task){
         inFlight++;
         var finishedTask=false,opts={
-          url:task.url,node:node,timeout:3900,
+          url:task.url,node:node,timeout:4300,
           "auto-cookie":false,"auto-redirect":task.follow!==false,insecure:false,
           headers:{"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/124 Safari/537.36","Accept-Language":"en-US,en;q=0.8"}
         };
@@ -76,7 +76,7 @@
   function reliable(url,cb,follow){
     var tried=false;
     function once(err,r,body){
-      if(err && !tried && timeLeft()>5600){
+      if(err && !tried && timeLeft()>6600){
         tried=true;get(url,once,follow);return;
       }
       cb(err,r,body);
@@ -139,6 +139,11 @@
           /premium is available in your country/i.test(b)||
           (/"browseId"\s*:\s*"SPunlimited"/i.test(b)&&/youtube premium/i.test(b));
         if(httpStatus(r)===200&&confirmed)return finish("available",countryCode);
+        // Public Premium page: recognizable purchase/plan area is a usable
+        // regional product signal, but a generic brand mention is not.
+        var offer=/youtube premium/i.test(b)&&
+          /(?:try premium|individual plan|family plan|student plan|join premium|start trial|get premium)/i.test(b);
+        if(httpStatus(r)===200&&offer)return finish("available",countryCode);
         if(countryCode)return finish("region",countryCode);
         finish(knownResponse(r)?"reachable":"unknown","");
       },true);
@@ -157,68 +162,89 @@
         finish("unknown",httpStatus(r)===429?"访问次数受限":"");
       },false);
     } else if(id==="tiktok"){
+      var edge="",pageResult="",pageError="",pending=2;
+      function assessTikTok(){
+        if(--pending)return;
+        if(pageResult==="blocked")return finish("blocked","");
+        if(pageResult==="reachable")return finish("reachable",edge);
+        if(edge)return finish("region",edge);
+        if(pageError)return finish(pageError,"");
+        finish("unknown","无有效检测响应");
+      }
       reliable("https://www.tiktok.com/cdn-cgi/trace",function(err,r,b){
-        if(!err && httpStatus(r)===451)return finish("blocked");
-        var code=!err?traceRegion(b):"";
-        if(code)return finish("region",code);
-        reliable("https://www.tiktok.com/",function(e,resp,page){
-          if(!e&&(httpStatus(resp)===451||restricted(page)))return finish("blocked");
-          if(!e&&httpStatus(resp)===200)return finish("reachable","");
-          finish(err&&e?(statusError(err)==="timeout"?"timeout":"failed"):"unknown");
-        },true);
+        if(!err&&httpStatus(r)===200)edge=traceRegion(b);
+        assessTikTok();
       },false);
+      reliable("https://www.tiktok.com/",function(err,r,b){
+        if(err)pageError=statusError(err);
+        else if(httpStatus(r)===451||restricted(b)||/tiktok is not available in (?:your|this) (?:region|country)/i.test(b))
+          pageResult="blocked";
+        else if(httpStatus(r)===200&&/(?:tiktok|SIGI_STATE|webapp)/i.test(b))pageResult="reachable";
+        else if(httpStatus(r)===200)pageResult="reachable";
+        assessTikTok();
+      },true);
     } else if(id==="chatgpt"){
-      var parts=["未确认","未确认"],kind=["unknown","unknown"],remaining=2;
-      function each(n,s,type){
-        parts[n]=s;kind[n]=type;
+      var parts=["未响应","未响应"],kind=["unknown","unknown"],remaining=2;
+      function finishBoth(){
         if(--remaining)return;
-        var detail="网页："+parts[0]+"，iOS："+parts[1];
+        var detail="Web "+parts[0]+"，iOS "+parts[1];
         if(kind.indexOf("blocked")>=0)return finish("blocked",detail);
-        if(kind[0]==="reachable"&&kind[1]==="reachable")return finish("reachable",detail);
-        if(kind[0]==="timeout"&&kind[1]==="timeout")return finish("timeout",detail);
+        if(kind[0]==="reachable"&&kind[1]==="reachable")return finish("reachable","Web / iOS");
+        if(kind.indexOf("reachable")>=0)return finish("partial",detail);
+        if(kind.indexOf("timeout")>=0)return finish("timeout",detail);
+        if(kind.indexOf("failed")>=0)return finish("failed",detail);
         finish("unknown",detail);
       }
       reliable("https://api.openai.com/compliance/cookie_requirements",function(err,r,b){
-        if(err)return each(0,statusError(err)==="timeout"?"超时":"连接异常",statusError(err));
-        if(httpStatus(r)===451||restricted(b))return each(0,"地区受限","blocked");
-        // HTTP 200 with cookie requirements is a reachable API, not a login/unlock guarantee.
-        each(0,httpStatus(r)===200&&/^\s*\{/.test(b)?"接口可达":"未确认",
-          httpStatus(r)===200&&/^\s*\{/.test(b)?"reachable":"unknown");
+        if(err){parts[0]="连接失败";kind[0]=statusError(err);return finishBoth();}
+        if(httpStatus(r)===451||restricted(b)){parts[0]="地区受限";kind[0]="blocked";return finishBoth();}
+        // HTTP 200 JSON from the compliance API confirms endpoint access,
+        // not account login or model access.
+        if(httpStatus(r)===200&&/^\s*\{/.test(b)){parts[0]="可访问";kind[0]="reachable";}
+        else if(httpStatus(r)===403){parts[0]="访问被拒";kind[0]="unknown";}
+        finishBoth();
       },true);
       reliable("https://ios.chat.openai.com/",function(err,r,b){
-        if(err)return each(1,statusError(err)==="timeout"?"超时":"连接异常",statusError(err));
-        if(/disallowed isp|have been blocked|unsupported_country/i.test(b)||httpStatus(r)===451)
-          return each(1,"地区受限","blocked");
-        var signal=b.toLowerCase().indexOf("request is not allowed. please try again later.")!==-1;
-        each(1,signal?"接口可达":"未确认",signal?"reachable":"unknown");
+        if(err){parts[1]="连接失败";kind[1]=statusError(err);return finishBoth();}
+        if(/disallowed isp|have been blocked|unsupported_country/i.test(b)||httpStatus(r)===451){
+          parts[1]="地区受限";kind[1]="blocked";return finishBoth();
+        }
+        if(b.toLowerCase().indexOf("request is not allowed. please try again later.")>=0){
+          parts[1]="可访问";kind[1]="reachable";
+        }
+        finishBoth();
       },true);
     } else if(id==="gemini"){
       reliable("https://gemini.google.com/app",function(err,r,b){
         if(err)return finish(statusError(err));
-        if(httpStatus(r)===451||restricted(b))return finish("blocked");
+        if(httpStatus(r)===451||restricted(b))return finish("blocked","");
         var code=extract(b,/,2,1,200,"([A-Z]{3})"/);
-        if(code)return finish("region",code);
-        if(knownResponse(r))return finish("reachable","");
-        finish("unknown",httpStatus(r)===429?"访问次数受限":"");
+        var barred={CHN:1,RUS:1,BLR:1,CUB:1,IRN:1,PRK:1,SYR:1,HKG:1,MAC:1};
+        // The app's own region marker is stronger than a CDN trace.
+        if(code&&barred[code])return finish("blocked",code);
+        if(code&&httpStatus(r)===200)return finish("available",code);
+        if(httpStatus(r)===200)return finish("reachable","");
+        finish("unknown",httpStatus(r)===429?"接口限流":"");
       },true);
     } else if(id==="claude"){
-      var regionCode="",pageResult="",pending=2;
-      function completeClaude(){
+      var edge="",pageResult="",pageError="",pending=2;
+      function assessClaude(){
         if(--pending)return;
-        if(pageResult==="blocked")return finish("blocked");
-        if(regionCode)return finish("region",regionCode);
-        if(pageResult==="reachable")return finish("reachable","");
-        finish(pageResult==="timeout"?"timeout":"unknown");
+        if(pageResult==="blocked")return finish("blocked",edge);
+        if(pageResult==="reachable")return finish("reachable",edge);
+        if(edge)return finish("region",edge);
+        if(pageError)return finish(pageError,"");
+        finish("unknown","");
       }
       reliable("https://claude.ai/cdn-cgi/trace",function(err,r,b){
-        if(!err)regionCode=traceRegion(b);
-        completeClaude();
+        if(!err&&httpStatus(r)===200)edge=traceRegion(b);
+        assessClaude();
       },false);
       reliable("https://claude.ai/",function(err,r,b){
-        if(err)pageResult=statusError(err);
+        if(err)pageError=statusError(err);
         else if(httpStatus(r)===451||restricted(b))pageResult="blocked";
-        else pageResult=httpStatus(r)===200?"reachable":"unknown";
-        completeClaude();
+        else if(httpStatus(r)===200)pageResult="reachable";
+        assessClaude();
       },true);
     } else if(id==="prime"){
       reliable("https://www.primevideo.com/",function(err,r,b){
@@ -258,16 +284,25 @@
     } else finish("unknown");
   }
   function value(r,id){
-    var names={available:"地区支持",partial:"部分内容",blocked:"地区受限",
-      region:"无法确认",reachable:"无法确认",unknown:"无法确认",
-      timeout:"检测超时",failed:"连接异常"};
-    if(r.code==="available"&&id==="netflix")return "片库可访问";
-    if(r.code==="available"&&(id==="bili_hk"||id==="bili_cn"))return "视频地址可获取";
-    if(r.code==="reachable")return id==="chatgpt"?"接口可访问 · 网页、iOS":"无法确认 · 网站可访问";
-    if(r.code==="region")return "无法确认"+(r.extra?" · 出口 "+r.extra:"");
-    if(r.code==="available")return "地区支持"+(r.extra?" · "+r.extra:"");
-    if(r.code==="unknown")return "无法确认"+(r.extra?" · "+r.extra:"");
-    return (names[r.code]||"无法确认")+(r.extra?" · "+r.extra:"");
+    var region=r.extra&&/^[A-Z]{2,3}$/.test(r.extra)?r.extra:"";
+    if(r.code==="available"){
+      if(id==="netflix")return "片库可访问";
+      if(id==="bili_hk"||id==="bili_cn")return "视频地址可获取";
+      if(id==="youtube")return "Premium 入口支持"+(region?" · "+region:"");
+      if(id==="spotify")return "地区接口支持"+(region?" · "+region:"");
+      if(id==="disney"||id==="prime"||id==="gemini")return "地区支持"+(region?" · "+region:"");
+      return "服务可用"+(region?" · "+region:"");
+    }
+    if(r.code==="blocked")return "地区受限"+(region?" · "+region:"");
+    if(r.code==="reachable"){
+      if(id==="chatgpt")return "Web / iOS 接口可访问";
+      return "网站可访问"+(region?" · 出口 "+region:"");
+    }
+    if(r.code==="region")return "出口地区 "+(region||"已识别")+" · 服务未验证";
+    if(r.code==="partial")return "部分接口可访问 · "+r.extra;
+    if(r.code==="timeout")return "检测超时";
+    if(r.code==="failed")return "连接失败";
+    return "未取得有效响应"+(r.extra?" · "+r.extra:"");
   }
   function output(){
     var ms=elapsed(),display=node.length>56?node.slice(0,29)+"…"+node.slice(-12):node;
@@ -281,7 +316,10 @@
     result.forEach(function(r){if(!r)return;if(r.code==="failed"||r.code==="timeout")errors++;
       else if(r.code!=="unknown")answered++;});
     if(errors>=5&&answered<=1)lines.push("","多项请求连接异常，请检查节点状态或稍后重试。");
-    lines.push("","实际播放结果以对应应用为准。","检测器 v6.3.5");
+    var useful=0;
+    result.forEach(function(r){if(r&&(/^(?:available|blocked|reachable|partial|region)$/.test(r.code)))useful++;});
+    if(!useful)lines.push("","全部请求未取得有效结果，请确认节点及插件设置。");
+    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.3.6");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function pumpService(){
