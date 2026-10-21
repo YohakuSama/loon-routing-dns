@@ -98,61 +98,90 @@
     var id=item[0],called=false;
     function finish(code,extra){if(called)return;called=true;cb(state(code,extra));}
     if(id==="netflix"){
-      var codes=[0,0],valid=[false,false],fail=["",""],titlesDone=0,cdnDone=false,cdnCode="";
+      var statuses=[0,0],proof=[false,false],errs=["",""],count=0,cdnDone=false,cdnRegion="";
+      var originalsRequested=false,originalsDone=false,originalsProof=false;
+      function realTitle(err,r,b,film){
+        if(err)return false;
+        var status=httpStatus(r),loc=header(r,"location"),canonical=header(r,"x-originating-url");
+        return (status===200&&/netflix/i.test(b)&&
+          (b.indexOf(film)>=0||canonical.indexOf("/title/"+film)>=0))||
+          ((status===301||status===302)&&/netflix\.com/i.test(loc)&&loc.indexOf(film)>=0);
+      }
       function netflixResult(){
         if(called)return;
-        if(valid[0]||valid[1])return finish("available","影片页面正常");
-        if(titlesDone!==2||!cdnDone)return;
-        if(codes.indexOf(451)>=0)return finish("blocked");
-        if(cdnCode)return finish("region",cdnCode);
-        if(fail[0]&&fail[1])return finish(fail.indexOf("timeout")>=0?"timeout":"failed");
-        finish("unknown","未能验证影片");
+        if(proof[0]||proof[1])return finish("available",cdnRegion);
+        if(count!==2)return;
+        if(statuses.indexOf(451)>=0)return finish("blocked");
+        if(statuses[0]===404&&statuses[1]===404&&!originalsRequested){
+          originalsRequested=true;
+          // An original-title response provides evidence when regional titles
+          // are unavailable; two 404s alone never prove "originals only".
+          get("https://www.netflix.com/title/80018499",function(err,r,b){
+            originalsProof=realTitle(err,r,b,"80018499");
+            originalsDone=true;netflixResult();
+          },false);
+        }
+        if(originalsRequested&&!originalsDone)return;
+        if(originalsProof)return finish("partial",cdnRegion);
+        if(!cdnDone)return;
+        if(cdnRegion)return finish("region",cdnRegion);
+        if(errs[0]&&errs[1])return finish(errs.indexOf("timeout")>=0?"timeout":"failed");
+        finish("unknown","影片页面无有效信息");
       }
       ["81280792","70143836"].forEach(function(film,n){
         reliable("https://www.netflix.com/title/"+film,function(err,r,b){
-          codes[n]=httpStatus(r);fail[n]=statusError(err);
-          var loc=header(r,"location");
-          var canonical=header(r,"x-originating-url");
-          valid[n]=!err&&((codes[n]===200&&/netflix/i.test(b)&&
-            (b.indexOf(film)>=0||canonical.indexOf("/title/"+film)>=0))||
-            ((codes[n]===301||codes[n]===302)&&/netflix\.com/i.test(loc)&&loc.indexOf(film)>=0));
-          titlesDone++;netflixResult();
+          statuses[n]=httpStatus(r);errs[n]=statusError(err);
+          proof[n]=realTitle(err,r,b,film);
+          count++;netflixResult();
         },false);
       });
-      // CDN can identify the country, but never confirms video playback.
       get("https://api.fast.com/netflix/speedtest/v2?https=true&token=YXNkZmFzZGxmbnNkYWZoYXNkZmhrYWxm&urlCount=5",function(err,r,b){
         if(!err&&httpStatus(r)===200){
-          try{
-            var json=JSON.parse(b);
-            cdnCode=country(json.targets&&json.targets[0]&&json.targets[0].location&&json.targets[0].location.country);
-          }catch(ignore){}
+          var json=decodeJSON(b);
+          cdnRegion=country(json&&json.targets&&json.targets[0]&&json.targets[0].location&&json.targets[0].location.country);
         }
         cdnDone=true;netflixResult();
       },false);
     } else if(id==="disney"){
-      // Service-specific anonymous device session, not a generic homepage check.
+      // Anonymous BAMTech region session is the strongest available signal.
+      // A home page/landing region is a useful fallback but NOT unlock proof.
       var root="https://disney.api.edge.bamgrid.com";
       var auth="Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84";
       var hdr={"authorization":auth,"Content-Type":"application/json"};
+      var homepage={ready:false,region:"",reachable:false,blocked:false},fallbackFn=null;
+      get("https://www.disneyplus.com/",function(err,r,b){
+        homepage.ready=true;
+        homepage.region=!err&&httpStatus(r)===200?
+          extract(b,/"region"\s*:\s*"([A-Za-z]{2})"/i):"";
+        homepage.blocked=httpStatus(r)===451||(!err&&restricted(b));
+        homepage.reachable=!err&&knownResponse(r);
+        if(fallbackFn){var next=fallbackFn;fallbackFn=null;next();}
+      },true);
+      function fallback(reason){
+        function settle(){
+          if(homepage.blocked)return finish("blocked");
+          if(homepage.region)return finish("region",homepage.region);
+          if(homepage.reachable)return finish("reachable",reason||"地区接口无有效结果");
+          finish("unknown",reason||"地区接口无有效结果");
+        }
+        if(homepage.ready)return settle();
+        fallbackFn=settle;
+      }
       function interpret(body){
         var data=decodeJSON(body);
-        // Only a returned service session can prove a supported location.
-        // Matching arbitrary countryCode and inSupportedLocation fields from
-        // elsewhere in the response would pair unrelated evidence.
         var session=data&&data.extensions&&data.extensions.sdk&&data.extensions.sdk.session;
         var code=session&&session.location&&country(session.location.countryCode);
         var supported=session&&session.inSupportedLocation;
         if(code&&typeof supported==="boolean")
           return finish(supported?"available":"blocked",code);
-        finish("unknown","地区会话未返回有效状态");
+        fallback("地区会话无有效状态");
       }
       function failure(err,r,body){
         if(/forbidden[-_.]location|unsupported_country|unsupported.country/i.test(body)||
-           httpStatus(r)===451)return finish("blocked");
-        if(err)return finish(statusError(err));
-        if(httpStatus(r)===403)return finish("unknown","服务拒绝检测请求");
-        if(httpStatus(r)===429)return finish("unknown","地区接口暂时限流");
-        finish("unknown","地区接口无有效结果");
+            httpStatus(r)===451)return finish("blocked");
+        if(httpStatus(r)===429)return fallback("地区接口请求过多");
+        if(httpStatus(r)===403)return fallback("地区接口拒绝访问");
+        fallback(err&&statusError(err)==="timeout"?"地区接口请求超时":"地区接口无有效结果");
       }
       function graphRefresh(token){
         var payload=JSON.stringify({query:"mutation refreshToken($input: RefreshTokenInput!) { refreshToken(refreshToken: $input) { activeSession { sessionId } } }",
@@ -172,7 +201,7 @@
           if(err||httpStatus(r)!==200)return failure(err,r,b);
           var data=decodeJSON(b),token=data&&data.refresh_token;
           if(typeof token!=="string"||!token||token.length>5000)
-            return finish("unknown","地区接口令牌无效");
+            return fallback("地区接口令牌无效");
           graphRefresh(token);
         });
       }
@@ -182,7 +211,7 @@
         var data=decodeJSON(b),assertion=data&&data.assertion;
         if(!assertion&&data&&data.data)assertion=data.data.assertion;
         if(typeof assertion!=="string"||!assertion||assertion.length>5000)
-          return finish("unknown","地区接口设备注册失败");
+          return fallback("地区接口设备注册失败");
         exchange(assertion);
       });
     } else if(id==="youtube"){
@@ -201,6 +230,8 @@
         var offer=/youtube premium/i.test(b)&&
           /(?:try premium|individual plan|family plan|student plan|join premium|start trial|get premium)/i.test(b);
         if(httpStatus(r)===200&&offer)return finish("available",countryCode);
+        if(httpStatus(r)===200&&countryCode&&/youtube premium/i.test(b))
+          return finish("reachable",countryCode);
         if(countryCode)return finish("region",countryCode);
         finish(knownResponse(r)?"reachable":"unknown","");
       },true);
@@ -274,15 +305,20 @@
         finishBoth();
       },true);
     } else if(id==="gemini"){
-      reliable("https://gemini.google.com/app",function(err,r,b){
+      // Try the lightweight landing page before requesting the app shell.
+      // Avoid retrying the same slow URL twice under the global deadline.
+      function parseGemini(err,r,b){
         if(err)return finish(statusError(err));
         if(httpStatus(r)===451||restricted(b))return finish("blocked","");
         var code=extract(b,/,2,1,200,"([A-Z]{3})"/);
-        // A region marker is not a live policy decision. Never infer denial
-        // from a hard-coded country list or success from country code alone.
         if(code&&httpStatus(r)===200)return finish("region",code);
         if(httpStatus(r)===200)return finish("reachable","");
         finish("unknown",httpStatus(r)===429?"接口限流":"");
+      }
+      get("https://gemini.google.com/",function(err,r,b){
+        if(err&&timeLeft()>6000)
+          return get("https://gemini.google.com/app",parseGemini,true);
+        parseGemini(err,r,b);
       },true);
     } else if(id==="claude"){
       var edge="",pageResult="",pageError="",pending=2;
@@ -354,13 +390,20 @@
     if(r.code==="blocked")return "地区受限"+(region?" · "+region:"");
     if(r.code==="reachable"){
       if(id==="chatgpt")return "Web / iOS 接口已响应 · 功能未验证";
+      if(id==="youtube")return region?"Premium 页面可访问 · "+region:"网站可访问";
+      if(id==="disney")return "网站可访问 · "+(r.extra||"地区未确认");
       return "网站可访问"+(region?" · 出口 "+region:"");
     }
     if(r.code==="region"){
-      if(id==="gemini")return "页面识别地区 "+(region||"未知")+" · 使用权限未验证";
+      if(id==="gemini")return "页面地区 "+(region||"未知")+" · 功能未验证";
+      if(id==="disney")return "页面地区 "+(region||"未知")+" · 解锁未确认";
+      if(id==="youtube")return "YouTube 地区 "+(region||"未知")+" · Premium 未确认";
       return "出口地区 "+(region||"已识别")+" · 服务未验证";
     }
-    if(r.code==="partial")return "部分接口可访问 · "+r.extra;
+    if(r.code==="partial"){
+      if(id==="netflix")return "部分测试影片可访问"+(region?" · "+region:"");
+      return "部分接口可访问 · "+r.extra;
+    }
     if(r.code==="timeout")return "检测超时";
     if(r.code==="failed")return "连接失败";
     return "未取得有效响应"+(r.extra?" · "+r.extra:"");
@@ -380,7 +423,7 @@
     var useful=0;
     result.forEach(function(r){if(r&&(/^(?:available|blocked|reachable|partial|region)$/.test(r.code)))useful++;});
     if(!useful)lines.push("","各平台没有返回可判定信息，请检查网络或稍后重试。");
-    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.3.9");
+    lines.push("","地区响应及网页访问不等于付费内容可播放。","检测器 v6.4.0");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function pumpService(){
