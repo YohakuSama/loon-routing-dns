@@ -37,17 +37,10 @@
 - 对 HTTP 非预期状态及 DNS 协议信息不足提供具体提示。
 - 支持可选的网络切换提醒，默认关闭。
 
-## main 分支新增可选诊断工具
-
-- 七个服务的主域名覆盖检查和冻结候选域名规则审计，帮助维护者发现待人工核查的覆盖差异。
-- 离线规则命中分析、脱敏日志汇总和私密关联排查，辅助定位 Final 兜底、AdBlock 及 HTTP 异常（不等于真机命中）。
-- 可选双端点手动连通性插件：Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn；分别检查主站与关联端点，有响应不等于 App 功能全部正常。
-- 不改变 v6.0.0 Release 附件、当前 DNS、TUN、正式规则或内置网络辅助；使用方法详见 [服务与分流排查](./ROUTE_DIAGNOSTICS.md)。
-
 ## 安装与更新
 
 - 正式配置：[`LoonKit.lcf`](../LoonKit.lcf)。
 - 导入后添加自己的代理节点或订阅，选择所需策略组，再刷新远程规则和插件资源。
 - 从已有配置升级前建议先备份个人节点与自定义设置。
 
-[下载 v6.0.0](https://github.com/YohakuSama/loonkit/releases/tag/v6.0.0) · [使用说明](../README.md) · [技术维护记录](./MAINTAINING.md) · [来源与许可证](./THIRD_PARTY_NOTICES.md)
+[版本下载](https://github.com/YohakuSama/loonkit/releases) · [使用说明](../README.md) · [技术维护记录](./MAINTAINING.md) · [来源与许可证](./THIRD_PARTY_NOTICES.md)
