@@ -153,7 +153,7 @@
       var root="https://disney.api.edge.bamgrid.com";
       var auth="Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84";
       var hdr={"authorization":auth,"Content-Type":"application/json"};
-      var homepage={ready:false,region:"",reachable:false,blocked:false},fallbackFn=null,quickTried=false;
+      var homepage={ready:false,region:"",reachable:false,blocked:false},fallbackFn=null;
       get("https://www.disneyplus.com/",function(err,r,b){
         homepage.ready=true;
         homepage.region=!err&&httpStatus(r)===200?
@@ -163,32 +163,6 @@
         if(fallbackFn){var next=fallbackFn;fallbackFn=null;next();}
       },true);
       function fallback(reason){
-        // Kelee's node unlock script checks BAMTech's one-step registerDevice
-        // GraphQL response. Try it when our token workflow did not produce a
-        // region session, then fall back to the already requested homepage.
-        if(!quickTried) {
-          quickTried=true;
-          var deviceQuery=JSON.stringify({
-            query:"mutation registerDevice($input: RegisterDeviceInput!) { registerDevice(registerDevice: $input) { grant { grantType assertion } } }",
-            variables:{input:{applicationRuntime:"chrome",deviceFamily:"browser",
-              deviceLanguage:"en",deviceProfile:"windows",
-              attributes:{browserName:"chrome",browserVersion:"94.0.4606",
-                manufacturer:"microsoft",operatingSystem:"windows",
-                operatingSystemVersion:"10.0",osDeviceIds:[]}}}
-          });
-          post(root+"/graph/v1/device/graphql",deviceQuery,{
-            "Authorization":auth.replace(/^Bearer /,""),
-            "Content-Type":"application/json",
-            "User-Agent":"UA"
-          },function(err,r,b) {
-            var parsed=decodeJSON(b),session=parsed&&parsed.extensions&&parsed.extensions.sdk&&parsed.extensions.sdk.session;
-            var code=session&&session.location&&country(session.location.countryCode);
-            if(!err&&httpStatus(r)===200&&code&&typeof session.inSupportedLocation==="boolean")
-              return finish(session.inSupportedLocation?"available":"blocked",code);
-            fallback(reason);
-          });
-          return;
-        }
         function settle(){
           if(homepage.blocked)return finish("blocked");
           if(homepage.region)return finish("site_region",homepage.region);
@@ -236,7 +210,8 @@
           graphRefresh(token);
         });
       }
-      post(root+"/devices",JSON.stringify({deviceFamily:"browser",applicationRuntime:"chrome",
+      function verifyLegacy(){
+        post(root+"/devices",JSON.stringify({deviceFamily:"browser",applicationRuntime:"chrome",
         deviceProfile:"windows",attributes:{}}),hdr,function(err,r,b){
         if(err||httpStatus(r)!==200)return failure(err,r,b);
         var data=decodeJSON(b),assertion=data&&data.assertion;
@@ -244,6 +219,27 @@
         if(typeof assertion!=="string"||!assertion||assertion.length>5000)
           return fallback("地区接口设备注册失败");
         exchange(assertion);
+      });
+      }
+      // First probe the one-step regional session used by established Loon tools.
+      // Use the longer token workflow only when it has no actionable result.
+      var quick=JSON.stringify({
+        query:"mutation registerDevice($input: RegisterDeviceInput!) { registerDevice(registerDevice: $input) { grant { grantType assertion } } }",
+        variables:{input:{applicationRuntime:"chrome",deviceFamily:"browser",
+          deviceLanguage:"en",deviceProfile:"windows",
+          attributes:{browserName:"chrome",browserVersion:"94.0.4606",
+            manufacturer:"microsoft",operatingSystem:"windows",
+            operatingSystemVersion:"10.0",osDeviceIds:[]}}}
+      });
+      post(root+"/graph/v1/device/graphql",quick,{
+        "Authorization":auth.replace(/^Bearer /,""),
+        "Content-Type":"application/json","User-Agent":"UA"
+      },function(err,r,b){
+        var parsed=decodeJSON(b),session=parsed&&parsed.extensions&&parsed.extensions.sdk&&parsed.extensions.sdk.session;
+        var code=session&&session.location&&country(session.location.countryCode);
+        if(!err&&httpStatus(r)===200&&code&&typeof session.inSupportedLocation==="boolean")
+          return finish(session.inSupportedLocation?"available":"blocked",code);
+        verifyLegacy();
       });
     } else if(id==="youtube"){
       reliable("https://www.youtube.com/premium?hl=en",function(err,r,b){
@@ -430,7 +426,7 @@
     return "检测失败";
   }
   function output(){
-    var ms=elapsed(),display=node.length>56?node.slice(0,29)+"…"+node.slice(-12):node;
+    var ms=elapsed(),display=node.length>32?node.slice(0,24)+"…"+node.slice(-5):node;
     var lines=["节点："+display,"耗时："+(ms/1000).toFixed(1)+" 秒"];
     serviceList.forEach(function(s,i){
       lines.push(s[1]+"："+value(result[i]||state("timeout"),s[0]));
