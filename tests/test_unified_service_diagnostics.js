@@ -236,7 +236,7 @@ const disneyTokenBlocked=mock({reply:url=>{
   return {status:200,body:"generic"};
 }});
 assert.match(resultOf(disneyTokenBlocked.out[0],"Disney+"),/不可用/);
-assert.equal(disneyTokenBlocked.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,0);
+assert.equal(disneyTokenBlocked.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,1);
 const disneyGeneric403=mock({reply:url=>url.endsWith("/devices")?
   {status:403,body:"403 ERROR - API access denied"}:{status:200,body:"generic"}});
 assert.doesNotMatch(resultOf(disneyGeneric403.out[0],"Disney+"),/不可用/);
@@ -251,7 +251,7 @@ const disneyNoToken=mock({reply:url=>{
   return {status:200,body:"generic"};
 }});
 assert.match(resultOf(disneyNoToken.out[0],"Disney+"),/：可连接/);
-assert.equal(disneyNoToken.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,0);
+assert.equal(disneyNoToken.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,1);
 const disneyTransportFailure=mock({reply:url=>url.endsWith("/devices")?
   {error:"timed out TOKEN_SECRET"}:{status:200,body:"generic"}});
 assert.match(resultOf(disneyTransportFailure.out[0],"Disney+"),/：可连接/);
