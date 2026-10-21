@@ -18,5 +18,5 @@ full_scan = switch,false,tag=完整检测,desc=默认快速检测，开启后增
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/db05de1c1df0648d999bf96aab292fd50dc02419/scripts/v20261021r2/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with tag="网络检测", img_url="network.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/3d72b8814dffa541fa1a26c8cdf252184b026edf/scripts/v20261021r9/media-unlock.js", {${target_policy}, ${full_scan}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=22
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/d26caa23d3dac34ecb350ee835bc9ba78a0170b7/scripts/v20261021r9/media-unlock.js", {${target_policy}, ${full_scan}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=22
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
