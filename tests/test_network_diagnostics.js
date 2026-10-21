@@ -155,7 +155,7 @@ check("diagnostics switches default to privacy-preserving values",()=>{
   assert.match(plugin,/compare_direct = switch,false/);
   assert.equal(plugin.split("\n").filter(x=>x.startsWith("generic then script(")).length,3);
   assert.doesNotMatch(plugin,/service = select|请选择服务/);
-  assert.match(plugin,/scripts\/v20261021r8\/service-diagnostics\.js/);
+  assert.match(plugin,/scripts\/v20261021r9\/media-unlock\.js/);
 });
 
 check("HTTP 200 on generate_204 endpoint is not reported as healthy",()=>{
