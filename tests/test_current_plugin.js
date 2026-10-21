@@ -85,7 +85,9 @@ check("no retired standalone plugin or script assets remain",()=>{
     "scripts/v20261021r3/service-diagnostics.js",
     "scripts/v20261021r4/service-diagnostics.js",
     "scripts/v20261021r5/service-diagnostics.js",
-    "scripts/v20261021r6/service-diagnostics.js"
+    "scripts/v20261021r6/service-diagnostics.js",
+    "scripts/v20261021r7/node-intelligence.js",
+    "scripts/v20261021r7/network-diagnostics.js"
   ];
   names.forEach(name=>assert(!fs.existsSync(path.join(root,name)),name));
 });
