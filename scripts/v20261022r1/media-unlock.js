@@ -148,7 +148,7 @@
       }
       get(base+"/",function(err,r,body){
         if(blocked(r,body))page=verdict("block");
-        else if(status(r)===200&&!/access denied|verify you are human/i.test(body))page=verdict("support");
+        else if(status(r)===200&&new RegExp(id==="tiktok"?"tiktok|SIGI_STATE|webapp":"claude|anthropic","i").test(body)&&!/access denied|verify you are human/i.test(body))page=verdict("support");
         else page=verdict(err?"failed":"unknown");
         end();
       });
@@ -176,7 +176,7 @@
       get("https://gemini.google.com/",function(err,r,body){
         if(blocked(r,body))return finish(verdict("block"));
         var geo=regionOf(body,/,2,1,200,"([A-Z]{3})"/);
-        if(status(r)===200)return finish(verdict("support",geo));
+        if(status(r)===200&&/gemini|google/i.test(body))return finish(verdict("support",geo));
         // An API-key error confirms API reachability, NOT Gemini web access.
         get("https://generativelanguage.googleapis.com/v1beta/models",function(e,ar,ab){
           if(blocked(ar,ab))return finish(verdict("block"));
@@ -215,7 +215,7 @@
   }
   function label(v){
     if(!v)v=verdict("failed");
-    var labels={support:"支持",block:"不支持",limited:"仅自制剧",unknown:"待确认",
+    var labels={support:"支持",block:"不支持",limited:"部分支持",unknown:"待确认",
       failed:"检测失败",region:"地区"};
     return (labels[v.code]||"待确认")+(country(v.region)?"（"+country(v.region)+"）":"");
   }
