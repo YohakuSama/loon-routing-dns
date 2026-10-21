@@ -11,10 +11,10 @@
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "Platform-specific content samples and anonymous regional sessions are distinguished from homepage/CDN location; Disney homepage fallback displays weaker evidence, not playback unlock. DNS/TUN/routing unchanged.",
-  "plugin_assets_commit": "6c44bba97b39e5d829e30c9be5e915b6c3144975",
+  "plugin_assets_commit": "c0a72e9d31490bbc044e4c4244f0db053b0806e5",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "a15784e0de87860a60264d78c2e851bca7e0ca84",
+  "unified_service_diagnostics_script_commit": "fa97787e344ad2a0ce6671562dcd4bc4f3c0c6e7",
   "node_script_commit": "edac8c9f51de9ad6e2a9a969752a31490c4cfd44"
 }
