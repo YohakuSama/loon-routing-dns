@@ -4,7 +4,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const source=fs.readFileSync(path.join(root,"scripts/v20261021r12/media-unlock.js"),"utf8");
+const source=fs.readFileSync(path.join(root,"scripts/v20261021r13/media-unlock.js"),"utf8");
 
 function mock(options={}){
   const sent=[],pending=[],out=[],timers=[],attempts={};
@@ -51,16 +51,16 @@ assert.match(generic.out[0].content,/节点：JP-node/);
 assert(generic.maxActive<=6,"HTTP semaphore must hold including Netflix and ChatGPT");
 assert(generic.maxActive>=4,"parallel scan expected");
 assert(generic.sent.every(x=>x.node==="JP-node"),"all requests use selected node");
-assert(generic.sent.every(x=>x.timeout<=3900 && x["auto-cookie"]===false && x.insecure===false));
-assert.equal(generic.timers[0].ms,12000);
-assert.match(resultOf(generic.out[0],"Netflix"),/无法确认/);
-assert.match(resultOf(generic.out[0],"YouTube Premium"),/无法确认 · 网站可访问/);
-assert.match(resultOf(generic.out[0],"Spotify"),/无法确认 · 网站可访问/);
-assert.match(resultOf(generic.out[0],"ChatGPT"),/无法确认/);
-assert.match(resultOf(generic.out[0],"Claude"),/无法确认/);
+assert(generic.sent.every(x=>x.timeout<=4300 && x["auto-cookie"]===false && x.insecure===false));
+assert.equal(generic.timers[0].ms,13000);
+assert.match(resultOf(generic.out[0],"Netflix"),/未取得有效响应/);
+assert.match(resultOf(generic.out[0],"YouTube Premium"),/网站可访问/);
+assert.match(resultOf(generic.out[0],"Spotify"),/网站可访问/);
+assert.match(resultOf(generic.out[0],"ChatGPT"),/未取得有效响应/);
+assert.match(resultOf(generic.out[0],"Claude"),/网站可访问/);
 assert.doesNotMatch(generic.out[0].content,/解锁成功|全部解锁/);
 assert(!generic.out[0].content.includes("Bilibili"));
-assert(generic.out[0].content.includes("检测器 v6.3.5"));
+assert(generic.out[0].content.includes("检测器 v6.3.6"));
 assert(!/可能可用|开放信号|非片库证明|非 Claude 解锁/.test(generic.out[0].content));
 
 const signals=mock({order:"reverse",reply:url=>{
@@ -80,12 +80,12 @@ const signals=mock({order:"reverse",reply:url=>{
 const b=signals.out[0];
 assert.match(resultOf(b,"Netflix"),/片库可访问/);
 assert.match(resultOf(b,"Disney+"),/地区支持 · JP/);
-assert.match(resultOf(b,"YouTube Premium"),/无法确认 · 出口 JP/);
-assert.match(resultOf(b,"Spotify"),/地区支持 · JP/);
-assert.match(resultOf(b,"TikTok"),/无法确认 · 出口 JP/);
-assert.match(resultOf(b,"ChatGPT"),/接口可访问 · 网页、iOS/);
-assert.match(resultOf(b,"Gemini"),/无法确认 · 网站可访问/);
-assert.match(resultOf(b,"Claude"),/无法确认 · 出口 JP/);
+assert.match(resultOf(b,"YouTube Premium"),/出口地区 JP · 服务未验证/);
+assert.match(resultOf(b,"Spotify"),/地区接口支持 · JP/);
+assert.match(resultOf(b,"TikTok"),/网站可访问 · 出口 JP/);
+assert.match(resultOf(b,"ChatGPT"),/Web \/ iOS 接口可访问/);
+assert.match(resultOf(b,"Gemini"),/网站可访问/);
+assert.match(resultOf(b,"Claude"),/网站可访问 · 出口 JP/);
 
 const geo=mock({reply:url=>{
   if(url.includes("disneyplus.com"))return {status:200,body:'{"inSupportedLocation":false,"countryCode":"JP"}'};
@@ -109,7 +109,7 @@ const retry=mock({reply:(url,attempt)=>{
   return {status:200,body:"generic"};
 }});
 assert.equal(retry.attempts[Object.keys(retry.attempts).find(x=>x.includes("spotify.com"))],2);
-assert.match(resultOf(retry.out[0],"Spotify"),/地区支持 · US/);
+assert.match(resultOf(retry.out[0],"Spotify"),/地区接口支持 · US/);
 assert(!retry.out[0].content.includes("PRIVATE_TOKEN"));
 
 const partial=mock({reply:url=>{
@@ -117,7 +117,7 @@ const partial=mock({reply:url=>{
   if(url.includes("/title/80018499"))return {status:200,body:"Netflix title 80018499"};
   return {status:200,body:"generic"};
 }});
-assert.match(resultOf(partial.out[0],"Netflix"),/无法确认/);
+assert.match(resultOf(partial.out[0],"Netflix"),/未取得有效响应/);
 
 
 // Region-only Netflix fast.com signal must not be misreported as full playback.
@@ -126,7 +126,7 @@ const cdn=mock({reply:url=>{
   if(url.includes("/title/"))return {status:404,body:""};
   return {status:200,body:"generic"};
 }});
-assert.match(resultOf(cdn.out[0],"Netflix"),/无法确认 · 出口 JP/);
+assert.match(resultOf(cdn.out[0],"Netflix"),/出口地区 JP · 服务未验证/);
 // Loon returns HTTP status in response even with network error: preserve evidence.
 const httpEvidence=mock({reply:url=>{
   if(url.includes("youtube.com/premium"))return {error:"HTTP failure",status:451,body:""};
@@ -137,13 +137,13 @@ assert.match(resultOf(httpEvidence.out[0],"YouTube Premium"),/地区受限/);
 const spotifyRedirect=mock({reply:url=>url.includes("spotify.com/api")?
   {status:302,headers:{Location:"https://www.spotify.com/jp/"}}:
   {status:200,body:"generic"}});
-assert.match(resultOf(spotifyRedirect.out[0],"Spotify"),/地区支持 · JP/);
+assert.match(resultOf(spotifyRedirect.out[0],"Spotify"),/地区接口支持 · JP/);
 
 
 const premium=mock({reply:url=>url.includes("youtube.com/premium")?
   {status:200,body:'{"isPremiumAvailable":true,"GL":"JP"}'}:
   {status:200,body:"generic"}});
-assert.match(resultOf(premium.out[0],"YouTube Premium"),/地区支持 · JP/);
+assert.match(resultOf(premium.out[0],"YouTube Premium"),/Premium 入口支持 · JP/);
 const premiumBlocked=mock({reply:url=>url.includes("youtube.com/premium")?
   {status:200,body:"Premium is not available in your country"}:
   {status:200,body:"generic"}});
@@ -161,9 +161,35 @@ const orderProof=mock({order:"reverse",reply:url=>{
 assert.match(resultOf(orderProof.out[0],"Netflix"),/片库可访问/);
 assert(!/可能可用|开放信号/.test(orderProof.out[0].content));
 
+
+// Platform-region marker, a country in a CDN trace and a generic webpage
+// should never be collapsed to proof of subscription/media playback.
+const geminiSupport=mock({reply:url=>url.includes("gemini.google.com")?
+  {status:200,body:',2,1,200,"JPN"'}:{status:200,body:"generic"}});
+assert.match(resultOf(geminiSupport.out[0],"Gemini"),/地区支持 · JPN/);
+const geminiBlocked=mock({reply:url=>url.includes("gemini.google.com")?
+  {status:200,body:',2,1,200,"CHN"'}:{status:200,body:"generic"}});
+assert.match(resultOf(geminiBlocked.out[0],"Gemini"),/地区受限 · CHN/);
+const premiumOffer=mock({reply:url=>url.includes("youtube.com/premium")?
+  {status:200,body:"<html>YouTube Premium Individual plan Start trial</html>"}:
+  {status:200,body:"generic"}});
+assert.match(resultOf(premiumOffer.out[0],"YouTube Premium"),/Premium 入口支持/);
+const marketingOnly=mock({reply:url=>url.includes("youtube.com/premium")?
+  {status:200,body:"YouTube Premium is a streaming platform"}:
+  {status:200,body:"generic"}});
+assert.doesNotMatch(resultOf(marketingOnly.out[0],"YouTube Premium"),/Premium 入口支持/);
+const tikDenied=mock({order:"reverse",reply:url=>url.includes("tiktok.com/")&&!url.includes("cdn-cgi")?
+  {status:451,body:""}:url.includes("tiktok.com/cdn-cgi")?
+  {status:200,body:"loc=JP\\n"}:{status:200,body:"generic"}});
+assert.match(resultOf(tikDenied.out[0],"TikTok"),/地区受限/);
+const mixedChat=mock({reply:url=>url.includes("api.openai.com")?
+  {status:200,body:'{"required":false}'}:url.includes("ios.chat.openai.com")?
+  {error:"timeout"}:{status:200,body:"generic"}});
+assert.match(resultOf(mixedChat.out[0],"ChatGPT"),/部分接口可访问/);
+
 const full=mock({full:true,policy:"Manual-node"});
 assert.equal(full.out.length,1);
-assert.equal(full.timers[0].ms,19500);
+assert.equal(full.timers[0].ms,20000);
 assert(full.sent.every(x=>x.node==="Manual-node"));
 assert(full.sent.length>generic.sent.length);
 assert(resultOf(full.out[0],"Apple 地区"));
