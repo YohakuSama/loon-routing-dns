@@ -32,10 +32,11 @@ function run(o={}){
   };
   vm.runInNewContext(src,ctx,{timeout:2000});
   assert.equal(done.length,1);
-  return {content:done[0].content,calls};
+  return {title:done[0].title,content:done[0].content,calls};
 }
 check("full report preserves detailed location and ASN/ISP",()=>{
   const r=run();
+  assert.equal(r.title,"节点信息");
   assert.match(r.content,/【出口信息】/);
   assert.match(r.content,/公网 IP：203\.0\.113\.21/);
   assert.match(r.content,/Japan \(JP\) · Osaka · Osaka/);
