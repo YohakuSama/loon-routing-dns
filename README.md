@@ -84,7 +84,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit **自有、可授权的代码和配置贡献**采用 [GPL-2.0-only](./LICENSE)。第三方规则保留其原许可及署名，主要涉及 GPL-2.0-only、MIT 和 WTFPL-2.0，详见[第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。第三方品牌图标不因本项目采用 GPL 而自动获得再授权。
 
-> **版本说明：** 当前 v6.0.0 配置可直接从仓库获取；GitHub Release 尚未单独发布，准备流程见[发布指引](./docs/RELEASE_READINESS.md)。
+> **版本说明：** 当前 v6.0.0 配置可从仓库获取；正式版本附件与哈希以 [GitHub Releases](https://github.com/YohakuSama/loonkit/releases) 实际发布状态为准，发布校验和流程见[发布指引](./docs/RELEASE_READINESS.md)。
 
 ---
 
