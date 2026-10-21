@@ -111,7 +111,7 @@ class PublicCopyChecks(unittest.TestCase):
 
     def test_changelog_versions_are_unique_and_current_first(self):
         text=(ROOT/"docs/CHANGELOG.md").read_text(encoding="utf-8")
-        headings=re.findall(r"^## (v\\d+\\.\\d+\\.\\d+)$",text,re.M)
+        headings=re.findall(r"^## (v\d+\.\d+\.\d+)$",text,re.M)
         self.assertGreater(len(headings),0)
         self.assertEqual(headings[0],"v6.3.9")
         self.assertEqual(len(headings),len(set(headings)),
