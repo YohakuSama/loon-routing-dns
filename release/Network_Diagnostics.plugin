@@ -2,7 +2,7 @@
 #!desc = 节点出口查询、网络连通性和 DNS 解析检查
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loonkit
-#!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png
+#!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/d9333b47b1a0361d911fc57e3dc5808683d416d5/icons/v20261021r2/Console.png
 #!system = iOS,iPadOS
 #!loon_version = 3.5.1(983)
 #!tag = 网络,节点,诊断
