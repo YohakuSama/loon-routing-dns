@@ -90,5 +90,5 @@ assert.match(plugin,/service = select,"Spotify"/);
 assert.match(plugin,/auto_check = switch,false/);
 assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
 assert.doesNotMatch(profile,/Service_Diagnostics\.plugin, enabled=true/);
-assert.match(profile,/f26e0ca041ae43496bb89cfc4945284f169cdc69\/release\/Network_Diagnostics\.plugin/);
+assert.match(profile,/8122c6993e3f13a3152449d3d4ec62717a96cded\/release\/Network_Diagnostics\.plugin/);
 console.log("Unified manual seven-service diagnostic tests passed");
