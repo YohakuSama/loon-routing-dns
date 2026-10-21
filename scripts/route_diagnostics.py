@@ -59,11 +59,33 @@ def matcher(raw: str):
 
 
 def known_services(root=ROOT):
+    """Classify all published service domains, including v6.1.0 additions.
+
+    Root domains are frozen in the engine manifest, while curated v6.1.0
+    additions are tracked separately from the immutable rule inputs.
+    """
+    root = Path(root)
     manifest = json.loads((root / "build/engine_manifest.json").read_text(encoding="utf-8"))
     data = manifest["reviewed_overseas_inline_minimal"]
     if set(SERVICE_GROUPS) != set(data):
         raise ValueError("seven-service reviewed roots changed; re-audit")
-    return {group: tuple(sorted(set(values))) for group, values in data.items()}
+    groups = {group: set(data[group]) for group in SERVICE_GROUPS}
+    extra = root / "rules/service_coverage_v6.1.0.json"
+    if extra.is_file():
+        inventory = json.loads(extra.read_text(encoding="utf-8"))
+        reviewed = inventory.get("reviewed_services")
+        if inventory.get("version") != "v6.1.0" or not isinstance(reviewed, dict) or set(reviewed) != set(SERVICE_GROUPS):
+            raise ValueError("published service coverage manifest changed; re-audit")
+        if inventory.get("domain_rules_count") != sum(len(v) for v in reviewed.values()):
+            raise ValueError("published service coverage count changed; re-audit")
+        for group, roots in reviewed.items():
+            if not isinstance(roots, list):
+                raise ValueError("invalid service coverage roots")
+            for domain in roots:
+                if not isinstance(domain, str) or not VALID_HOST.fullmatch(domain):
+                    raise ValueError("invalid published service hostname")
+                groups[group].add(domain.lower())
+    return {group: tuple(sorted(roots)) for group, roots in groups.items()}
 
 
 class Router:
@@ -162,7 +184,7 @@ def coverage(router: Router) -> dict:
         groups.append({"service": group, "declared_root_count": len(roots),
                        "reviewed_roots_match": all(x["pass"] for x in checks),
                        "roots": checks})
-    return {"summary": "只检查已登记的主域名；不代表 App 登录/API/CDN 已完整覆盖。",
+    return {"summary": "检查已登记的服务主域名与 v6.1.0 精选域名；不代表 App 登录/API/CDN 已完整覆盖。",
             "all_reviewed_roots_match": all(g["reviewed_roots_match"] for g in groups),
             "services": groups}
 
