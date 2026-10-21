@@ -13,5 +13,6 @@
   "warning": "Pinned 26 upstream rules preserved; scoped service domains and optional manual diagnostics added to main profile. Device testing delegated to user.",
   "plugin_assets_commit": "5b115b5dd02836620597b2212b2b49c18c646bb7",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
-  "diagnostics_script_commit": "af78ebb6b75bdbb341996db446d87cb2be719af4"
+  "diagnostics_script_commit": "af78ebb6b75bdbb341996db446d87cb2be719af4",
+  "optional_service_plugin_commit": "7cb02a4be5db739d74266536fefbc54b720ec35b"
 }
