@@ -109,9 +109,9 @@ check("node menu context takes precedence and outage stays explicit",()=>{
   assert.match(fail.content,/查询失败/);
   assert.doesNotMatch(fail.content,/情报源|没有把 DIRECT 地址冒充/);
 });
-check("current plugin uses versioned script and only two manual actions",()=>{
+check("current plugin preserves node exit and has three integrated manual actions",()=>{
   const p=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
-  assert.equal(p.split("\n").filter(x=>x.startsWith("generic then script(")).length,2);
+  assert.equal(p.split("\n").filter(x=>x.startsWith("generic then script(")).length,3);
   assert(p.includes("97c48a5d14087597dbba35119d5ee8d43b1ce537/scripts/v20261021r1/node-intelligence.js"));
   assert(p.includes("auto_check = switch,false"));
   assert(p.includes("compare_direct = switch,false"));
