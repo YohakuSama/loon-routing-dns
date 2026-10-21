@@ -218,15 +218,26 @@
   if(route.length>200 || /[\r\n\u0000-\u001f]/.test(route)) {
     done("节点或策略名称无效。");return;
   }
-  lookup(route,function(err,item){
-    if(err) {
-      done("节点/策略："+safe(route)+"\n查询失败："+safe(err)+
+  if(args.compare_direct!==true||route==="DIRECT"){
+    lookup(route,function(err,item){
+      if(err)return done("节点/策略："+safe(route)+"\n查询失败："+safe(err)+
         "\n请检查当前节点是否可用。");
-      return;
-    }
-    if(args.compare_direct!==true||route==="DIRECT")return done(show(item,null));
-    lookup("DIRECT",function(directErr,direct){
-      done(show(item,directErr?null:direct));
+      done(show(item,null));
     });
-  });
+  }else{
+    // Optional direct/exit comparison runs both lookups in parallel.
+    var waiting=2,proxyResult=null,proxyError="",directResult=null;
+    function joined(){
+      if(--waiting)return;
+      if(proxyError)return done("节点/策略："+safe(route)+"\n查询失败："+safe(proxyError)+
+        "\n请检查当前节点是否可用。");
+      done(show(proxyResult,directResult));
+    }
+    lookup(route,function(err,item){
+      proxyError=err||"";proxyResult=item;joined();
+    });
+    lookup("DIRECT",function(err,item){
+      directResult=err?null:item;joined();
+    });
+  }
 })();
