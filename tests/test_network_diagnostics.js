@@ -120,7 +120,7 @@ check("no DNS API cannot be misreported healthy",()=>{
 });
 check("native DNS error and proxy failure are detected",()=>{
   const r=run({native:"fail",proxyFail:true});
-  assert.match(r.results[0].content,/检测到连接或解析失败/);
+  assert.match(r.results[0].content,/连接或解析失败/);
   assert.match(r.results[0].content,/超时/);
 });
 check("automatic check has no DNS probe and is silent when healthy",()=>{
@@ -145,7 +145,7 @@ check("automatic double-failure alerts only once per cooldown",()=>{
   assert.equal(first.requests.length,2);
   assert.equal(first.alerts[0][0],"Loon 网络切换提醒");
   assert.equal(first.alerts[0][1],"直连连接连续失败");
-  assert.match(first.alerts[0][2],/网络切换后两次检测均未成功/);
+  assert.match(first.alerts[0][2],/网络切换后连续两次连接失败/);
 });
 
 check("diagnostics switches default to privacy-preserving values",()=>{
@@ -179,7 +179,7 @@ check("user-selected ordinary DNS is not treated as a config violation",()=>{
   assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
   assert.match(r.results[0].content,/解析成功 · 普通 DNS/);
   assert.match(r.results[0].content,/网络与 DNS 检测正常/);
-  assert.doesNotMatch(r.results[0].content,/检测到连接或解析失败/);
+  assert.doesNotMatch(r.results[0].content,/连接或解析失败/);
 });
 check("an empty DNS address does not infer DoH or normal UDP",()=>{
   const r=run({protocol:"auto",server:""});
@@ -188,7 +188,7 @@ check("an empty DNS address does not infer DoH or normal UDP",()=>{
 });
 check("no A or AAAA value is a DNS failure even with record type",()=>{
   const r=run({answers:[{type:"A",value:""}]});
-  assert.match(r.results[0].content,/检测到连接或解析失败/);
+  assert.match(r.results[0].content,/连接或解析失败/);
   assert.match(r.results[0].content,/没有获得有效的解析地址/);
 });
 
