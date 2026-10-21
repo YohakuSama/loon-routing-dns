@@ -105,7 +105,8 @@ def verify(remote=False):
     # Inspect the embedded immutable URLs as well as the top-level plugin link.
     # The diagnostic path is versioned to avoid stale Loon script caches.
     embedded = LINK.findall(plugin.decode("utf-8"))
-    expected_script = "scripts/v20261021r2/network-diagnostics.js"
+    expected_script = "scripts/v20261021r3/network-diagnostics.js"
+    node_script = "scripts/v20261021r2/node-intelligence.js"
     service_script = "scripts/v20261021r7/service-diagnostics.js"
     if spec["stable_release_version"] == "v6.3.0":
         if len(embedded) != 5 or sum(path == expected_script for _,path in embedded) != 2 or sum(path == service_script for _,path in embedded) != 1:
@@ -114,6 +115,7 @@ def verify(remote=False):
         raise ValueError("unexpected scripts in network helper")
     for ref,path in embedded:
         expected_ref = (spec["diagnostics_script_commit"] if path == expected_script else
+                        spec["node_script_commit"] if path == node_script else
                         spec["unified_service_diagnostics_script_commit"] if path == service_script else
                         spec["script_assets_commit"])
         if ref != expected_ref or not path.startswith(("scripts/", "icons/")):
