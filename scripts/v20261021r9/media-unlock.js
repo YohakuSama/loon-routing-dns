@@ -241,7 +241,7 @@
   function pump() {
     if (ended) return;
     if (count===services.length) {finish(report());return;}
-    while (running<6 && cursor<services.length && !ended) {
+    while (running<4 && cursor<services.length && !ended) {
       (function(i) {
         var released=false;
         running++;
