@@ -19,7 +19,7 @@ check("only the shipped immutable plugin is present",()=>{
   assert(plugin.includes("/af78ebb6b75bdbb341996db446d87cb2be719af4/scripts/v20261021r2/network-diagnostics.js"));
   assert(plugin.includes("/0746301e41bca9b0832ebcece9f10cc68e8a63cb/scripts/v20261021r7/service-diagnostics.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
-  assert(plugin.includes("/17ca5380fc24e4950bc5a5f5bcc8237853119f97/scripts/v20261021r7/service-diagnostics.js"));
+  
 });
 check("three integrated manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
@@ -47,10 +47,10 @@ check("all current scripts remain local versioned assets",()=>{
   assert.equal(s.length,4);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r1/node-intelligence.js")).length,1);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r2/network-diagnostics.js")).length,2);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261021r6/service-diagnostics.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261021r7/service-diagnostics.js")).length,1);
   assert(fs.existsSync(path.join(root,"scripts/v20261021r1/node-intelligence.js")));
   assert(fs.existsSync(path.join(root,"scripts/v20261021r2/network-diagnostics.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261021r6/service-diagnostics.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261021r7/service-diagnostics.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
@@ -80,7 +80,12 @@ check("no retired standalone plugin or script assets remain",()=>{
     "scripts/node-intelligence.js",
     "scripts/console.js",
     "scripts/v20261018r4/node-intelligence.js",
-    "scripts/v20261018r5/node-intelligence.js"
+    "scripts/v20261018r5/node-intelligence.js",
+    "release/Service_Diagnostics.plugin",
+    "scripts/v20261021r3/service-diagnostics.js",
+    "scripts/v20261021r4/service-diagnostics.js",
+    "scripts/v20261021r5/service-diagnostics.js",
+    "scripts/v20261021r6/service-diagnostics.js"
   ];
   names.forEach(name=>assert(!fs.existsSync(path.join(root,name)),name));
 });
