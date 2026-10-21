@@ -4,7 +4,7 @@
 
 ## 下载与使用
 
-- **正式配置**：[LoonKit.lcf](../LoonKit.lcf)（[Raw 导入链接](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf)）
+- **正式配置**：[LoonKit.lcf](../LoonKit.lcf)（[Raw 导入链接](https://raw.githubusercontent.com/YohakuSama/loonkit/v6.0.0/LoonKit.lcf)）
 - 导入 Loon 后，**自行添加节点或订阅**，在 `Proxy`、`Auto`、`Fallback` 中选择节点策略，再按需设置服务策略组。
 - 从旧配置升级前先备份个人节点及设置；部分已删除的历史 Raw 路径不再提供更新。
 
@@ -26,4 +26,4 @@
 
 [更新记录](./CHANGELOG.md) · [安装说明](../README.md) · [规则与来源](../rules/README.md) · [发布检查](./RELEASE_READINESS.md)
 
-> 本文为 **Release 文案草案**，不表示 GitHub Releases 页面已发布版本，也不表示独立法律审核或未执行的真机测试已完成。创建 Release 时应使用已验证的版本提交，并将下载 URL 固定到对应 Tag。
+> 实际发布情况请以 [GitHub Releases](https://github.com/YohakuSama/loonkit/releases) 为准。真机测试已由使用者确认通过，但尚无独立设备日志；开源许可记录不等于第三方素材的独立法律认证。

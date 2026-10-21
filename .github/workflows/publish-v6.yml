@@ -1,0 +1,81 @@
+name: Publish LoonKit v6.0.0
+on:
+  workflow_run:
+    workflows: ["LoonKit Production CI"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-loonkit-v6
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exactly the commit that passed Production CI
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+
+      - name: Publish immutable validated tag and configuration
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHECKED_SHA: ${{ github.event.workflow_run.head_sha }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # No unreviewed PR branches, races with newer commits, or mutable tags.
+          test "$(git rev-parse HEAD)" = "$CHECKED_SHA"
+          current_main="$(gh api "repos/$GH_REPO/commits/main" --jq '.sha')"
+          test "$current_main" = "$CHECKED_SHA" || {
+            echo "A newer commit exists; do not tag an older state."
+            exit 0
+          }
+          if gh release view v6.0.0 --repo "$GH_REPO" >/dev/null 2>&1; then
+            echo "v6.0.0 release already exists, no action required."
+            exit 0
+          fi
+          if gh api "repos/$GH_REPO/git/ref/tags/v6.0.0" >/dev/null 2>&1; then
+            echo "Tag already exists without a release: require manual verification."
+            exit 1
+          fi
+
+          python3 scripts/source_lock.py --check
+          python3 scripts/verify_release.py --check
+          mkdir -p release-output
+          cp LoonKit.lcf release-output/LoonKit.lcf
+          sha256sum release-output/LoonKit.lcf | tee release-output/SHA256SUMS
+          cat >release-output/RELEASE_NOTES.md <<'NOTES'
+          # LoonKit v6.0.0
+
+          Loon 分流配置：26 个固定规则订阅、33 个策略组、可选广告拦截及网络辅助插件。**不提供代理节点或订阅。**
+
+          - 首次使用前请备份现有 Loon 配置，导入下方附带的 `LoonKit.lcf`，并添加你自己的节点。
+          - 图标、插件和远程规则按已审核的固定提交提供。本版本**完全保留原有 34 个图标**，不替换样式。
+          - 用户已报告真机使用正常；自动 CI 通过不等于覆盖所有地区、网络及 App。
+          - 上游 87 条来源已完成读取和内容分类，8 条正则未转换并继续隔离；不会自动扩大或缩小正式分流。
+          - 第三方来源与品牌标志保留其原权利；本仓库 GPL-2.0-only 只适用于有权授权的原创贡献。
+          - 使用说明、完整来源和许可证请查看此发布对应的源代码归档。
+
+          从本页附件下载 `LoonKit.lcf`；`SHA256SUMS` 用于校验下载后的文件。
+          NOTES
+          gh release create v6.0.0 \
+            release-output/LoonKit.lcf release-output/SHA256SUMS \
+            --repo "$GH_REPO" \
+            --target "$CHECKED_SHA" \
+            --title "LoonKit v6.0.0" \
+            --notes-file release-output/RELEASE_NOTES.md
+          echo "Release created at tested commit $CHECKED_SHA."
+          gh release view v6.0.0 --repo "$GH_REPO" --json url,tagName --jq '.url'

@@ -37,6 +37,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_upstream_coverage.py' -v
       - name: Repository metadata and maintenance documentation consistency
         run: python3 -m unittest discover -s tests -p 'test_repository_consistency.py' -v
+      - name: Original icon byte preservation and release guards
+        run: python3 -m unittest discover -s tests -p 'test_icon_integrity_and_publish.py' -v
       - name: JavaScript plugin regressions
         run: |
           node --check scripts/v20261021r2/network-diagnostics.js

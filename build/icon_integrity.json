@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "policy": "Do not change original LoonKit icon PNG/SVG files without explicit maintainer approval.",
+  "assets": [
+    {
+      "path": "icons/source/AdBlock.svg",
+      "git_blob_sha1": "c12332539ccf6b784a67a60f84967275c88da6de"
+    },
+    {
+      "path": "icons/source/AI.svg",
+      "git_blob_sha1": "e815950701b0835f9ee6861d180d6cc6baa05846"
+    },
+    {
+      "path": "icons/source/Apple.svg",
+      "git_blob_sha1": "7895f95b7e395bbb8ebeecb31f2b0262b05e7cce"
+    },
+    {
+      "path": "icons/source/Auto.svg",
+      "git_blob_sha1": "3679a9eef2bad499b9e86e9e3ddd22c43ad7af34"
+    },
+    {
+      "path": "icons/source/Console.svg",
+      "git_blob_sha1": "e2db6d3f1c524e87d9839718df68d0458c6c9c85"
+    },
+    {
+      "path": "icons/source/Discord.svg",
+      "git_blob_sha1": "826cbe1c8b1f2e6fab404cca33571b5fd6c89f4b"
+    },
+    {
+      "path": "icons/source/Fallback.svg",
+      "git_blob_sha1": "44ec0bfb0afc6aa70b48ba2cc43d2b7ec85cf350"
+    },
+    {
+      "path": "icons/source/Final.svg",
+      "git_blob_sha1": "7041f16ac683a40b7757ee6653443fff867baece"
+    },
+    {
+      "path": "icons/source/Google.svg",
+      "git_blob_sha1": "3a829c804a47aeb0250cf04cff1cabd697ff622a"
+    },
+    {
+      "path": "icons/source/Instagram.svg",
+      "git_blob_sha1": "3fd733992683f39d30163a63a55bd7f1464c281e"
+    },
+    {
+      "path": "icons/source/Microsoft.svg",
+      "git_blob_sha1": "96698165e9b88af00e0f43caba05049a2ab9e295"
+    },
+    {
+      "path": "icons/source/Netflix.svg",
+      "git_blob_sha1": "f8ead318e5ef49be7f33f08fa4dfb9007c5d5e25"
+    },
+    {
+      "path": "icons/source/Proxy.svg",
+      "git_blob_sha1": "90a310b2abd127a56dc6167d2f54302a8b2b2b0f"
+    },
+    {
+      "path": "icons/source/Spotify.svg",
+      "git_blob_sha1": "f0c21932ea55b8a42ec1a9a93796aec4dfb5d26b"
+    },
+    {
+      "path": "icons/source/Telegram.svg",
+      "git_blob_sha1": "bfbd1d19b07ab82f50aee307d40ba1c9bf762032"
+    },
+    {
+      "path": "icons/source/TikTok.svg",
+      "git_blob_sha1": "71a6e9f6649fe57822f73424a5a79d7f746d83f8"
+    },
+    {
+      "path": "icons/v20261021r1/Abema.png",
+      "git_blob_sha1": "993b3ba9eb822e095c0db3e6bf0c1be1f1999f66"
+    },
+    {
+      "path": "icons/v20261021r1/AdBlock.png",
+      "git_blob_sha1": "32c686122f0da0c1a0342d96fac60fa8fea05b53"
+    },
+    {
+      "path": "icons/v20261021r1/AI.png",
+      "git_blob_sha1": "b89c41fccc0e6814e06340ba353a5f54b0f8fcef"
+    },
+    {
+      "path": "icons/v20261021r1/AnimeCrazy.png",
+      "git_blob_sha1": "418ecb462cbbbd04d2a5c66cb51b005672af40b9"
+    },
+    {
+      "path": "icons/v20261021r1/Apple.png",
+      "git_blob_sha1": "951aac9379bc7ffd1960be6740e9e3c8c8dc15d1"
+    },
+    {
+      "path": "icons/v20261021r1/Auto.png",
+      "git_blob_sha1": "f17262803b3cc1c81c6ef37924b3afe141f1f555"
+    },
+    {
+      "path": "icons/v20261021r1/BBC.png",
+      "git_blob_sha1": "5cefe9031bdad979baf27d584642dbbaf262a589"
+    },
+    {
+      "path": "icons/v20261021r1/Bilibili.png",
+      "git_blob_sha1": "f8c6af92b0705021d745e61202aa2c439b3d329f"
+    },
+    {
+      "path": "icons/v20261021r1/Console.png",
+      "git_blob_sha1": "cabb86938bda50e7f9d7800ab20c97d3887cbd0d"
+    },
+    {
+      "path": "icons/v20261021r1/Dazn.png",
+      "git_blob_sha1": "ac00415dbd0d9a2a7e3d2e98f172a907e7953620"
+    },
+    {
+      "path": "icons/v20261021r1/Discord.png",
+      "git_blob_sha1": "c653a26a68e63f893a62288d59c970ebc48f644c"
+    },
+    {
+      "path": "icons/v20261021r1/Disney.png",
+      "git_blob_sha1": "c04990bc8fc9b9c062e4cce37e3f40c99a89175d"
+    },
+    {
+      "path": "icons/v20261021r1/Facebook.png",
+      "git_blob_sha1": "166012f57e5e1b2f352984cb383e882dd88cfbbe"
+    },
+    {
+      "path": "icons/v20261021r1/Fallback.png",
+      "git_blob_sha1": "22d41e5b57eb2b668ae0727203bd4e6173651cfb"
+    },
+    {
+      "path": "icons/v20261021r1/Final.png",
+      "git_blob_sha1": "fc73587361f8af02c678d6054acf6af228932602"
+    },
+    {
+      "path": "icons/v20261021r1/Google.png",
+      "git_blob_sha1": "3a6f3f66760ef2774aed0ab2e4c1336c88c264be"
+    },
+    {
+      "path": "icons/v20261021r1/HBO.png",
+      "git_blob_sha1": "e027bb5c9b05eadb9eaf934322dd4619d7c38dc6"
+    },
+    {
+      "path": "icons/v20261021r1/Instagram.png",
+      "git_blob_sha1": "6b1d83c24fd90551abbec9b5f19a4efd5a20b759"
+    },
+    {
+      "path": "icons/v20261021r1/Line.png",
+      "git_blob_sha1": "3c41426c63e5457e573cece4dcbb321d97157248"
+    },
+    {
+      "path": "icons/v20261021r1/Linkedin.png",
+      "git_blob_sha1": "713ef5cc43985bfd0e1f0aaf0791ad07b9aa1f0b"
+    },
+    {
+      "path": "icons/v20261021r1/Microsoft.png",
+      "git_blob_sha1": "1c57c558bbae7d86fc84e2a6a898fdb4ac832481"
+    },
+    {
+      "path": "icons/v20261021r1/Netflix.png",
+      "git_blob_sha1": "3f910915612f7716da1b27d997c8d6976c5de590"
+    },
+    {
+      "path": "icons/v20261021r1/Paypal.png",
+      "git_blob_sha1": "b4c5e2a4310713454b528929b904d7a21fa454c2"
+    },
+    {
+      "path": "icons/v20261021r1/PrimeVideo.png",
+      "git_blob_sha1": "ee95dc47a1016995741812633d78ad17933382cb"
+    },
+    {
+      "path": "icons/v20261021r1/Proxy.png",
+      "git_blob_sha1": "d48cc70cfc78690b7159bac176189c2925ccbfcd"
+    },
+    {
+      "path": "icons/v20261021r1/Reddit.png",
+      "git_blob_sha1": "0a6374862dba24c20e723eaa610c3ae5cf5a6646"
+    },
+    {
+      "path": "icons/v20261021r1/Spotify.png",
+      "git_blob_sha1": "8b02ab7cbb89338897ddf8192d86e0f7d0e7f662"
+    },
+    {
+      "path": "icons/v20261021r1/Steam.png",
+      "git_blob_sha1": "08dbebc94abd160576e9e99d47ed1a30040194a7"
+    },
+    {
+      "path": "icons/v20261021r1/Telegram.png",
+      "git_blob_sha1": "b0ee496e44dd8dff51b7f2795e4b32d09f61d0e7"
+    },
+    {
+      "path": "icons/v20261021r1/TikTok.png",
+      "git_blob_sha1": "944fd55a33d3f58d5fb1d5777d8d56f4bdf16db1"
+    },
+    {
+      "path": "icons/v20261021r1/Twitch.png",
+      "git_blob_sha1": "ce17c406e23171d14190c49a0ae16483d5f18409"
+    },
+    {
+      "path": "icons/v20261021r1/Twitter.png",
+      "git_blob_sha1": "ea0b30e98e4a1bcdb0225fb673bf6e553dda9094"
+    },
+    {
+      "path": "icons/v20261021r1/Whatsapp.png",
+      "git_blob_sha1": "d02ce968a715435c7b0d011a305b581ed300e6ff"
+    },
+    {
+      "path": "icons/v20261021r1/YouTube.png",
+      "git_blob_sha1": "e660f0a7c52cd7eaf1bf6d088da663abb1359647"
+    }
+  ]
+}
