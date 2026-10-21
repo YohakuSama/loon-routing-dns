@@ -1,0 +1,37 @@
+name: Probe Endpoint Reality Check
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/probe-endpoints.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check probe HTTP status without redirects
+        shell: bash
+        run: |
+          set -eu
+          {
+            echo '## HTTP probe endpoints (GitHub runner only)'
+            echo ''
+            echo '| Purpose | URL | Observed results |'
+            echo '| --- | --- | --- |'
+            for pair in \
+              'Profile proxy|http://bing.com/generate_204' \
+              'Plugin proxy|https://www.gstatic.com/generate_204' \
+              'Plugin direct|http://wifi.vivo.com.cn/generate_204'; do
+              purpose="${pair%%|*}"
+              url="${pair#*|}"
+              first="$(curl -sS -o /dev/null --max-time 9 --connect-timeout 5 --max-redirs 0 -w '%{http_code}' "$url" || true)"
+              sleep 1
+              second="$(curl -sS -o /dev/null --max-time 9 --connect-timeout 5 --max-redirs 0 -w '%{http_code}' "$url" || true)"
+              echo "| $purpose | \`$url\` | \`$first\`, \`$second\` |"
+            done
+            echo ''
+            echo 'GitHub-hosted runner measurements do not prove device-network response or globally stable behavior.'
+          } >> "$GITHUB_STEP_SUMMARY"
