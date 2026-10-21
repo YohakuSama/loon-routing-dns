@@ -11,10 +11,10 @@
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
   "warning": "Node checks display concise platform reachability results. 'Available' requires positive service evidence, 'Connectable' includes webpage/CDN signals; playback and account rights not verified. DNS/TUN/routing unchanged.",
-  "plugin_assets_commit": "37aeca8569f962cb89298be745125461ba3862b9",
+  "plugin_assets_commit": "7acb9c02d9d3143e96e8a8387ee6f79124d41225",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "7396e69b744f6eb063cfbed1984859cbfe963d89",
+  "unified_service_diagnostics_script_commit": "4da24725f8ae60599247306ada249f7e5ccc82bc",
   "node_script_commit": "edac8c9f51de9ad6e2a9a969752a31490c4cfd44"
 }
