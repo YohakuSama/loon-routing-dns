@@ -17,7 +17,7 @@ check("only the shipped immutable plugin is present",()=>{
   for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
     assert(!fs.existsSync(path.join(root,dir)),dir);
   assert(plugin.includes("/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js"));
-  assert(plugin.includes("/78a7c5129495f33efccb5364145fb4042091c5c2/scripts/v20261022r1/media-unlock.js"));
+  assert(plugin.includes("/67249c58f40a99d3d034acc7934aa1de03d3d72d/scripts/v20261022r2/media-unlock.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
   
 });
@@ -37,11 +37,11 @@ check("only the current network-change event is opt-in",()=>{
 check("four settings, private comparison and automation off",()=>{
   const args=plugin.split("[Argument]")[1].split("[Script]")[0].split("\n")
     .filter(x=>/^[a-z_]+\s*=/.test(x)).map(x=>x.split("=")[0].trim());
-  assert.deepEqual(args,["auto_check","target_policy","compare_direct","full_scan"]);
+  assert.deepEqual(args,["auto_check","target_policy","compare_direct"]);
   assert(plugin.includes("compare_direct = switch,false"));
   assert(!plugin.includes("service = select"));
   assert(plugin.includes("tag=检测策略"));
-  assert(plugin.includes("full_scan = switch,false"));
+  assert(!plugin.includes("full_scan"));
   assert(plugin.includes('img_url="play.rectangle.system"'));
   assert(!plugin.includes('service = select,"Spotify"'));
 });
@@ -50,14 +50,14 @@ check("all current scripts remain local versioned assets",()=>{
   assert.equal(s.length,4);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/node-intelligence.js")).length,1);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/network-diagnostics.js")).length,2);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261022r1/media-unlock.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261022r2/media-unlock.js")).length,1);
   assert(fs.existsSync(path.join(root,"scripts/v20261021r3/node-intelligence.js")));
   assert(fs.existsSync(path.join(root,"scripts/v20261021r3/network-diagnostics.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261022r1/media-unlock.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261022r2/media-unlock.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/fe8b80fa0f5cc0b24da8432c93bf5735eaf0631c/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/9c43b437789c2bee0685f8ecb22e2bdb3f73ac63/release/Network_Diagnostics.plugin, enabled=true"));
   assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
   assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
@@ -100,6 +100,7 @@ check("no retired standalone plugin or script assets remain",()=>{
     "scripts/v20261021r16/media-unlock.js",
     "scripts/v20261021r17/media-unlock.js",
     "scripts/v20261021r18/media-unlock.js",
+    "scripts/v20261022r1/media-unlock.js",
     "scripts/v20261021r7/node-intelligence.js",
     "scripts/v20261021r7/network-diagnostics.js"
   ];
