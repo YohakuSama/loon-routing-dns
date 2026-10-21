@@ -1,6 +1,6 @@
-# LoonKit v6.2.0 维护流程
+# LoonKit v6.3.0 维护流程
 
-唯一正式入口：`LoonKit.lcf`。自 v6.1.0 起的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。v6.2.0 的自动发布由 `publish-v62.yml` 处理，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
+唯一正式入口：`LoonKit.lcf`。自 v6.1.0 起的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。v6.3.0 的自动发布由 `publish-v63.yml` 处理，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
 
 ## 构建
 
@@ -23,16 +23,18 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标及脚本引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；正式插件引用 `5b115b5dd02836620597b2212b2b49c18c646bb7`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标及脚本引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；当前正式插件引用 `bc1abb8ba78f4cc671168c63eb2fa7b21050a3f1`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
-主配置中的现役插件引用 `5b115b5dd02836620597b2212b2b49c18c646bb7` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `af78ebb6b75bdbb341996db446d87cb2be719af4` 的 `scripts/v20261021r2/network-diagnostics.js`；节点出口脚本及图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `bc1abb8ba78f4cc671168c63eb2fa7b21050a3f1` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `af78ebb6b75bdbb341996db446d87cb2be719af4` 的 `scripts/v20261021r2/network-diagnostics.js`；节点出口脚本及图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，手动服务检测脚本引用 `0746301e41bca9b0832ebcece9f10cc68e8a63cb` 的 `scripts/v20261021r7/service-diagnostics.js`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
-## 可选服务诊断插件的固定引用
+## 服务检测脚本与用户文案
 
-`release/Service_Diagnostics.plugin` 为单独按需安装的辅助插件，不属于 v6.0.0 正式配置中引用的插件。更新 `scripts/v20261021r5/service-diagnostics.js` 等版本化脚本时，**必须在新脚本所在提交进入 main 历史后**，再使用那个已合并的 main 提交 SHA 固定插件 URL。不要指向仅在临时 PR/feature 分支可达的提交，尤其不能在 squash merge 之后依赖开发分支提交；否则删除分支后可能使 Raw URL 失效。测试文件中的固定哈希必须与插件一致。
+当前只维护一个「网络辅助」插件；服务检测作为第三个手动入口。选择项起始必须为「请选择服务」，实际选择项应标明服务用途，不得预设任一品牌。不发起请求的默认状态以及 HTTP 4xx、5xx、DNS 查询失败、超时、TLS 错误均要有独立回归测试。用户可见提示优先回答当前状态和下一步操作，不显示非必要的原始协议代码、IP 地址或节点凭据。
+
+更新脚本时先写入新的版本化目录，后更新插件固定脚本 SHA，最后更新正式配置中的插件 SHA 和 `build/release_manifest.json` 的校验值。使用包含全部固定资源提交的合并方式，避免压缩合并后资源 SHA 不在 `main` 历史内。历史版本的 Release 与其固定脚本 URL 不修改。
 
 ## 网络诊断脚本维护
 
@@ -50,15 +52,15 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 每周任务下载上游快照，生成全量增删差异、规范化候选及跨策略冲突审阅报告。来源不可用、未知格式、规则数量不符均标记为不完整，不能当成可发布候选。只对同策略内的精确重复及被该策略 `DOMAIN-SUFFIX` 明确覆盖的 `DOMAIN` 作候选去重；不自动合并 IP 网段或把宽关键字猜测为精确域名。**所有来源变更均不自动修改正式规则、输入锁、策略归属或用户配置**；新规则发布需要审核与回归测试。
 
-## v6.1.0 诊断与验证边界
+## 服务分流和诊断验证边界
 
-新版本随主配置提供手动服务连通性插件，引用主线历史已存在的固定提交。新增服务规则仅涉及经审阅的域名后缀，未直接引入上游的宽关键字、共享平台 IP 网段或用户代理规则。自动化执行规则、日志隐私、固定引用、哈希及发布校验；跨网络、真实账号、内容播放和地区限制仍由使用者另行验证，不能把 GitHub CI 视为真机测试结果。
+现役网络辅助插件包含手动服务检测，引用主线历史已存在的固定提交。新增服务规则仅涉及经审阅的域名后缀，未直接引入上游的宽关键字、共享平台 IP 网段或用户代理规则。自动化执行规则、日志隐私、固定引用、哈希及发布校验；跨网络、真实账号、内容播放和地区限制仍由使用者另行验证，不能把 GitHub CI 视为真机测试结果。
 
 ## 真机验收与测速端点
 
 自动化 CI 不能证明真实网络上的测速网址始终返回 204。正式配置当前用 `http://bing.com/generate_204` 进行代理测速，插件另对 `https://www.gstatic.com/generate_204`（代理）与 `http://wifi.vivo.com.cn/generate_204`（直连）执行探测。**发布前要在 Loon 真机和至少两种网络环境下确认这些 URL 返回预期状态**；GitHub Runner 实测中 Bing 的 HTTP 地址两次返回 301，插件的 Gstatic 与 Vivo 两次返回 204，详见 [测速记录](./PROBE_ENDPOINTS_2026-10-21.md)。使用者确认真机正常，所以保留所有现有测速 URL；只在真实客户端出现问题并有证据时单独评估替换。
 
-插件的最低声明为 `3.5.1(983)`，而 `$dns.query` 需要 Build 988+，因此兼容性验收应分别覆盖插件加载、节点出口和 DNS 诊断。项目使用者已明确反馈真机测试通过，发布清单标记为 `USER_REPORTED_PASS`，详情见 [真机反馈记录](./DEVICE_TEST_STATUS.md)。尚未提供可独立复核的 Loon 日志，不应把用户反馈误表述成自动化真机测试。
+插件的最低声明为 `3.5.1(983)`，而 `$dns.query` 需要 Build 988+，因此兼容性验收应分别覆盖插件加载、节点信息和 DNS 诊断。历史用户反馈与新版自动化结果分开记录，参见 [真机反馈记录](./DEVICE_TEST_STATUS.md)。
 
 ## 完整上游审计（2026-10-21）
 
