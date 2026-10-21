@@ -32,7 +32,7 @@ class ParserAndPrivacy(unittest.TestCase):
              "response":{"status":500}}
         ]}}).encode()
         output = diag.sanitized_log_summary(raw, diag.known_services())
-        result = json.dumps(output)
+        result = json.dumps(output, ensure_ascii=False)
         self.assertEqual(output["processed_requests"],2)
         self.assertIn('"service": "Spotify"',result)
         self.assertIn('"service": "Linkedin"',result)
