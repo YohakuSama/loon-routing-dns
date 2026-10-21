@@ -49,6 +49,8 @@ class ReleaseWorkflowTests(unittest.TestCase):
                 self.assertIn(guard,code)
         self.assertNotIn("pull_request_target:",code)
         self.assertNotIn("persist-credentials: true",code)
+        self.assertIn("python-version: '3.12'", code)
+        self.assertIn("actions/setup-python@v5", code)
 
 if __name__ == "__main__":
     unittest.main()
