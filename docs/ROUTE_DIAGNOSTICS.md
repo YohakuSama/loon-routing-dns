@@ -64,4 +64,4 @@ LoonKit 已将服务检测整合到[「网络辅助」](../release/Network_Diagn
 
 曾额外安装过旧的独立诊断插件的用户，升级后可在 Loon 中删除旧插件，避免重复入口。
 
-[回到 README](../README.md) · [原有网络与 DNS 诊断](./NETWORK_DIAGNOSTICS.md)
+[回到 README](../README.md) · [网络辅助说明](./NETWORK_DIAGNOSTICS.md)
