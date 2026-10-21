@@ -85,7 +85,7 @@ def verify(remote=False):
 
         if plugins != [(spec["plugin_assets_commit"],"release/Network_Diagnostics.plugin")]:
             raise ValueError("network plugin URL unexpectedly changed")
-        if spec["stable_release_version"] == "v6.3.5":
+        if spec["stable_release_version"] == "v6.3.6":
             if spec.get("optional_service_plugin_commit") is not None:
                 raise ValueError("obsolete secondary plugin still declared")
             if sum(line.startswith(RAW) and line.endswith(".plugin, enabled=true") for line in section(profile, "Plugin").splitlines()) != 1:
@@ -107,8 +107,8 @@ def verify(remote=False):
     embedded = LINK.findall(plugin.decode("utf-8"))
     expected_script = "scripts/v20261021r3/network-diagnostics.js"
     node_script = "scripts/v20261021r2/node-intelligence.js"
-    service_script = "scripts/v20261021r12/media-unlock.js"
-    if spec["stable_release_version"] == "v6.3.5":
+    service_script = "scripts/v20261021r13/media-unlock.js"
+    if spec["stable_release_version"] == "v6.3.6":
         if len(embedded) != 5 or sum(path == expected_script for _,path in embedded) != 2 or sum(path == service_script for _,path in embedded) != 1 or sum(path == node_script for _,path in embedded) != 1:
             raise ValueError("unified plugin must contain icon, node, network x2 and service scripts")
     elif len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
@@ -122,13 +122,13 @@ def verify(remote=False):
             raise ValueError("untrusted plugin script/icon reference: " + path)
         if not (ROOT / path).is_file():
             raise ValueError("missing plugin script/icon resource: " + path)
-    if spec["stable_release_version"] == "v6.3.5":
+    if spec["stable_release_version"] == "v6.3.6":
         source = plugin.decode("utf-8")
         if source.count("generic then script(") != 3 or source.count("network-changed then script(") != 1:
             raise ValueError("unexpected unified plugin entrypoints")
         if "service = select," in source or "auto_check = switch,false" not in source or 'tag="解锁检测"' not in source:
             raise ValueError("unexpected service selection or missing opt-in reminder")
-    if spec["stable_release_version"] == "v6.3.5":
+    if spec["stable_release_version"] == "v6.3.6":
         if (ROOT/"release/Service_Diagnostics.plugin").exists():
             raise ValueError("obsolete standalone service plugin remains")
         for obsolete in ("v20261021r3","v20261021r4","v20261021r5","v20261021r6"):
