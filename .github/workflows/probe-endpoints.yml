@@ -1,0 +1,32 @@
+name: Probe Endpoint Observations
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/probe-endpoints.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Measure HTTP 204 endpoints without following redirects
+        shell: bash
+        run: |
+          set -u
+          echo '## External endpoint check (GitHub runner only)' >> "$GITHUB_STEP_SUMMARY"
+          echo '| Use | URL | Request 1 | Request 2 |' >> "$GITHUB_STEP_SUMMARY"
+          echo '| --- | --- | --- | --- |' >> "$GITHUB_STEP_SUMMARY"
+          for entry in \
+            'Configuration proxy test|http://bing.com/generate_204' \
+            'Plugin proxy check|https://www.gstatic.com/generate_204' \
+            'Plugin direct check|http://wifi.vivo.com.cn/generate_204'; do
+            name="${entry%%|*}"
+            endpoint="${entry#*|}"
+            first="$(curl --noproxy '*' -sS -o /dev/null --connect-timeout 6 --max-time 12 --max-redirs 0 -w '%{http_code}' "$endpoint" 2>/dev/null || true)"
+            second="$(curl --noproxy '*' -sS -o /dev/null --connect-timeout 6 --max-time 12 --max-redirs 0 -w '%{http_code}' "$endpoint" 2>/dev/null || true)"
+            echo "$name :: $endpoint :: first=$first second=$second"
+            echo "| $name | \`$endpoint\` | \`$first\` | \`$second\` |" >> "$GITHUB_STEP_SUMMARY"
+          done
+          echo 'GitHub runner HTTP status is observational only; it cannot override the user-verified Loon behavior.' >> "$GITHUB_STEP_SUMMARY"
