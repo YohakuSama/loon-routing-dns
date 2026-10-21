@@ -28,6 +28,12 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha }}
           persist-credentials: false
 
+      - name: Match the production CI Python interpreter
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert release builder runtime
+        run: python3 -c 'import sys; print(sys.version); assert sys.version_info[:2] == (3,12)'
       - name: Publish immutable validated tag and configuration
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
