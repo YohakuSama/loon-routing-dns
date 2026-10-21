@@ -4,9 +4,11 @@ LoonKit 正式配置已内置 **网络辅助插件**，无需重复添加。最�
 
 [查看当前插件](../release/Network_Diagnostics.plugin) · [返回首页](../README.md)
 
-## 七个服务的可选诊断
+## 七个服务的手动诊断
 
-如果需要检查 Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn 的两个代表性连接端点，或离线查看规则预计命中、候选覆盖差异和私密日志归因，请使用 [服务与分流排查](./ROUTE_DIAGNOSTICS.md)。v6.1.0 已将独立的服务诊断插件加入正式配置，但检测仍需要用户手动启动，不会自动运行。
+当前正式配置只有一个「网络辅助」插件。选择 Spotify、Twitch、Abema、BBC、Line、Reddit 或 LinkedIn，再手动运行「服务连通性诊断」，可查看主站、关联 HTTPS 端点及 Loon 原生 DNS 查询结果。HTTP 404 表示检测地址没有对应资源，但说明服务器有响应；不据此判断 App 不能使用。查询得到 A 记录而没有 AAAA 记录，不等于 IPv6 网络故障。不会自动扫描、切换节点或上传日志。需要离线查看规则与私密日志汇总，请参阅 [服务与分流排查](./ROUTE_DIAGNOSTICS.md)。
+
+从 v6.1.0 升级的用户，如果曾经额外手动安装过独立「服务连通性诊断」插件，请在 Loon 内删除旧的独立安装项，避免界面上出现重复插件。
 
 ## 节点出口信息
 
