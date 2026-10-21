@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | 唯一完整配置 | [`LoonKit.lcf`](../LoonKit.lcf) | 通过 `main` 下载或导入 |
 | 26 份远程规则 | [`rules/releases/vNext-RC2/`](../rules/README.md) | `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` |
-| 33 个策略图标 + 1 个插件图标 | [`icons/v20261021r1/`](../icons/README.md) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
+| 33 个策略图标 + 1 个插件图标 | [`icons/v20261021r2/`](../icons/README.md) | `d9333b47b1a0361d911fc57e3dc5808683d416d5` |
 | 网络辅助插件 | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `5b115b5dd02836620597b2212b2b49c18c646bb7` |
 | 节点出口脚本 | [`scripts/v20261021r1/node-intelligence.js`](../scripts/v20261021r1/node-intelligence.js) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
 | 网络与 DNS 诊断脚本 | [`scripts/v20261021r2/network-diagnostics.js`](../scripts/v20261021r2/network-diagnostics.js) | `af78ebb6b75bdbb341996db446d87cb2be719af4` |
