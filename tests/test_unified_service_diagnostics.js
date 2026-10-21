@@ -182,7 +182,7 @@ assert.match(invalid.out[0].content,/节点名称无效/);
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
 const profile=fs.readFileSync(path.join(root,"LoonKit.lcf"),"utf8");
 assert(plugin.includes('tag="解锁检测"'));
-assert(plugin.includes("scripts/v20261021r11/media-unlock.js"));
+assert(plugin.includes("scripts/v20261021r12/media-unlock.js"));
 assert(plugin.includes('img_url="play.rectangle.system"'));
 assert(!plugin.includes("service = select"));
 assert(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length===1);
