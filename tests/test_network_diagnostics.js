@@ -53,6 +53,7 @@ function run(options={}) {
 check("healthy manual test reports DoH address without claiming capture",()=>{
   const r=run();
   assert.equal(r.results.length,1);
+  assert.equal(r.results[0].title,"网络检测");
   assert.match(r.results[0].content,/网络与 DNS 检测正常/);
   assert.match(r.results[0].content,/解析成功 · DoH/);
   assert(r.requests.some(x=>x.native));
