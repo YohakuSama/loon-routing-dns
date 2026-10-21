@@ -130,7 +130,7 @@
       },function(err,res,body){
         if(err||status(res)!==200)return finish(verdict("failed"));
         var j=parse(body),session=j&&j.extensions&&j.extensions.sdk&&j.extensions.sdk.session;
-        if(!session)return finish(verdict("unsupported"));
+        if(!session)return finish(verdict("failed"));
         var geo=region(session.location&&session.location.countryCode);
         if(typeof session.inSupportedLocation!=="boolean")return finish(verdict("failed"));
         finish(verdict(session.inSupportedLocation?"supported":"coming",geo));
