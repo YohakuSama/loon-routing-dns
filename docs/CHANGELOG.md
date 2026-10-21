@@ -1,5 +1,13 @@
 # LoonKit 更新记录
 
+## v6.4.5
+
+- 七项解锁检测的状态分支与参考脚本逐项对齐。
+- Disney+ 恢复「即将登陆」，DAZN 无地区返回「未支持」；ChatGPT 使用原脚本的请求地址与地区判断。
+- YouTube Premium 恢复地区回退顺序，Netflix 恢复对应 HTTP 状态与地区处理。
+- 弹窗使用参考脚本的结果文案，不增加额外提醒文字。
+
+
 ## v6.4.4
 
 - 解锁检测改为参考脚本实际执行的七项：DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium。
