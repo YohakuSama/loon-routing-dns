@@ -196,7 +196,9 @@ def parse_source(source: dict, blob: bytes) -> tuple[set[str], dict]:
             if len(issues) < 15:
                 issues.append({"line": number, "reason": str(exc), "snippet": raw[:120]})
     minimum = int(source.get("min_rules", 1))
-    return result, {"rules": len(result), "invalid_count": invalid,
+    kinds = dict(sorted(Counter(fields(rule)[0] for rule in result).items()))
+    return result, {"rules": len(result), "rule_kinds": kinds,
+                    "invalid_count": invalid,
                     "invalid_samples": issues,
                     "quality_review_count": quality_review_count,
                     "quality_review_samples": quality_samples,
