@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "version": "v6.1.0",
+  "source": "rules/inputs/{service}.list (frozen locked inputs)",
+  "mode": "curated_domain_suffix_only",
+  "domain_rules_count": 62,
+  "reviewed_services": {
+    "Spotify": [
+      "byspotify.com",
+      "pscdn.co",
+      "spoti.fi",
+      "spotify-com.akamaized.net",
+      "spotify-everywhere.com",
+      "spotify.app.link",
+      "spotify.design",
+      "spotify.link",
+      "spotifycdn.com",
+      "spotifycdn.net",
+      "spotifycharts.com",
+      "spotifycodes.com",
+      "spotilocal.com"
+    ],
+    "Twitch": [
+      "ext-twitch.tv",
+      "jtvnw.net",
+      "live-video.net",
+      "twitchcdn.net",
+      "twitchcon.com",
+      "twitchsvc.net"
+    ],
+    "Abema": [
+      "abema-tv.com",
+      "abematv.akamaized.net",
+      "abematv.co.jp",
+      "ds-linear-abematv.akamaized.net",
+      "ds-vod-abematv.akamaized.net",
+      "linear-abematv.akamaized.net",
+      "vod-abematv.akamaized.net"
+    ],
+    "BBC": [
+      "bbc.co",
+      "bbc.in",
+      "bbc.net.uk",
+      "bbci.co",
+      "bbci.co.uk",
+      "bbcmedia.co.uk",
+      "bbcchinese.com",
+      "bbcverticals.com",
+      "bbc.mp-pxcdn.com",
+      "bbcfmt.hs.llnwd.net",
+      "bbcfmt.s.llnwi.net"
+    ],
+    "Line": [
+      "gcld-line.com",
+      "lin.ee",
+      "line-apps-beta.com",
+      "line-apps-rc.com",
+      "line-beta.me",
+      "line-cdn.net",
+      "line-scdn.net",
+      "line.biz",
+      "linecorp.com",
+      "linegame.jp",
+      "linemobile.com"
+    ],
+    "Reddit": [
+      "reddit.app.link",
+      "redditblog.com",
+      "reddithelp.com",
+      "redditinc.com",
+      "redditmail.com",
+      "redditmedia.com",
+      "redditspace.com",
+      "redditstatic.com",
+      "redditstatus.com",
+      "reddituploads.com"
+    ],
+    "Linkedin": [
+      "linkedin.at",
+      "linkedin.cn",
+      "licdn.cn",
+      "lnkd.in"
+    ]
+  },
+  "excluded_kinds": [
+    "DOMAIN-KEYWORD",
+    "IP-CIDR",
+    "IP-CIDR6",
+    "IP-ASN",
+    "USER-AGENT"
+  ],
+  "notes": [
+    "Conservative brand-scoped domains only; avoid broad CDNs and unrelated business roots.",
+    "The AdBlock local exceptions remain before service selectors.",
+    "No upstream frozen input or immutable v6.0.0 resource was altered.",
+    "Domain routing does not imply application login, content playback or region access."
+  ]
+}

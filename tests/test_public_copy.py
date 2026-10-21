@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = (
     "README.md",
     "docs/RELEASE_NOTES_v6.0.0.md",
+    "docs/RELEASE_NOTES_v6.1.0.md",
     "docs/CHANGELOG.md",
     "docs/REPOSITORY_ABOUT.md",
     "docs/NETWORK_DIAGNOSTICS.md",
@@ -50,6 +51,21 @@ class PublicCopyChecks(unittest.TestCase):
         for heading in ("主要功能", "安装"):
             self.assertIn(heading, notes)
         self.assertIn("LoonKit.lcf",notes)
+
+    def test_v61_release_is_reviewed_and_immutable(self):
+        workflow=(ROOT/".github/workflows/publish-v61.yml").read_text(encoding="utf-8")
+        notes=(ROOT/"docs/RELEASE_NOTES_v6.1.0.md").read_text(encoding="utf-8")
+        for guard in ("workflow_run:", "conclusion == 'success'", "head_branch == 'main'",
+                      'git rev-parse HEAD', '"$CHECKED_SHA"', 'gh release create v6.1.0',
+                      'gh release view v6.1.0', 'scripts/verify_release.py --check',
+                      'cmp -s LoonKit.lcf existing-release/LoonKit.lcf'):
+            self.assertIn(guard, workflow)
+        self.assertIn("--notes-file docs/RELEASE_NOTES_v6.1.0.md", workflow)
+        self.assertIn("## 主要功能", notes)
+        self.assertIn("## 安装与升级", notes)
+        self.assertIn("LoonKit.lcf", notes)
+        old=(ROOT/".github/workflows/publish-v6.yml").read_text(encoding="utf-8")
+        self.assertIn('if ! grep -qx "# LoonKit v6.0.0"', old)
 
     def test_landing_page_has_setup_and_support(self):
         readme=(ROOT/"README.md").read_text(encoding="utf-8")

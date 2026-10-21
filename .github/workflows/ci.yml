@@ -36,6 +36,8 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_production.py' -v
       - name: Optional service coverage and private log regressions
         run: python3 -m unittest discover -s tests -p 'test_route_diagnostics.py' -v
+      - name: Scoped seven-service v6.1.0 release regressions
+        run: python3 -m unittest discover -s tests -p 'test_v61_service_release.py' -v
       - name: Upstream candidate safety regressions
         run: python3 -m unittest discover -s tests -p 'test_upstream_review.py' -v
       - name: Independent routing and matcher stress audit

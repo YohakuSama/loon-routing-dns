@@ -6,7 +6,7 @@ LoonKit 正式配置已内置 **网络辅助插件**，无需重复添加。最�
 
 ## 七个服务的可选诊断
 
-如果需要检查 Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn 的两个代表性连接端点，或离线查看规则预计命中、候选覆盖差异和私密日志归因，请使用 [服务与分流排查](./ROUTE_DIAGNOSTICS.md)。这项功能独立于现有插件，需要按需安装，不会自动运行。
+如果需要检查 Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn 的两个代表性连接端点，或离线查看规则预计命中、候选覆盖差异和私密日志归因，请使用 [服务与分流排查](./ROUTE_DIAGNOSTICS.md)。v6.1.0 已将独立的服务诊断插件加入正式配置，但检测仍需要用户手动启动，不会自动运行。
 
 ## 节点出口信息
 

@@ -1,6 +1,6 @@
 # 正式版依赖与固定版本引用
 
-> 本文描述当前 `main` 的 **LoonKit v6.0.0**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
+> 本文描述当前 `main` 的 **LoonKit v6.1.0**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
 
 ## 正式运行链
 
@@ -12,8 +12,9 @@
 | 网络辅助插件 | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `5b115b5dd02836620597b2212b2b49c18c646bb7` |
 | 节点出口脚本 | [`scripts/v20261021r1/node-intelligence.js`](../scripts/v20261021r1/node-intelligence.js) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
 | 网络与 DNS 诊断脚本 | [`scripts/v20261021r2/network-diagnostics.js`](../scripts/v20261021r2/network-diagnostics.js) | `af78ebb6b75bdbb341996db446d87cb2be719af4` |
+| 手动服务连通性诊断插件 | [`release/Service_Diagnostics.plugin`](../release/Service_Diagnostics.plugin) | `7cb02a4be5db739d74266536fefbc54b720ec35b` |
 
-**可选独立工具：** [服务连通性诊断插件](../release/Service_Diagnostics.plugin) 引用固定版本的 [服务诊断脚本](../scripts/v20261021r4/service-diagnostics.js)；[离线规则诊断](../scripts/route_diagnostics.py) 只读取正式配置与已发布规则。两者不在默认运行链中，不修改 v6.0.0 的固定正式资源。使用说明见 [服务与分流排查](./ROUTE_DIAGNOSTICS.md)。
+**服务诊断工具：** 插件随 v6.1.0 正式配置提供，执行 [服务诊断脚本](../scripts/v20261021r5/service-diagnostics.js)。此插件仅提供手动动作；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 在用户电脑上运行，不自动读取真机数据。
 
 调用关系为 `LoonKit.lcf` → 固定提交的 `release/Network_Diagnostics.plugin` → 版本化节点出口、网络诊断脚本和插件图标。Loon 中更新正式配置后，还应刷新远程插件及脚本缓存。
 
@@ -21,7 +22,7 @@
 
 ## 规则构建与发布验证
 
-冻结规则输入由 `rules/inputs/`（33 份）和 `rules/custom/`（10 份）构成，`build/engine_manifest.json` 与 `build/sources.lock.json` 固定其输入，`scripts/rule_engine.py` 构建 26 份正式规则。**正式输出不能作为自己的输入**。
+冻结规则输入由 `rules/inputs/`（33 份）和 `rules/custom/`（10 份）构成，`build/engine_manifest.json` 与 `build/sources.lock.json` 固定其输入，`scripts/rule_engine.py` 构建 26 份固定正式远程规则。v6.1.0 在主配置中额外启用 62 条来源于冻结输入的审阅域名规则，审阅记录位于 [服务覆盖清单](../rules/service_coverage_v6.1.0.json)。**正式输出不能作为自己的输入**。
 
 校验入口：`scripts/source_lock.py --check`、`scripts/verify_release.py --check`；需要逐个检查固定远程链接时另外执行 `scripts/verify_release.py --check --remote`。对应测试位于 `tests/`，主 CI 为 [`ci.yml`](../.github/workflows/ci.yml)。
 

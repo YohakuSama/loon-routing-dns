@@ -1,4 +1,4 @@
-# LoonKit v6.0.0
+# LoonKit v6.1.0
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loonkit
 # X: https://x.com/yohakusama
@@ -218,8 +218,81 @@ DOMAIN-SUFFIX,reddit.com,Reddit
 DOMAIN-SUFFIX,redd.it,Reddit
 DOMAIN-SUFFIX,linkedin.com,Linkedin
 DOMAIN-SUFFIX,licdn.com,Linkedin
+# Scoped service-owned hosts from frozen reviewed upstream inputs; no shared provider wildcard.
+# Local AdBlock exceptions above take precedence over these service suffixes.
+# Spotify · reviewed v6.1.0 domains
+DOMAIN-SUFFIX,byspotify.com,Spotify
+DOMAIN-SUFFIX,pscdn.co,Spotify
+DOMAIN-SUFFIX,spoti.fi,Spotify
+DOMAIN-SUFFIX,spotify-com.akamaized.net,Spotify
+DOMAIN-SUFFIX,spotify-everywhere.com,Spotify
+DOMAIN-SUFFIX,spotify.app.link,Spotify
+DOMAIN-SUFFIX,spotify.design,Spotify
+DOMAIN-SUFFIX,spotify.link,Spotify
+DOMAIN-SUFFIX,spotifycdn.com,Spotify
+DOMAIN-SUFFIX,spotifycdn.net,Spotify
+DOMAIN-SUFFIX,spotifycharts.com,Spotify
+DOMAIN-SUFFIX,spotifycodes.com,Spotify
+DOMAIN-SUFFIX,spotilocal.com,Spotify
+# Twitch · reviewed v6.1.0 domains
+DOMAIN-SUFFIX,ext-twitch.tv,Twitch
+DOMAIN-SUFFIX,jtvnw.net,Twitch
+DOMAIN-SUFFIX,live-video.net,Twitch
+DOMAIN-SUFFIX,twitchcdn.net,Twitch
+DOMAIN-SUFFIX,twitchcon.com,Twitch
+DOMAIN-SUFFIX,twitchsvc.net,Twitch
+# Abema · reviewed v6.1.0 domains
+DOMAIN-SUFFIX,abema-tv.com,Abema
+DOMAIN-SUFFIX,abematv.akamaized.net,Abema
+DOMAIN-SUFFIX,abematv.co.jp,Abema
+DOMAIN-SUFFIX,ds-linear-abematv.akamaized.net,Abema
+DOMAIN-SUFFIX,ds-vod-abematv.akamaized.net,Abema
+DOMAIN-SUFFIX,linear-abematv.akamaized.net,Abema
+DOMAIN-SUFFIX,vod-abematv.akamaized.net,Abema
+# BBC · reviewed v6.1.0 domains
+DOMAIN-SUFFIX,bbc.co,BBC
+DOMAIN-SUFFIX,bbc.in,BBC
+DOMAIN-SUFFIX,bbc.net.uk,BBC
+DOMAIN-SUFFIX,bbci.co,BBC
+DOMAIN-SUFFIX,bbci.co.uk,BBC
+DOMAIN-SUFFIX,bbcmedia.co.uk,BBC
+DOMAIN-SUFFIX,bbcchinese.com,BBC
+DOMAIN-SUFFIX,bbcverticals.com,BBC
+DOMAIN-SUFFIX,bbc.mp-pxcdn.com,BBC
+DOMAIN-SUFFIX,bbcfmt.hs.llnwd.net,BBC
+DOMAIN-SUFFIX,bbcfmt.s.llnwi.net,BBC
+# Line · reviewed v6.1.0 domains
+DOMAIN-SUFFIX,gcld-line.com,Line
+DOMAIN-SUFFIX,lin.ee,Line
+DOMAIN-SUFFIX,line-apps-beta.com,Line
+DOMAIN-SUFFIX,line-apps-rc.com,Line
+DOMAIN-SUFFIX,line-beta.me,Line
+DOMAIN-SUFFIX,line-cdn.net,Line
+DOMAIN-SUFFIX,line-scdn.net,Line
+DOMAIN-SUFFIX,line.biz,Line
+DOMAIN-SUFFIX,linecorp.com,Line
+DOMAIN-SUFFIX,linegame.jp,Line
+DOMAIN-SUFFIX,linemobile.com,Line
+# Reddit · reviewed v6.1.0 domains
+DOMAIN-SUFFIX,reddit.app.link,Reddit
+DOMAIN-SUFFIX,redditblog.com,Reddit
+DOMAIN-SUFFIX,reddithelp.com,Reddit
+DOMAIN-SUFFIX,redditinc.com,Reddit
+DOMAIN-SUFFIX,redditmail.com,Reddit
+DOMAIN-SUFFIX,redditmedia.com,Reddit
+DOMAIN-SUFFIX,redditspace.com,Reddit
+DOMAIN-SUFFIX,redditstatic.com,Reddit
+DOMAIN-SUFFIX,redditstatus.com,Reddit
+DOMAIN-SUFFIX,reddituploads.com,Reddit
+# Linkedin · reviewed v6.1.0 domains
+DOMAIN-SUFFIX,linkedin.at,Linkedin
+DOMAIN-SUFFIX,linkedin.cn,Linkedin
+DOMAIN-SUFFIX,licdn.cn,Linkedin
+DOMAIN-SUFFIX,lnkd.in,Linkedin
 GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
 [Plugin]
 https://raw.githubusercontent.com/YohakuSama/loonkit/5b115b5dd02836620597b2212b2b49c18c646bb7/release/Network_Diagnostics.plugin, enabled=true
+# Optional manual-only service connectivity tool: no cron, network-change or auto-poll.
+https://raw.githubusercontent.com/YohakuSama/loonkit/7cb02a4be5db739d74266536fefbc54b720ec35b/release/Service_Diagnostics.plugin, enabled=true
