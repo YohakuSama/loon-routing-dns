@@ -23,11 +23,11 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；当前正式插件引用 `37aeca8569f962cb89298be745125461ba3862b9`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；当前正式插件引用 `7acb9c02d9d3143e96e8a8387ee6f79124d41225`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
-主配置中的现役插件引用 `37aeca8569f962cb89298be745125461ba3862b9` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d` 的 `scripts/v20261021r3/network-diagnostics.js`；节点出口脚本引用 `edac8c9f51de9ad6e2a9a969752a31490c4cfd44`，原有插件图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，手动服务检测脚本引用 `7396e69b744f6eb063cfbed1984859cbfe963d89` 的 `scripts/v20261021r18/media-unlock.js`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `7acb9c02d9d3143e96e8a8387ee6f79124d41225` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d` 的 `scripts/v20261021r3/network-diagnostics.js`；节点出口脚本引用 `edac8c9f51de9ad6e2a9a969752a31490c4cfd44`，原有插件图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，手动服务检测脚本引用 `4da24725f8ae60599247306ada249f7e5ccc82bc` 的 `scripts/v20261021r18/media-unlock.js`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 服务检测脚本与用户文案
