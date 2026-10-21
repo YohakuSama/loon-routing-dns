@@ -94,14 +94,17 @@
     var id=service.id, completed=false;
     function settle(k,d) { if (completed) return; completed=true; cb(tag(k,d)); }
     if (id === "netflix") {
-      var titles=[0,0],errors=0,seen=0;
+      var titles=[0,0],valid=[false,false],errors=0,seen=0;
       ["81280792","70143836"].forEach(function(film,index) {
         get("https://www.netflix.com/title/"+film,function(err,r,b) {
           titles[index] = err ? -1 : status(r);
+          var redirected=String(r && r.headers && (r.headers.Location || r.headers.location) || "");
+          valid[index] = !err && ((status(r)===200 && /netflix/i.test(b) && b.indexOf(film)>=0) ||
+            (status(r)===301 && redirected.indexOf("netflix.com/")>=0 && redirected.indexOf(film)>=0));
           if (err) errors++;
           seen++;
           if (seen < 2) return;
-          if (titles.some(function(x){return x===200 || x===301;})) settle("available","片库");
+          if (valid.some(function(x){return x;})) settle("available","片库");
           else if (titles[0]===404 && titles[1]===404) settle("limited","仅自制剧（推测）");
           else if (titles.some(function(x){return x===403 || x===451;})) settle("blocked","");
           else settle(errors===2?"failed":"unknown","");
