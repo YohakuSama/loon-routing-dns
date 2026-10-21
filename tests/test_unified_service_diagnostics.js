@@ -4,7 +4,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const source=fs.readFileSync(path.join(root,"scripts/v20261021r13/media-unlock.js"),"utf8");
+const source=fs.readFileSync(path.join(root,"scripts/v20261021r14/media-unlock.js"),"utf8");
 
 function mock(options={}){
   const sent=[],pending=[],out=[],timers=[],attempts={};
@@ -17,13 +17,17 @@ function mock(options={}){
     $httpClient:{get(req,callback){
       attempts[req.url]=(attempts[req.url]||0)+1;
       sent.push(req);active++;maxActive=Math.max(active,maxActive);
-      pending.push({req,callback,attempt:attempts[req.url]});
+      pending.push({req,callback,attempt:attempts[req.url],method:"GET"});
+    },post(req,callback){
+      attempts[req.url]=(attempts[req.url]||0)+1;
+      sent.push({...req,method:"POST"});active++;maxActive=Math.max(active,maxActive);
+      pending.push({req,callback,attempt:attempts[req.url],method:"POST"});
     }}
   };
   vm.runInNewContext(source,runtime,{timeout:2000});
   function respond(entry){
     active--;
-    const reply=options.reply?options.reply(entry.req.url,entry.attempt):null;
+    const reply=options.reply?options.reply(entry.req.url,entry.attempt,entry.req,entry.method):null;
     const r=reply||{status:200,body:"<html>Generic homepage</html>"};
     entry.callback(r.error||null,{status:r.status||200,headers:r.headers||{}},r.body||"");
   }
@@ -51,8 +55,8 @@ assert.match(generic.out[0].content,/节点：JP-node/);
 assert(generic.maxActive<=6,"HTTP semaphore must hold including Netflix and ChatGPT");
 assert(generic.maxActive>=4,"parallel scan expected");
 assert(generic.sent.every(x=>x.node==="JP-node"),"all requests use selected node");
-assert(generic.sent.every(x=>x.timeout<=4300 && x["auto-cookie"]===false && x.insecure===false));
-assert.equal(generic.timers[0].ms,13000);
+assert(generic.sent.every(x=>x.timeout<=5100 && x["auto-cookie"]===false && x.insecure===false));
+assert.equal(generic.timers[0].ms,19000);
 assert.match(resultOf(generic.out[0],"Netflix"),/未取得有效响应/);
 assert.match(resultOf(generic.out[0],"YouTube Premium"),/网站可访问/);
 assert.match(resultOf(generic.out[0],"Spotify"),/网站可访问/);
@@ -60,12 +64,15 @@ assert.match(resultOf(generic.out[0],"ChatGPT"),/未取得有效响应/);
 assert.match(resultOf(generic.out[0],"Claude"),/网站可访问/);
 assert.doesNotMatch(generic.out[0].content,/解锁成功|全部解锁/);
 assert(!generic.out[0].content.includes("Bilibili"));
-assert(generic.out[0].content.includes("检测器 v6.3.6"));
+assert(generic.out[0].content.includes("检测器 v6.3.8"));
 assert(!/可能可用|开放信号|非片库证明|非 Claude 解锁/.test(generic.out[0].content));
 
 const signals=mock({order:"reverse",reply:url=>{
   if(url.includes("/title/81280792"))return {status:200,body:"Netflix title 81280792"};
   if(url.includes("/title/70143836"))return {status:404};
+  if(url.endsWith("/devices"))return {status:200,body:'{"assertion":"anon-device-token"}'};
+  if(url.endsWith("/token"))return {status:200,body:'{"refresh_token":"anon-session-token"}'};
+  if(url.includes("bamgrid.com/graph/"))return {status:200,body:'{"extensions":{"sdk":{"session":{"inSupportedLocation":true,"location":{"countryCode":"JP"}}}}}'};
   if(url.includes("disneyplus.com"))return {status:200,body:'{"inSupportedLocation":true,"countryCode":"JP"}'};
   if(url.includes("youtube.com/premium"))return {status:200,body:'{"GL":"JP"}'};
   if(url.includes("spotify.com/api"))return {status:200,body:'{"countryCode":"JP"}'};
@@ -88,6 +95,7 @@ assert.match(resultOf(b,"Gemini"),/网站可访问/);
 assert.match(resultOf(b,"Claude"),/网站可访问 · 出口 JP/);
 
 const geo=mock({reply:url=>{
+  if(url.endsWith("/devices"))return {status:451,body:"forbidden-location"};
   if(url.includes("disneyplus.com"))return {status:200,body:'{"inSupportedLocation":false,"countryCode":"JP"}'};
   if(url.includes("youtube.com/premium"))return {status:200,body:"Premium is not available in your country"};
   if(url.includes("api.openai.com"))return {status:403,body:"unsupported_country"};
@@ -96,7 +104,7 @@ const geo=mock({reply:url=>{
   return {status:403,body:"Access forbidden"};
 }});
 const g=geo.out[0];
-assert.match(resultOf(g,"Disney+"),/地区受限 · JP/);
+assert.match(resultOf(g,"Disney+"),/地区受限/);
 assert.match(resultOf(g,"YouTube Premium"),/地区受限/);
 assert.match(resultOf(g,"ChatGPT"),/地区受限/);
 assert.match(resultOf(g,"Claude"),/地区受限/);
@@ -187,9 +195,79 @@ const mixedChat=mock({reply:url=>url.includes("api.openai.com")?
   {error:"timeout"}:{status:200,body:"generic"}});
 assert.match(resultOf(mixedChat.out[0],"ChatGPT"),/部分接口可访问/);
 
+
+const disneyAllowed=mock({environment:{node:"Selected"},reply:(url,attempt,req,method)=>{
+  if(url.endsWith("/devices")) {
+    assert.equal(method,"POST");
+    assert.equal(req.node,"Selected");
+    assert.equal(req.headers["Content-Type"],"application/json");
+    return {status:200,body:'{"assertion":"device-assertion"}'};
+  }
+  if(url.endsWith("/token")) {
+    assert.equal(method,"POST");
+    assert.match(req.body,/subject_token=device-assertion/);
+    assert.match(req.headers["Content-Type"],/form-urlencoded/);
+    return {status:200,body:'{"refresh_token":"short-lived-session"}'};
+  }
+  if(url.includes("/graph/v1/device/graphql")) {
+    assert.equal(method,"POST");
+    assert.match(req.body,/short-lived-session/);
+    return {status:200,body:'{"extensions":{"sdk":{"session":{"location":{"countryCode":"JP"},"inSupportedLocation":true}}}}'};
+  }
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(disneyAllowed.out[0],"Disney+"),/地区支持 · JP/);
+assert.equal(disneyAllowed.sent.filter(x=>x.method==="POST").length,3);
+assert(disneyAllowed.sent.every(x=>x.node==="Selected"));
+assert(!disneyAllowed.out[0].content.includes("short-lived-session"));
+assert(!disneyAllowed.out[0].content.includes("device-assertion"));
+assert(disneyAllowed.maxActive<=6);
+const disneyUnavailable=mock({reply:url=>{
+  if(url.endsWith("/devices"))return {status:200,body:'{"assertion":"device"}'};
+  if(url.endsWith("/token"))return {status:200,body:'{"refresh_token":"refresh"}'};
+  if(url.includes("/graph/v1/device/graphql"))return {status:200,body:'{"extensions":{"sdk":{"session":{"location":{"countryCode":"KR"},"inSupportedLocation":false}}}}'};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(disneyUnavailable.out[0],"Disney+"),/地区受限 · KR/);
+const disneyTokenBlocked=mock({reply:url=>{
+  if(url.endsWith("/devices"))return {status:200,body:'{"assertion":"device"}'};
+  if(url.endsWith("/token"))return {status:403,body:"forbidden-location"};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(disneyTokenBlocked.out[0],"Disney+"),/地区受限/);
+assert.equal(disneyTokenBlocked.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,0);
+const disneyMalformed=mock({reply:url=>url.endsWith("/devices")?
+  {status:200,body:'{"not_assertion":"placeholder"}'}:{status:200,body:"generic"}});
+assert.match(resultOf(disneyMalformed.out[0],"Disney+"),/未取得有效响应/);
+assert.equal(disneyMalformed.sent.filter(x=>x.url.endsWith("/token")).length,0);
+const disneyNoToken=mock({reply:url=>{
+  if(url.endsWith("/devices"))return {status:200,body:'{"assertion":"device"}'};
+  if(url.endsWith("/token"))return {status:200,body:'{"access_token":"not-refresh"}'};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(disneyNoToken.out[0],"Disney+"),/未取得有效响应/);
+assert.equal(disneyNoToken.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,0);
+const disneyTransportFailure=mock({reply:url=>url.endsWith("/devices")?
+  {error:"timed out TOKEN_SECRET"}:{status:200,body:"generic"}});
+assert.match(resultOf(disneyTransportFailure.out[0],"Disney+"),/检测超时/);
+assert(!disneyTransportFailure.out[0].content.includes("TOKEN_SECRET"));
+const disneyWrongJson=mock({reply:url=>{
+  if(url.endsWith("/devices"))return {status:200,body:'{"assertion":"device"}'};
+  if(url.endsWith("/token"))return {status:200,body:'{"refresh_token":"refresh"}'};
+  if(url.includes("/graph/v1/device/graphql"))return {status:200,body:'{"errors":[{"message":"not a region status"}]}'};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(disneyWrongJson.out[0],"Disney+"),/未取得有效响应/);
+const netflixOriginating=mock({reply:url=>{
+  if(url.includes("/title/81280792"))return {status:200,headers:{"X-Originating-URL":"https://www.netflix.com/jp/title/81280792"},body:"Netflix title page"};
+  if(url.includes("/title/70143836"))return {status:404,body:""};
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(netflixOriginating.out[0],"Netflix"),/片库可访问/);
+
 const full=mock({full:true,policy:"Manual-node"});
 assert.equal(full.out.length,1);
-assert.equal(full.timers[0].ms,20000);
+assert.equal(full.timers[0].ms,26000);
 assert(full.sent.every(x=>x.node==="Manual-node"));
 assert(full.sent.length>generic.sent.length);
 assert(resultOf(full.out[0],"Apple 地区"));
@@ -208,7 +286,7 @@ assert.match(invalid.out[0].content,/节点名称无效/);
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
 const profile=fs.readFileSync(path.join(root,"LoonKit.lcf"),"utf8");
 assert(plugin.includes('tag="解锁检测"'));
-assert(plugin.includes("scripts/v20261021r13/media-unlock.js"));
+assert(plugin.includes("scripts/v20261021r14/media-unlock.js"));
 assert(plugin.includes('img_url="play.rectangle.system"'));
 assert(!plugin.includes("service = select"));
 assert(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length===1);
