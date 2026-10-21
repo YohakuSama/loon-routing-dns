@@ -22,7 +22,7 @@ class IconAssetTests(unittest.TestCase):
                 with self.subTest(name=name):
                     a=(output/name).read_bytes()
                     b=(published/name).read_bytes()
-                    self.assertTrue(a.startswith(b"\\x89PNG\\r\\n\\x1a\\n".decode("unicode_escape").encode("latin1")))
+                    self.assertTrue(a.startswith(bytes((137,80,78,71,13,10,26,10))))
                     self.assertEqual(a,b, "published icon diverged from reproducible original icon")
 
     def test_active_profile_uses_only_new_versioned_tiles(self):
