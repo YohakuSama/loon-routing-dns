@@ -52,7 +52,9 @@
       else failed++;
     }
     var status = responded === 2 ? "两个端点都有 HTTP 响应"
+      : responded && server ? "端点部分可达，另有 HTTP 5xx 需排查"
       : responded ? "部分端点有响应，需进一步检查"
+      : server ? "端点返回 HTTP 5xx，不能据此认定节点故障"
       : "未确认端点连通，需检查节点、DNS 与 Loon 日志";
     return selected + "（所选策略：" + selected + "）\n" + status +
       "\n主站：" + results[0].text +
