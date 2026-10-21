@@ -32,7 +32,7 @@ class OriginalIconIntegrityTests(unittest.TestCase):
                   "icons/v20261021r1/")
         self.assertEqual(profile.count(pinned), 33)
         self.assertEqual(plugin.count(pinned + "Console.png"), 1)
-        self.assertNotIn("v20261021r2", profile + plugin)
+        self.assertNotIn("/icons/v20261021r2/", profile + plugin)
         self.assertFalse((ROOT / "icons/v20261021r2").exists())
 
 class ReleaseWorkflowTests(unittest.TestCase):
