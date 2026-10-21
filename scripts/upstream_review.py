@@ -235,6 +235,49 @@ def fetch_source(source: dict, root: Path = ROOT) -> bytes:
     return _local_path(root, source["path"]).read_bytes()
 
 
+# Recursively expand upstream's own include files from ONE whitelisted repo.
+# This is audit-only: the resulting rules remain quarantined.
+INCLUDE_PATTERN = re.compile(r"^include:([a-z0-9][a-z0-9_-]{0,90})$", re.I)
+MAX_INCLUDE_DEPTH = 6
+MAX_EXPANDED_LINES = 160_000
+
+
+def expand_v2fly_includes(source: dict, blob: bytes, loader):
+    if source["format"] != "v2fly":
+        return blob, {}
+    cache = {}
+    expanded_lines = []
+
+    def walk(data: bytes, chain: tuple[str, ...]):
+        if len(chain) > MAX_INCLUDE_DEPTH:
+            raise ValueError("v2fly include depth exceeded")
+        text = data.decode("utf-8-sig")
+        for lineno, line in enumerate(text.splitlines(), 1):
+            stripped = re.split(r"\s+#", line.strip(), maxsplit=1)[0].strip()
+            if not stripped.startswith("include:"):
+                expanded_lines.append(line)
+            else:
+                m = INCLUDE_PATTERN.fullmatch(stripped)
+                if not m:
+                    raise ValueError("unsafe or malformed v2fly include at line " + str(lineno))
+                name = m.group(1)
+                if name in chain:
+                    raise ValueError("cyclic v2fly include: " + " -> ".join(chain+(name,)))
+                if name not in cache:
+                    content = loader(name)
+                    if not content or len(content) > MAX_SOURCE:
+                        raise ValueError("empty/oversized include: " + name)
+                    cache[name] = content
+                walk(cache[name], chain + (name,))
+            if len(expanded_lines) > MAX_EXPANDED_LINES:
+                raise ValueError("v2fly include expansion is oversized")
+    walk(blob, ())
+    expanded = ("\n".join(expanded_lines) + "\n").encode("utf-8")
+    if len(expanded) > MAX_SOURCE:
+        raise ValueError("expanded v2fly source is oversized")
+    return expanded, cache
+
+
 def _parents(domain: str):
     p = domain.split(".")
     for i in range(len(p)):
@@ -355,6 +398,7 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
     groups: dict[str, set[str]] = {g: set() for g in active}
     provenance = defaultdict(set)
     snapshots: dict[str, bytes] = {}
+    included_snapshots: dict[str, bytes] = {}
     records = []
     fetcher = fetcher or (lambda item: fetch_source(item, root))
     invalid_groups = set()
@@ -368,7 +412,24 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
                "enabled": bool(source.get("enabled", False)), "url": source.get("url")}
         try:
             data = fetcher(source)
-            rules, parse = parse_source(source, data)
+            snapshots[sid] = data
+            if source["format"] == "v2fly":
+                def load_include(name):
+                    ref = {"id": "include:" + name, "format": "v2fly",
+                           "url": ("https://raw.githubusercontent.com/v2fly/"
+                                   "domain-list-community/master/data/" + name)}
+                    return fetcher(ref)
+                expanded, includes = expand_v2fly_includes(source, data, load_include)
+                for name, included in includes.items():
+                    if name in included_snapshots and included_snapshots[name] != included:
+                        raise ValueError("v2fly include source changed during audit: " + name)
+                    included_snapshots[name] = included
+                row["expanded_includes"] = [
+                    {"name": name, "sha256": digest(content), "bytes": len(content)}
+                    for name, content in sorted(includes.items())]
+                rules, parse = parse_source(source, expanded)
+            else:
+                rules, parse = parse_source(source, data)
             row.update(parse)
             row.update(status="PARSED_FOR_REVIEW", sha256=digest(data), bytes=len(data))
             snapshots[sid] = data
@@ -485,6 +546,7 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
         "schema_version": 1, "status": "REVIEW_ONLY_NEVER_PUBLISH",
         "source_count": len(sources), "active_groups": len(active),
         "snapshot_count": len(snapshots),
+        "included_snapshot_count": len(included_snapshots),
         "incomplete_sources": sum(x["status"] != "PARSED_FOR_REVIEW" for x in records),
         "incomplete_groups": sorted(invalid_groups & set(active)),
         "full_delta_sha256": digest(full), "sources": records,
@@ -501,7 +563,8 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             "No automatic tightening, widening, rule publication or source lock updates.",
         ],
     }
-    return report, snapshots, {"deltas": deltas, "full_risk_audit": full_risks,
+    return report, snapshots, {"deltas": deltas, "include_snapshots": included_snapshots,
+                               "full_risk_audit": full_risks,
                                "rules": baseline,
                                "unapproved_proposals": candidate,
                                "source_ids_by_rule": provenance}
@@ -526,6 +589,10 @@ def write_review(output: Path, report: dict, snapshots: dict[str, bytes], data: 
         dest = folder/"snapshots"/(sid+".txt")
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(blob)
+    for name, content in sorted(data.get("include_snapshots", {}).items()):
+        dest = folder/"include_snapshots"/(name + ".txt")
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(content)
     for group, rules in sorted(data["rules"].items()):
         dest = folder/"candidate"/(("AnimeCrazy" if group == "動畫瘋" else group)+".list")
         dest.parent.mkdir(parents=True, exist_ok=True)
