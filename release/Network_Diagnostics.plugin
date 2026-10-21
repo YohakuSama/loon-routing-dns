@@ -11,7 +11,7 @@
 
 [Argument]
 auto_check = switch,false,tag=网络切换提醒,desc=默认关闭；网络切换后连续检测失败才提醒
-target_policy = input,"Proxy",tag=查询策略,desc=查询节点信息所用的策略，默认 Proxy
+target_policy = input,"Proxy",tag=检测策略,desc=节点信息与服务检测使用此策略；从节点菜单运行时使用所选节点
 compare_direct = switch,false,tag=直连 IP 对照,desc=开启后额外显示当前网络的公网 IP
 
 [Script]
