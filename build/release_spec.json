@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "rc_label": "vNext-RC2",
-  "stable_release_version": "v6.4.3",
+  "stable_release_version": "v6.4.4",
   "status": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
   "release_rules_dir": "rules/releases/vNext-RC2",
   "release_assets_dir": "release",
@@ -10,11 +10,11 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Unlock checks show supported, unsupported, uncertain, or failed results from public platform signals. Account entitlement and video playback are not verified. DNS/TUN/routing unchanged.",
-  "plugin_assets_commit": "fe8b80fa0f5cc0b24da8432c93bf5735eaf0631c",
+  "warning": "Seven media and ChatGPT reference checks return unlocked, locked, partial or failed verdicts. Public signals cannot prove paid playback. DNS/TUN/routing unchanged.",
+  "plugin_assets_commit": "9c43b437789c2bee0685f8ecb22e2bdb3f73ac63",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "78a7c5129495f33efccb5364145fb4042091c5c2",
+  "unified_service_diagnostics_script_commit": "67249c58f40a99d3d034acc7934aa1de03d3d72d",
   "node_script_commit": "edac8c9f51de9ad6e2a9a969752a31490c4cfd44"
 }
