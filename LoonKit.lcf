@@ -293,4 +293,4 @@ GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe4be3bae1c98d7bd3d3b400c6a87c7ef6e06adf/release/Network_Diagnostics.plugin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/8d15db975fb7f17c0216086458c9c4705aec6c8e/release/Network_Diagnostics.plugin, enabled=true
