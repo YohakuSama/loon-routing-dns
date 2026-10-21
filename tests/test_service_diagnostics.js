@@ -57,5 +57,6 @@ const plugin=fs.readFileSync(path.join(__dirname,"../release/Service_Diagnostics
 assert.match(plugin,/#!name = LoonKit · 服务连通性诊断/);
 assert.match(plugin,/service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin"/);
 assert.match(plugin,/scripts\/v20261021r4\/service-diagnostics\.js/);
+assert.match(plugin,/500c2f3344263f6c0fef7c10ba104fea31e1bf5d/,"optional plugin must pin reviewed immutable code");
 assert.doesNotMatch(plugin,/network-changed|cron |push |http-request/);
 console.log("Optional service diagnostic tests passed");
