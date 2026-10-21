@@ -62,11 +62,11 @@ class RepositoryConsistency(unittest.TestCase):
         plugin=(ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         profile=(ROOT/"LoonKit.lcf").read_text(encoding="utf-8")
         deps=(ROOT/"docs/DEPENDENCIES.md").read_text(encoding="utf-8")
-        self.assertEqual(spec["stable_release_version"],"v6.3.6")
+        self.assertEqual(spec["stable_release_version"],"v6.3.7")
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertIn(spec["plugin_assets_commit"]+"/release/Network_Diagnostics.plugin",profile)
         for path,key in (
-            ("scripts/v20261021r2/node-intelligence.js","node_script_commit"),
+            ("scripts/v20261021r3/node-intelligence.js","node_script_commit"),
             ("scripts/v20261021r3/network-diagnostics.js","diagnostics_script_commit"),
             ("scripts/v20261021r13/media-unlock.js","unified_service_diagnostics_script_commit"),
         ):
