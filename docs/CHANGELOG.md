@@ -1,5 +1,13 @@
 # LoonKit 更新记录
 
+## v6.4.4
+
+- 解锁检测改为参考脚本实际执行的七项：DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium。
+- 移除 Gemini、Spotify、TikTok、Claude 及「完整检测」开关。
+- 直接显示「已解锁、未解锁、检测失败」，Netflix 另外显示「仅自制剧」，不再使用「待确认」。
+- Netflix 和 YouTube Premium 采用参考脚本的 HTTP 判定方式；继续保留错误处理与所选节点检测。
+
+
 ## v6.4.3
 
 - 解锁检测精简请求和备用流程，缩短常用节点的检测路径。
