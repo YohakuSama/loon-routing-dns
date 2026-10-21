@@ -62,13 +62,13 @@ class RepositoryConsistency(unittest.TestCase):
         plugin=(ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         profile=(ROOT/"LoonKit.lcf").read_text(encoding="utf-8")
         deps=(ROOT/"docs/DEPENDENCIES.md").read_text(encoding="utf-8")
-        self.assertEqual(spec["stable_release_version"],"v6.3.0")
+        self.assertEqual(spec["stable_release_version"],"v6.3.1")
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertIn(spec["plugin_assets_commit"]+"/release/Network_Diagnostics.plugin",profile)
         for path,key in (
             ("scripts/v20261021r2/node-intelligence.js","node_script_commit"),
             ("scripts/v20261021r3/network-diagnostics.js","diagnostics_script_commit"),
-            ("scripts/v20261021r7/service-diagnostics.js","unified_service_diagnostics_script_commit"),
+            ("scripts/v20261021r8/service-diagnostics.js","unified_service_diagnostics_script_commit"),
         ):
             self.assertTrue((ROOT/path).is_file())
             self.assertIn(spec[key]+"/"+path,plugin)
@@ -83,8 +83,8 @@ class RepositoryConsistency(unittest.TestCase):
             "scripts/v20261021r6/service-diagnostics.js",
         ):
             self.assertFalse((ROOT/retired).exists(),retired)
-        self.assertIn('service = select,"请选择服务"',plugin)
-        self.assertNotIn('service = select,"Spotify"',plugin)
+        self.assertNotIn("service = select,",plugin)
+        self.assertIn('tag="服务检测"',plugin)
         self.assertEqual(plugin.count("generic then script("),3)
         self.assertIn('auto_check = switch,false',plugin)
 

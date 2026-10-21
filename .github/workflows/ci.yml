@@ -36,7 +36,7 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_production.py' -v
       - name: Optional service coverage and private log regressions
         run: python3 -m unittest discover -s tests -p 'test_route_diagnostics.py' -v
-      - name: Scoped seven-service v6.3.0 release regressions
+      - name: Scoped service routing and current release regressions
         run: python3 -m unittest discover -s tests -p 'test_v63_service_release.py' -v
       - name: Upstream candidate safety regressions
         run: python3 -m unittest discover -s tests -p 'test_upstream_review.py' -v
@@ -59,7 +59,7 @@ jobs:
           node tests/test_node_copy.js
           node tests/test_network_diagnostics.js
           node tests/test_current_plugin.js
-          node --check scripts/v20261021r7/service-diagnostics.js
+          node --check scripts/v20261021r8/service-diagnostics.js
           node tests/test_unified_service_diagnostics.js
       - name: No mutation of production content
         run: |
