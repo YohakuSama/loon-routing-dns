@@ -12,17 +12,19 @@ LoonKit 采用通常的社区开源项目做法：**按照实际上游许可证�
 
 项目保留 [87 条历史来源记录](../build/license_sources.json) 以及冻结规则输入，提供可查证的上游说明。旧构建没有保存最终 197,765 条合并匹配的逐行来源，**这一限制应诚实公开，但不是要求给每一行规则单独取得许可的理由**。明确由原仓库许可覆盖的内容按许可条件处理；发现例外、混入未知来源或权利异议时，针对该内容处理。
 
-## 建议的 GitHub Release 流程
+## GitHub Release 的自动验证发布流程
 
 1. **确认许可声明**：顶层 `LICENSE`、[第三方声明](./THIRD_PARTY_NOTICES.md)、上游署名及完整许可文本齐备；不宣称整个混合规则库都是 LoonKit 原创、全部通过独立法律审查，或有品牌官方授权。
 2. **检查版本内容**：`LoonKit.lcf` 可导入，规则和插件的固定 URL 没有失效；没有包含私人节点订阅或凭据。
 3. **运行已有 CI**，确认冻结输入、正式规则、脚本和回归测试通过。
 4. **由维护者作实际使用验收**：至少覆盖导入、常用分流、DNS 与网络辅助；在发布说明中写出测试范围和已知限制，不需要假设存在未进行的真机测试。
-5. **创建版本 Tag 和 Release**：选择已验证的提交，附上 [更新记录](./CHANGELOG.md)、[第三方许可声明](./THIRD_PARTY_NOTICES.md)，把下载入口指向该版本的 `LoonKit.lcf`。不要将尚未公开的内部审核证据说成已完成。
+5. **自动创建 Tag 和 Release**：仅允许合并到 `main` 且 Production CI 成功的对应提交触发 `publish-v6.yml`；在发布前再次校验固定规则、哈希和当前主分支 SHA，添加 `LoonKit.lcf`、`SHA256SUMS` 附件。已有 Release 时不重复创建；如果版本标签已经被其他提交占用则停止。不要将尚未公开的内部审核证据说成已完成。
+
+实际 GitHub Release 是否存在应以 [Releases 页面](https://github.com/YohakuSama/loonkit/releases) 为准；尚未执行成功时不能仅凭工作流文件宣称已发布。GitHub About 的 Homepage 和 Topics 需要具有仓库管理权限的账户设置，普通 `GITHUB_TOKEN` 不能直接改写这些字段，建议值见 [About 设置](./REPOSITORY_ABOUT.md)。
 
 ### 关于旧的内部状态字段
 
-原有构建清单曾把历史来源审阅、独立法律认证和常规开源许可混为 `BLOCKED_REVIEW`、`NOT_CLEARED`。现将**可验证的许可证与署名资料**标为 `LICENSE_NOTICES_DOCUMENTED`，将**未做独立权利认证**单独标为 `NOT_INDEPENDENTLY_REVIEWED`；真机验收未执行仍记为 `NOT_EXECUTED`。这些状态不等于“GPL、MIT、WTFPL 都无效”，也不意味着必须付费取得逐条授权。
+原有构建清单曾把历史来源审阅、独立法律认证和常规开源许可混为 `BLOCKED_REVIEW`、`NOT_CLEARED`。现将**可验证的许可证与署名资料**标为 `LICENSE_NOTICES_DOCUMENTED`，将**未做独立权利认证**单独标为 `NOT_INDEPENDENTLY_REVIEWED`；真机验收已由项目使用者报告通过，标记为 `USER_REPORTED_PASS`（不包含独立 Loon 运行日志）。这些状态不等于“GPL、MIT、WTFPL 都无效”，也不意味着必须付费取得逐条授权。
 
 这些状态应与实际许可证义务分开理解。自动化可以核对保留的许可证和来源记录，**但既不能自动授予任何第三方权利，也不能代替维护者对具体争议素材的判断**。如果某一素材明确不允许当前用途，就针对素材调整、替换或取得单独许可，而不是让整个项目陷入不可执行的逐行审批。
 
