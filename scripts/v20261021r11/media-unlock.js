@@ -64,7 +64,7 @@
           if(finishedTask)return;
           finishedTask=true;
           inFlight--;
-          if(!ended)task.cb(err&&httpStatus(res)?null:err,res||{},cleanBody(body));
+          if(!ended)task.cb(err&&httpStatus(res)>=400?null:err,res||{},cleanBody(body));
           if(!ended)send();
         }
         try{$httpClient.get(opts,complete);}catch(e){complete(e,null,"");}
