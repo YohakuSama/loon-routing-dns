@@ -36,8 +36,10 @@
   function httpLabel(error, response) {
     if (error) return {state:"failed", detail:errorLabel(error)};
     var status = Number(response && response.status);
-    if (status >= 200 && status < 500)
+    if (status >= 200 && status < 400)
       return {state:"ok", detail:"可连接"};
+    if (status >= 400 && status < 500)
+      return {state:"responded", detail:"有响应"};
     if (status >= 500 && status < 600)
       return {state:"server", detail:"响应异常（HTTP " + status + "）"};
     return {state:"unknown", detail:"暂未确认"};
@@ -48,10 +50,12 @@
     var failed = first.state === "failed" || second.state === "failed";
     var server = first.state === "server" || second.state === "server";
     var unclear = first.state === "unknown" || second.state === "unknown";
+    var responded = first.state === "responded" || second.state === "responded";
     var titleState = dnsState === "failed" ? "DNS 检查异常"
       : failed ? "部分连接失败"
       : server ? "服务响应异常"
       : unclear ? "检查未完成"
+      : responded ? "已收到响应"
       : dnsState === "ok" ? "连接正常" : "已连接";
     var dnsLabel = dnsState === "ok" ? "正常"
       : dnsState === "failed" ? "解析失败"
