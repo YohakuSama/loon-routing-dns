@@ -236,6 +236,10 @@ const disneyTokenBlocked=mock({reply:url=>{
 }});
 assert.match(resultOf(disneyTokenBlocked.out[0],"Disney+"),/地区受限/);
 assert.equal(disneyTokenBlocked.sent.filter(x=>x.url.includes("bamgrid.com/graph/")).length,0);
+const disneyGeneric403=mock({reply:url=>url.endsWith("/devices")?
+  {status:403,body:"403 ERROR - API access denied"}:{status:200,body:"generic"}});
+assert.doesNotMatch(resultOf(disneyGeneric403.out[0],"Disney+"),/地区受限/);
+assert.match(resultOf(disneyGeneric403.out[0],"Disney+"),/未取得有效响应/);
 const disneyMalformed=mock({reply:url=>url.endsWith("/devices")?
   {status:200,body:'{"not_assertion":"placeholder"}'}:{status:200,body:"generic"}});
 assert.match(resultOf(disneyMalformed.out[0],"Disney+"),/未取得有效响应/);
