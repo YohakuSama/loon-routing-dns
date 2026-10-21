@@ -1,6 +1,6 @@
 # 正式版依赖与固定版本引用
 
-> 本文描述当前 `main` 的 **LoonKit v6.3.1**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
+> 本文描述当前 `main` 的 **LoonKit v6.3.2**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
 
 ## 正式运行链
 
@@ -9,10 +9,10 @@
 | 唯一完整配置 | [`LoonKit.lcf`](../LoonKit.lcf) | 通过 `main` 下载或导入 |
 | 26 份远程规则 | [`rules/releases/vNext-RC2/`](../rules/README.md) | `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` |
 | 33 个策略图标 + 1 个插件图标 | [`icons/v20261021r1/`](../icons/README.md) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
-| 网络辅助插件（内含服务诊断） | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `7214d536b6207df5a84b68a2825e7d7878336e1c` |
+| 网络辅助插件（内含服务诊断） | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `9e24340278ba43d04df038d5d5be41e66f62e11a` |
 | 节点出口脚本 | [`scripts/v20261021r2/node-intelligence.js`](../scripts/v20261021r2/node-intelligence.js) | `db05de1c1df0648d999bf96aab292fd50dc02419` |
 | 网络与 DNS 诊断脚本 | [`scripts/v20261021r3/network-diagnostics.js`](../scripts/v20261021r3/network-diagnostics.js) | `01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d` |
-| 节点服务检测脚本 | [`scripts/v20261021r8/service-diagnostics.js`](../scripts/v20261021r8/service-diagnostics.js) | `d09953faf50f90925cf06c096339a154a6fc04e5` |
+| 流媒体与 AI 地区检测脚本 | [`scripts/v20261021r9/media-unlock.js`](../scripts/v20261021r9/media-unlock.js) | `3d72b8814dffa541fa1a26c8cdf252184b026edf` |
 
 **服务诊断工具：** 现有网络辅助插件已加入第三个服务检测工具，使用上述版本化服务诊断脚本，无需单独添加第二个插件。旧版独立插件已不再维护，历史版本可在对应 Release 查看；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 仍在用户电脑上运行。
 
