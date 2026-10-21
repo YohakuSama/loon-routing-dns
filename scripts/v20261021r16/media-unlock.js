@@ -390,7 +390,7 @@
     if(r.code==="blocked")return "地区受限"+(region?" · "+region:"");
     if(r.code==="reachable"){
       if(id==="chatgpt")return "Web / iOS 接口已响应 · 功能未验证";
-      if(id==="youtube")return "Premium 页面可访问"+(region?" · "+region:"");
+      if(id==="youtube")return region?"Premium 页面可访问 · "+region:"网站可访问";
       if(id==="disney")return "网站可访问 · "+(r.extra||"地区未确认");
       return "网站可访问"+(region?" · "+region:"");
     }
