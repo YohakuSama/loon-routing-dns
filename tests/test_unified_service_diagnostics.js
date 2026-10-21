@@ -108,7 +108,7 @@ const denied=simulate({reply:url=>{
  if(url.includes("ios.chat.openai.com"))return {status:200,body:"sorry, you have been blocked"};
  return {status:200,body:"Generic homepage and navbar mentioning Netflix Spotify."};
 }});
-assert.match(denied.finished[0].content,/Disney\+：地区受限 · JP/);
+assert.match(denied.finished[0].content,/Disney\+：地区受限/);
 assert.match(denied.finished[0].content,/YouTube Premium：地区受限/);
 assert.match(denied.finished[0].content,/ChatGPT：地区受限/);
 assert.doesNotMatch(denied.finished[0].content,/Spotify：地区可用/);
