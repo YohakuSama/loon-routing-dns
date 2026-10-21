@@ -55,7 +55,7 @@ jobs:
           node tests/test_node_copy.js
           node tests/test_network_diagnostics.js
           node tests/test_current_plugin.js
-          node --check scripts/v20261021r3/service-diagnostics.js
+          node --check scripts/v20261021r5/service-diagnostics.js
           node tests/test_service_diagnostics.js
       - name: No mutation of production content
         run: |
