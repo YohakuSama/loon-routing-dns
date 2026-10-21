@@ -149,7 +149,7 @@
         if(/sign in to netflix|enter your email to create or restart|captcha|verify you are human/i.test(body))
           return finish(verdict("failed"));
         var isTitle=/netflix\.com/i.test(origin)&&origin.indexOf("/title/"+film)>=0 ||
-          /netflix/i.test(body)&&(/\/title\/81280792|81280792|<title>[^<]*netflix/i.test(body));
+          /netflix/i.test(body)&&(/\/title\/81280792|81280792/i.test(body));
         if(!isTitle)return finish(verdict("failed"));
         var parts=origin.split("/"),area=parts.length>3?parts[3].split("-")[0].toUpperCase():"";
         finish(verdict("full",area==="TITLE"?"":region(area)));
@@ -170,7 +170,8 @@
         var sc=status(res),redirect=header(res,"location");
         if(/unsupported_country|disallowed isp|not available in your country/i.test(body))
           return finish(verdict("unsupported"));
-        var accepted=sc===200&&/chatgpt|openai/i.test(body)||
+        var isChallenge=/cloudflare|captcha|verify you are human|just a moment/i.test(body);
+        var accepted=sc===200&&!isChallenge&&/chatgpt|openai/i.test(body)||
           [301,302,307,308].indexOf(sc)>=0&&/^https:\/\/(?:chatgpt\.com|auth\.openai\.com|login\.openai\.com)\//i.test(redirect);
         function finishCountry(ok){
           if(!ok)return finish(verdict("failed"));
