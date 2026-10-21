@@ -57,19 +57,19 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 - **节点信息**：查看节点配置的服务器入口，以及实际代理出口 IP、地区和运营商；可选直连出口对照。
 - **网络检测**：检查直连、代理连接与 DNS 解析，区分连接失败和暂时无法确认的结果。
-- **解锁检测**：通过所选节点检查流媒体及 AI 服务，区分平台地区支持、网站访问和受限信息；可在插件设置中启用完整检测。
+- **解锁检测**：按所选节点一次检测 DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT 和 YouTube Premium。
 - **网络切换提醒**：网络切换后连续检测失败才提醒，**默认关闭**。
 
 插件仅用于查询和提醒，不会自动更改节点、DNS 或分流设置。
 
-> 解锁检测区分平台响应、CDN 出口地区和普通网页连通；检测结果不能代替实际账号和播放验证。检测结果与注意事项见 [网络辅助说明](./docs/NETWORK_DIAGNOSTICS.md)。
+> 解锁检测检测依据来自平台公开页面及地区接口，不等于账号会员或实际播放验证。检测结果与注意事项见 [网络辅助说明](./docs/NETWORK_DIAGNOSTICS.md)。
 
 更新配置后，请在 Loon 中刷新插件与脚本。
 
 ## 服务与分流问题排查
 
 - [服务与分流排查指南](./docs/ROUTE_DIAGNOSTICS.md)：检查 Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn 的已有主域名归属和候选规则覆盖差异；查询预计命中，并通过脱敏日志分类辅助定位问题。
-- **解锁检测**：在[「网络辅助」](./release/Network_Diagnostics.plugin)中选中节点并运行，查看 Netflix、Disney+、YouTube Premium、Spotify、TikTok 及 AI 服务地区状态；不在后台自动运行。
+- **解锁检测**：在[「网络辅助」](./release/Network_Diagnostics.plugin)中选中节点并运行，查看 DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium 的解锁结果；不在后台自动运行。
 - 对自己导出的 HAR 或文本日志，可在电脑上离线汇总服务类别、状态码区间、已知策略和疑似问题类型。**不会上传原始日志**。
 
 上述工具仅辅助排查。预计规则命中不代表真机实际命中，连接端点有响应也不等于 App 登录或播放成功。这些排查工具不会自动修改 DNS、节点或分流策略；实际问题请结合 Loon 请求日志判断。
@@ -90,7 +90,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[历史版本](https://github.com/YohakuSama/loonkit/releases) · [当前配置校验](./docs/RELEASE_CHECKSUM_v6.4.3.md)
+[历史版本](https://github.com/YohakuSama/loonkit/releases) · [当前配置校验](./docs/RELEASE_CHECKSUM_v6.4.4.md)
 
 ---
 
