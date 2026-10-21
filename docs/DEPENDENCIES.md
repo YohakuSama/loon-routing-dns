@@ -9,10 +9,10 @@
 | 唯一完整配置 | [`LoonKit.lcf`](../LoonKit.lcf) | 通过 `main` 下载或导入 |
 | 26 份远程规则 | [`rules/releases/vNext-RC2/`](../rules/README.md) | `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` |
 | 33 个策略图标 + 1 个插件图标 | [`icons/v20261021r1/`](../icons/README.md) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
-| 网络辅助插件（内含服务诊断） | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `fe4be3bae1c98d7bd3d3b400c6a87c7ef6e06adf` |
+| 网络辅助插件（内含服务诊断） | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `8d15db975fb7f17c0216086458c9c4705aec6c8e` |
 | 节点出口脚本 | [`scripts/v20261021r2/node-intelligence.js`](../scripts/v20261021r2/node-intelligence.js) | `db05de1c1df0648d999bf96aab292fd50dc02419` |
 | 网络与 DNS 诊断脚本 | [`scripts/v20261021r3/network-diagnostics.js`](../scripts/v20261021r3/network-diagnostics.js) | `01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d` |
-| 流媒体与 AI 地区检测脚本 | [`scripts/v20261021r9/media-unlock.js`](../scripts/v20261021r9/media-unlock.js) | `d26caa23d3dac34ecb350ee835bc9ba78a0170b7` |
+| 流媒体与 AI 地区检测脚本 | [`scripts/v20261021r9/media-unlock.js`](../scripts/v20261021r9/media-unlock.js) | `04fc9be5ea0df5b42e7ffcb4b5366766859ce189` |
 
 **服务诊断工具：** 现有网络辅助插件已加入第三个服务检测工具，使用上述版本化服务诊断脚本，无需单独添加第二个插件。旧版独立插件已不再维护，历史版本可在对应 Release 查看；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 仍在用户电脑上运行。
 
