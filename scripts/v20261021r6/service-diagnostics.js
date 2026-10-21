@@ -14,7 +14,8 @@
     Linkedin: ["www.linkedin.com", "static.licdn.com", "账号与动态"]
   };
   var options = typeof $argument === "object" && $argument ? $argument : {};
-  var wanted = typeof options.service === "string" ? options.service.trim() : "Spotify";
+  var wanted = typeof options.service === "undefined" ? "Spotify" :
+    (typeof options.service === "string" ? options.service.trim() : "");
   var service = Object.prototype.hasOwnProperty.call(services, wanted) ? wanted : "";
   var finished = false, http = [], dnsText = "DNS：未检查", dnsReady = false;
   var step = 0, dnsDomain;
