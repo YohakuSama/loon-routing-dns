@@ -84,7 +84,7 @@ const plugin = fs.readFileSync(
 assert.match(plugin, /#!name = LoonKit · 服务连通性诊断/);
 assert.match(plugin, /service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin"/);
 assert.match(plugin, /scripts\/v20261021r5\/service-diagnostics\.js/);
-assert.match(plugin, /4b46a8c4d2733b30d807db8ec51c98b6285faa37/,
+assert.match(plugin, /876e2a7ef9803448d6a3d2f6769df381d4319323/,
              "optional plugin must pin reviewed immutable code");
 assert.doesNotMatch(plugin, /network-changed|cron |push |http-request/);
 console.log("Optional two-endpoint service diagnostic tests passed");

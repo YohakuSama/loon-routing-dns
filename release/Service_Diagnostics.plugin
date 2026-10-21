@@ -12,4 +12,4 @@
 service = select,"Spotify","Twitch","Abema","BBC","Line","Reddit","Linkedin",tag=检测服务,desc=选择要检查的服务
 
 [Script]
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/4b46a8c4d2733b30d807db8ec51c98b6285faa37/scripts/v20261021r5/service-diagnostics.js", {${service}}) with tag="服务连通性检测", img_url="network", timeout=20
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/876e2a7ef9803448d6a3d2f6769df381d4319323/scripts/v20261021r5/service-diagnostics.js", {${service}}) with tag="服务连通性检测", img_url="network", timeout=20
