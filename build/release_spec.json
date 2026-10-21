@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "rc_label": "vNext-RC2",
-  "stable_release_version": "v6.1.0",
+  "stable_release_version": "v6.2.0",
   "status": "PUBLISHED_WITH_USER_RUNTIME_TEST_PENDING",
   "release_rules_dir": "rules/releases/vNext-RC2",
   "release_assets_dir": "release",
@@ -10,9 +10,10 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Pinned 26 upstream rules preserved; scoped service domains and optional manual diagnostics added to main profile. Device testing delegated to user.",
-  "plugin_assets_commit": "5b115b5dd02836620597b2212b2b49c18c646bb7",
+  "warning": "Single built-in network helper, manually invoked HTTPS/DNS service check; do not assume geo, playback or complete DNS/UDP coverage.",
+  "plugin_assets_commit": "8122c6993e3f13a3152449d3d4ec62717a96cded",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "af78ebb6b75bdbb341996db446d87cb2be719af4",
-  "optional_service_plugin_commit": "7cb02a4be5db739d74266536fefbc54b720ec35b"
+  "optional_service_plugin_commit": null,
+  "unified_service_diagnostics_script_commit": "17ca5380fc24e4950bc5a5f5bcc8237853119f97"
 }

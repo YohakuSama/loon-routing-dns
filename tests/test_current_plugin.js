@@ -17,13 +17,16 @@ check("only the shipped immutable plugin is present",()=>{
   for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
     assert(!fs.existsSync(path.join(root,dir)),dir);
   assert(plugin.includes("/af78ebb6b75bdbb341996db446d87cb2be719af4/scripts/v20261021r2/network-diagnostics.js"));
+  assert(plugin.includes("/17ca5380fc24e4950bc5a5f5bcc8237853119f97/scripts/v20261021r6/service-diagnostics.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
+  assert(plugin.includes("/17ca5380fc24e4950bc5a5f5bcc8237853119f97/scripts/v20261021r6/service-diagnostics.js"));
 });
-check("exactly two manual tools with expected names",()=>{
+check("three integrated manual tools with expected names",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("generic then script("));
-  assert.equal(entries.length,2);
+  assert.equal(entries.length,3);
   assert(entries.some(x=>x.includes('tag="节点出口信息"')));
   assert(entries.some(x=>x.includes('tag="网络与 DNS 诊断"')));
+  assert(entries.some(x=>x.includes('tag="服务连通性诊断"')));
 });
 check("only the current network-change event is opt-in",()=>{
   const entries=plugin.split("\n").filter(x=>x.startsWith("network-changed then script("));
@@ -31,23 +34,27 @@ check("only the current network-change event is opt-in",()=>{
   assert(entries[0].includes("with enable=\${auto_check}"));
   assert(plugin.includes("auto_check = switch,false"));
 });
-check("exactly three settings and private comparison off",()=>{
+check("four settings, private comparison and automation off",()=>{
   const args=plugin.split("[Argument]")[1].split("[Script]")[0].split("\n")
     .filter(x=>/^[a-z_]+\s*=/.test(x)).map(x=>x.split("=")[0].trim());
-  assert.deepEqual(args,["auto_check","target_policy","compare_direct"]);
+  assert.deepEqual(args,["auto_check","target_policy","compare_direct","service"]);
   assert(plugin.includes("compare_direct = switch,false"));
 });
 check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
-  assert.equal(s.length,3);
+  assert.equal(s.length,4);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r1/node-intelligence.js")).length,1);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r2/network-diagnostics.js")).length,2);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261021r6/service-diagnostics.js")).length,1);
   assert(fs.existsSync(path.join(root,"scripts/v20261021r1/node-intelligence.js")));
   assert(fs.existsSync(path.join(root,"scripts/v20261021r2/network-diagnostics.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261021r6/service-diagnostics.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/5b115b5dd02836620597b2212b2b49c18c646bb7/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/8122c6993e3f13a3152449d3d4ec62717a96cded/release/Network_Diagnostics.plugin, enabled=true"));
+  assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
+  assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
   assert(!rc2.includes("/main/icons/"));
   assert(profile.includes("dns-server = 223.5.5.5,223.6.6.6"));

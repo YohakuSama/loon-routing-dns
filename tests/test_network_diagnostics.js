@@ -152,7 +152,9 @@ check("diagnostics switches default to privacy-preserving values",()=>{
   const plugin=fs.readFileSync(path.join(ROOT,"release/Network_Diagnostics.plugin"),"utf8");
   assert.match(plugin,/auto_check = switch,false/);
   assert.match(plugin,/compare_direct = switch,false/);
-  assert.equal(plugin.split("\n").filter(x=>x.startsWith("generic then script(")).length,2);
+  assert.equal(plugin.split("\n").filter(x=>x.startsWith("generic then script(")).length,3);
+  assert.match(plugin,/service = select,"Spotify"/);
+  assert.match(plugin,/scripts\/v20261021r6\/service-diagnostics\.js/);
 });
 
 check("HTTP 200 on generate_204 endpoint is not reported as healthy",()=>{

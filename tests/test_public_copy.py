@@ -8,6 +8,7 @@ PUBLIC = (
     "README.md",
     "docs/RELEASE_NOTES_v6.0.0.md",
     "docs/RELEASE_NOTES_v6.1.0.md",
+    "docs/RELEASE_NOTES_v6.2.0.md",
     "docs/CHANGELOG.md",
     "docs/REPOSITORY_ABOUT.md",
     "docs/NETWORK_DIAGNOSTICS.md",
@@ -69,6 +70,25 @@ class PublicCopyChecks(unittest.TestCase):
         self.assertIn("LoonKit.lcf", notes)
         old=(ROOT/".github/workflows/publish-v6.yml").read_text(encoding="utf-8")
         self.assertIn('if ! grep -qx "# LoonKit v6.0.0"', old)
+
+    def test_v62_single_plugin_and_immutable_release(self):
+        profile=(ROOT/"LoonKit.lcf").read_text(encoding="utf-8")
+        self.assertIn("# LoonKit v6.2.0",profile)
+        self.assertEqual(profile.count(".plugin, enabled=true"),1)
+        self.assertNotIn("/release/Service_Diagnostics.plugin, enabled=true",profile)
+        workflow=(ROOT/".github/workflows/publish-v62.yml").read_text(encoding="utf-8")
+        notes=(ROOT/"docs/RELEASE_NOTES_v6.2.0.md").read_text(encoding="utf-8")
+        for required in ("workflow_run:", "conclusion == 'success'", "head_branch == 'main'",
+                         "head_repository.full_name == github.repository", "fetch-depth: 0",
+                         "git merge-base --is-ancestor", "scripts/verify_release.py --check",
+                         "gh release create v6.2.0", "gh release download v6.2.0",
+                         "cmp -s LoonKit.lcf existing-release/LoonKit.lcf",
+                         'sha256sum LoonKit.lcf'):
+            self.assertIn(required, workflow)
+        self.assertIn("## 主要更新",notes)
+        self.assertIn("## 安装",notes)
+        self.assertIn("一个插件",notes)
+        self.assertIn("v6.2.0", (ROOT/"README.md").read_text(encoding="utf-8"))
 
     def test_landing_page_has_setup_and_support(self):
         readme=(ROOT/"README.md").read_text(encoding="utf-8")
