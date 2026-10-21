@@ -17,8 +17,8 @@ LoonKit 采用通常的社区开源项目做法：**按照实际上游许可证�
 1. **确认许可声明**：顶层 `LICENSE`、[第三方声明](./THIRD_PARTY_NOTICES.md)、上游署名及完整许可文本齐备；不宣称整个混合规则库都是 LoonKit 原创、全部通过独立法律审查，或有品牌官方授权。
 2. **检查版本内容**：`LoonKit.lcf` 可导入，规则和插件的固定 URL 没有失效；没有包含私人节点订阅或凭据。
 3. **运行已有 CI**，确认冻结输入、正式规则、脚本和回归测试通过。
-4. **由使用者执行实际使用验收**：本次 v6.1.0 按使用者要求先合并发布，iPhone 上的导入、服务分流、DNS 与诊断由使用者自行测试。CI 仅校验静态配置与模拟逻辑，不宣称真机测试已经完成。
-5. **自动创建 Tag 和 Release**：仅允许合并到 `main` 且 Production CI 成功的对应提交触发当前版本的 `publish-v61.yml`（旧版历史发布使用 `publish-v6.yml`）；在发布前再次校验固定规则、哈希和当前主分支 SHA，添加 `LoonKit.lcf`、`SHA256SUMS` 附件。已有 Release 时不重复创建；如果版本标签已经被其他提交占用则停止。不要将尚未公开的内部审核证据说成已完成。
+4. **由使用者执行实际使用验收**：本次 v6.2.0 按使用者要求先合并发布，iPhone 上的导入、服务分流、DNS 与诊断由使用者自行测试。CI 仅校验静态配置与模拟逻辑，不宣称真机测试已经完成。
+5. **自动创建 Tag 和 Release**：仅允许合并到 `main` 且 Production CI 成功的对应提交触发当前版本的 `publish-v62.yml`（旧版历史发布使用 `publish-v6.yml`）；在发布前再次校验固定规则、哈希和当前主分支 SHA，添加 `LoonKit.lcf`、`SHA256SUMS` 附件。已有 Release 时不重复创建；如果版本标签已经被其他提交占用则停止。不要将尚未公开的内部审核证据说成已完成。
 
 实际 GitHub Release 是否存在应以 [Releases 页面](https://github.com/YohakuSama/loonkit/releases) 为准；尚未执行成功时不能仅凭工作流文件宣称已发布。GitHub About 的 Homepage 和 Topics 需要具有仓库管理权限的账户设置，普通 `GITHUB_TOKEN` 不能直接改写这些字段，建议值见 [About 设置](./REPOSITORY_ABOUT.md)。
 
