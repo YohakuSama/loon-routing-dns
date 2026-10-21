@@ -250,9 +250,13 @@
     var last="";
     serviceList.forEach(function(s,i){
       if(s[2]!==last){last=s[2];lines.push("","【"+last+"】");}
-      lines.push(s[1]+"："+value(result[i]||state("unknown","等待超时")));
+      lines.push(s[1]+"："+value(result[i]||state("timeout","超过总等待时间")));
     });
-    lines.push("","接口与地区信号仅供参考，不代表账号或播放已解锁。");
+    var errors=0,answered=0;
+    result.forEach(function(r){if(!r)return;if(r.code==="failed"||r.code==="timeout")errors++;
+      else if(r.code!=="unknown")answered++;});
+    if(errors>=5&&answered<=1)lines.push("","多项请求连接异常，请检查节点状态或稍后重试。");
+    lines.push("","检测结果仅反映当前地区信号，不能保证账号或播放可用。");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function pumpService(){
