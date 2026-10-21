@@ -1,14 +1,14 @@
 {
-  "device_test": "V6_3_USER_RUNTIME_TEST_PENDING_V6_3_1_UNTESTED",
-  "label": "v6.3.1",
+  "device_test": "V6_3_2_RUNTIME_PENDING",
+  "label": "v6.3.2",
   "licenses": "NOTICES_DOCUMENTED_NOT_INDEPENDENTLY_CERTIFIED",
   "locked_inputs_path": "build/sources.lock.json",
   "maintainer_approval": "USER_REQUESTED_PUBLISH_WITH_RUNTIME_TEST_BY_USER",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
   "plugin_path": "release/Network_Diagnostics.plugin",
-  "plugin_sha256": "f406dfd19363b9975980cc50808fbd62cbf7303789c1c2050dfba0498ef1a562",
+  "plugin_sha256": "34f5dec29f57ca9051d22cbd3e1b0e02e198af1e243f8db3dd88fb3c14a91175",
   "profile_sha256": {
-    "LoonKit.lcf": "589c7b73755846eeb9006bfd518d6bf4614ecaa25e25f103ea76707c88d63309"
+    "LoonKit.lcf": "ca12dab164d2f8980763804f9547a27968cae8e4ad3d22c7c9a6b6d3f969b994"
   },
   "remote_rule_count": 197765,
   "remote_subscription_count": 26,
@@ -198,7 +198,7 @@
   },
   "schema_version": 1,
   "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
-  "stage": "MAIN_UPDATED_RUNTIME_TEST_PENDING",
+  "stage": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
   "upstream_historical_lineage": "UNRECOVERABLE",
   "device_test_evidence": null
 }
