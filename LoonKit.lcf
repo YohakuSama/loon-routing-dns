@@ -1,4 +1,4 @@
-# LoonKit v6.3.4
+# LoonKit v6.3.5
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loonkit
 # X: https://x.com/yohakusama
@@ -293,4 +293,4 @@ GEOIP,CN,DIRECT,no-resolve
 FINAL,Final
 
 [Plugin]
-https://raw.githubusercontent.com/YohakuSama/loonkit/ff64680c0911371864b418c765b8ca7fa3097a3a/release/Network_Diagnostics.plugin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/eaf6353713f10551e50ebb0c50bf8905d2e0c9f3/release/Network_Diagnostics.plugin, enabled=true
