@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strict, read-only formal v6.0.0 integrity check."""
+"""Strict read-only formal release integrity check for the current locked version."""
 from __future__ import annotations
 import argparse
 import hashlib
@@ -58,7 +58,9 @@ def verify(remote=False):
     if sha(data) != release["profile_sha256"]["LoonKit.lcf"] or set(release["profile_sha256"]) != {"LoonKit.lcf"}:
         raise ValueError("protected standard profile changed or duplicate profile manifest exists")
     profile = data.decode("utf-8")
-    if not profile.startswith("# LoonKit v6.0.0"):
+    if release["label"] != spec["stable_release_version"]:
+        raise ValueError("release label/spec mismatch")
+    if not profile.startswith("# LoonKit " + spec["stable_release_version"] + "\n"):
         raise ValueError("unexpected production profile version")
     if (ROOT/"rules/generated").exists() or (ROOT/"rules/ProxyProtect.list").exists() or (ROOT/"rules/active_profile.json").exists():
         raise ValueError("retired compatibility rules reintroduced")
@@ -82,7 +84,13 @@ def verify(remote=False):
             raise ValueError("strategy icons are not consolidated or contain duplicates")
 
         if plugins != [(spec["plugin_assets_commit"],"release/Network_Diagnostics.plugin")]:
-            raise ValueError("plugin URL unexpectedly changed")
+            raise ValueError("network plugin URL unexpectedly changed")
+        services = [(ref, path) for ref, path in links if path == "release/Service_Diagnostics.plugin"]
+        expected_services = [(spec["optional_service_plugin_commit"], "release/Service_Diagnostics.plugin")] if spec.get("optional_service_plugin_commit") else []
+        if services != expected_services:
+            raise ValueError("optional service diagnostics URL changed")
+        if services and not re.search(r"(?m)^" + re.escape(RAW + spec["optional_service_plugin_commit"] + "/release/Service_Diagnostics.plugin") + r", enabled=true$", section(profile, "Plugin")):
+            raise ValueError("manual-only service plugin was removed or disabled unexpectedly")
         for ref,path in links:
             if not (ROOT/path).is_file():
                 raise ValueError("missing referenced asset: " + path)
@@ -105,6 +113,10 @@ def verify(remote=False):
             raise ValueError("untrusted plugin script/icon reference: " + path)
         if not (ROOT / path).is_file():
             raise ValueError("missing plugin script/icon resource: " + path)
+    if spec.get("optional_service_plugin_commit"):
+        optional=(ROOT/"release/Service_Diagnostics.plugin").read_text(encoding="utf-8")
+        if ("network-changed" in optional or "cron " in optional or "http-request" in optional):
+            raise ValueError("service diagnostics should be manual-only")
     if remote:
         for ref,path in sorted(set(LINK.findall(profile) + embedded)):
             if not path.startswith(("icons/","rules/releases/","release/","scripts/")):
@@ -113,7 +125,7 @@ def verify(remote=False):
                 live=response.read()
             if sha(live)!=sha((ROOT/path).read_bytes()):
                 raise ValueError("Raw content changed: "+path)
-    return {"release":"v6.0.0","rules":26,"matchers":total,"locked_inputs":checked["verified_frozen_inputs"],"profiles":1,"remote_checked":remote}
+    return {"release":spec["stable_release_version"],"rules":26,"matchers":total,"locked_inputs":checked["verified_frozen_inputs"],"profiles":1,"remote_checked":remote}
 
 
 if __name__=="__main__":
