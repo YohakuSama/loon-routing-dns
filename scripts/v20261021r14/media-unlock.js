@@ -150,7 +150,8 @@
         if(/forbidden.location|forbidden-location|unsupported.country|403 ERROR/i.test(body)||
            httpStatus(r)===451)return finish("blocked");
         if(err)return finish(statusError(err));
-        if(httpStatus(r)===403)return finish("blocked");
+        if(httpStatus(r)===403)return finish("unknown","服务拒绝检测请求");
+        if(httpStatus(r)===429)return finish("unknown","地区接口暂时限流");
         finish("unknown","地区接口无有效结果");
       }
       function graphRefresh(token){
