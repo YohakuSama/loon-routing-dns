@@ -250,7 +250,7 @@
           extract(b,/id=["']country-code["'][^>]*>\s*([A-Za-z]{2})/i);
         var confirmed=/"isPremiumAvailable"\s*:\s*true/i.test(b)||
           /premium is available in your country/i.test(b)||
-          /"browseId"\s*:\s*"SPunlimited"/i.test(b);
+          (/"browseId"\s*:\s*"SPunlimited"/i.test(b)&&/youtube premium/i.test(b));
         if(httpStatus(r)===200&&confirmed)return finish("available",countryCode);
         // Public Premium page: recognizable purchase/plan area is a usable
         // regional product signal, but a generic brand mention is not.
