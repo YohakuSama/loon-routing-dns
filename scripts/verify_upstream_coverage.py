@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Evaluate completeness of the read-only upstream review, not release approval."""
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -47,12 +48,19 @@ def assess(report: dict, source_catalog: dict) -> dict:
             sources_with_exclusions += 1
         excluded_total += len(excluded)
         for item in excluded:
-            if (item.get("kind") not in {"URL-REGEX", "regexp"}
-                    or item.get("reason") not in {"MITM_URL_REGEX_NOT_DOMAIN_RULE",
-                                                 "HOST_REGEX_CANNOT_SAFELY_WIDEN_TO_SUFFIX"}
+            reasons = {"URL-REGEX": "MITM_URL_REGEX_NOT_DOMAIN_RULE",
+                       "regexp": "HOST_REGEX_CANNOT_SAFELY_WIDEN_TO_SUFFIX"}
+            kind = item.get("kind")
+            expression = item.get("expression")
+            claimed_hash = item.get("sha256")
+            if (kind not in reasons
+                    or item.get("reason") != reasons.get(kind)
                     or not isinstance(item.get("line"), int) or item["line"] < 1
-                    or not isinstance(item.get("expression"), str)
-                    or not re.fullmatch(r"[0-9a-f]{64}", str(item.get("sha256", "")))):
+                    or not isinstance(expression, str) or not expression.strip()
+                    or not re.fullmatch(r"[0-9a-f]{64}", str(claimed_hash or ""))
+                    or (isinstance(expression, str)
+                        and claimed_hash != hashlib.sha256(
+                            expression.encode("utf-8")).hexdigest())):
                 problems.append(f"{sid}: unsupported exclusion evidence is malformed")
         if entry.get("invalid_count", 0) != 0:
             problems.append(f"{sid}: {entry.get('invalid_count')} unknown/unparsed lines")
