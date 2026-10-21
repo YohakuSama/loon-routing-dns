@@ -60,6 +60,9 @@ class PublicCopyChecks(unittest.TestCase):
                       'gh release view v6.1.0', 'scripts/verify_release.py --check',
                       'cmp -s LoonKit.lcf existing-release/LoonKit.lcf'):
             self.assertIn(guard, workflow)
+        self.assertIn("b82fb2b61a6fc95f29dfb2b48dbf36885545c219", workflow)
+        self.assertIn("19de1c36ee747ea76512af3bf5b2d62475e77175db09a2568ce8de43a82e480b", workflow)
+        self.assertNotIn('test "$published_tag" = "$CHECKED_SHA"', workflow)
         self.assertIn("--notes-file docs/RELEASE_NOTES_v6.1.0.md", workflow)
         self.assertIn("## 主要功能", notes)
         self.assertIn("## 安装与升级", notes)
