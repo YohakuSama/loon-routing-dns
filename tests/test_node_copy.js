@@ -94,6 +94,32 @@ check("different ISP organization is displayed",()=>{
   const r=run({payload:{...rich,isp:{asn:"AS1",isp:"ISP A",org:"Company B"}}});
   assert.match(r.content,/组织：Company B/);
 });
+check("Loon configured server address is distinguished from actual exit IP",()=>{
+  const r=run({context:{node:"Tokyo relay",nodeInfo:{address:"entry.example.com:443"}}});
+  assert.match(r.content,/【节点入口】/);
+  assert.match(r.content,/服务器：entry\.example\.com/);
+  assert.match(r.content,/【出口信息】/);
+  assert.match(r.content,/公网 IP：203\.0\.113\.21/);
+  assert.doesNotMatch(r.content,/服务器：203\.0\.113\.21/);
+  assert.equal(r.calls.length,1);
+  assert.equal(r.calls[0].node,"Tokyo relay");
+});
+check("IPv4 and IPv6 configured entry hosts are parsed without extra lookups",()=>{
+  const v4=run({context:{nodeInfo:{address:"198.51.100.10:443"}}});
+  assert.match(v4.content,/服务器：198\.51\.100\.10/);
+  const v6=run({context:{nodeInfo:{address:"[2001:db8::1]:443"}}});
+  assert.match(v6.content,/服务器：2001:db8::1/);
+  assert.equal(v4.calls.length,1);
+  assert.equal(v6.calls.length,1);
+});
+check("invalid or credential-like entrance addresses are not rendered",()=>{
+  for(const address of ["https://example.net/private","user:password@host","a\nb","http://token.example"]){
+    const r=run({context:{nodeInfo:{address}}});
+    assert.doesNotMatch(r.content,/【节点入口】/);
+    assert.doesNotMatch(r.content,/user:password|token\.example/);
+  }
+});
+
 check("backup API still returns valid egress without inventing flags",()=>{
   const r=run({primaryFail:true});
   assert.equal(r.calls.length,2);
