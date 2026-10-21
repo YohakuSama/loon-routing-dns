@@ -406,7 +406,7 @@ assert(resultOf(full.out[0],"Prime Video"));
 
 const stall=mock({stall:true,fireTimeout:true});
 assert.equal(stall.out.length,1);
-assert.match(stall.out[0].content,/检测超时/);
+assert.match(stall.out[0].content,/检测失败/);
 stall.drain();
 assert.equal(stall.out.length,1,"no second report from late callbacks");
 const invalid=mock({environment:{node:"illegal\nnode"}});
