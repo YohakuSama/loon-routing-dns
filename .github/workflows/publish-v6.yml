@@ -44,6 +44,10 @@ jobs:
           set -euo pipefail
           # No unreviewed PR branches, races with newer commits, or mutable tags.
           test "$(git rev-parse HEAD)" = "$CHECKED_SHA"
+          if ! grep -qx "# LoonKit v6.0.0" LoonKit.lcf; then
+            echo "Legacy v6.0.0 workflow: active profile is a newer release; do not edit the historic Release."
+            exit 0
+          fi
           current_main="$(gh api "repos/$GH_REPO/commits/main" --jq '.sha')"
           test "$current_main" = "$CHECKED_SHA" || {
             echo "A newer commit exists; do not tag an older state."
