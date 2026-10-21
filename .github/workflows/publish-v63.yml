@@ -52,7 +52,7 @@ jobs:
           python3 scripts/source_lock.py --check
           python3 scripts/verify_release.py --check
           python3 -m unittest discover -s tests -p 'test_v63_service_release.py'
-          EXPECTED="75864720496132550b4cded4b27c78cd00ea8bdc49500daa9a7c5adc31653d9e"
+          EXPECTED="47c145baeb68ae828db13095a88258961418fe235460bd28f28d1faf0c1deb45"
           test "$(sha256sum LoonKit.lcf | cut -d ' ' -f 1)" = "$EXPECTED"
           if gh release view v6.3.0 --repo "$GH_REPO" >/dev/null 2>&1; then
             tag_sha="$(gh api "repos/$GH_REPO/git/ref/tags/v6.3.0" --jq '.object.sha')"
