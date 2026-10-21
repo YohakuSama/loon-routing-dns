@@ -373,6 +373,28 @@ const netflixCdnOnly=mock({reply:url=>{
 assert.match(resultOf(netflixCdnOnly.out[0],"Netflix"),/：可连接/);
 assert.doesNotMatch(resultOf(netflixCdnOnly.out[0],"Netflix"),/：可用/);
 
+
+const disneyFast=mock({reply:url=>{
+  if(url.endsWith("/graph/v1/device/graphql"))
+    return {status:200,body:'{"extensions":{"sdk":{"session":{"inSupportedLocation":true,"location":{"countryCode":"JP"}}}}}'};
+  if(url.endsWith("/devices")||url.endsWith("/token"))
+    throw new Error("fast regional response must not require extra token stages");
+  return {status:200,body:"generic"};
+}});
+assert.match(resultOf(disneyFast.out[0],"Disney+"),/：可用（JP）/);
+assert.equal(disneyFast.sent.filter(x=>x.method==="POST").length,1);
+assert.equal(disneyFast.sent.filter(x=>x.url.endsWith("/devices")).length,0);
+
+// Default popup has one concise verdict per service and no implementation jargon.
+const lines=signals.out[0].content.split("\n").filter(Boolean);
+for(const name of ["Netflix","Disney+","YouTube Premium","Spotify","TikTok","ChatGPT","Gemini","Claude"]){
+  const rows=lines.filter(x=>x.startsWith(name+"："));
+  assert.equal(rows.length,1,"single status row for "+name);
+  assert.match(rows[0],/：(可用|不可用|部分可用|可连接|检测失败)(（[A-Z]{2,3}）)?$/);
+}
+assert(!/地区接口|CDN|网页可访问|未确认|开放信号|功能未验证|检测超时/.test(signals.out[0].content));
+assert(!/【流媒体】|【AI】/.test(signals.out[0].content));
+
 const full=mock({full:true,policy:"Manual-node"});
 assert.equal(full.out.length,1);
 assert.equal(full.timers[0].ms,26000);
