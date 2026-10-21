@@ -55,3 +55,11 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 ## 完整上游审计（2026-10-21）
 
 `upstream-live-audit.yml` 使用 GitHub Actions Runner 下载全部 87 个登记来源并生成审阅附件。V2Fly 的 `include:` 受递归深度、输入格式和仓库白名单约束，额外保留引用文件快照。`URL-REGEX` 与 V2Fly 主机名 `regexp:` 不会泛化成 `DOMAIN-SUFFIX`：当前 8 条表达式有明确排除来源、哈希和理由。`verify_upstream_coverage.py` 单独检查来源分类完整性与转换完整性；发布许可永远是另一个审核步骤。参见[审计结果](./UPSTREAM_COVERAGE_2026-10-21.md)。
+
+## 对外发布文案规范
+
+公开页面（README、GitHub Release、版本更新记录、About）应首先说明产品功能、安装方法、实际更新和用户需要了解的限制。**内部流程和审核证据应放在维护文档，而不是在版本介绍中陈述自我验证过程或维护者的个别要求。**
+
+例如图标文件的版本锁、CI 与真机验收证据、上游解析异常及暂不采用的规则数量，都应放在对应的依赖、审核或测试记录中；只有影响用户安装、兼容性或已知功能的事项才写入 Release。许可证文本、第三方归属与必要的法律声明仍正常保留在许可专页。
+
+`docs/RELEASE_NOTES_v6.0.0.md` 是 v6.0.0 Release 的唯一文案源。发布工作流只在通过 Production CI 且现有 Tag、正式配置附件核对一致时同步正文，**不修改 Tag 或附件**。CI 的 `tests/test_public_copy.py` 会检查常见维护过程措辞，不能替代对公开文案的人工审阅。
