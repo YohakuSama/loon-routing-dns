@@ -176,6 +176,46 @@ class HardeningTests(unittest.TestCase):
         self.assertIn("DIRECT_PROTECTED_DOMAIN", review._domain_risk(
             "DOMAIN-SUFFIX,browserleaks.com", "ChinaDirect", protected))
 
+class IncludeResolutionTests(unittest.TestCase):
+    def test_expand_multiple_safe_includes_and_keep_original_evidence(self):
+        src = {"format": "v2fly"}
+        raw = b"include:abc\ninclude:hotstar # Disney child\nexample.org\n"
+        corpus = {
+            "abc": b"abc.com\nfull:api.abc.com\n",
+            "hotstar": b"hotstar.com\nfull:cdn.hotstar.com\n",
+        }
+        actual, files = review.expand_v2fly_includes(src, raw, corpus.__getitem__)
+        self.assertEqual(set(files), {"abc", "hotstar"})
+        self.assertEqual(files["abc"], corpus["abc"])
+        rules, info = review.parse_source(src, actual)
+        self.assertEqual(info["invalid_count"], 0)
+        self.assertEqual(rules, {
+            "DOMAIN-SUFFIX,abc.com", "DOMAIN,api.abc.com",
+            "DOMAIN-SUFFIX,hotstar.com", "DOMAIN,cdn.hotstar.com",
+            "DOMAIN-SUFFIX,example.org",
+        })
+
+    def test_include_cycles_and_bad_paths_are_fail_closed(self):
+        src = {"format": "v2fly"}
+        with self.assertRaisesRegex(ValueError, "cyclic"):
+            review.expand_v2fly_includes(src, b"include:a\n", lambda _: b"include:a\n")
+        for text in (b"include:../evil\n", b"include:https://evil.test\n",
+                     b"include:abc/def\n", b"include:\n"):
+            with self.subTest(raw=text):
+                with self.assertRaises(ValueError):
+                    review.expand_v2fly_includes(src, text, lambda _: b"foo.com\n")
+
+    def test_unresolved_regexp_in_nested_source_stays_incomplete(self):
+        src = {"format": "v2fly", "min_rules": 1}
+        actual, captured = review.expand_v2fly_includes(
+            src, b"include:hotstar\n",
+            lambda _: b"example.org\nregexp:^sub[1-5]\\.example\\.org$\n")
+        self.assertIn("hotstar", captured)
+        rules, status = review.parse_source(src, actual)
+        self.assertEqual(rules, {"DOMAIN-SUFFIX,example.org"})
+        self.assertEqual(status["invalid_count"], 1)
+
+
 class CandidateWorkflow(unittest.TestCase):
     @staticmethod
     def fixture(root: Path):
