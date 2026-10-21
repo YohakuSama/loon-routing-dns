@@ -56,6 +56,40 @@ class ParserAndPrivacy(unittest.TestCase):
         with self.assertRaises(ValueError):
             diag.sanitized_log_summary(b"{}",diag.known_services())
 
+    def test_private_triage_never_exposes_sensitive_fields(self):
+        raw = json.dumps({"log": {"entries": [
+            {"request": {"url": "https://open.spotify.com/secret?token=SENSITIVE_X11",
+                          "headers": [{"name": "Cookie", "value": "COOKIE_X11"}]},
+             "response": {"status": 403}, "_policy": "PersonalSecretNodeX11"},
+            {"request": {"url": "https://log.spotify.com/trace?token=SENSITIVE_X12"},
+             "response": {"status": 0}, "_policy": "AdBlock"},
+            {"request": {"url": "https://www.reddit.com/private?token=SENSITIVE_X13"},
+             "response": {"status": 503}, "_policy": "Reddit"},
+            {"request": {"url": "https://other.example/file?secret=SENSITIVE_X14"},
+             "response": {"status": 200}, "_policy": "other_unknown_node"},
+        ]}}).encode()
+        router = diag.Router(ROOT)
+        result = diag.private_triage(raw, diag.known_services(), router)
+        output = json.dumps(result, ensure_ascii=False)
+        self.assertEqual(result["processed_requests"], 4)
+        self.assertTrue(any("AdBlock" in x["finding"] for x in result["findings"]))
+        self.assertTrue(any("5xx" in x["finding"] for x in result["findings"]))
+        self.assertTrue(any("4xx" in x["finding"] for x in result["findings"]))
+        for forbidden in (
+            "SENSITIVE_X11", "SENSITIVE_X12", "SENSITIVE_X13", "SENSITIVE_X14",
+            "COOKIE_X11", "PersonalSecretNodeX11", "other_unknown_node",
+            "open.spotify.com", "log.spotify.com", "www.reddit.com",
+            "other.example", "/secret", "/private"):
+            self.assertNotIn(forbidden, output)
+
+    def test_private_triage_text_mode_is_privacy_safe(self):
+        raw = b"https://open.spotify.com/path?token=SENSITIVE_TXT HTTP 401\\n"
+        result = diag.private_triage(raw, diag.known_services(), diag.Router(ROOT),
+                                    text_mode=True)
+        self.assertEqual(result["processed_requests"], 1)
+        self.assertEqual(result["findings"][0]["recorded_policy"], "未知")
+        self.assertNotIn("SENSITIVE_TXT", json.dumps(result))
+
     def test_missing_log_path_does_not_expose_private_filename(self):
         marker = "PRIVATE_SECRET_LOCAL_PATH_4519"
         result = subprocess.run([sys.executable, str(ROOT/"scripts/route_diagnostics.py"),
@@ -118,6 +152,18 @@ class ProductionCoverage(unittest.TestCase):
         self.assertTrue(result["all_reviewed_roots_match"],result)
         self.assertEqual({x["service"] for x in result["services"]},set(diag.SERVICE_GROUPS))
         self.assertEqual(len(result["services"]),7)
+
+    def test_staged_service_rules_audit_is_review_only(self):
+        result = diag.candidate_coverage_audit(self.router)
+        self.assertFalse(result["publication_allowed"])
+        self.assertEqual(len(result["services"]), 7)
+        for item in result["services"]:
+            self.assertGreater(item["candidate_domain_rules"], 0)
+            self.assertEqual(
+                item["candidate_domain_rules"],
+                sum(item["counts"].get(k, 0) for k in (
+                    "covered_by_service", "adblock_review",
+                    "not_explicitly_routed", "routed_to_other_policy")))
 
     def test_known_safeguards(self):
         self.assertEqual(self.router.match("analytics.spotify.com")["predicted_policy"],"AdBlock")
