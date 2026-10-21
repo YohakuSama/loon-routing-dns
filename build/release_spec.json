@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "rc_label": "vNext-RC2",
-  "stable_release_version": "v6.3.3",
+  "stable_release_version": "v6.3.4",
   "status": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
   "release_rules_dir": "rules/releases/vNext-RC2",
   "release_assets_dir": "release",
@@ -10,11 +10,11 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Regional streaming/AI checks use service-specific evidence and bounded retries. Domain reachability is not account or playback unlock. DNS and routing rules unchanged.",
-  "plugin_assets_commit": "1c422e79d3ce03c0f517953838ef0aa3bad5eebe",
+  "warning": "Media checks distinguish CDN region, service-specific evidence and website reachability. No confirmed playback claim. DNS/rules unchanged.",
+  "plugin_assets_commit": "3b17ab0e9cecbd4dc319362c48f604c6c1910abf",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "b1d4a82c8ad4ebf20c36d7b85d8a2d6e63acd6c4",
+  "unified_service_diagnostics_script_commit": "81fea9e2ff8947cee8576297e1a5e7cc1747248c",
   "node_script_commit": "db05de1c1df0648d999bf96aab292fd50dc02419"
 }
