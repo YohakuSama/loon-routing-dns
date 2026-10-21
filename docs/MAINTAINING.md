@@ -1,6 +1,6 @@
-# LoonKit v6.1.0 维护流程
+# LoonKit v6.2.0 维护流程
 
-唯一正式入口：`LoonKit.lcf`。v6.1.0 的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。新版本的自动发布由 `publish-v61.yml` 处理，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
+唯一正式入口：`LoonKit.lcf`。自 v6.1.0 起的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。v6.2.0 的自动发布由 `publish-v62.yml` 处理，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
 
 ## 构建
 
