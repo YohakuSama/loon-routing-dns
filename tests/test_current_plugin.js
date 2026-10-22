@@ -34,7 +34,7 @@ check("only the current network-change event is opt-in",()=>{
   assert(entries[0].includes("with enable=\${auto_check}"));
   assert(plugin.includes("auto_check = switch,false"));
 });
-check("four settings, private comparison and automation off",()=>{
+check("settings, private comparison and automation off",()=>{
   const args=plugin.split("[Argument]")[1].split("[Script]")[0].split("\n")
     .filter(x=>/^[a-z_]+\s*=/.test(x)).map(x=>x.split("=")[0].trim());
   assert.deepEqual(args,["auto_check","target_policy","compare_direct"]);
@@ -105,7 +105,8 @@ check("no retired standalone plugin or script assets remain",()=>{
     "scripts/v20261022r5/media-unlock.js",
     "scripts/v20261022r6/media-unlock.js",
     "scripts/v20261021r7/node-intelligence.js",
-    "scripts/v20261021r7/network-diagnostics.js"
+    "scripts/v20261021r7/network-diagnostics.js",
+    "scripts/v20261021r3/network-diagnostics.js"
   ];
   names.forEach(name=>assert(!fs.existsSync(path.join(root,name)),name));
 });
