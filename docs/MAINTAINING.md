@@ -1,6 +1,6 @@
-# LoonKit v6.4.6 维护流程
+# LoonKit v6.4.7 维护流程
 
-唯一正式入口：`LoonKit.lcf`。自 v6.1.0 起的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。v6.3.0 的历史发布由 `publish-v63.yml` 处理；v6.4.6 当前配置在主分支更新，尚未宣称真机验收，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
+唯一正式入口：`LoonKit.lcf`。自 v6.1.0 起的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。v6.3.0 的历史发布由 `publish-v63.yml` 处理；v6.4.7 当前配置在主分支更新，尚未宣称真机验收，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
 
 ## 构建
 
@@ -23,11 +23,11 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## Git 历史
 
-正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；当前正式插件引用 `2c0b7aa835e075ab9764b92ba9d43b3544c04685`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
+正式规则固定引用 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`；正式图标引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`；当前正式插件引用 `4e0b669c435272053c0d7bd3ba616bddeb07ba9e`。改写现有仓库历史前必须先迁移这些运行时 URL 到受保护的版本引用、验证全部资源并取得单独批准。历史改写不是普通文件删除。
 
 ## 网络诊断插件固定引用
 
-主配置中的现役插件引用 `2c0b7aa835e075ab9764b92ba9d43b3544c04685` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d` 的 `scripts/v20261021r3/network-diagnostics.js`；节点出口脚本引用 `edac8c9f51de9ad6e2a9a969752a31490c4cfd44`，原有插件图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，手动服务检测脚本引用 `bd3ddfbee6b9588d70c14bc762c57bc3739921a9` 的 `scripts/v20261022r4/media-unlock.js`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `4e0b669c435272053c0d7bd3ba616bddeb07ba9e` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d` 的 `scripts/v20261021r3/network-diagnostics.js`；节点出口脚本引用 `edac8c9f51de9ad6e2a9a969752a31490c4cfd44`，原有插件图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，手动服务检测脚本引用 `9670ebc88a3eeaeeec2418e0ab2ffa34d5c6f85e` 的 `scripts/v20261022r5/media-unlock.js`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 服务检测脚本与用户文案

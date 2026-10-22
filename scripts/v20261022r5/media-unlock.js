@@ -1,7 +1,8 @@
 /*
  * LoonKit · 节点解锁查询
- * 按平台响应判断地区能力；修正自动跳转、Cookie、登录页及地区误判。
- * 原项目：https://github.com/KOP-XIAO/QuantumultX
+ * 各平台检测方法参考 KOP-XIAO QuantumultX streaming-ui-check.js。
+ * 检测脚本由 LoonKit 自身托管和执行，不加载第三方仓库的脚本。
+ * 上游参考：https://github.com/KOP-XIAO/QuantumultX
  */
 (function () {
   "use strict";
@@ -11,7 +12,7 @@
   function string(v){return typeof v==="string"?v.trim():"";}
   var node=string(env.node)||string(info.name)||string(info.tag)||string(env.policyGroup)||string(args.target_policy)||"Proxy";
   if(node.length>220||/[\u0000-\u001f\u007f]/.test(node)){
-    $done({title:"节点解锁查询",content:"节点名称无效"});return;
+    $done({title:"解锁检测",content:"节点名称无效"});return;
   }
   var items=[
     ["dazn","DAZN"],["discovery","Discovery+"],["paramount","Paramount+"],
@@ -66,17 +67,6 @@
   function post(url,body,headers,callback){
     enqueue(url,{method:"POST",body:body,headers:headers},callback);
   }
-  var openAICountries=[
-    "T1","XX","AL","DZ","AD","AO","AG","AR","AM","AU","AT","AZ","BS","BD","BB","BE","BZ","BJ","BT","BA",
-    "BW","BR","BG","BF","CV","CA","CL","CO","KM","CR","HR","CY","DK","DJ","DM","DO","EC","SV","EE","FJ",
-    "FI","FR","GA","GM","GE","DE","GH","GR","GD","GT","GN","GW","GY","HT","HN","HU","IS","IN","ID","IQ",
-    "IE","IL","IT","JM","JP","JO","KZ","KE","KI","KW","KG","LV","LB","LS","LR","LI","LT","LU","MG","MW",
-    "MY","MV","ML","MT","MH","MR","MU","MX","MC","MN","ME","MA","MZ","MM","NA","NR","NP","NL","NZ","NI",
-    "NE","NG","MK","NO","OM","PK","PW","PA","PG","PE","PH","PL","PT","QA","RO","RW","KN","LC","VC","WS",
-    "SM","ST","SN","RS","SC","SL","SG","SK","SI","SB","ZA","ES","LK","SR","SE","CH","TH","TG","TO","TT",
-    "TN","TR","TV","UG","AE","US","UY","VU","ZM","BO","BN","CG","CZ","VA","FM","MD","PS","KR","TW",
-    "TZ","TL","GB"
-  ];
   function test(id,finish){
     if(id==="dazn"){
       post("https://startup.core.indazn.com/misl/v5/Startup",
@@ -190,27 +180,26 @@
       },{redirect:false});
     }else finish(verdict("failed"));
   }
-  function flag(geo){
-    if(!geo)return "未知地区";
-    var c=geo==="UK"?"GB":geo;
-    return String.fromCodePoint(127397+c.charCodeAt(0),127397+c.charCodeAt(1));
-  }
-  function present(v,id){
-    if(!v)return "检测失败 ❗️";
-    if(v.state==="failed")return "检测失败 ❗️";
-    if(v.state==="unsupported")return "未支持 🚫";
-    if(v.state==="originals")return "支持自制剧集 ⚠️";
-    if(v.state==="full")return "完整支持"+(v.geo?" ➟ ⟦"+flag(v.geo)+"⟧":"")+" 🎉";
-    if(v.state==="coming")return "即将登陆 ➟ ⟦"+flag(v.geo)+"⟧ ⚠️";
-    if(v.state==="supported")return "支持"+(v.geo?" ➟ ⟦"+flag(v.geo)+"⟧":"")+" 🎉";
-    return "检测失败 ❗️";
+  function present(v){
+    if(!v)return "检测失败";
+    var label={
+      supported:"已解锁",
+      unsupported:"未解锁",
+      originals:"仅自制剧",
+      full:"完整解锁",
+      coming:"未解锁",
+      failed:"检测失败"
+    }[v.state]||"检测失败";
+    if((v.state==="supported"||v.state==="full")&&v.geo)
+      return label+"（"+v.geo+"）";
+    return label;
   }
   function output(){
     var showNode=node.length>32?node.slice(0,24)+"…"+node.slice(-5):node;
-    var lines=[];
-    items.forEach(function(s){lines.push(s[1]+"："+present(result[s[0]],s[0]));});
-    lines.push("","节点："+showNode,"检测器 v6.4.6");
-    return {title:"节点解锁查询",content:lines.join("\n")};
+    var lines=["节点："+showNode];
+    items.forEach(function(s){lines.push(s[1]+"："+present(result[s[0]]));});
+    lines.push("","LoonKit v6.4.7");
+    return {title:"解锁检测",content:lines.join("\n")};
   }
   function done(){if(closed)return;closed=true;$done(output());}
   items.forEach(function(it){
