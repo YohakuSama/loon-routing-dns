@@ -44,7 +44,7 @@ Fallback_Filter = NameRegex, FilterKey = ".*"
 # All strategy icons are self-hosted under icons/, reviewed for light and dark UI.
 Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Proxy.png
 Auto = url-test,Auto_Filter,url = http://cp.cloudflare.com/generate_204,interval = 900,tolerance = 80,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Auto.png
-Fallback = fallback,Fallback_Filter,url = http://cp.cloudflare.com/generate_204,interval = 1200,max-timeout = 1500,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Fallback.png
+Fallback = fallback,Fallback_Filter,url = http://cp.cloudflare.com/generate_204,interval = 900,max-timeout = 1800,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Fallback.png
 AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/AdBlock.png
 Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Final.png
 
