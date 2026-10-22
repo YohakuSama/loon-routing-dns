@@ -58,6 +58,7 @@ jobs:
           node --check scripts/v20261021r3/node-intelligence.js
           node tests/test_node_copy.js
           node tests/test_network_diagnostics.js
+          node tests/test_network_diagnostics_v651.js
           node tests/test_current_plugin.js
           node --check scripts/v20261022r7/media-unlock.js
           node tests/test_unified_service_diagnostics.js
