@@ -67,14 +67,33 @@
   function post(url,body,headers,callback){
     enqueue(url,{method:"POST",body:body,headers:headers},callback);
   }
+  // Diagnostics stay in the Loon script log, never in the popup.
+  // Never log node names, response bodies, tokens or request URLs.
+  function daznLog(reason,httpStatus){
+    if(typeof console==="undefined"||typeof console.log!=="function")return;
+    var code=typeof httpStatus==="number"&&httpStatus>0?" HTTP "+httpStatus:"";
+    try{console.log("[LoonKit][DAZN] "+reason+code);}catch(e){}
+  }
   function test(id,finish){
     if(id==="dazn"){
       post("https://startup.core.indazn.com/misl/v5/Startup",
         JSON.stringify({LandingPageKey:"generic",Platform:"web",PlatformAttributes:{},Manufacturer:"",PromoCode:"",Version:"2"}),
         {"Content-Type":"application/json"},function(err,res,body){
-          if(err||status(res)!==200)return finish(verdict("failed"));
+          if(err){
+            daznLog(/timed?\s*out|timeout/i.test(String(err))?"timeout":"request-error");
+            return finish(verdict("failed"));
+          }
+          if(status(res)!==200){
+            daznLog("http-error",status(res));
+            return finish(verdict("failed"));
+          }
           var data=parse(body),geo=region(data&&data.GeolocatedCountry)||
             find(body,/"GeolocatedCountry"\s*:\s*"([^"]+)"/);
+          if(!data&&!geo){
+            daznLog("invalid-response",200);
+            return finish(verdict("failed"));
+          }
+          if(!geo)daznLog("country-not-returned",200);
           finish(verdict(geo?"supported":"unsupported",geo));
         });
     }else if(id==="discovery"){
@@ -88,7 +107,9 @@
             var account=parse(detail);
             if(!account||!account.data||!account.data.attributes)return finish(verdict("failed"));
             var location=account.data.attributes.currentLocationTerritory;
-            finish(verdict(location==="us"?"supported":"unsupported"));
+            if(typeof location!=="string"||!location.trim())
+              return finish(verdict("failed"));
+            finish(verdict(location.trim().toLowerCase()==="us"?"supported":"unsupported"));
           },{headers:{"Cookie":"st="+token}});
         });
     }else if(id==="paramount"){
@@ -196,7 +217,7 @@
     var showNode=node.length>32?node.slice(0,24)+"…"+node.slice(-5):node;
     var lines=["节点："+showNode];
     items.forEach(function(s){lines.push(s[1]+"："+present(result[s[0]]));});
-    lines.push("","LoonKit v6.4.8");
+    lines.push("","LoonKit v6.4.9");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function done(){if(closed)return;closed=true;$done(output());}
