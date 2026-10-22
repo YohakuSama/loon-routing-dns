@@ -118,34 +118,36 @@
     var env=(typeof $environment==="object" && $environment && $environment.params)||{};
     var args=(typeof $argument==="object" && $argument)||{};
     var info=env.nodeInfo && typeof env.nodeInfo==="object"?env.nodeInfo:{};
-    // Node actions carry the concrete node. Do not substitute a policy group for it.
+    // A node-menu invocation wins over the plugin's fallback policy argument.
     var selected=choose(env.node)||choose(info.name)||choose(info.tag);
     if(!selected)selected=choose(env.policyGroup)||choose(args.target_policy);
-    if(!selected) return "";
-    var config=typeof $config==="object"&&$config;
+    if(!selected)return "";
+    var config=typeof $config==="object"&&$config,groups=[],selection={};
+    try {
+      if(config&&typeof config.getConfig==="function"){
+        var snapshot=JSON.parse(config.getConfig()||"{}");
+        if(Array.isArray(snapshot.all_policy_groups))groups=snapshot.all_policy_groups;
+        if(snapshot.policy_select&&typeof snapshot.policy_select==="object")
+          selection=snapshot.policy_select;
+      }
+    }catch(e){}
     var visited={},depth=0;
     while(depth++<8){
       if(visited[selected])return "";
       visited[selected]=true;
+      if(/^(DIRECT|REJECT|REJECT-DROP)$/i.test(selected))return "";
+      var isGroup=groups.some(function(group){
+        return group===selected || group&&typeof group==="object"&&
+          (group.name===selected||group.tag===selected);
+      });
       var child="";
       try {
         if(config&&typeof config.getSelectedPolicy==="function")
           child=choose(config.getSelectedPolicy(selected));
       }catch(e){}
-      if(child && child!==selected){selected=child;continue;}
-      // Proxy/Auto/Fallback are groups in the LoonKit profile; without a
-      // concrete selection, don't report aggregate group requests as node latency.
-      if(/^(Proxy|Auto|Fallback|ALL_Filter)$/i.test(selected))return "";
-      // Also fail closed for any other known group, if the config exposes it.
-      try {
-        var cfg=config&&typeof config.getConfig==="function"?
-          JSON.parse(config.getConfig()||"{}"):{};
-        var groups=cfg.all_policy_groups;
-        if(Array.isArray(groups) && groups.some(function(group){
-          return group===selected || group&&typeof group==="object"&&
-            (group.name===selected||group.tag===selected);
-        }))return "";
-      } catch(e){}
+      if(!child)child=choose(selection[selected]);
+      if(child&&child!==selected){selected=child;continue;}
+      if(isGroup||/^(Proxy|Auto|Fallback|ALL_Filter)$/i.test(selected))return "";
       return selected;
     }
     return "";
