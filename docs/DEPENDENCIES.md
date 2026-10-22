@@ -9,10 +9,10 @@
 | 唯一完整配置 | [`LoonKit.lcf`](../LoonKit.lcf) | 通过 `main` 下载或导入 |
 | 26 份远程规则 | [`rules/releases/vNext-RC2/`](../rules/README.md) | `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4` |
 | 33 个策略图标 + 1 个插件图标 | [`icons/v20261021r1/`](../icons/README.md) | `97c48a5d14087597dbba35119d5ee8d43b1ce537` |
-| 网络辅助插件（内含服务诊断） | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `e2229cd2aba8f5f8621048deed29998e912753c5` |
-| 节点入口与出口脚本 | [`scripts/v20261022r10/node-intelligence.js`](../scripts/v20261022r10/node-intelligence.js) | `2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e` |
-| 网络与 DNS 诊断脚本 | [`scripts/v20261022r10/network-diagnostics.js`](../scripts/v20261022r10/network-diagnostics.js) | `2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e` |
-| 流媒体与 AI 地区检测脚本 | [`scripts/v20261022r10/media-unlock.js`](../scripts/v20261022r10/media-unlock.js) | `2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e` |
+| 网络辅助插件（内含服务诊断） | [`release/Network_Diagnostics.plugin`](../release/Network_Diagnostics.plugin) | `5c2498084539bce76fd1f0f12fd8e5d4a0e989ea` |
+| 节点入口与出口脚本 | [`scripts/v20261022r11/node-intelligence.js`](../scripts/v20261022r11/node-intelligence.js) | `db83bbe402c40c4ec5bb2421115989126fd5bf05` |
+| 网络与 DNS 诊断脚本 | [`scripts/v20261022r11/network-diagnostics.js`](../scripts/v20261022r11/network-diagnostics.js) | `db83bbe402c40c4ec5bb2421115989126fd5bf05` |
+| 流媒体与 AI 地区检测脚本 | [`scripts/v20261022r11/media-unlock.js`](../scripts/v20261022r11/media-unlock.js) | `db83bbe402c40c4ec5bb2421115989126fd5bf05` |
 
 **服务诊断工具：** 现有网络辅助插件已加入第三个服务检测工具，使用上述版本化服务诊断脚本，无需单独添加第二个插件。旧版独立插件已不再维护，历史版本可在对应 Release 查看；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 仍在用户电脑上运行。
 
@@ -24,7 +24,7 @@
 
 冻结规则输入由 `rules/inputs/`（33 份）和 `rules/custom/`（10 份）构成，`build/engine_manifest.json` 与 `build/sources.lock.json` 固定其输入，`scripts/rule_engine.py` 构建 26 份固定正式远程规则。v6.1.0 在主配置中额外启用 62 条来源于冻结输入的审阅域名规则，审阅记录位于 [服务覆盖清单](../rules/service_coverage_v6.1.0.json)。**正式输出不能作为自己的输入**。
 
-校验入口：`scripts/source_lock.py --check`、`scripts/verify_release.py --check`；需要逐个检查固定远程链接时另外执行 `scripts/verify_release.py --check --remote`。对应测试位于 `tests/`，主 CI 为 [`ci.yml`](../.github/workflows/ci.yml)。
+校验入口：`scripts/source_lock.py --check`、`scripts/verify_release.py --check`；需要逐个检查固定远程链接时另外执行 `scripts/verify_release.py --check --remote`。静态校验和语法检查由主 CI 执行；主 CI 为 [`ci.yml`](../.github/workflows/ci.yml)。
 
 远程上游目录 `rules/sources.json` 记录 87 个历史来源，`scripts/upstream_review.py` 仅生成待审快照和差异，不覆盖冻结输入或正式规则。每周 [`rules-update.yml`](../.github/workflows/rules-update.yml) 负责只读候选审核，[`upstream-live-audit.yml`](../.github/workflows/upstream-live-audit.yml) 用于真实上游完整性复核；[`release.yml`](../.github/workflows/release.yml) **只生成手动候选，不自动发布**。
 

@@ -12,15 +12,14 @@ LoonKit 采用通常的社区开源项目做法：**按照实际上游许可证�
 
 项目保留 [87 条历史来源记录](../build/license_sources.json) 以及冻结规则输入，提供可查证的上游说明。旧构建没有保存最终 197,765 条合并匹配的逐行来源，**这一限制应诚实公开，但不是要求给每一行规则单独取得许可的理由**。明确由原仓库许可覆盖的内容按许可条件处理；发现例外、混入未知来源或权利异议时，针对该内容处理。
 
-## GitHub Release 的自动验证发布流程
+## 当前发布流程
 
-1. **确认许可声明**：顶层 `LICENSE`、[第三方声明](./THIRD_PARTY_NOTICES.md)、上游署名及完整许可文本齐备；不宣称整个混合规则库都是 LoonKit 原创、全部通过独立法律审查，或有品牌官方授权。
-2. **检查版本内容**：`LoonKit.lcf` 可导入，规则和插件的固定 URL 没有失效；没有包含私人节点订阅或凭据。
-3. **运行已有 CI**，确认冻结输入、正式规则、脚本和回归测试通过。
-4. **由使用者执行实际使用验收**：本次 v6.3.0 按使用者要求先合并发布，iPhone 上的导入、服务分流、DNS 与诊断由使用者自行测试。CI 仅校验静态配置与模拟逻辑，不宣称真机测试已经完成。
-5. **自动创建 Tag 和 Release**：仅允许合并到 `main` 且 Production CI 成功的对应提交触发当前版本的 `publish-v63.yml`（旧版历史发布使用 `publish-v6.yml`）；在发布前再次校验固定规则、哈希和当前主分支 SHA，添加 `LoonKit.lcf`、`SHA256SUMS` 附件。已有 Release 时不重复创建；如果版本标签已经被其他提交占用则停止。不要将尚未公开的内部审核证据说成已完成。
+1. 保留许可证、来源说明和所有正式固定资源提交。
+2. 执行静态验证与 JavaScript 语法检查。
+3. 在实际 iOS/iPadOS Loon 中检查三个入口、弹窗断行以及七项平台判定，确认没有回归。
+4. 由维护者单独决定是否发布新 Release；不会因 CI 成功而更新历史版本。
 
-实际 GitHub Release 是否存在应以 [Releases 页面](https://github.com/YohakuSama/loonkit/releases) 为准；尚未执行成功时不能仅凭工作流文件宣称已发布。GitHub About 的 Homepage 和 Topics 需要具有仓库管理权限的账户设置，普通 `GITHUB_TOKEN` 不能直接改写这些字段，建议值见 [About 设置](./REPOSITORY_ABOUT.md)。
+发布记录参见 [Releases](https://github.com/YohakuSama/loonkit/releases)。历史 GitHub Actions 运行记录不属于 Git 版本文件，删除工作流 YAML 不会删除历史运行记录。
 
 ### 关于旧的内部状态字段
 
@@ -35,10 +34,10 @@ python3 scripts/source_lock.py --check
 python3 scripts/verify_release.py --check
 python3 scripts/license_audit.py --check
 python3 scripts/license_evidence.py --check
-python3 -m unittest discover -s tests -p 'test_production.py' -v
-node tests/test_current_plugin.js
-node tests/test_network_diagnostics.js
-node tests/test_node_copy.js
+node --check scripts/v20261022r11/media-unlock.js
+node --check scripts/v20261022r11/node-intelligence.js
+node --check scripts/v20261022r11/network-diagnostics.js
+
 ```
 
 其中许可证脚本核验的是资料与原文的一致性，不出具法律意见；输出中未执行的独立审核应如实保留。

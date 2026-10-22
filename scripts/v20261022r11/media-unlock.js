@@ -192,12 +192,14 @@
     }[v.state]||"检测失败";
     return label;
   }
+  // Native Loon dialogs use proportional text; show one compact result per line.
+  function shortNode(value){
+    var chars=Array.from(value);
+    return chars.length<=24?value:chars.slice(0,13).join("")+"…"+chars.slice(-7).join("");
+  }
   function output(){
-    var chars=Array.from(node);
-    var showNode=chars.length>30?chars.slice(0,20).join("")+"…"+chars.slice(-8).join(""):node;
-    var lines=["【检测节点】",showNode,"","【解锁结果】"];
+    var lines=["节点："+shortNode(node),"","解锁结果"];
     items.forEach(function(s){lines.push(s[1]+"："+present(result[s[0]]));});
-    lines.push("","7 项平台检测 · LoonKit v6.5.2");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function done(){if(closed)return;closed=true;$done(output());}

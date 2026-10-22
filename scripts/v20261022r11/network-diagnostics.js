@@ -1,4 +1,4 @@
-/* LoonKit · single-node network/DNS diagnostics v6.5.1.
+/* LoonKit · single-node network/DNS diagnostics v6.5.2.
  * Inspect the resolver used by the native Loon DNS stack. This cannot prove
  * that browsers or other apps do not use independent encrypted DNS.
  * No routing, DNS, policy, or VPN settings are modified. */
@@ -152,30 +152,29 @@
     }
     return "";
   }
-  // Loon generic script dialogs render title/content reliably; do not use HTML.
-  function compact(item) {
-    var ms=typeof item.ms==="number"?" · "+item.ms+" ms":"";
-    var state=item.ok===true?"正常":item.ok===false?"失败":"已响应";
-    return state+ms+" · "+item.detail;
+  // Native alert content is proportional-font text, not an HTML table.
+  function shortNode(value) {
+    var chars=Array.from(safe(value));
+    return chars.length<=24?chars.join(""):chars.slice(0,13).join("")+"…"+chars.slice(-7).join("");
   }
   function display(node,direct,proxy,dns) {
     var failure=proxy.ok===false||direct.ok===false||dns.ok===false;
     var uncertain=proxy.ok===null||direct.ok===null||dns.ok===null;
-    var headline=failure?"部分检测失败":uncertain?"网络已响应，部分结果需确认":"网络正常";
-    var shown=safe(node);
-    if(shown.length>40)shown=shown.slice(0,23)+"…"+shown.slice(-12);
-    return {title:"网络检测",content:[
-      "状态："+headline,
-      "节点："+shown,
-      "",
-      "节点请求："+compact(proxy),
-      "直连请求："+compact(direct),
-      "DNS："+(dns.ok===true?"正常":dns.ok===false?"失败":"需确认")+" · "+dns.detail,
-      "",
-      "注：以上是请求耗时，不是节点测速延迟",
-      "目标：www.gstatic.com/generate_204",
-      "LoonKit v6.5.1"
-    ].join("\n")};
+    var headline=failure?"部分失败":uncertain?"部分待确认":"连接正常";
+    function state(item){
+      return (item.ok===true?"正常":item.ok===false?"失败":"待确认")+
+        (typeof item.ms==="number"?" · "+item.ms+"ms":"");
+    }
+    var lines=["节点："+shortNode(node),"","连接状态",
+      "代理："+state(proxy),"直连："+state(direct),
+      "DNS："+(dns.ok===true?"正常":dns.ok===false?"失败":"待确认")];
+    if(proxy.ok!==true)lines.push("代理说明："+proxy.detail);
+    if(direct.ok!==true)lines.push("直连说明："+direct.detail);
+    lines.push("解析："+dns.detail);
+    if(dns.notice)lines.push("DNS 提示："+dns.notice);
+    lines.push("","结论："+headline);
+    if(uncertain||failure)lines.push("请结合 Loon 请求记录排查");
+    return {title:"网络检测",content:lines.join("\n")};
   }
   function manual() {
     var target=resolveNode();
