@@ -1,4 +1,4 @@
-# LoonKit · 开源许可与发布检查
+# LoonKit · 开源许可、维护与发布检查
 
 LoonKit 采用通常的社区开源项目做法：**按照实际上游许可证使用和再分发内容，保留来源、版权及许可证文本**。无需为 GPL、MIT、WTFPL 已授权的使用逐条联系规则作者，也无需购买规则。完整来源与声明见 [第三方许可与来源](./THIRD_PARTY_NOTICES.md)。
 
@@ -23,9 +23,13 @@ LoonKit 采用通常的社区开源项目做法：**按照实际上游许可证�
 
 ### 关于旧的内部状态字段
 
-原有构建清单曾把历史来源审阅、独立法律认证和常规开源许可混为 `BLOCKED_REVIEW`、`NOT_CLEARED`。现将**可验证的许可证与署名资料**标为 `LICENSE_NOTICES_DOCUMENTED`，将**未做独立权利认证**单独标为 `NOT_INDEPENDENTLY_REVIEWED`；真机验收已由项目使用者报告通过，标记为 `USER_REPORTED_PASS`（不包含独立 Loon 运行日志）。这些状态不等于“GPL、MIT、WTFPL 都无效”，也不意味着必须付费取得逐条授权。
+原有构建清单曾把历史来源审阅、独立法律认证和常规开源许可混为 `BLOCKED_REVIEW`、`NOT_CLEARED`。现将**可验证的许可证与署名资料**标为 `LICENSE_NOTICES_DOCUMENTED`，将**未做独立权利认证**单独标为 `NOT_INDEPENDENTLY_REVIEWED`；**历史 v6.0.0** 的设备测试曾由使用者报告正常。当前 **v6.5.2** 的维护者反馈为“已完成真机测试，暂未发现其他问题”；但缺少逐项测试结果、设备与 Loon 版本信息，不能标记为已完成全面验收。这些状态不等于“GPL、MIT、WTFPL 都无效”，也不意味着必须付费取得逐条授权。
 
 这些状态应与实际许可证义务分开理解。自动化可以核对保留的许可证和来源记录，**但既不能自动授予任何第三方权利，也不能代替维护者对具体争议素材的判断**。如果某一素材明确不允许当前用途，就针对素材调整、替换或取得单独许可，而不是让整个项目陷入不可执行的逐行审批。
+
+### 当前发布入口与历史
+
+截至 2026-10-22 复核，GitHub Releases 当前为空。旧 Release/Tag 不自动恢复；历史下载链接可能失效。唯一当前下载入口：[main/LoonKit.lcf](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf)，发布新版本需维护者明确授权。
 
 ### 常用核验命令
 
@@ -37,6 +41,8 @@ python3 scripts/license_evidence.py --check
 node --check scripts/v20261022r11/media-unlock.js
 node --check scripts/v20261022r11/node-intelligence.js
 node --check scripts/v20261022r11/network-diagnostics.js
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+node --test tests/diagnostics.test.cjs
 
 ```
 
