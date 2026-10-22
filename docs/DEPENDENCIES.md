@@ -1,6 +1,6 @@
 # 正式版依赖与固定版本引用
 
-> 本文描述当前 `main` 的 **LoonKit v6.5.2**，不包含已移除的旧版插件或图标目录。引用的提交号是为了保持远程资源不可变，**不能随意改写 Git 历史**。
+本文记录 **LoonKit v6.5.2** 的正式资源及其固定提交，供更新、排错和完整性校验使用。
 
 ## 正式运行链
 
@@ -14,7 +14,7 @@
 | 网络与 DNS 诊断脚本 | [`scripts/v20261022r11/network-diagnostics.js`](../scripts/v20261022r11/network-diagnostics.js) | `db83bbe402c40c4ec5bb2421115989126fd5bf05` |
 | 流媒体与 AI 地区检测脚本 | [`scripts/v20261022r11/media-unlock.js`](../scripts/v20261022r11/media-unlock.js) | `db83bbe402c40c4ec5bb2421115989126fd5bf05` |
 
-**服务诊断工具：** 现有网络辅助插件已加入第三个服务检测工具，使用上述版本化服务诊断脚本，无需单独添加第二个插件。旧版独立插件已不再维护，历史版本可在对应 Release 查看；[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 仍在用户电脑上运行。
+网络辅助插件集成三个诊断入口，加载表中列出的版本化脚本。[离线规则与脱敏日志分析](../scripts/route_diagnostics.py) 可在本地电脑运行。
 
 调用关系为 `LoonKit.lcf` → 固定提交的 `release/Network_Diagnostics.plugin` → 版本化节点入口与出口、网络/DNS、服务诊断脚本与插件图标。Loon 中更新正式配置后，还应刷新远程插件及脚本缓存。
 
@@ -22,16 +22,16 @@
 
 ## 规则构建与发布验证
 
-冻结规则输入由 `rules/inputs/`（33 份）和 `rules/custom/`（10 份）构成，`build/engine_manifest.json` 与 `build/sources.lock.json` 固定其输入，`scripts/rule_engine.py` 构建 26 份固定正式远程规则。v6.1.0 在主配置中额外启用 62 条来源于冻结输入的审阅域名规则，审阅记录位于 [服务覆盖清单](../rules/service_coverage_v6.1.0.json)。**正式输出不能作为自己的输入**。
+冻结规则输入由 `rules/inputs/`（33 份）和 `rules/custom/`（10 份）构成，`build/engine_manifest.json` 与 `build/sources.lock.json` 固定其输入，`scripts/rule_engine.py` 构建 26 份固定正式远程规则。v6.1.0 在主配置中额外启用 62 条来源于冻结输入的审阅域名规则，审阅记录位于 [服务覆盖清单](../rules/service_coverage_v6.1.0.json)。正式规则由锁定的上游及本地输入生成，输出不参与源数据构建。
 
 校验入口：`scripts/source_lock.py --check`、`scripts/verify_release.py --check`；需要逐个检查固定远程链接时另外执行 `scripts/verify_release.py --check --remote`。静态校验和语法检查由主 CI 执行；主 CI 为 [`ci.yml`](../.github/workflows/ci.yml)。
 
 远程上游目录 `rules/sources.json` 记录 87 个历史来源，`scripts/upstream_review.py` 仅生成待审快照和差异，不覆盖冻结输入或正式规则。每周 [`rules-update.yml`](../.github/workflows/rules-update.yml) 负责只读候选审核，[`upstream-live-audit.yml`](../.github/workflows/upstream-live-audit.yml) 用于真实上游完整性复核；[`release.yml`](../.github/workflows/release.yml) **只生成手动候选，不自动发布**。
 
-## 历史兼容与权利声明
+## 兼容性与许可
 
-旧 DNSPod 完整配置、旧版 `rules/generated/`、`ProxyProtect.list`、`rules/active_profile.json` 及旧插件别名已从主分支清理。引用**已删除的动态路径**的旧配置可能无法更新；使用历史固定提交 URL 的资源仍可访问。清理主分支文件不等于改写 Git 历史。
+早期配置中的动态资源路径可能与当前版本不同；请使用上述固定资源路径更新配置。历史资源及变更记录可通过 Git 提交历史查阅。
 
-项目自有可授权部分采用 [GPL-2.0-only](../LICENSE)，第三方素材沿用各自许可证与版权；详见 [第三方声明](./THIRD_PARTY_NOTICES.md)。发布验收还应区分 CI 完整性检查、Loon 真机验证和正式 GitHub Release，不能把任一项混为全部完成。
+项目原创且有权授权的部分采用 [GPL-2.0-only](../LICENSE)，第三方素材依照各自许可证与版权声明使用；见 [第三方来源](./THIRD_PARTY_NOTICES.md)。发布流程见 [发布检查](./RELEASE_READINESS.md)。
 
 [维护流程](./MAINTAINING.md) · [DNS 说明](./DNS_PRIVACY.md) · [规则安全机制](./RULE_SAFETY.md) · [回到 README](../README.md)

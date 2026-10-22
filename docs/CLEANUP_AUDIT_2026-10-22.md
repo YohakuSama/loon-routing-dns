@@ -16,10 +16,10 @@
 
 ## 未删除的服务端历史
 
-本节的 **462 条 Actions / 4 个 Releases** 是此前清理记录留下的历史观察，不代表当前服务端状态。2026-10-22 本次复核时，GitHub Releases API 返回空列表；无法据此推断历史 Release 的删除者、时间或原因，**本次未恢复、删除或创建任何 Release/Tag**。当前工具无法逐项核实历史 Actions 数量及保留期设置；没有再次批量删除记录。删除工作流源文件并不等于删除服务器端运行记录。
+清理前的历史统计曾记录 462 条 Actions 运行和 4 个 GitHub Releases；2026-10-22 的仓库复核中，Releases API 返回空列表。记录中未包含历史 Release 消失的具体原因。
 
-历史的 SHA 固定 URL 可能被旧配置使用。清理主分支中的旧文件不代表已经消除 Git 历史对象，也不能保证 GitHub 立即释放存储空间。
+此次维护未创建或恢复 Release/Tag，也没有执行 Actions 运行记录批量删除。工作流文件的整理不影响 Git 提交历史；现役配置仍引用固定的历史资源提交。
 
 ## 验证边界
 
-原清理 PR 删除测试目录后，main CI 不再提供原有逐平台动态模拟回归；这是清理时的验证缺口。安全维护 PR 现补回独立的 Python 断言测试及 Node Loon API 模拟测试，并重新接入 main CI。它们不修改探测地址、请求头、区域判定、DNS/TUN 或策略组；模拟测试和 CI 不代替 v6.5.2 真机逐项验收。
+清理时移除了旧测试目录。后续 [安全维护 PR #94](https://github.com/YohakuSama/loonkit/pull/94) 恢复了 Python 断言测试和 Node.js 诊断模拟回归，并接入 Production CI；正式配置及网络行为未变。v6.5.2 真机测试记录另见 [设备测试](./DEVICE_TEST_STATUS.md)。
