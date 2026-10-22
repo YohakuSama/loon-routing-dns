@@ -19,7 +19,7 @@ const u0=read("scripts/v20261022r9/media-unlock.js");
 const u1=read("scripts/v20261022r10/media-unlock.js");
 assert.equal(strip(u0,"  function output(){","  function done(){"),
   strip(u1,"  function output(){","  function done(){"),"Seven platform probe logic must be unchanged");
-for(const source of [n1,w1,u1]){assert(!source.includes("htmlMessage"));assert(source.includes("v6.5.2"));}
+for(const source of [n1,read("scripts/v20261022r10/network-diagnostics.js"),u1]){assert(!source.includes("htmlMessage"));assert(source.includes("v6.5.2"));}
 const p=read("release/Network_Diagnostics.plugin");
 assert.equal((p.match(/^generic then script\(/gm)||[]).length,3);
 assert.equal((p.match(/^network-changed then script\(/gm)||[]).length,1);
