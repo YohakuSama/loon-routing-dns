@@ -7,7 +7,7 @@
   var name = (typeof $script === "object" && $script && $script.name) || "";
   var automatic = name === "网络切换异常监测";
   var DIRECT_URL = "http://wifi.vivo.com.cn/generate_204";
-  var MANUAL_URL = "http://cp.cloudflare.com/";
+  var MANUAL_URL = "https://www.gstatic.com/generate_204";
   var ALERT_KEY = "loonkit:v4:network-alert";
   var COOLDOWN = 30 * 60 * 1000;
   var finished = false;
@@ -161,7 +161,7 @@
   function display(node,direct,proxy,dns) {
     var failure=proxy.ok===false||direct.ok===false||dns.ok===false;
     var uncertain=proxy.ok===null||direct.ok===null||dns.ok===null;
-    var headline=failure?"部分检测失败":uncertain?"部分结果需确认":"网络连接正常";
+    var headline=failure?"部分检测失败":uncertain?"网络已响应，部分结果需确认":"网络正常";
     var shown=safe(node);
     if(shown.length>40)shown=shown.slice(0,23)+"…"+shown.slice(-12);
     return {title:"网络检测",content:[
@@ -172,8 +172,8 @@
       "直连请求："+compact(direct),
       "DNS："+(dns.ok===true?"正常":dns.ok===false?"失败":"需确认")+" · "+dns.detail,
       "",
-      "以上为 HTTP 请求耗时，不代表节点测速延迟",
-      "目标：cp.cloudflare.com",
+      "注：以上是请求耗时，不是节点测速延迟",
+      "目标：www.gstatic.com/generate_204",
       "LoonKit v6.5.1"
     ].join("\n")};
   }
