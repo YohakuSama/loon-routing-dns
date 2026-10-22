@@ -95,7 +95,7 @@ check("nodeInfo supports Loon's current node-menu metadata",()=>{
 });
 check("plugin entry resolves nested Proxy / Auto group to concrete selected node",()=>{
   const r=run({params:{},targetPolicy:"Proxy",selections:{Proxy:"Auto",Auto:"SG Node"}});
-  const p=manual(r);assert.match(p.content,/节点：SG Node/);
+  const p=manual(r);assert.match(p.content,/【检测节点】\nSG Node/);
   assert.equal(r.requests.filter(x=>!x.native)[1].node,"SG Node");
 });
 check("selection snapshot fallback works when selected-policy API returns empty",()=>{
