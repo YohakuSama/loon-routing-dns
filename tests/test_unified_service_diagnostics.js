@@ -102,9 +102,9 @@ assert.equal(rows(chatBlocked)["ChatGPT"],"未解锁");
 const chatGeneric=run(req=>req.url.includes("chatgpt.com/")?{status:403,body:"Cloudflare challenge"}:
   req.url.includes("ios.chat.openai.com/")?{status:403,body:"access denied"}:{status:503});
 assert.equal(rows(chatGeneric)["ChatGPT"],"检测失败");
-const chatIOS=run(req=>req.url.includes("chatgpt.com/")?{status:403,body:"Cloudflare challenge"}:
-  req.url.includes("ios.chat.openai.com/")?{status:403,body:"request is not allowed. please try again later."}:
-  req.url.includes("cdn-cgi/trace")?{body:"loc=JP\n"}:{status:503});
+const chatIOS=run(req=>req.url.includes("cdn-cgi/trace")?{body:"loc=JP\n"}:
+  req.url.includes("chatgpt.com/")?{status:403,body:"Cloudflare challenge"}:
+  req.url.includes("ios.chat.openai.com/")?{status:403,body:"request is not allowed. please try again later."}:{status:503});
 assert.equal(rows(chatIOS)["ChatGPT"],"已解锁（JP）");
 const failed=run(()=>({status:503}));
 assert(services.every(s=>rows(failed)[s]==="检测失败"));
