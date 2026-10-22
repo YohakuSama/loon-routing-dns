@@ -37,6 +37,24 @@ jobs:
           node --check scripts/v20261022r11/node-intelligence.js
           node --check scripts/v20261022r11/network-diagnostics.js
           node --check scripts/v20261022r11/media-unlock.js
+      - name: Native results are concise without changing probes
+        run: |
+          node - <<'JS'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const read = p => fs.readFileSync(p, 'utf8');
+          const media = read('scripts/v20261022r11/media-unlock.js');
+          const node = read('scripts/v20261022r11/node-intelligence.js');
+          const network = read('scripts/v20261022r11/network-diagnostics.js');
+          const plugin = read('release/Network_Diagnostics.plugin');
+          assert(!media.includes('7 项平台检测'));
+          for (const word of ['DAZN','Discovery+','Paramount+','Disney+','Netflix','ChatGPT','YouTube Premium']) assert(media.includes(word));
+          assert(media.includes('test(it[0]') && media.includes('setTimeout(done,22000)'));
+          assert(node.includes('风险评分') && node.includes('网络特征'));
+          assert(network.includes('连接状态') && network.includes('nativeDns('));
+          assert.equal((plugin.match(/^generic then script\(/gm)||[]).length,3);
+          assert.equal((plugin.match(/^network-changed then script\(/gm)||[]).length,1);
+          JS
       - name: No mutation of production content
         run: |
           git diff --exit-code -- LoonKit.lcf LoonKit.PrivacyDNS.lcf rules/releases/ icons/ plugins/

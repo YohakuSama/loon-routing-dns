@@ -1,9 +1,9 @@
-# LoonKit v6.5.2 校验
+# LoonKit v6.5.2 当前配置校验
 
-正式配置 `LoonKit.lcf` SHA256：
+主分支配置 `LoonKit.lcf` SHA256：
 
 ```text
-7bdac10a240fe4e7913a034a408fcb588014205f237b0a2c22d94bfdc5b9aca6  LoonKit.lcf
+e98dc568485ac4be1240a475e6c2beee60feb9ab5ce3afc19e7d96be81f6a5de  LoonKit.lcf
 ```
 
-完整性校验不代表真实 iOS Loon 弹窗验收。
+校验仅证明文件内容一致；iOS/iPadOS Loon 的原生弹窗布局仍需真机确认。
