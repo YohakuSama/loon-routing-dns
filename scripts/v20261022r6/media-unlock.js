@@ -190,15 +190,13 @@
       coming:"未解锁",
       failed:"检测失败"
     }[v.state]||"检测失败";
-    if((v.state==="supported"||v.state==="full")&&v.geo)
-      return label+"（"+v.geo+"）";
     return label;
   }
   function output(){
     var showNode=node.length>32?node.slice(0,24)+"…"+node.slice(-5):node;
     var lines=["节点："+showNode];
     items.forEach(function(s){lines.push(s[1]+"："+present(result[s[0]]));});
-    lines.push("","LoonKit v6.4.7");
+    lines.push("","LoonKit v6.4.8");
     return {title:"解锁检测",content:lines.join("\n")};
   }
   function done(){if(closed)return;closed=true;$done(output());}

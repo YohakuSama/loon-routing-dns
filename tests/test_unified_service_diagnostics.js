@@ -4,7 +4,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const script=fs.readFileSync(path.join(root,"scripts/v20261022r5/media-unlock.js"),"utf8");
+const script=fs.readFileSync(path.join(root,"scripts/v20261022r6/media-unlock.js"),"utf8");
 const services=["DAZN","Discovery+","Paramount+","Disney+","Netflix","ChatGPT","YouTube Premium"];
 function run(reply,options={}){
   const sent=[],pending=[],output=[],timers=[];
@@ -30,9 +30,10 @@ function run(reply,options={}){
 function rows(test){
   assert.equal(test.output.length,1);
   const content=test.output[0].content;
-  assert.match(content,/LoonKit v6\.4\.7/);
+  assert.match(content,/LoonKit v6\.4\.8/);
   assert(!/Spotify：|TikTok：|Gemini：|Claude：|待确认|仅检测公开地区|节点解锁查询|完整支持|即将登陆|支持自制剧集|⟦|🎉|⚠️|🚫|➟/.test(content));
   assert.equal(test.output[0].title,"解锁检测");
+  assert(!/（[A-Z]{2}）/.test(content),"unlock list must omit per-service regions");
   const data={};
   for(const name of services){
     const matches=content.split("\n").filter(x=>x.startsWith(name+"："));
@@ -54,13 +55,13 @@ const normal=run(req=>{
   return {body:""};
 });
 const yes=rows(normal);
-assert.equal(yes["DAZN"],"已解锁（JP）");
+assert.equal(yes["DAZN"],"已解锁");
 assert.equal(yes["Discovery+"],"已解锁");
 assert.equal(yes["Paramount+"],"已解锁");
-assert.equal(yes["Disney+"],"已解锁（JP）");
-assert.equal(yes["Netflix"],"完整解锁（JP）");
-assert.equal(yes["ChatGPT"],"已解锁（JP）");
-assert.equal(yes["YouTube Premium"],"已解锁（JP）");
+assert.equal(yes["Disney+"],"已解锁");
+assert.equal(yes["Netflix"],"完整解锁");
+assert.equal(yes["ChatGPT"],"已解锁");
+assert.equal(yes["YouTube Premium"],"已解锁");
 assert(normal.maxActive<=7);
 assert(normal.sent.every(x=>x.node==="Selected-JP"&&x.insecure===false));
 assert(!normal.sent.some(x=>/gemini|spotify|tiktok|claude|fast\.com/.test(x.url)));
@@ -105,7 +106,7 @@ assert.equal(rows(chatGeneric)["ChatGPT"],"检测失败");
 const chatIOS=run(req=>req.url.includes("cdn-cgi/trace")?{body:"loc=JP\n"}:
   req.url.includes("chatgpt.com/")?{status:403,body:"Cloudflare challenge"}:
   req.url.includes("ios.chat.openai.com/")?{status:403,body:"request is not allowed. please try again later."}:{status:503});
-assert.equal(rows(chatIOS)["ChatGPT"],"已解锁（JP）");
+assert.equal(rows(chatIOS)["ChatGPT"],"已解锁");
 const failed=run(()=>({status:503}));
 assert(services.every(s=>rows(failed)[s]==="检测失败"));
 const stalled=run(()=>({status:503}),{stall:true,fireTimeout:true});
@@ -116,5 +117,5 @@ const invalid=run(()=>({status:200}),{params:{node:"bad\nnode"}});
 assert.equal(invalid.sent.length,0);
 assert.match(invalid.output[0].content,/节点名称无效/);
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
-assert(plugin.includes("scripts/v20261022r5/media-unlock.js"));
+assert(plugin.includes("scripts/v20261022r6/media-unlock.js"));
 console.log("Unlock transport, regional verdict and WAF/reachability regression: PASS");

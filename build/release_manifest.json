@@ -1,14 +1,14 @@
 {
   "device_test": "V6_4_2_RUNTIME_PENDING",
-  "label": "v6.4.7",
+  "label": "v6.4.8",
   "licenses": "NOTICES_DOCUMENTED_NOT_INDEPENDENTLY_CERTIFIED",
   "locked_inputs_path": "build/sources.lock.json",
   "maintainer_approval": "USER_REQUESTED_PUBLISH_WITH_RUNTIME_TEST_BY_USER",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
   "plugin_path": "release/Network_Diagnostics.plugin",
-  "plugin_sha256": "c137899da17a7d07f5f71b51c7d4d36f4d68e970889e68ed5c5f35f94d2ad39e",
+  "plugin_sha256": "d56a001a0eb660c845afa5ee2947a776447146be90001dd567acb2c4262328bb",
   "profile_sha256": {
-    "LoonKit.lcf": "2c40ad0d866da9a6a52ee303d7121b991468ea4809cdfe7b38c3e7feca8e9766"
+    "LoonKit.lcf": "0d5fa7d243be73bc4f7f692abccf414ecca56550283d638a765b0ca2d2f3715a"
   },
   "remote_rule_count": 197765,
   "remote_subscription_count": 26,
