@@ -1,6 +1,6 @@
-# LoonKit v6.5.1 维护流程
+# LoonKit v6.5.2 维护流程
 
-唯一正式入口：`LoonKit.lcf`。自 v6.1.0 起的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。v6.3.0 的历史发布由 `publish-v63.yml` 处理；v6.5.1 当前配置在主分支更新，尚未宣称真机验收，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
+唯一正式入口：`LoonKit.lcf`。自 v6.1.0 起的 62 条补充规则记录在 `rules/service_coverage_v6.1.0.json`，随主配置分发；26 份历史固定规则未被覆盖。v6.3.0 的历史发布由 `publish-v63.yml` 处理；v6.5.2 当前配置在主分支更新，尚未宣称真机验收，旧版 `publish-v6.yml` 在活动版本变化后不再更新历史 v6.0.0 Release。唯一发布规则目录：`rules/releases/vNext-RC2/`。正式策略图标统一存放于 `icons/v20261021r1/`，正式插件位于 `release/Network_Diagnostics.plugin`。已发布的旧固定提交 URL 保持可访问，旧文件不再出现在 `main` 的活动目录。
 
 ## 构建
 
@@ -27,7 +27,7 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## 网络诊断插件固定引用
 
-主配置中的现役插件引用 `103a9390fe588018953dd3db9185568bacbd5763` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `e486d32e4b07e66f72ecfde627f1d5414d9a30bf` 的 `scripts/v20261022r9/network-diagnostics.js`；节点出口脚本引用 `edac8c9f51de9ad6e2a9a969752a31490c4cfd44`，原有插件图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，手动服务检测脚本引用 `0104b576628cf3629d4b032b9206960017465724` 的 `scripts/v20261022r9/media-unlock.js`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
+主配置中的现役插件引用 `103a9390fe588018953dd3db9185568bacbd5763` 的 `release/Network_Diagnostics.plugin`。诊断脚本引用 `e486d32e4b07e66f72ecfde627f1d5414d9a30bf` 的 `scripts/v20261022r10/network-diagnostics.js`；节点出口脚本引用 `edac8c9f51de9ad6e2a9a969752a31490c4cfd44`，原有插件图标仍引用 `97c48a5d14087597dbba35119d5ee8d43b1ce537`，手动服务检测脚本引用 `0104b576628cf3629d4b032b9206960017465724` 的 `scripts/v20261022r10/media-unlock.js`。更新脚本时，应先提交版本化脚本，后提交固定脚本引用的插件，再更新正式配置中的插件提交号和 `build/release_manifest.json` 的 SHA256。不可将已发布脚本直接覆盖，也不可自动改写 DNS 或规则。
 
 
 ## 服务检测脚本与用户文案
@@ -38,7 +38,7 @@ python3 -m unittest discover -s tests -p 'test_production.py' -v
 
 ## 网络诊断脚本维护
 
-现役网络诊断脚本版本为 `scripts/v20261022r9/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本从主分支删除，但对应固定提交仍可通过历史访问，不重写已发布 Git 历史。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
+现役网络诊断脚本版本为 `scripts/v20261022r10/network-diagnostics.js`，正式插件通过固定 Git Commit 引用它；旧脚本从主分支删除，但对应固定提交仍可通过历史访问，不重写已发布 Git 历史。对外诊断结论应区分连通性成功、DNS 解析成功和 DNS 传输协议元数据待确认。网络切换通知由 `$notification.post` 输出中文标题、摘要和正文；默认不启用。
 
 ## 新版 Git 历史
 

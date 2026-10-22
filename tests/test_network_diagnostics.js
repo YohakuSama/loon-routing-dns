@@ -5,7 +5,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const ROOT=path.resolve(__dirname,"..");
-const source=fs.readFileSync(path.join(ROOT,"scripts/v20261022r9/network-diagnostics.js"),"utf8");
+const source=fs.readFileSync(path.join(ROOT,"scripts/v20261022r10/network-diagnostics.js"),"utf8");
 let passed=0;
 function check(name,fn){
   try{fn();passed++;console.log("PASS",name);}
@@ -66,7 +66,7 @@ function manual(r){
   assert.equal(result.title,"网络检测");
   assert(typeof result.content==="string");
   assert.equal(result.htmlMessage,undefined);
-  assert(result.content.includes("v6.5.1"));
+  assert(result.content.includes("v6.5.2"));
   return result;
 }
 check("single node from context, same measurement target for direct and selected node",()=>{
@@ -78,7 +78,7 @@ check("single node from context, same measurement target for direct and selected
   assert(req.every(x=>x.url==="https://www.gstatic.com/generate_204"));
   assert(req.every(x=>x.timeout===6500&&x["auto-redirect"]===false));
   assert(!req.some(x=>x.node==="Proxy"));
-  assert.match(p.content,/节点：JP Individual/);
+  assert.match(p.content,/【检测节点】\nJP Individual/);
   assert.match(p.content,/网络正常/);
   assert.match(p.content,/www\.gstatic\.com\/generate_204/);
   assert.match(p.content,/解析成功/);
@@ -95,7 +95,7 @@ check("nodeInfo supports Loon's current node-menu metadata",()=>{
 });
 check("plugin entry resolves nested Proxy / Auto group to concrete selected node",()=>{
   const r=run({params:{},targetPolicy:"Proxy",selections:{Proxy:"Auto",Auto:"SG Node"}});
-  const p=manual(r);assert.match(p.content,/节点：SG Node/);
+  const p=manual(r);assert.match(p.content,/【检测节点】\nSG Node/);
   assert.equal(r.requests.filter(x=>!x.native)[1].node,"SG Node");
 });
 check("selection snapshot fallback works when selected-policy API returns empty",()=>{
@@ -150,7 +150,8 @@ check("HTTP 503 is uncertain, not a proxy outage verdict",()=>{
 check("timeout on node reports failure without changing selected policy",()=>{
   const r=run({nodeFail:true}),p=manual(r);
   assert.match(p.content,/部分检测失败/);
-  assert.match(p.content,/节点请求：失败.*超时/);
+  assert.match(p.content,/节点请求：失败/);
+  assert.match(p.content,/节点说明：超时/);
 });
 check("native DoH metadata and success are retained",()=>{
   const r=run(),p=manual(r);
@@ -206,7 +207,7 @@ check("auto monitor treats redirects as inconclusive and does not notify",()=>{
 });
 check("plugin points to the current node-specific diagnostic script",()=>{
   const plugin=fs.readFileSync(path.join(ROOT,"release/Network_Diagnostics.plugin"),"utf8");
-  assert(plugin.includes("scripts/v20261022r9/network-diagnostics.js"));
+  assert(plugin.includes("scripts/v20261022r10/network-diagnostics.js"));
   assert.equal(plugin.split("\n").filter(x=>x.startsWith("generic then script(")).length,3);
   assert.match(plugin,/auto_check = switch,false/);
 });

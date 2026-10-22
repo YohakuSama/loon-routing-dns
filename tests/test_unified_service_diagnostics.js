@@ -4,7 +4,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const script=fs.readFileSync(path.join(root,"scripts/v20261022r9/media-unlock.js"),"utf8");
+const script=fs.readFileSync(path.join(root,"scripts/v20261022r10/media-unlock.js"),"utf8");
 const services=["DAZN","Discovery+","Paramount+","Disney+","Netflix","ChatGPT","YouTube Premium"];
 function run(reply,options={}){
   const sent=[],pending=[],output=[],timers=[];
@@ -30,7 +30,7 @@ function run(reply,options={}){
 function rows(test){
   assert.equal(test.output.length,1);
   const content=test.output[0].content;
-  assert.match(content,/LoonKit v6\.5\.1/);
+  assert.match(content,/LoonKit v6\.5\.2/);
   assert(!/Spotify：|TikTok：|Gemini：|Claude：|待确认|仅检测公开地区|节点解锁查询|完整支持|即将登陆|支持自制剧集|⟦|🎉|⚠️|🚫|➟/.test(content));
   assert.equal(test.output[0].title,"解锁检测");
   assert(!/（[A-Z]{2}）/.test(content),"unlock list must omit per-service regions");
@@ -117,5 +117,5 @@ const invalid=run(()=>({status:200}),{params:{node:"bad\nnode"}});
 assert.equal(invalid.sent.length,0);
 assert.match(invalid.output[0].content,/节点名称无效/);
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
-assert(plugin.includes("scripts/v20261022r9/media-unlock.js"));
+assert(plugin.includes("scripts/v20261022r10/media-unlock.js"));
 console.log("Unlock transport, regional verdict and WAF/reachability regression: PASS");
