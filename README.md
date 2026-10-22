@@ -16,6 +16,8 @@ LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整�
 
 配置入口为 `LoonKit.lcf`。**配置不提供代理节点**，需要自行添加节点或订阅。截至 2026-10-22，GitHub Releases 没有可供下载的当前条目，请以本仓库 Raw 配置为准。
 
+**v6.5.2 真机反馈**：维护者已在 Loon 真机测试，报告**未发现任何异常**。这是维护者的实际使用反馈；尚未提供设备型号、Loon Build 和逐项验收记录，不代表自动化或第三方已完成全面真机验收。详情见[真机测试记录](./docs/DEVICE_TEST_STATUS.md)。
+
 ## 快速开始
 
 **[下载 / 导入 LoonKit.lcf](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf)** · [查看配置内容](./LoonKit.lcf)
