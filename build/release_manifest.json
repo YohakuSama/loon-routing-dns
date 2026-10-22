@@ -1,6 +1,6 @@
 {
-  "device_test": "V6_5_2_USER_REPORTED_NO_OTHER_ISSUES_FULL_CHECKLIST_UNDOCUMENTED",
-  "label": "v6.5.2",
+  "device_test": "V6_5_3_NEW_POLICY_DEVICE_TEST_PENDING_PRIOR_V6_5_2_NO_ANOMALIES",
+  "label": "v6.5.3",
   "licenses": "NOTICES_DOCUMENTED_NOT_INDEPENDENTLY_CERTIFIED",
   "locked_inputs_path": "build/sources.lock.json",
   "maintainer_approval": "MAINTENANCE_ONLY_NO_NEW_RELEASE_OR_TAG_AUTHORIZED",
@@ -198,7 +198,7 @@
   },
   "schema_version": 1,
   "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
-  "stage": "POLICY_TUNING_CANDIDATE_DEVICE_VALIDATION_PENDING",
+  "stage": "V6_5_3_POLICY_TUNING_NO_DEVICE_RUNTIME_ATTESTATION",
   "upstream_historical_lineage": "UNRECOVERABLE",
   "device_test_evidence": null
 }
