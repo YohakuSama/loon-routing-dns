@@ -27,9 +27,36 @@ def section(profile, name):
     return profile[start:end if end >= 0 else None]
 
 
+
+def check_public_checksums(root: Path, release: dict, spec: dict) -> str:
+    """Read-only agreement check; never regenerate a release manifest or profile."""
+    version = spec["stable_release_version"]
+    digest = sha((root / "LoonKit.lcf").read_bytes())
+    if release["label"] != version or release["profile_sha256"] != {"LoonKit.lcf": digest}:
+        raise ValueError("published profile/manifest checksum or version mismatch")
+
+    expected_doc = root / "docs" / ("RELEASE_CHECKSUM_" + version + ".md")
+    expected_sums = root / "release" / ("SHA256SUMS." + version)
+    # The cleanup intentionally left only the current public checksum pair.
+    if (sorted((root / "docs").glob("RELEASE_CHECKSUM_*.md")) != [expected_doc]
+            or sorted((root / "release").glob("SHA256SUMS.*")) != [expected_sums]):
+        raise ValueError("unexpected missing, stale or duplicate public checksum files")
+    expected_line = digest + "  LoonKit.lcf"
+    sums = expected_sums.read_text(encoding="utf-8")
+    if sums != expected_line + "\n":
+        raise ValueError("release SHA256SUMS does not match the actual profile")
+    document = expected_doc.read_text(encoding="utf-8")
+    if (version not in document or
+            re.findall(r"(?m)^[0-9a-f]{64}  LoonKit\\.lcf$", document) != [expected_line] or
+            len(re.findall(r"\\b[0-9a-f]{64}\\b", document)) != 1):
+        raise ValueError("release checksum documentation does not match profile")
+    return digest
+
+
 def verify(remote=False):
     spec = json.loads((ROOT/"build/release_spec.json").read_text())
     release = json.loads((ROOT/"build/release_manifest.json").read_text())
+    check_public_checksums(ROOT, release, spec)
     checked = check_lock(ROOT)
     compiled = {key.removeprefix("build/generated/"): data.encode("utf-8")
                 for key, data in compile_rules(ROOT).items()
