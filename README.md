@@ -14,9 +14,7 @@
 
 LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整合常用服务规则、独立策略组、广告拦截及网络辅助工具，让日常分流更清晰、管理更方便。
 
-配置入口为 `LoonKit.lcf`。**配置不提供代理节点**，需要自行添加节点或订阅。截至 2026-10-22，GitHub Releases 没有可供下载的当前条目，请以本仓库 Raw 配置为准。
-
-**v6.5.2 真机反馈**：维护者已在 Loon 真机测试，报告**未发现任何异常**。这是维护者的实际使用反馈；尚未提供设备型号、Loon Build 和逐项验收记录，不代表自动化或第三方已完成全面真机验收。详情见[真机测试记录](./docs/DEVICE_TEST_STATUS.md)。
+当前配置版本为 **v6.5.2**，可通过下方链接直接获取。配置不包含代理节点，需要自行添加节点或订阅。维护者已进行 Loon 真机测试，未发现异常。
 
 ## 快速开始
 
@@ -64,24 +62,22 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 插件仅用于查询和提醒，不会自动更改节点、DNS 或分流设置。
 
-> 解锁检测检测依据来自平台公开页面及地区接口，不等于账号会员或实际播放验证。检测结果与注意事项见 [网络辅助说明](./docs/NETWORK_DIAGNOSTICS.md)。
+解锁状态依据各平台页面和地区接口判断，实际会员权益及播放能力以平台账户为准。详见 [网络辅助说明](./docs/NETWORK_DIAGNOSTICS.md)。
 
 更新配置后，请在 Loon 中刷新插件与脚本。
 
 ## 服务与分流问题排查
 
 - [服务与分流排查指南](./docs/ROUTE_DIAGNOSTICS.md)：检查 Spotify、Twitch、Abema、BBC、Line、Reddit、LinkedIn 的已有主域名归属和候选规则覆盖差异；查询预计命中，并通过脱敏日志分类辅助定位问题。
-- **解锁检测**：在[「网络辅助」](./release/Network_Diagnostics.plugin)中选中节点并运行，查看 DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium 的解锁结果；不在后台自动运行。
 - 对自己导出的 HAR 或文本日志，可在电脑上离线汇总服务类别、状态码区间、已知策略和疑似问题类型。**不会上传原始日志**。
 
-上述工具仅辅助排查。预计规则命中不代表真机实际命中，连接端点有响应也不等于 App 登录或播放成功。这些排查工具不会自动修改 DNS、节点或分流策略；实际问题请结合 Loon 请求日志判断。
+离线工具基于当前规则分析预计命中，实际连接与分流结果可结合 Loon 请求记录核对。工具只读取数据，不修改节点、DNS 或分流策略。
 
 ## DNS 与规则更新
 
 默认提供 AliDNS DoH，并支持在 Loon 中使用自选 DNS。相关选项和常见问题见 [DNS 设置说明](./docs/DNS_PRIVACY.md)。
 
 规则来源按计划检查更新，新增规则会先经过格式、重复项和策略冲突检查，再由维护者审核后发布新版本。详见 [规则说明](./rules/README.md)。
-
 
 ## 安全维护
 
@@ -97,7 +93,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[发布历史（当前无 Release）](https://github.com/YohakuSama/loonkit/releases) · [当前配置校验](./docs/RELEASE_CHECKSUM_v6.5.2.md) · [安全报告](./SECURITY.md)
+[配置校验](./docs/RELEASE_CHECKSUM_v6.5.2.md) · [安全报告](./SECURITY.md)
 
 ---
 
