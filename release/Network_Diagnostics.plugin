@@ -17,5 +17,5 @@ compare_direct = switch,false,tag=直连 IP 对照,desc=开启后额外显示当
 [Script]
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/edac8c9f51de9ad6e2a9a969752a31490c4cfd44/scripts/v20261021r3/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点信息", img_url="location.fill.viewfinder.system", timeout=40
 generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with tag="网络检测", img_url="network.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/bd3ddfbee6b9588d70c14bc762c57bc3739921a9/scripts/v20261022r4/media-unlock.js", {${target_policy}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=30
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/9670ebc88a3eeaeeec2418e0ab2ffa34d5c6f85e/scripts/v20261022r5/media-unlock.js", {${target_policy}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=30
 network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d/scripts/v20261021r3/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
