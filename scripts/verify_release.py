@@ -35,12 +35,16 @@ def check_public_checksums(root: Path, release: dict, spec: dict) -> str:
     if release["label"] != version or release["profile_sha256"] != {"LoonKit.lcf": digest}:
         raise ValueError("published profile/manifest checksum or version mismatch")
 
-    # Check both the current profile and the immutable historical v6.5.2 digest.
-    # Published checksum records cannot be overwritten when the main profile changes.
-    legacy = {"v6.5.2": "e98dc568485ac4be1240a475e6c2beee60feb9ab5ce3afc19e7d96be81f6a5de"}
+    # Verify each historical published checksum without rewriting any prior record.
+    legacy = {
+        "v6.5.2": "e98dc568485ac4be1240a475e6c2beee60feb9ab5ce3afc19e7d96be81f6a5de",
+        "v6.5.3": "3ca24609dadd075a31116c75c0358ec252bf301c15c47bc5c1d98b140832c3a1",
+    }
     expected = {version: digest}
-    if version != "v6.5.2":
-        expected.update(legacy)
+    if version in ("v6.5.3", "v6.5.4"):
+        expected["v6.5.2"] = legacy["v6.5.2"]
+    if version == "v6.5.4":
+        expected["v6.5.3"] = legacy["v6.5.3"]
     expected_docs = sorted(root / "docs" / ("RELEASE_CHECKSUM_" + v + ".md") for v in expected)
     expected_sums = sorted(root / "release" / ("SHA256SUMS." + v) for v in expected)
     if (sorted((root / "docs").glob("RELEASE_CHECKSUM_*.md")) != expected_docs
@@ -119,7 +123,7 @@ def verify(remote=False):
 
         if plugins != [(spec["plugin_assets_commit"],"release/Network_Diagnostics.plugin")]:
             raise ValueError("network plugin URL unexpectedly changed")
-        if spec["stable_release_version"] in ("v6.5.2", "v6.5.3"):
+        if spec["stable_release_version"] in ("v6.5.2", "v6.5.3", "v6.5.4"):
             if spec.get("optional_service_plugin_commit") is not None:
                 raise ValueError("obsolete secondary plugin still declared")
             if sum(line.startswith(RAW) and line.endswith(".plugin, enabled=true") for line in section(profile, "Plugin").splitlines()) != 1:
@@ -142,7 +146,7 @@ def verify(remote=False):
     expected_script = "scripts/v20261022r11/network-diagnostics.js"
     node_script = "scripts/v20261022r11/node-intelligence.js"
     service_script = "scripts/v20261022r11/media-unlock.js"
-    if spec["stable_release_version"] in ("v6.5.2", "v6.5.3"):
+    if spec["stable_release_version"] in ("v6.5.2", "v6.5.3", "v6.5.4"):
         if len(embedded) != 5 or sum(path == expected_script for _,path in embedded) != 2 or sum(path == service_script for _,path in embedded) != 1 or sum(path == node_script for _,path in embedded) != 1:
             raise ValueError("unified plugin must contain icon, node, network x2 and service scripts")
     elif len(embedded) != 4 or sum(path == expected_script for _,path in embedded) != 2:
@@ -156,13 +160,13 @@ def verify(remote=False):
             raise ValueError("untrusted plugin script/icon reference: " + path)
         if not (ROOT / path).is_file():
             raise ValueError("missing plugin script/icon resource: " + path)
-    if spec["stable_release_version"] in ("v6.5.2", "v6.5.3"):
+    if spec["stable_release_version"] in ("v6.5.2", "v6.5.3", "v6.5.4"):
         source = plugin.decode("utf-8")
         if source.count("generic then script(") != 3 or source.count("network-changed then script(") != 1:
             raise ValueError("unexpected unified plugin entrypoints")
         if "service = select," in source or "auto_check = switch,false" not in source or 'tag="解锁检测"' not in source:
             raise ValueError("unexpected service selection or missing opt-in reminder")
-    if spec["stable_release_version"] in ("v6.5.2", "v6.5.3"):
+    if spec["stable_release_version"] in ("v6.5.2", "v6.5.3", "v6.5.4"):
         if (ROOT/"release/Service_Diagnostics.plugin").exists():
             raise ValueError("obsolete standalone service plugin remains")
         for obsolete in ("v20261021r3","v20261021r4","v20261021r5","v20261021r6"):

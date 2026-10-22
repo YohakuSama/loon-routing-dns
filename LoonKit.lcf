@@ -1,18 +1,15 @@
-# LoonKit v6.5.3
+# LoonKit v6.5.4
 # Maintainer: @YohakuSama
 # GitHub: https://github.com/YohakuSama/loonkit
 # X: https://x.com/yohakusama
 # Community configuration; not affiliated with Loon.
 
 [General]
-# Restore the pre-migration, device-tested mainland DNS settings (v5.1.0).
-# AliDNS DoH is the configured encrypted resolver; Loon's app-level
-# "encrypted DNS fallback to standard DNS" option must remain OFF for
-# fail-closed operation. The two UDP entries are only compatibility fallback.
+# DNS：优先使用 AliDNS DoH；普通 DNS 回退由 Loon 应用设置控制。
 dns-server = 223.5.5.5,223.6.6.6
 doh-server = https://dns.alidns.com/dns-query
 hijack-dns = *:53
-# UDP/53 interception does not capture third-party DoH/DoT.
+# DNS 劫持覆盖 UDP/53，不包含应用内置的 DoH/DoT 请求。
 ip-mode = dual
 ipv6-vif = auto
 interface-mode = auto
@@ -31,30 +28,29 @@ allow-wifi-access = false
 [Proxy]
 
 [Remote Proxy]
-# Add your own subscription definitions here. Never publish private URLs.
+# 节点和订阅由用户自行添加。
 
 [Remote Filter]
 ALL_Filter = NameRegex, FilterKey = ".*"
-# Independent candidate filters; all nodes remain available until users narrow them.
+# Auto 与 Fallback 分别筛选节点，默认包含全部订阅节点。
 Auto_Filter = NameRegex, FilterKey = ".*"
 Fallback_Filter = NameRegex, FilterKey = ".*"
 
 [Proxy Group]
-# Core
-# All strategy icons are self-hosted under icons/, reviewed for light and dark UI.
+# 基础策略
 Proxy = select,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Proxy.png
 Auto = url-test,Auto_Filter,url = http://cp.cloudflare.com/generate_204,interval = 600,tolerance = 60,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Auto.png
 Fallback = fallback,Fallback_Filter,url = http://cp.cloudflare.com/generate_204,interval = 900,max-timeout = 2200,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Fallback.png
 AdBlock = select,REJECT,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/AdBlock.png
 Final = select,Proxy,Auto,Fallback,DIRECT,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Final.png
 
-# AI and Platforms
+# AI 与平台
 AI = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/AI.png
 Google = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Google.png
 Microsoft = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Microsoft.png
 Apple = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Apple.png
 
-# Streaming
+# 流媒体
 YouTube = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/YouTube.png
 Netflix = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Netflix.png
 Disney = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Disney.png
@@ -69,7 +65,7 @@ Dazn = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercon
 BBC = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/BBC.png
 Bilibili = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Bilibili.png
 
-# Social — brand App Store artwork
+# 社交平台
 Telegram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Telegram.png
 Whatsapp = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Whatsapp.png
 Instagram = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Instagram.png
@@ -80,12 +76,12 @@ Line = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercon
 Reddit = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Reddit.png
 Linkedin = select,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Linkedin.png
 
-# Games and Payments
+# 游戏与支付
 Steam = select,Proxy,Auto,Fallback,DIRECT,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Steam.png
 Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Paypal.png
 
 [Remote Rule]
-# vNext-RC2 pinned content; not an auto-updating branch.
+# 固定版本远程规则。
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/AI.list, policy=AI, tag=Our-AI, enabled=true
@@ -114,7 +110,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe0364
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
 
 [Rule]
-# Reviewed local service exceptions. No independent diagnostic proxy subscription.
+# 本地服务分流规则。
 DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy
 DOMAIN-SUFFIX,openai.com,AI
 DOMAIN-SUFFIX,chatgpt.com,AI
@@ -179,8 +175,7 @@ DOMAIN-SUFFIX,abchina.com,DIRECT
 DOMAIN-SUFFIX,abchina.com.cn,DIRECT
 DOMAIN-SUFFIX,t3go.cn,DIRECT
 DOMAIN-SUFFIX,wo.cn,DIRECT
-# Minimal overseas service selector compatibility; candidate only.
-# Scoped AdBlock overrides precede local overseas service roots.
+# 海外服务和广告分流规则。
 DOMAIN,buttons.reddit.com,AdBlock
 DOMAIN,platform.linkedin.com,AdBlock
 DOMAIN-SUFFIX,a1.api.bbc.co.uk,AdBlock
@@ -221,9 +216,8 @@ DOMAIN-SUFFIX,reddit.com,Reddit
 DOMAIN-SUFFIX,redd.it,Reddit
 DOMAIN-SUFFIX,linkedin.com,Linkedin
 DOMAIN-SUFFIX,licdn.com,Linkedin
-# Scoped service-owned hosts from frozen reviewed upstream inputs; no shared provider wildcard.
-# Local AdBlock exceptions above take precedence over these service suffixes.
-# Spotify · reviewed v6.1.0 domains
+# 常用服务域名。
+# Spotify
 DOMAIN-SUFFIX,byspotify.com,Spotify
 DOMAIN-SUFFIX,pscdn.co,Spotify
 DOMAIN-SUFFIX,spoti.fi,Spotify
@@ -237,14 +231,14 @@ DOMAIN-SUFFIX,spotifycdn.net,Spotify
 DOMAIN-SUFFIX,spotifycharts.com,Spotify
 DOMAIN-SUFFIX,spotifycodes.com,Spotify
 DOMAIN-SUFFIX,spotilocal.com,Spotify
-# Twitch · reviewed v6.1.0 domains
+# Twitch
 DOMAIN-SUFFIX,ext-twitch.tv,Twitch
 DOMAIN-SUFFIX,jtvnw.net,Twitch
 DOMAIN-SUFFIX,live-video.net,Twitch
 DOMAIN-SUFFIX,twitchcdn.net,Twitch
 DOMAIN-SUFFIX,twitchcon.com,Twitch
 DOMAIN-SUFFIX,twitchsvc.net,Twitch
-# Abema · reviewed v6.1.0 domains
+# Abema
 DOMAIN-SUFFIX,abema-tv.com,Abema
 DOMAIN-SUFFIX,abematv.akamaized.net,Abema
 DOMAIN-SUFFIX,abematv.co.jp,Abema
@@ -252,7 +246,7 @@ DOMAIN-SUFFIX,ds-linear-abematv.akamaized.net,Abema
 DOMAIN-SUFFIX,ds-vod-abematv.akamaized.net,Abema
 DOMAIN-SUFFIX,linear-abematv.akamaized.net,Abema
 DOMAIN-SUFFIX,vod-abematv.akamaized.net,Abema
-# BBC · reviewed v6.1.0 domains
+# BBC
 DOMAIN-SUFFIX,bbc.co,BBC
 DOMAIN-SUFFIX,bbc.in,BBC
 DOMAIN-SUFFIX,bbc.net.uk,BBC
@@ -264,7 +258,7 @@ DOMAIN-SUFFIX,bbcverticals.com,BBC
 DOMAIN-SUFFIX,bbc.mp-pxcdn.com,BBC
 DOMAIN-SUFFIX,bbcfmt.hs.llnwd.net,BBC
 DOMAIN-SUFFIX,bbcfmt.s.llnwi.net,BBC
-# Line · reviewed v6.1.0 domains
+# Line
 DOMAIN-SUFFIX,gcld-line.com,Line
 DOMAIN-SUFFIX,lin.ee,Line
 DOMAIN-SUFFIX,line-apps-beta.com,Line
@@ -276,7 +270,7 @@ DOMAIN-SUFFIX,line.biz,Line
 DOMAIN-SUFFIX,linecorp.com,Line
 DOMAIN-SUFFIX,linegame.jp,Line
 DOMAIN-SUFFIX,linemobile.com,Line
-# Reddit · reviewed v6.1.0 domains
+# Reddit
 DOMAIN-SUFFIX,reddit.app.link,Reddit
 DOMAIN-SUFFIX,redditblog.com,Reddit
 DOMAIN-SUFFIX,reddithelp.com,Reddit
@@ -287,7 +281,7 @@ DOMAIN-SUFFIX,redditspace.com,Reddit
 DOMAIN-SUFFIX,redditstatic.com,Reddit
 DOMAIN-SUFFIX,redditstatus.com,Reddit
 DOMAIN-SUFFIX,reddituploads.com,Reddit
-# Linkedin · reviewed v6.1.0 domains
+# Linkedin
 DOMAIN-SUFFIX,linkedin.at,Linkedin
 DOMAIN-SUFFIX,linkedin.cn,Linkedin
 DOMAIN-SUFFIX,licdn.cn,Linkedin

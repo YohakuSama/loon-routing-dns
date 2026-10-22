@@ -1,4 +1,4 @@
-# DNS 设置与检查（v6.5.3）
+# DNS 设置与检查（v6.5.4）
 
 当前配置及 DNS 设置详见 [LoonKit.lcf](../LoonKit.lcf)。
 

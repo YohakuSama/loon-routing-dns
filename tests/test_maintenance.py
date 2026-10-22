@@ -83,6 +83,32 @@ class PublicChecksumTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "documentation"):
             self.check()
 
+    def test_v654_preserves_v653_and_v652_checksums(self):
+        v652 = "e98dc568485ac4be1240a475e6c2beee60feb9ab5ce3afc19e7d96be81f6a5de"
+        v653 = "3ca24609dadd075a31116c75c0358ec252bf301c15c47bc5c1d98b140832c3a1"
+        self.spec["stable_release_version"] = "v6.5.4"
+        self.manifest["label"] = "v6.5.4"
+        self.sums.rename(self.root / "release/SHA256SUMS.v6.5.4")
+        self.doc.rename(self.root / "docs/RELEASE_CHECKSUM_v6.5.4.md")
+        (self.root / "docs/RELEASE_CHECKSUM_v6.5.4.md").write_text(
+            "# v6.5.4\n" + self.digest + "  LoonKit.lcf\n", encoding="utf-8")
+        for version, digest in (("v6.5.2", v652), ("v6.5.3", v653)):
+            (self.root / "release" / ("SHA256SUMS." + version)).write_text(
+                digest + "  LoonKit.lcf\n", encoding="utf-8")
+            (self.root / "docs" / ("RELEASE_CHECKSUM_" + version + ".md")).write_text(
+                "# " + version + " historical\n" + digest + "  LoonKit.lcf\n",
+                encoding="utf-8")
+        self.assertEqual(self.check(), self.digest)
+        old = self.root / "release/SHA256SUMS.v6.5.3"
+        old.write_text(self.digest + "  LoonKit.lcf\n", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "SHA256SUMS"):
+            self.check()
+        old.write_text(v653 + "  LoonKit.lcf\n", encoding="utf-8")
+        self.assertEqual(self.check(), self.digest)
+        (self.root / "docs/RELEASE_CHECKSUM_v6.5.2.md").unlink()
+        with self.assertRaisesRegex(ValueError, "missing"):
+            self.check()
+
     def test_wrong_release_title_is_rejected(self):
         self.manifest["label"] = "v6.5.1"
         with self.assertRaisesRegex(ValueError, "version mismatch"):
