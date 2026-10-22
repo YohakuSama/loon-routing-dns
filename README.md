@@ -95,7 +95,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[配置校验](./docs/RELEASE_CHECKSUM_v6.5.2.md) · [安全报告](./SECURITY.md)
+[配置校验](./docs/RELEASE_CHECKSUM_v6.5.3.md) · [安全报告](./SECURITY.md)
 
 ---
 
