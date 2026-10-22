@@ -30,7 +30,7 @@ function run(reply,options={}){
 function rows(test){
   assert.equal(test.output.length,1);
   const content=test.output[0].content;
-  assert.match(content,/LoonKit v6\.5\.1/);
+  assert.match(content,/LoonKit v6\.5\.2/);
   assert(!/Spotify：|TikTok：|Gemini：|Claude：|待确认|仅检测公开地区|节点解锁查询|完整支持|即将登陆|支持自制剧集|⟦|🎉|⚠️|🚫|➟/.test(content));
   assert.equal(test.output[0].title,"解锁检测");
   assert(!/（[A-Z]{2}）/.test(content),"unlock list must omit per-service regions");
