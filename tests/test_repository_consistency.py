@@ -25,7 +25,7 @@ class RepositoryConsistency(unittest.TestCase):
                               else "rules/releases/vNext-RC2/" if path.startswith("rules/")
                               else path)
                 self.assertIn(documented, dep, "undocumented current dependency " + path)
-        self.assertIn("scripts/v20261021r3/network-diagnostics.js", dep)
+        self.assertIn("scripts/v20261022r8/network-diagnostics.js", dep)
         self.assertIn("release/Network_Diagnostics.plugin", dep)
         self.assertIn("icons/v20261021r1/", dep)
         for stale in ("release/phase-07/", "release/phase-08/",
@@ -62,12 +62,12 @@ class RepositoryConsistency(unittest.TestCase):
         plugin=(ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         profile=(ROOT/"LoonKit.lcf").read_text(encoding="utf-8")
         deps=(ROOT/"docs/DEPENDENCIES.md").read_text(encoding="utf-8")
-        self.assertEqual(spec["stable_release_version"],"v6.4.9")
+        self.assertEqual(spec["stable_release_version"],"v6.5.0")
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertIn(spec["plugin_assets_commit"]+"/release/Network_Diagnostics.plugin",profile)
         for path,key in (
             ("scripts/v20261021r3/node-intelligence.js","node_script_commit"),
-            ("scripts/v20261021r3/network-diagnostics.js","diagnostics_script_commit"),
+            ("scripts/v20261022r8/network-diagnostics.js","diagnostics_script_commit"),
             ("scripts/v20261022r7/media-unlock.js","unified_service_diagnostics_script_commit"),
         ):
             self.assertTrue((ROOT/path).is_file())
@@ -77,6 +77,7 @@ class RepositoryConsistency(unittest.TestCase):
             "release/Service_Diagnostics.plugin",
             "scripts/v20261021r1/node-intelligence.js",
             "scripts/v20261021r2/network-diagnostics.js",
+            "scripts/v20261021r3/network-diagnostics.js",
             "scripts/v20261021r3/service-diagnostics.js",
             "scripts/v20261021r4/service-diagnostics.js",
             "scripts/v20261021r5/service-diagnostics.js",

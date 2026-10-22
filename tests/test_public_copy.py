@@ -92,7 +92,7 @@ class PublicCopyChecks(unittest.TestCase):
         plugin=(ROOT/"release/Network_Diagnostics.plugin").read_text(encoding="utf-8")
         workflow=(ROOT/".github/workflows/publish-v63.yml").read_text(encoding="utf-8")
         notes=(ROOT/"docs/RELEASE_NOTES_v6.3.0.md").read_text(encoding="utf-8")
-        self.assertIn("# LoonKit v6.4.9",profile)
+        self.assertIn("# LoonKit v6.5.0",profile)
         self.assertEqual(profile.count(".plugin, enabled=true"),1)
         self.assertFalse((ROOT/"release/Service_Diagnostics.plugin").exists())
         self.assertNotIn("service = select,",plugin)
@@ -113,7 +113,7 @@ class PublicCopyChecks(unittest.TestCase):
         text=(ROOT/"docs/CHANGELOG.md").read_text(encoding="utf-8")
         headings=re.findall(r"^## (v\d+\.\d+\.\d+)$",text,re.M)
         self.assertGreater(len(headings),0)
-        self.assertEqual(headings[0],"v6.4.9")
+        self.assertEqual(headings[0],"v6.5.0")
         self.assertEqual(len(headings),len(set(headings)),
                          "historical update headings must not all be rewritten to current version")
 
