@@ -82,6 +82,11 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 规则来源按计划检查更新，新增规则会先经过格式、重复项和策略冲突检查，再由维护者审核后发布新版本。详见 [规则说明](./rules/README.md)。
 
+
+## 安全维护
+
+项目维护变更原则上通过独立分支和 Pull Request 提交，合并前要求 `production` CI 检查通过。CI 会核对正式配置校验值、固定资源完整性、规则确定性与回归测试；现役 GitHub Actions 使用经核验的完整提交 SHA 固定版本，并由 Dependabot 提供依赖更新 PR。安全问题请参阅 [安全报告指引](./SECURITY.md)。
+
 ## 文档与支持
 
 [规则与来源](./rules/README.md) · [服务与分流排查](./docs/ROUTE_DIAGNOSTICS.md) · [网络辅助](./docs/NETWORK_DIAGNOSTICS.md) · [DNS 说明](./docs/DNS_PRIVACY.md) · [更新记录](./docs/CHANGELOG.md)
