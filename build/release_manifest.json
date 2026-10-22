@@ -198,7 +198,7 @@
   },
   "schema_version": 1,
   "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
-  "stage": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
+  "stage": "POLICY_TUNING_CANDIDATE_DEVICE_VALIDATION_PENDING",
   "upstream_historical_lineage": "UNRECOVERABLE",
   "device_test_evidence": null
 }
