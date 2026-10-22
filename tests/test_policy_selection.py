@@ -64,10 +64,27 @@ class PolicySelectionTests(unittest.TestCase):
         self.assertEqual(self.general["test-timeout"], "5")
 
     def test_balanced_intervals_and_failover_threshold(self):
-        self.assertIn("interval = 900", self.groups["Auto"])
-        self.assertIn("tolerance = 80", self.groups["Auto"])
+        self.assertIn("interval = 600", self.groups["Auto"])
+        self.assertIn("tolerance = 60", self.groups["Auto"])
         self.assertIn("interval = 900", self.groups["Fallback"])
-        self.assertIn("max-timeout = 1800", self.groups["Fallback"])
+        self.assertIn("max-timeout = 2200", self.groups["Fallback"])
+
+    def test_small_and_large_subscription_names_have_no_default_exclusions(self):
+        # Static filter-regex regression, not an actual Loon network performance test.
+        for size in (1, 6, 120):
+            nodes = [f"Airport-{(i % 3) + 1}-节点-{i}" for i in range(size)]
+            for name in ("ALL_Filter", "Auto_Filter", "Fallback_Filter"):
+                pattern = self.filters[name].split('FilterKey = "', 1)[1].rstrip('"')
+                matched = [node for node in nodes if re.search(pattern, node)]
+                self.assertEqual(matched, nodes, (size, name))
+        self.assertEqual(self.profile.splitlines()[0], "# LoonKit v6.5.3")
+
+    def test_auto_prioritizes_latency_and_fallback_uses_order(self):
+        # Confirm group strategy semantics; Loon makes actual runtime decisions.
+        self.assertTrue(self.groups["Auto"].startswith("url-test,"))
+        self.assertTrue(self.groups["Fallback"].startswith("fallback,"))
+        self.assertNotIn("max-timeout =", self.groups["Auto"])
+        self.assertNotIn("tolerance =", self.groups["Fallback"])
 
     def test_dns_routes_and_plugin_are_unchanged_in_scope(self):
         rules = get_section(self.profile, "Rule")
