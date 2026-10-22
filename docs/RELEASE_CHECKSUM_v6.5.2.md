@@ -3,7 +3,7 @@
 主分支配置 `LoonKit.lcf` SHA256：
 
 ```text
-e65e87c7f716694b9ea0ce555e717cffae615421575c04296c1ca2cce86401ce  LoonKit.lcf
+4e5b3948f827ea8fc6cc193a289fdc47a9cb27bd6b83c8e0e2b0dfcc63f2c410  LoonKit.lcf
 ```
 
 校验仅证明文件内容一致；iOS/iPadOS Loon 的原生弹窗布局仍需真机确认。
