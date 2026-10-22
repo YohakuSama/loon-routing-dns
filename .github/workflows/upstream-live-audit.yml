@@ -4,9 +4,7 @@ on:
     paths:
       - 'scripts/upstream_review.py'
       - 'scripts/verify_upstream_coverage.py'
-      - 'tests/test_upstream_review.py'
-      - 'tests/test_upstream_coverage.py'
-      - 'tests/test_rule_stress.py'
+      - 'tests/test_maintenance.py'
       - 'scripts/rule_engine.py'
       - 'rules/routing_guardrails.json'
       - '.github/workflows/rules-update.yml'
@@ -20,17 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
       - name: Download all 87 sources and generate quarantined review
         run: python3 scripts/upstream_review.py --output "$RUNNER_TEMP/upstream-review"
       - name: Upload source snapshots and risk findings
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: full-upstream-live-review
           path: ${{ runner.temp }}/upstream-review/
