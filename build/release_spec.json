@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "rc_label": "vNext-RC2",
-  "stable_release_version": "v6.5.0",
+  "stable_release_version": "v6.5.1",
   "status": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
   "release_rules_dir": "rules/releases/vNext-RC2",
   "release_assets_dir": "release",
@@ -10,11 +10,11 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Network detection tests one selected node rather than Proxy group; manual probes use the configured bing.com generate_204 target. Native DNS and automatic direct-only alerts retained. Device test pending.",
-  "plugin_assets_commit": "103a9390fe588018953dd3db9185568bacbd5763",
+  "warning": "Single-node HTTP connectivity checks use Google's HTTPS generate_204 endpoint with native compact results; unlock checks restore v6.4.8 evaluation; device validation pending.",
+  "plugin_assets_commit": "5bd2c1411da7ffcaa44f79f0b56c7da87c529751",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
-  "diagnostics_script_commit": "e486d32e4b07e66f72ecfde627f1d5414d9a30bf",
+  "diagnostics_script_commit": "04a9ed5afe0e6e7d25d6ec4e9d29db052f276817",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "0104b576628cf3629d4b032b9206960017465724",
+  "unified_service_diagnostics_script_commit": "04a9ed5afe0e6e7d25d6ec4e9d29db052f276817",
   "node_script_commit": "edac8c9f51de9ad6e2a9a969752a31490c4cfd44"
 }
