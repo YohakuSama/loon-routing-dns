@@ -8,7 +8,7 @@
   "plugin_path": "release/Network_Diagnostics.plugin",
   "plugin_sha256": "0aa39949f5778dc9fd49177ed543069d9a9de93dfbf0952033ffc999d2c287cd",
   "profile_sha256": {
-    "LoonKit.lcf": "e98dc568485ac4be1240a475e6c2beee60feb9ab5ce3afc19e7d96be81f6a5de"
+    "LoonKit.lcf": "e65e87c7f716694b9ea0ce555e717cffae615421575c04296c1ca2cce86401ce"
   },
   "remote_rule_count": 197765,
   "remote_subscription_count": 26,
