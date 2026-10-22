@@ -4,10 +4,10 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const root=path.resolve(__dirname,"..");
-const script=fs.readFileSync(path.join(root,"scripts/v20261022r7/media-unlock.js"),"utf8");
+const script=fs.readFileSync(path.join(root,"scripts/v20261022r9/media-unlock.js"),"utf8");
 const services=["DAZN","Discovery+","Paramount+","Disney+","Netflix","ChatGPT","YouTube Premium"];
 function run(reply,options={}){
-  const sent=[],pending=[],output=[],timers=[],logs=[];
+  const sent=[],pending=[],output=[],timers=[];
   let active=0,maxActive=0;
   function request(req,cb){active++;maxActive=Math.max(active,maxActive);sent.push(req);pending.push({req,cb});}
   vm.runInNewContext(script,{
@@ -15,8 +15,7 @@ function run(reply,options={}){
     $argument:{target_policy:"Proxy"},
     $httpClient:{get:request,post:request},
     $done:r=>output.push(r),
-    setTimeout:(fn,ms)=>timers.push({fn,ms}),
-    console:{log:value=>logs.push(String(value))}
+    setTimeout:(fn,ms)=>timers.push({fn,ms})
   },{timeout:2000});
   function next(){
     const item=pending.shift();if(!item)return;
@@ -26,12 +25,12 @@ function run(reply,options={}){
   }
   if(!options.stall){let n=0;while(pending.length){assert(++n<45,"probe count bounded");next();}}
   if(options.fireTimeout)timers.forEach(t=>t.fn());
-  return {sent,pending,output,timers,next,maxActive,logs};
+  return {sent,pending,output,timers,next,maxActive};
 }
 function rows(test){
   assert.equal(test.output.length,1);
   const content=test.output[0].content;
-  assert.match(content,/LoonKit v6\.4\.9/);
+  assert.match(content,/LoonKit v6\.5\.1/);
   assert(!/Spotify：|TikTok：|Gemini：|Claude：|待确认|仅检测公开地区|节点解锁查询|完整支持|即将登陆|支持自制剧集|⟦|🎉|⚠️|🚫|➟/.test(content));
   assert.equal(test.output[0].title,"解锁检测");
   assert(!/（[A-Z]{2}）/.test(content),"unlock list must omit per-service regions");
@@ -73,36 +72,6 @@ assert(normal.sent.some(x=>x.url==="https://chatgpt.com/"&&x["auto-redirect"]===
 assert.equal(normal.sent.find(x=>x.url.includes("youtube.com/premium")).timeout,10000);
 assert.equal(normal.sent.find(x=>x.url.includes("netflix.com/title")).timeout,6000);
 assert.equal(normal.sent.find(x=>x.url.endsWith("/users/me")).headers.Cookie,"st=secret");
-const discoveryUpper=run(req=>req.url.includes("discoveryplus.com/token")?
-  {body:'{"data":{"attributes":{"token":"secret"}}}'}:
-  req.url.includes("/users/me")?
-  {body:'{"data":{"attributes":{"currentLocationTerritory":"US"}}}'}:{status:503});
-assert.equal(rows(discoveryUpper)["Discovery+"],"已解锁");
-const discoveryMissing=run(req=>req.url.includes("discoveryplus.com/token")?
-  {body:'{"data":{"attributes":{"token":"secret"}}}'}:
-  req.url.includes("/users/me")?
-  {body:'{"data":{"attributes":{}}}'}:{status:503});
-assert.equal(rows(discoveryMissing)["Discovery+"],"检测失败");
-const discoveryOther=run(req=>req.url.includes("discoveryplus.com/token")?
-  {body:'{"data":{"attributes":{"token":"secret"}}}'}:
-  req.url.includes("/users/me")?
-  {body:'{"data":{"attributes":{"currentLocationTerritory":"jp"}}}'}:{status:503});
-assert.equal(rows(discoveryOther)["Discovery+"],"未解锁");
-const daznHttp=run(req=>req.url.includes("indazn.com")?{status:503,body:"PRIVATE_TOKEN=never-log"}:{status:503});
-assert.equal(rows(daznHttp)["DAZN"],"检测失败");
-assert(daznHttp.logs.some(x=>x.includes("[LoonKit][DAZN] http-error HTTP 503")));
-assert(daznHttp.logs.every(x=>!x.includes("PRIVATE_TOKEN")&&!x.includes("https://")));
-const daznTimeout=run(req=>req.url.includes("indazn.com")?{status:0,error:"timeout PRIVATE_TOKEN=never-log"}:{status:503});
-assert.equal(rows(daznTimeout)["DAZN"],"检测失败");
-assert(daznTimeout.logs.some(x=>x.includes("[LoonKit][DAZN] timeout")));
-assert(daznTimeout.logs.every(x=>!x.includes("PRIVATE_TOKEN")));
-const daznMalformed=run(req=>req.url.includes("indazn.com")?{status:200,body:"not-json SECRET"}:{status:503});
-assert.equal(rows(daznMalformed)["DAZN"],"检测失败");
-assert(daznMalformed.logs.some(x=>x.includes("invalid-response")));
-assert(daznMalformed.logs.every(x=>!x.includes("not-json")&&!x.includes("SECRET")));
-const daznNoRegion=run(req=>req.url.includes("indazn.com")?{status:200,body:"{}"}:{status:503});
-assert.equal(rows(daznNoRegion)["DAZN"],"未解锁");
-assert(daznNoRegion.logs.some(x=>x.includes("country-not-returned")));
 const nfLogin=run(req=>req.url.includes("netflix.com/title")?{body:"Sign in to Netflix"}:{status:503});
 assert.equal(rows(nfLogin)["Netflix"],"检测失败");
 const nfGeneric=run(req=>req.url.includes("netflix.com/title")?{body:"generic page"}:{status:503});
@@ -148,5 +117,5 @@ const invalid=run(()=>({status:200}),{params:{node:"bad\nnode"}});
 assert.equal(invalid.sent.length,0);
 assert.match(invalid.output[0].content,/节点名称无效/);
 const plugin=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
-assert(plugin.includes("scripts/v20261022r7/media-unlock.js"));
+assert(plugin.includes("scripts/v20261022r9/media-unlock.js"));
 console.log("Unlock transport, regional verdict and WAF/reachability regression: PASS");

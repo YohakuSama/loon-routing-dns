@@ -16,8 +16,8 @@ check("only the shipped immutable plugin is present",()=>{
   assert(!fs.existsSync(path.join(root,"plugins/")));
   for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
     assert(!fs.existsSync(path.join(root,dir)),dir);
-  assert(plugin.includes("/e486d32e4b07e66f72ecfde627f1d5414d9a30bf/scripts/v20261022r8/network-diagnostics.js"));
-  assert(plugin.includes("/0104b576628cf3629d4b032b9206960017465724/scripts/v20261022r7/media-unlock.js"));
+  assert(plugin.includes("/04a9ed5afe0e6e7d25d6ec4e9d29db052f276817/scripts/v20261022r9/network-diagnostics.js"));
+  assert(plugin.includes("/04a9ed5afe0e6e7d25d6ec4e9d29db052f276817/scripts/v20261022r9/media-unlock.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
   
 });
@@ -49,15 +49,15 @@ check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
   assert.equal(s.length,4);
   assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/node-intelligence.js")).length,1);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261022r8/network-diagnostics.js")).length,2);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261022r7/media-unlock.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261022r9/network-diagnostics.js")).length,2);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261022r9/media-unlock.js")).length,1);
   assert(fs.existsSync(path.join(root,"scripts/v20261021r3/node-intelligence.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261022r8/network-diagnostics.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261022r7/media-unlock.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261022r9/network-diagnostics.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261022r9/media-unlock.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/103a9390fe588018953dd3db9185568bacbd5763/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/5bd2c1411da7ffcaa44f79f0b56c7da87c529751/release/Network_Diagnostics.plugin, enabled=true"));
   assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
   assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));

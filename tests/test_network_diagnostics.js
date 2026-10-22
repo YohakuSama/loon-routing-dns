@@ -5,7 +5,7 @@ const fs=require("node:fs");
 const path=require("node:path");
 const vm=require("node:vm");
 const ROOT=path.resolve(__dirname,"..");
-const source=fs.readFileSync(path.join(ROOT,"scripts/v20261022r8/network-diagnostics.js"),"utf8");
+const source=fs.readFileSync(path.join(ROOT,"scripts/v20261022r9/network-diagnostics.js"),"utf8");
 let passed=0;
 function check(name,fn){
   try{fn();passed++;console.log("PASS",name);}
@@ -65,10 +65,8 @@ function manual(r){
   const result=r.results[0];
   assert.equal(result.title,"网络检测");
   assert(typeof result.content==="string");
-  assert(typeof result.htmlMessage==="string");
-  assert(result.htmlMessage.includes("<!doctype html>"));
-  assert(result.htmlMessage.includes("LOONKIT"));
-  assert(result.htmlMessage.includes("v6.5.0"));
+  assert.equal(result.htmlMessage,undefined);
+  assert(result.content.includes("v6.5.1"));
   return result;
 }
 check("single node from context, same measurement target for direct and selected node",()=>{
@@ -77,13 +75,13 @@ check("single node from context, same measurement target for direct and selected
   assert.equal(req.length,2);
   assert.equal(req[0].node,"DIRECT");
   assert.equal(req[1].node,"JP Individual");
-  assert(req.every(x=>x.url==="http://bing.com/generate_204"));
+  assert(req.every(x=>x.url==="https://www.gstatic.com/generate_204"));
   assert(req.every(x=>x.timeout===6500&&x["auto-redirect"]===false));
   assert(!req.some(x=>x.node==="Proxy"));
   assert.match(p.content,/节点：JP Individual/);
-  assert.match(p.content,/检测正常/);
-  assert.match(p.content,/bing\.com\/generate_204/);
-  assert.match(p.htmlMessage,/解析成功/);
+  assert.match(p.content,/网络正常/);
+  assert.match(p.content,/www\.gstatic\.com\/generate_204/);
+  assert.match(p.content,/解析成功/);
 });
 check("node-menu context overrides fallback policy group",()=>{
   const r=run({params:{node:"HK 01",nodeInfo:{name:"JP stale"}}});
@@ -127,33 +125,32 @@ check("cycle in policy selections fails closed",()=>{
   const r=run({params:{},selections:{Proxy:"Auto",Auto:"Proxy"}});
   assert.equal(r.requests.length,0);
 });
-check("HTML escapes node names instead of injecting untrusted markup",()=>{
+check("native popup returns plain text and never injects HTML",()=>{
   const r=run({params:{node:'<script>alert("x")</script> Node'}});
   const p=manual(r);
-  assert(!p.htmlMessage.includes("<script>"));
-  assert(p.htmlMessage.includes("&lt;script&gt;"));
-  assert(p.htmlMessage.includes("&quot;"));
+  assert.equal(p.htmlMessage,undefined);
+  assert.match(p.content,/Node/);
 });
 check("captive portal HTTP 200 is flagged as uncertain, not healthy",()=>{
   const r=run({nodeStatus:200}),p=manual(r);
-  assert.match(p.content,/部分结果需检查/);
+  assert.match(p.content,/部分结果需确认/);
   assert.match(p.content,/响应异常（HTTP 200）/);
   assert(!p.content.includes("检测正常"));
 });
 check("HTTP 301 is inconclusive rather than a disconnected node",()=>{
   const r=run({nodeStatus:301}),p=manual(r);
   assert.match(p.content,/HTTP 301/);
-  assert.match(p.content,/部分结果需检查/);
+  assert.match(p.content,/部分结果需确认/);
 });
 check("HTTP 503 is uncertain, not a proxy outage verdict",()=>{
   const r=run({nodeStatus:503}),p=manual(r);
   assert.match(p.content,/HTTP 503/);
-  assert.match(p.content,/部分结果需检查/);
+  assert.match(p.content,/部分结果需确认/);
 });
 check("timeout on node reports failure without changing selected policy",()=>{
   const r=run({nodeFail:true}),p=manual(r);
   assert.match(p.content,/部分检测失败/);
-  assert.match(p.content,/节点请求：超时/);
+  assert.match(p.content,/节点请求：失败.*超时/);
 });
 check("native DoH metadata and success are retained",()=>{
   const r=run(),p=manual(r);
@@ -178,7 +175,7 @@ check("custom DoT and DoH metadata remain supported",()=>{
 });
 check("missing native DNS API is not falsely healthy",()=>{
   const p=manual(run({dns:"missing"}));
-  assert.match(p.content,/部分结果需检查/);
+  assert.match(p.content,/部分结果需确认/);
   assert.match(p.content,/当前 Loon 版本不支持 DNS 检测/);
 });
 check("DNS timeout remains an explicit failure",()=>{
@@ -209,7 +206,7 @@ check("auto monitor treats redirects as inconclusive and does not notify",()=>{
 });
 check("plugin points to the current node-specific diagnostic script",()=>{
   const plugin=fs.readFileSync(path.join(ROOT,"release/Network_Diagnostics.plugin"),"utf8");
-  assert(plugin.includes("scripts/v20261022r8/network-diagnostics.js"));
+  assert(plugin.includes("scripts/v20261022r9/network-diagnostics.js"));
   assert.equal(plugin.split("\n").filter(x=>x.startsWith("generic then script(")).length,3);
   assert.match(plugin,/auto_check = switch,false/);
 });
