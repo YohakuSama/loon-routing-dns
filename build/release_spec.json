@@ -10,11 +10,11 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Only native mobile presentation updated across 3 existing diagnostics. Endpoints, verdicts, DNS, TUN, network policy unchanged. Device rendering not yet verified.",
+  "warning": "Native mobile text layout streamlined; all seven platform request and verdict functions unchanged. Pending Loon iPhone/iPad acceptance.",
   "plugin_assets_commit": "e2229cd2aba8f5f8621048deed29998e912753c5",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
-  "diagnostics_script_commit": "2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e",
+  "diagnostics_script_commit": "db83bbe402c40c4ec5bb2421115989126fd5bf05",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e",
-  "node_script_commit": "2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e"
+  "unified_service_diagnostics_script_commit": "db83bbe402c40c4ec5bb2421115989126fd5bf05",
+  "node_script_commit": "db83bbe402c40c4ec5bb2421115989126fd5bf05"
 }

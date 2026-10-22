@@ -1,5 +1,5 @@
 #!name = LoonKit · 网络辅助
-#!desc = 节点信息、网络检测和解锁检测
+#!desc = 节点状态 · 网络检测 · 解锁查询
 #!author = YohakuSama
 #!homepage = https://github.com/YohakuSama/loonkit
 #!icon = https://raw.githubusercontent.com/YohakuSama/loonkit/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png
@@ -10,12 +10,12 @@
 #!type = normal
 
 [Argument]
-auto_check = switch,false,tag=网络切换提醒,desc=默认关闭；网络切换后连续检测失败才提醒
-target_policy = input,"Proxy",tag=检测策略,desc=从节点菜单运行使用选定节点；否则使用此策略
-compare_direct = switch,false,tag=直连 IP 对照,desc=开启后额外显示当前网络的公网 IP
+auto_check = switch,false,tag=网络切换提醒,desc=连续检测失败时提醒，默认关闭
+target_policy = input,"Proxy",tag=检测策略,desc=优先使用节点菜单选定的节点
+compare_direct = switch,false,tag=直连 IP 对照,desc=对照直连与代理出口 IP
 
 [Script]
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e/scripts/v20261022r10/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点信息", img_url="location.fill.viewfinder.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e/scripts/v20261022r10/network-diagnostics.js", {${target_policy}}) with tag="网络检测", img_url="network.system", timeout=40
-generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e/scripts/v20261022r10/media-unlock.js", {${target_policy}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=30
-network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e/scripts/v20261022r10/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/db83bbe402c40c4ec5bb2421115989126fd5bf05/scripts/v20261022r11/node-intelligence.js", {${target_policy}, ${compare_direct}}) with tag="节点信息", img_url="location.fill.viewfinder.system", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/db83bbe402c40c4ec5bb2421115989126fd5bf05/scripts/v20261022r11/network-diagnostics.js", {${target_policy}}) with tag="网络检测", img_url="network.system", timeout=40
+generic then script("https://raw.githubusercontent.com/YohakuSama/loonkit/db83bbe402c40c4ec5bb2421115989126fd5bf05/scripts/v20261022r11/media-unlock.js", {${target_policy}}) with tag="解锁检测", img_url="play.rectangle.system", timeout=30
+network-changed then script("https://raw.githubusercontent.com/YohakuSama/loonkit/db83bbe402c40c4ec5bb2421115989126fd5bf05/scripts/v20261022r11/network-diagnostics.js", {${auto_check}}) with enable=${auto_check}, tag="网络切换异常监测", timeout=40

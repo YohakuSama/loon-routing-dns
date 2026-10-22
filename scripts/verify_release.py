@@ -105,9 +105,9 @@ def verify(remote=False):
     # Inspect the embedded immutable URLs as well as the top-level plugin link.
     # The diagnostic path is versioned to avoid stale Loon script caches.
     embedded = LINK.findall(plugin.decode("utf-8"))
-    expected_script = "scripts/v20261022r10/network-diagnostics.js"
-    node_script = "scripts/v20261022r10/node-intelligence.js"
-    service_script = "scripts/v20261022r10/media-unlock.js"
+    expected_script = "scripts/v20261022r11/network-diagnostics.js"
+    node_script = "scripts/v20261022r11/node-intelligence.js"
+    service_script = "scripts/v20261022r11/media-unlock.js"
     if spec["stable_release_version"] == "v6.5.2":
         if len(embedded) != 5 or sum(path == expected_script for _,path in embedded) != 2 or sum(path == service_script for _,path in embedded) != 1 or sum(path == node_script for _,path in embedded) != 1:
             raise ValueError("unified plugin must contain icon, node, network x2 and service scripts")
