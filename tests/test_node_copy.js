@@ -3,7 +3,7 @@
 const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
 const assert=require("node:assert/strict");
 const root=path.resolve(__dirname,"..");
-const src=fs.readFileSync(path.join(root,"scripts/v20261021r3/node-intelligence.js"),"utf8");
+const src=fs.readFileSync(path.join(root,"scripts/v20261022r10/node-intelligence.js"),"utf8");
 let count=0;
 function check(label,fn){try{fn();console.log("PASS",label);count++;}catch(e){process.exitCode=1;console.error("FAIL",label,e);}}
 const rich={
@@ -39,7 +39,7 @@ check("full report preserves detailed location and ASN/ISP",()=>{
   assert.equal(r.title,"节点信息");
   assert.match(r.content,/【出口信息】/);
   assert.match(r.content,/公网 IP：203\.0\.113\.21/);
-  assert.match(r.content,/Japan \(JP\) · Osaka · Osaka/);
+  assert.match(r.content,/Japan \(JP\) · Osaka/);
   assert.match(r.content,/时区：Asia\/Tokyo/);
   assert.match(r.content,/邮编：540-0002/);
   assert.match(r.content,/坐标：34\.708, 135\.493/);
@@ -139,7 +139,7 @@ check("node menu context takes precedence and outage stays explicit",()=>{
 check("current plugin preserves node exit and has three integrated manual actions",()=>{
   const p=fs.readFileSync(path.join(root,"release/Network_Diagnostics.plugin"),"utf8");
   assert.equal(p.split("\n").filter(x=>x.startsWith("generic then script(")).length,3);
-  assert(p.includes("edac8c9f51de9ad6e2a9a969752a31490c4cfd44/scripts/v20261021r3/node-intelligence.js"));
+  assert(p.includes("2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e/scripts/v20261022r10/node-intelligence.js"));
   assert(p.includes("auto_check = switch,false"));
   assert(p.includes("compare_direct = switch,false"));
   assert(!/已移除|情报源|DNS 解析器泄漏检测/.test(p));

@@ -16,8 +16,8 @@ check("only the shipped immutable plugin is present",()=>{
   assert(!fs.existsSync(path.join(root,"plugins/")));
   for(const dir of ["release/phase-07","release/phase-08","icons/v20261018r2","icons/v20261018r3","scripts/v20261018r11","scripts/v20261020r1","scripts/v20261020r2"])
     assert(!fs.existsSync(path.join(root,dir)),dir);
-  assert(plugin.includes("/04a9ed5afe0e6e7d25d6ec4e9d29db052f276817/scripts/v20261022r9/network-diagnostics.js"));
-  assert(plugin.includes("/04a9ed5afe0e6e7d25d6ec4e9d29db052f276817/scripts/v20261022r9/media-unlock.js"));
+  assert(plugin.includes("/2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e/scripts/v20261022r10/network-diagnostics.js"));
+  assert(plugin.includes("/2397ee8e4aa579e7b7ac3d8e4aa18426e9aba70e/scripts/v20261022r10/media-unlock.js"));
   assert(plugin.includes("/97c48a5d14087597dbba35119d5ee8d43b1ce537/icons/v20261021r1/Console.png"));
   
 });
@@ -48,16 +48,16 @@ check("settings, private comparison and automation off",()=>{
 check("all current scripts remain local versioned assets",()=>{
   const s=plugin.split("\n").filter(x=>/then script\("/.test(x));
   assert.equal(s.length,4);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261021r3/node-intelligence.js")).length,1);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261022r9/network-diagnostics.js")).length,2);
-  assert.equal(s.filter(x=>x.includes("scripts/v20261022r9/media-unlock.js")).length,1);
-  assert(fs.existsSync(path.join(root,"scripts/v20261021r3/node-intelligence.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261022r9/network-diagnostics.js")));
-  assert(fs.existsSync(path.join(root,"scripts/v20261022r9/media-unlock.js")));
+  assert.equal(s.filter(x=>x.includes("scripts/v20261022r10/node-intelligence.js")).length,1);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261022r10/network-diagnostics.js")).length,2);
+  assert.equal(s.filter(x=>x.includes("scripts/v20261022r10/media-unlock.js")).length,1);
+  assert(fs.existsSync(path.join(root,"scripts/v20261022r10/node-intelligence.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261022r10/network-diagnostics.js")));
+  assert(fs.existsSync(path.join(root,"scripts/v20261022r10/media-unlock.js")));
 });
 check("formal profile loads current plugin with fallback routing intact",()=>{
   const rc2 = read("release/Network_Diagnostics.plugin");
-  assert(profile.includes("/5bd2c1411da7ffcaa44f79f0b56c7da87c529751/release/Network_Diagnostics.plugin, enabled=true"));
+  assert(profile.includes("/e2229cd2aba8f5f8621048deed29998e912753c5/release/Network_Diagnostics.plugin, enabled=true"));
   assert.equal(profile.split("\n").filter(x=>x.includes(".plugin, enabled=true")).length,1);
   assert(!profile.includes("/release/Service_Diagnostics.plugin, enabled=true"));
   assert(!rc2.includes("/main/scripts/"));
