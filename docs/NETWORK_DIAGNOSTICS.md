@@ -1,6 +1,6 @@
 # 网络辅助
 
-现有的 `Network_Diagnostics.plugin` 提供三个手动功能，不需要安装第二个插件。
+[网络辅助插件](../release/Network_Diagnostics.plugin) 集成三个手动诊断入口，并提供可选的网络切换提醒。
 
 [插件文件](../release/Network_Diagnostics.plugin) · [返回首页](../README.md)
 
@@ -14,8 +14,8 @@
 
 ## 解锁检测
 
-一次按所选节点检测 DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium。七个请求及判定分支保持原样，只压缩节点名并以一行一项展示状态，不添加计数、版本或解释性尾注。页面判定并非账号权益或真实播放保证；安全验证或接口错误可导致“检测失败”。
+一次按所选节点检测 DAZN、Discovery+、Paramount+、Disney+、Netflix、ChatGPT、YouTube Premium。按服务逐行显示结果。部分平台可能因安全验证或接口异常显示“检测失败”；会员权益与内容播放情况以实际账号为准。
 
 ## 更新
 
-更新主配置后须在 Loon 内刷新同一个网络辅助插件和三个远程脚本。原生系统对话框没有 HTML 栅格；本次改动只调整文本层级、字段长度和留白，不承诺字体或按钮位置可由插件自定义。真机验证仍待完成。
+更新主配置后，在 Loon 中刷新网络辅助插件及远程脚本。诊断结果使用系统原生文本弹窗。维护者报告 v6.5.2 已完成真机测试，未发现异常。
