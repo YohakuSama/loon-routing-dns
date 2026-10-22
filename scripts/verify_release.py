@@ -54,8 +54,8 @@ def check_public_checksums(root: Path, release: dict, spec: dict) -> str:
             raise ValueError("release SHA256SUMS does not match pinned version " + ver)
         document = doc_path.read_text(encoding="utf-8")
         if (ver not in document or
-                re.findall(r"(?m)^[0-9a-f]{64}  LoonKit\\.lcf$", document) != [expected_line] or
-                len(re.findall(r"\\b[0-9a-f]{64}\\b", document)) != 1):
+                re.findall(r"(?m)^[0-9a-f]{64}  LoonKit\.lcf$", document) != [expected_line] or
+                len(re.findall(r"\b[0-9a-f]{64}\b", document)) != 1):
             raise ValueError("release checksum documentation does not match pinned version " + ver)
     return digest
 
