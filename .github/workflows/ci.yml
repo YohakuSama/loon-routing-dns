@@ -25,6 +25,8 @@ jobs:
         run: |
           python3 scripts/source_lock.py --check
           python3 scripts/verify_release.py --check
+      - name: Validate all immutable Raw resources and content hashes
+        run: python3 scripts/verify_release.py --check --remote
       - name: Verify rule rebuild is independent of Python hash seed
         run: |
           for seed in 0 1 42 2026; do
