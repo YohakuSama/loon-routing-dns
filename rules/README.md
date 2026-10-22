@@ -1,6 +1,6 @@
 # LoonKit 正式规则
 
-当前 **v6.5.2** 使用 `rules/releases/vNext-RC2/` 中的 26 份固定版本远程规则，引用提交 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`。配置还包含自 v6.1.0 起审阅的七项服务 62 条域名规则，详见 [服务覆盖清单](./service_coverage_v6.1.0.json)。
+当前 **v6.5.3** 使用 `rules/releases/vNext-RC2/` 中的 26 份固定版本远程规则，引用提交 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`。配置还包含自 v6.1.0 起审阅的七项服务 62 条域名规则，详见 [服务覆盖清单](./service_coverage_v6.1.0.json)。
 
 ## 规则构建
 
