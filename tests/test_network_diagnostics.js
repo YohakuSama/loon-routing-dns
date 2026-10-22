@@ -83,7 +83,7 @@ check("single node from context, same measurement target for direct and selected
   assert.match(p.content,/节点：JP Individual/);
   assert.match(p.content,/检测正常/);
   assert.match(p.content,/bing\.com\/generate_204/);
-  assert.match(p.htmlMessage,/DNS 解析/);
+  assert.match(p.htmlMessage,/解析成功/);
 });
 check("node-menu context overrides fallback policy group",()=>{
   const r=run({params:{node:"HK 01",nodeInfo:{name:"JP stale"}}});
