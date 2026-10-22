@@ -1,43 +1,34 @@
-# 第三方许可与来源声明
+# 第三方许可与来源
 
-LoonKit 是社区维护的 Loon 配置项目。**LoonKit 维护者有权授权的原创代码、脚本和配置贡献**按 [GPL-2.0-only](../LICENSE) 开源；第三方规则、已有代码、图标和商标**保留各自的权利与适用许可**。顶层 `LICENSE` 不代表我们能替其他作者重新授权其作品。
+LoonKit 的原创代码、脚本和配置贡献采用 [GPL-2.0-only](../LICENSE) 许可。第三方规则、素材及品牌标识适用各自的版权与许可条件，相关来源及声明保留在仓库中。
 
-开源许可证通常已经授予符合条件的使用、修改和再分发权利；使用 GPL、MIT、WTFPL 许可的资源，不需要逐条联系作者或购买所谓的「规则授权」。是否允许再分发，仍以**相应内容实际适用的许可证**和其他权利为准。非商业使用并不会自动免除署名、许可文本、同许可证发布或源代码提供等义务。
+## 规则来源
 
-## 主要规则来源
-
-| 历史来源 | 记录数 | 上游声明的许可 | 许可文本 / 来源 |
+| 来源项目 | 历史来源记录 | 上游许可 | 许可与来源 |
 | --- | ---: | --- | --- |
-| [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) | 41 | GPL-2.0-only（以实际适用内容为准） | [许可证](../rules/LICENSE.GPL-2.0) · [上游 LICENSE](https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE) |
-| [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) | 35 | MIT | [许可证及版权声明](../rules/LICENSE.MIT-V2FLY) · [上游 LICENSE](https://github.com/v2fly/domain-list-community/blob/master/LICENSE) |
-| [felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) | 1 | WTFPL-2.0 | [许可证](../rules/LICENSE.WTFPL-FELIXONMARS) · [上游 LICENSE](https://github.com/felixonmars/dnsmasq-china-list/blob/master/LICENSE) |
-| LoonKit 本地规则 | 10 | 自有贡献按 GPL-2.0-only；来源未确认部分不作原创断言 | [历史目录](../rules/sources.json) |
+| [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) | 41 | GPL-2.0-only | [本地许可文本](../rules/LICENSE.GPL-2.0) · [上游 LICENSE](https://github.com/blackmatrix7/ios_rule_script/blob/master/LICENSE) |
+| [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) | 35 | MIT | [本地许可及版权声明](../rules/LICENSE.MIT-V2FLY) · [上游 LICENSE](https://github.com/v2fly/domain-list-community/blob/master/LICENSE) |
+| [felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list) | 1 | WTFPL-2.0 | [本地许可文本](../rules/LICENSE.WTFPL-FELIXONMARS) · [上游 LICENSE](https://github.com/felixonmars/dnsmasq-china-list/blob/master/LICENSE) |
+| LoonKit 本地规则 | 10 | 自有贡献采用 GPL-2.0-only；其他内容按实际来源核对 | [来源目录](../rules/sources.json) |
 
-表中为 **87 条历史来源记录**，并非 87 位作者或 87 份逐行已追溯的许可。完整索引见 [build/license_sources.json](../build/license_sources.json)，冻结构建输入和正式输出见 [规则说明](../rules/README.md)。
+上述共计 87 条历史输入来源记录，完整索引见 [license_sources.json](../build/license_sources.json)。记录数为输入来源条目数，而非独立作者数。
 
-## 应如何遵守
+## 许可与署名
 
-- **GPL-2.0-only：** 保留版权、许可与修改说明；对所分发的 GPL 派生部分遵守同许可证和对应源代码提供要求。许可原文位于仓库及 `rules/LICENSE.GPL-2.0`。
-- **MIT：** 对适用部分保留上游完整版权和 MIT 许可声明（当前记录为 V2Ray 2018–2019），详见 `rules/LICENSE.MIT-V2FLY`。
-- **WTFPL-2.0：** 依据上游许可使用，保留本仓库的来源说明和上游文本以便追溯。
-- **LoonKit 原创部分：** 采用 GPL-2.0-only；不借此宣称上游第三方素材已转为本项目版权。
+使用、修改及分发相关内容时，以其实际适用的许可证和权利声明为准，并保留所需的版权、许可和修改记录。GPL 许可部分还需履行适用的相应许可和源码提供义务；MIT 版权及许可声明保留在仓库内的完整文本中。
 
-### blackmatrix7 特别声明
+[blackmatrix7 上游 README](https://github.com/blackmatrix7/ios_rule_script/blob/master/README.md) 另有转载发布及部分素材来源说明，项目保留该来源链接供使用者核对。
 
-[blackmatrix7 的 README](https://github.com/blackmatrix7/ios_rule_script/blob/master/README.md) 除 GPL 文本外，还声明禁止公众号、自媒体转载发布，并说明部分资源取自互联网。这一点**不能忽略，也不能简单解释成任何人在任何场景都必须付费授权**。LoonKit 是 GitHub 上的社区规则项目，仍需遵守实际适用的许可证，并在收到明确的权利异议时核查具体内容、必要时移除或替换。上游仓库自身的 GPL 文件不能替所有外部来源作权利保证。
+## 来源可追溯性
 
-## 原始来源的实际限制
+正式规则由冻结输入合并、规范化和去重生成，共 26 份远程规则、197,765 条匹配。历史构建未保留最终每条匹配到原始来源的完整对应关系；[来源索引](../build/license_sources.json) 记录可追溯的历史输入。维护中针对具体来源及授权问题逐项核查。
 
-发布版的 26 份规则由冻结输入合并、去重后形成，共 197,765 条匹配。旧版构建时未保留每一行最终规则的原始作者信息，现有目录**无法用于证明所有合并行的确切权属**。这是一项来源透明度限制，**并不意味着开源许可必须逐行人工审批**。
+自动化检查用于验证许可文件与来源资料的完整性，不属于独立的法律权利认定。
 
-对明确来自上述上游、且实际受其许可证覆盖的内容，按许可证履行义务即可；对混入的其他来源、例外条款或被提出异议的具体内容，应单独核查并在必要时替换。不要将来源目录等同于对每一个字符的授权保证。
+## 图标、商标及其他素材
 
-## 图标与插件
+第三方品牌名称、标志和应用图标用于识别相应服务，其商标和素材权利仍归各自权利人。图标信息见 [图标说明](../icons/README.md)。
 
-- LoonKit 自行编写、可授权的脚本与配置贡献按顶层 GPL-2.0-only 处理。
-- 品牌名称、标志与 App 图标的商标和素材权利，**不因顶层 GPL 文件而改变**；项目仅为识别第三方服务而引用，未声明与其官方存在合作或授权关系。
-- 维护和替换图标时遵循 [图标说明](../icons/README.md)，必要时使用具有明确许可的素材。
+发现遗漏署名、许可信息不准确或素材权利问题，请通过 [Issues](https://github.com/YohakuSama/loonkit/issues) 提供相应资源路径和参考来源。
 
-如发现来源遗漏、署名错误、许可冲突或希望移除某项规则/素材，请通过 [Issues](https://github.com/YohakuSama/loonkit/issues) 提供资源路径及来源链接，我们会针对具体问题检查和处理。
-
-> 这里列出可核实的上游许可与来源，不构成对所有历史混合规则和品牌素材的无条件权利保证；发布审阅记录见 [发布说明](./RELEASE_READINESS.md)。
+[返回首页](../README.md) · [发布检查](./RELEASE_READINESS.md)
