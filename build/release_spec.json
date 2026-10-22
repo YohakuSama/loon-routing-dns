@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "rc_label": "vNext-RC2",
-  "stable_release_version": "v6.4.6",
+  "stable_release_version": "v6.4.7",
   "status": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
   "release_rules_dir": "rules/releases/vNext-RC2",
   "release_assets_dir": "release",
@@ -10,11 +10,11 @@
   "source_snapshot_dir": "rules/inputs",
   "live_dns_tun_edits_permitted": false,
   "release_gate_file": null,
-  "warning": "Seven services check platform responses with correct Loon redirect and cookie defaults and evidence-based regional verdicts. DNS/TUN/routing unchanged.",
-  "plugin_assets_commit": "2c0b7aa835e075ab9764b92ba9d43b3544c04685",
+  "warning": "Seven platform checks are evaluated by LoonKit; only the compact verdict presentation is changed. DNS/TUN/routing unchanged.",
+  "plugin_assets_commit": "4e0b669c435272053c0d7bd3ba616bddeb07ba9e",
   "script_assets_commit": "97c48a5d14087597dbba35119d5ee8d43b1ce537",
   "diagnostics_script_commit": "01e8a70ba5f7c6fe8c14ad79a1f3eba643ec801d",
   "optional_service_plugin_commit": null,
-  "unified_service_diagnostics_script_commit": "bd3ddfbee6b9588d70c14bc762c57bc3739921a9",
+  "unified_service_diagnostics_script_commit": "9670ebc88a3eeaeeec2418e0ab2ffa34d5c6f85e",
   "node_script_commit": "edac8c9f51de9ad6e2a9a969752a31490c4cfd44"
 }
