@@ -36,7 +36,7 @@ python3 scripts/verify_release.py --check --remote
 | --- | --- |
 | 正式配置 | v6.5.2 · [获取配置](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf) |
 | 完整性核验 | [Production CI](https://github.com/YohakuSama/loonkit/actions/workflows/ci.yml) |
-| 真机测试 | 维护者报告 v6.5.2 在 Loon 真机测试中未发现异常；具体登记见[测试记录](./DEVICE_TEST_STATUS.md) |
+| 真机测试 | 原 v6.5.2 基线维护者反馈未发现异常；自动选路参数调整需另行进行真机回归，见[测试记录](./DEVICE_TEST_STATUS.md) |
 | GitHub Releases | [发布页](https://github.com/YohakuSama/loonkit/releases)（截至 2026-10-22 未发布条目） |
 
 ## 开源许可与来源
