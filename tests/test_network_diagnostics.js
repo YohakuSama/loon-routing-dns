@@ -66,7 +66,7 @@ function manual(r){
   assert.equal(result.title,"网络检测");
   assert(typeof result.content==="string");
   assert.equal(result.htmlMessage,undefined);
-  assert(result.htmlMessage.includes("v6.5.1"));
+  assert(result.content.includes("v6.5.1"));
   return result;
 }
 check("single node from context, same measurement target for direct and selected node",()=>{
@@ -80,7 +80,7 @@ check("single node from context, same measurement target for direct and selected
   assert(!req.some(x=>x.node==="Proxy"));
   assert.match(p.content,/节点：JP Individual/);
   assert.match(p.content,/网络正常/);
-  assert.match(p.content,/bing\.com\/generate_204/);
+  assert.match(p.content,/www\.gstatic\.com\/generate_204/);
   assert.match(p.content,/解析成功/);
 });
 check("node-menu context overrides fallback policy group",()=>{
