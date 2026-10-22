@@ -20,12 +20,16 @@ python3 scripts/license_audit.py --check
 node --check scripts/v20261022r11/node-intelligence.js
 node --check scripts/v20261022r11/network-diagnostics.js
 node --check scripts/v20261022r11/media-unlock.js
+python3 -m unittest discover -s tests -p 'test_*.py' -v
+node --test tests/diagnostics.test.cjs
 ```
 
-每周只读规则审阅保留 `rules-update.yml`，手动候选保留 `release.yml`，正式检查保留 `ci.yml`；旧版自动发布工作流已清理。当前版本必须由维护者确认后发布，不自动修改历史 Release。
+每周只读规则审阅保留 `rules-update.yml`，手动候选保留 `release.yml`，正式检查保留 `ci.yml`；旧版自动发布工作流已清理。当前版本必须由维护者确认后发布，不自动修改历史 Release。当前 GitHub Releases 为空，历史下载链接不能假设有效。五个工作流的外部 Actions 统一按经官方仓库核验的完整提交 SHA 固定，并由 Dependabot 提供更新 PR。
+
+安全漏洞请参阅 [SECURITY.md](../SECURITY.md)。公共校验文档和 SHA256SUMS 与 profile、manifest 的一致性由只读 CI 强制检查；**不要以重新生成正式清单的方式掩盖非预期的 LoonKit.lcf 改动**。
 
 ## 显示与检测的边界
 
-Loon 原生弹窗不可使用 HTML 网格；只输出紧凑的分区文本，不用对齐空格硬凑列宽。七项解锁请求与判定逻辑独立于展示函数，不因排版修改而改变。代理出口和代理配置入口不保证是同一 IP；网络特征与风险标签仅供参考。真实 iOS/iPadOS 渲染、网络接口可用性与实际平台观看行为需真机确认。
+Loon 原生弹窗不可使用 HTML 网格；只输出紧凑的分区文本，不用对齐空格硬凑列宽。七项解锁请求与判定逻辑独立于展示函数，不因排版修改而改变。代理出口和代理配置入口不保证是同一 IP；网络特征与风险标签仅供参考。维护者目前报告已进行真机检查，暂未发现其他问题，但 v6.5.2 的逐项正式验收没有完整记录，不能把 CI 或旧版测试写成当前正式通过。具体事项见 [设备验收](./DEVICE_TEST_STATUS.md)。
 
 [清理清单](./CLEANUP_AUDIT_2026-10-22.md) · [规则安全](./RULE_SAFETY.md) · [第三方许可](./THIRD_PARTY_NOTICES.md)

@@ -8,10 +8,10 @@
 
 **Website**
 
-https://github.com/YohakuSama/loonkit/releases/latest
+https://github.com/YohakuSama/loonkit
 
 **Topics**
 
 `loon`、`loon-config`、`proxy-rules`、`routing-rules`、`proxy`、`adblock`、`dns`、`ios`、`network-diagnostics`
 
-在 [仓库首页](https://github.com/YohakuSama/loonkit) 的 About 设置中填写并保存。首页展示选项建议启用 Releases，其他选项按实际使用的分发功能选择。
+在 [仓库首页](https://github.com/YohakuSama/loonkit) 的 About 设置中填写并保存。当前没有 GitHub Releases；首页展示可保留默认配置，未来有有效 Release 时再决定是否启用 Releases，其他选项按实际使用的分发功能选择。

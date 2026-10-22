@@ -12,19 +12,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '22'
       - name: Locked inputs and bit-exact published output
         run: |
           python3 scripts/source_lock.py --check
           python3 scripts/verify_release.py --check
+      - name: Validate all immutable Raw resources and content hashes
+        run: python3 scripts/verify_release.py --check --remote
       - name: Verify rule rebuild is independent of Python hash seed
         run: |
           for seed in 0 1 42 2026; do
@@ -32,6 +34,10 @@ jobs:
           done
       - name: Third-party license evidence
         run: python3 scripts/license_audit.py --check
+      - name: Python regression tests (real assertions)
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Native Loon mocked-response regressions
+        run: node --test tests/diagnostics.test.cjs
       - name: Native plugin JavaScript syntax
         run: |
           node --check scripts/v20261022r11/node-intelligence.js

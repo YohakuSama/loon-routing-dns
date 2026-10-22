@@ -14,7 +14,7 @@
 
 LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整合常用服务规则、独立策略组、广告拦截及网络辅助工具，让日常分流更清晰、管理更方便。
 
-配置入口为 `LoonKit.lcf`。**配置不提供代理节点**，需要自行添加节点或订阅。
+配置入口为 `LoonKit.lcf`。**配置不提供代理节点**，需要自行添加节点或订阅。截至 2026-10-22，GitHub Releases 没有可供下载的当前条目，请以本仓库 Raw 配置为准。
 
 ## 快速开始
 
@@ -90,7 +90,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[历史版本](https://github.com/YohakuSama/loonkit/releases) · [当前配置校验](./docs/RELEASE_CHECKSUM_v6.5.2.md)
+[发布历史（当前无 Release）](https://github.com/YohakuSama/loonkit/releases) · [当前配置校验](./docs/RELEASE_CHECKSUM_v6.5.2.md) · [安全报告](./SECURITY.md)
 
 ---
 
