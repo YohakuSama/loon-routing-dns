@@ -166,16 +166,16 @@ test('network: automatic probe only sends a notification after two actual failur
 });
 
 function mediaResponse({method, request}) {
-  const url = request.url;
-  if (url.includes('indazn.com')) return {status:200, body:JSON.stringify({GeolocatedCountry:'US'})};
-  if (url.includes('discoveryplus.com/token')) return {status:200, body:JSON.stringify({data:{attributes:{token:'fake-test-token'}}})};
-  if (url.includes('discoveryplus.com/users/me')) return {status:200, body:JSON.stringify({data:{attributes:{currentLocationTerritory:'us'}}})};
-  if (url.includes('paramountplus.com')) return {status:200, body:'Paramount+'};
-  if (url.includes('bamgrid.com')) return {status:200, body:JSON.stringify({extensions:{sdk:{session:{inSupportedLocation:true,location:{countryCode:'US'}}}}})};
-  if (url.includes('netflix.com/title')) return {status:200, body:'Netflix /title/81280792'};
-  if (url.includes('youtube.com/premium')) return {status:200, body:'{"GL":"US"}'};
-  if (url.includes('/cdn-cgi/trace')) return {status:200, body:'loc=US\n'};
-  if (url === 'https://chatgpt.com/') return {status:200, body:'ChatGPT OpenAI'};
+  const url = new URL(request.url);
+  if (url.hostname === 'startup.core.indazn.com') return {status:200, body:JSON.stringify({GeolocatedCountry:'US'})};
+  if (url.hostname === 'us1-prod-direct.discoveryplus.com' && url.pathname === '/token') return {status:200, body:JSON.stringify({data:{attributes:{token:'fake-test-token'}}})};
+  if (url.hostname === 'us1-prod-direct.discoveryplus.com' && url.pathname === '/users/me') return {status:200, body:JSON.stringify({data:{attributes:{currentLocationTerritory:'us'}}})};
+  if (url.hostname === 'www.paramountplus.com') return {status:200, body:'Paramount+'};
+  if (url.hostname === 'disney.api.edge.bamgrid.com') return {status:200, body:JSON.stringify({extensions:{sdk:{session:{inSupportedLocation:true,location:{countryCode:'US'}}}}})};
+  if (url.hostname === 'www.netflix.com' && url.pathname.startsWith('/title/')) return {status:200, body:'Netflix /title/81280792'};
+  if (url.hostname === 'www.youtube.com' && url.pathname === '/premium') return {status:200, body:'{"GL":"US"}'};
+  if (url.hostname === 'chatgpt.com' && url.pathname === '/cdn-cgi/trace') return {status:200, body:'loc=US\n'};
+  if (url.href === 'https://chatgpt.com/') return {status:200, body:'ChatGPT OpenAI'};
   return {status:503};
 }
 test('media: seven mocked supported responses produce seven distinct verdicts', () => {
@@ -183,7 +183,7 @@ test('media: seven mocked supported responses produce seven distinct verdicts', 
   assert.equal(session.completed.length, 1);
   const out = output(session);
   for (const name of ['DAZN','Discovery+','Paramount+','Disney+','Netflix','ChatGPT','YouTube Premium']) {
-    assert.match(out, new RegExp(name.replace(/[+]/g,'\\+')+'：'));
+    assert.ok(out.includes(name + '：'), 'missing service result: ' + name);
   }
   assert.match(out, /Netflix：完整解锁/);
   assert.match(out, /YouTube Premium：已解锁/);
@@ -195,9 +195,9 @@ test('media: seven mocked supported responses produce seven distinct verdicts', 
 
 test('media: redirect-based block and Netflix 404 remain conservative', () => {
   const session = run('media', call => {
-    if (call.request.url.includes('paramountplus.com'))
+    if (new URL(call.request.url).hostname === 'www.paramountplus.com')
       return {status:302, headers:{location:'https://www.paramountplus.com/unavailable'}};
-    if (call.request.url.includes('netflix.com/title')) return {status:404};
+    if (new URL(call.request.url).hostname === 'www.netflix.com') return {status:404};
     if (call.request.url === 'https://chatgpt.com/')
       return {status:302, headers:{Location:'https://auth.openai.com/login'}};
     return mediaResponse(call);
@@ -209,8 +209,8 @@ test('media: redirect-based block and Netflix 404 remain conservative', () => {
 
 test('media: malformed platform JSON and thrown requests cannot create supported verdicts', () => {
   const session = run('media', call => {
-    if (call.request.url.includes('bamgrid.com')) return {status:200, body:'{broken'};
-    if (call.request.url.includes('indazn.com')) throw new Error('request exception');
+    if (new URL(call.request.url).hostname === 'disney.api.edge.bamgrid.com') return {status:200, body:'{broken'};
+    if (new URL(call.request.url).hostname === 'startup.core.indazn.com') throw new Error('request exception');
     return mediaResponse(call);
   });
   assert.match(output(session), /DAZN：检测失败/);
@@ -219,7 +219,7 @@ test('media: malformed platform JSON and thrown requests cannot create supported
 
 test('media: a delayed request reaches the existing 22-second watchdog exactly once', () => {
   const session = run('media', call => {
-    if (call.request.url.includes('netflix.com/title')) return {hold:true};
+    if (new URL(call.request.url).hostname === 'www.netflix.com') return {hold:true};
     return mediaResponse(call);
   });
   assert.equal(session.completed.length, 0);
@@ -228,7 +228,7 @@ test('media: a delayed request reaches the existing 22-second watchdog exactly o
   watchdog.fn();
   assert.equal(session.completed.length, 1);
   assert.match(output(session), /Netflix：检测失败/);
-  session.requests.find(r => r.request.url.includes('netflix.com/title'))
+  session.requests.find(r => new URL(r.request.url).hostname === 'www.netflix.com')
     .callback(null, {status:200}, 'Netflix /title/81280792');
   watchdog.fn();
   assert.equal(session.completed.length, 1);
