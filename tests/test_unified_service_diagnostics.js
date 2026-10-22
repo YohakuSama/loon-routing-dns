@@ -31,7 +31,7 @@ function rows(test){
   assert.equal(test.output.length,1);
   const content=test.output[0].content;
   assert.match(content,/LoonKit v6\.4\.7/);
-  assert(!/Spotify：|TikTok：|Gemini：|Claude：|待确认|仅检测公开地区|节点解锁查询|完整解锁|未解锁|支持自制剧集|⟦|🎉|⚠️|🚫|➟/.test(content));
+  assert(!/Spotify：|TikTok：|Gemini：|Claude：|待确认|仅检测公开地区|节点解锁查询|完整支持|即将登陆|支持自制剧集|⟦|🎉|⚠️|🚫|➟/.test(content));
   assert.equal(test.output[0].title,"解锁检测");
   const data={};
   for(const name of services){
