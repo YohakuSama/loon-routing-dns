@@ -13,7 +13,7 @@ assert.equal(strip(n0,"  function show(item,direct) {","  function done(msg){"),
 const w0=read("scripts/v20261022r9/network-diagnostics.js");
 const w1=read("scripts/v20261022r10/network-diagnostics.js").replaceAll("v6.5.2","v6.5.1");
 assert.equal(strip(w0,"  // Loon generic script dialogs render title/content reliably; do not use HTML.","  function manual() {"),
-  strip(w1,"  // Generic script results are native text, not a HTML table.","  function manual() {"),
+  strip(w1,"  // Loon generic script dialogs render title/content reliably; do not use HTML.","  function manual() {"),
   "Network request, DNS and automatic monitor must be unchanged");
 const u0=read("scripts/v20261022r9/media-unlock.js");
 const u1=read("scripts/v20261022r10/media-unlock.js");
