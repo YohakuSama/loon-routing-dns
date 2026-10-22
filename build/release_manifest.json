@@ -1,6 +1,6 @@
 {
-  "device_test": "V6_5_2_USER_REPORTED_NO_OTHER_ISSUES_FULL_CHECKLIST_UNDOCUMENTED",
-  "label": "v6.5.2",
+  "device_test": "V6_5_3_NEW_POLICY_DEVICE_TEST_PENDING_PRIOR_V6_5_2_NO_ANOMALIES",
+  "label": "v6.5.3",
   "licenses": "NOTICES_DOCUMENTED_NOT_INDEPENDENTLY_CERTIFIED",
   "locked_inputs_path": "build/sources.lock.json",
   "maintainer_approval": "MAINTENANCE_ONLY_NO_NEW_RELEASE_OR_TAG_AUTHORIZED",
@@ -8,7 +8,7 @@
   "plugin_path": "release/Network_Diagnostics.plugin",
   "plugin_sha256": "0aa39949f5778dc9fd49177ed543069d9a9de93dfbf0952033ffc999d2c287cd",
   "profile_sha256": {
-    "LoonKit.lcf": "e98dc568485ac4be1240a475e6c2beee60feb9ab5ce3afc19e7d96be81f6a5de"
+    "LoonKit.lcf": "3ca24609dadd075a31116c75c0358ec252bf301c15c47bc5c1d98b140832c3a1"
   },
   "remote_rule_count": 197765,
   "remote_subscription_count": 26,
@@ -198,7 +198,7 @@
   },
   "schema_version": 1,
   "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
-  "stage": "MAIN_CONFIG_UPDATED_DEVICE_TEST_PENDING",
+  "stage": "V6_5_3_POLICY_TUNING_NO_DEVICE_RUNTIME_ATTESTATION",
   "upstream_historical_lineage": "UNRECOVERABLE",
   "device_test_evidence": null
 }

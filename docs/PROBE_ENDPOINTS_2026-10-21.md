@@ -1,6 +1,6 @@
 # LoonKit 测速端点实测记录（2026-10-21）
 
-以下结果来自 2026-10-21 GitHub Actions Ubuntu Runner 的两轮 `curl` 请求（未跟随重定向，排除 Runner 代理环境变量）：
+以下记录对应 v6.5.2 及更早配置中的测速端点；v6.5.3 已将原生代理测速改为 Cloudflare 204 地址。以下结果来自 2026-10-21 GitHub Actions Ubuntu Runner 的两轮 `curl` 请求（未跟随重定向，排除 Runner 代理环境变量）：
 
 | 用途 | 目标 | 第 1 次 | 第 2 次 |
 | --- | --- | ---: | ---: |
