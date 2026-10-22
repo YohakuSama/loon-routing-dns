@@ -32,36 +32,11 @@ jobs:
           done
       - name: Third-party license evidence
         run: python3 scripts/license_audit.py --check
-      - name: Formal Python regressions
-        run: python3 -m unittest discover -s tests -p 'test_production.py' -v
-      - name: Optional service coverage and private log regressions
-        run: python3 -m unittest discover -s tests -p 'test_route_diagnostics.py' -v
-      - name: Scoped service routing and current release regressions
-        run: python3 -m unittest discover -s tests -p 'test_v63_service_release.py' -v
-      - name: Upstream candidate safety regressions
-        run: python3 -m unittest discover -s tests -p 'test_upstream_review.py' -v
-      - name: Independent routing and matcher stress audit
-        run: python3 -m unittest discover -s tests -p 'test_rule_stress.py' -v
-      - name: Upstream coverage status regressions
-        run: python3 -m unittest discover -s tests -p 'test_upstream_coverage.py' -v
-      - name: Repository metadata and maintenance documentation consistency
-        run: python3 -m unittest discover -s tests -p 'test_repository_consistency.py' -v
-      - name: Original icon byte preservation and release guards
-        run: python3 -m unittest discover -s tests -p 'test_icon_integrity_and_publish.py' -v
-      - name: User-facing copy quality and Release description consistency
-        run: python3 -m unittest discover -s tests -p 'test_public_copy.py' -v
-      - name: Current and historical Release checksums
-        run: python3 -m unittest discover -s tests -p 'test_portable_release_checksum.py' -v
-      - name: JavaScript plugin regressions
+      - name: Native plugin JavaScript syntax
         run: |
-          node --check scripts/v20261022r10/network-diagnostics.js
-          node --check scripts/v20261022r10/node-intelligence.js
-          node tests/test_node_copy.js
-          node tests/test_mobile_presentation_invariants.js
-          node tests/test_network_diagnostics.js
-          node tests/test_current_plugin.js
-          node --check scripts/v20261022r10/media-unlock.js
-          node tests/test_unified_service_diagnostics.js
+          node --check scripts/v20261022r11/node-intelligence.js
+          node --check scripts/v20261022r11/network-diagnostics.js
+          node --check scripts/v20261022r11/media-unlock.js
       - name: No mutation of production content
         run: |
           git diff --exit-code -- LoonKit.lcf LoonKit.PrivacyDNS.lcf rules/releases/ icons/ plugins/

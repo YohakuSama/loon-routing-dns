@@ -153,60 +153,40 @@
     }
     return host;
   }
+  // Keep native iPhone dialogs compact; preserve semantics and source uncertainty.
   function show(item,direct) {
-    var location=[item.country+(item.countryCode!=="未知"?" ("+item.countryCode+")":""),
-      item.region,item.city].filter(function(v){return v&&v!=="未知";}).join(" · ");
-    var entrance=configuredEntrance();
-    var lines=[];
-    if(entrance) {
-      lines.push("【节点入口】","服务器："+entrance,
-        "（配置地址，不代表中转链路的真实第一跳）","");
+    function brief(value,max) {
+      var chars=Array.from(safe(value));
+      return chars.length<=max?chars.join(""):
+        chars.slice(0,max-8).join("")+"…"+chars.slice(-7).join("");
     }
-    lines.push(
-      "【出口信息】",
-      "节点/策略："+safe(route),
+    var loc=[item.countryCode!=="未知"?item.countryCode:item.country,
+      item.region,item.city].filter(function(x){return x&&x!=="未知";});
+    if(loc.length>=3&&loc[1]===loc[2])loc.splice(1,1);
+    var lines=["节点："+brief(route,24),"","出口信息",
       "公网 IP："+item.ip,
-      "IP 版本："+(item.ip.indexOf(":")>=0?"IPv6":"IPv4"),
-      "地区："+(location||"未知")
-    );
-    if(item.timezone)lines.push("时区："+item.timezone);
-    if(item.zip)lines.push("邮编："+item.zip);
-    if(item.lat!==null&&item.lon!==null)
-      lines.push("坐标："+item.lat.toFixed(3)+", "+item.lon.toFixed(3));
-    lines.push("","【网络信息】",
+      "位置："+brief(loc.join(" · ")||"未知",30),
+      "运营商："+brief(item.isp,27),
       "ASN："+item.asn,
-      "ISP："+item.isp);
-    // Some APIs repeat identical legal names in both ISP and organization.
-    if(item.org!=="未知"&&item.org.toLowerCase()!==item.isp.toLowerCase())
-      lines.push("组织："+item.org);
-    lines.push("类型："+category(item));
-    var flags=[
-      item.datacenter,item.mobile,item.vpn,item.proxy,item.tor
-    ];
+      "类型："+category(item)];
+    var entry=configuredEntrance();
+    if(entry && entry!==item.ip)lines.push("入口："+brief(entry,27));
+    if(item.timezone)lines.push("时区："+brief(item.timezone,27));
+    var flags=[item.datacenter,item.mobile,item.vpn,item.proxy,item.tor];
     if(flags.some(function(x){return x!==null;})){
-      lines.push("","【网络特征】",
-        "机房："+flag(item.datacenter)+"　移动："+flag(item.mobile),
-        "VPN："+flag(item.vpn)+"　代理："+flag(item.proxy)+"　Tor："+flag(item.tor));
+      lines.push("","网络特征",
+        "机房："+flag(item.datacenter)+" · 移动："+flag(item.mobile),
+        "VPN："+flag(item.vpn)+" · 代理："+flag(item.proxy)+" · Tor："+flag(item.tor));
     }
-    if(item.riskScore!==null)lines.push("风险分："+item.riskScore+"/100");
+    if(item.riskScore!==null)lines.push("风险评分："+item.riskScore+"/100");
     var local=localInfo(item.ip);
-    if(local) {
-      lines.push("","【本地数据库】",
-        "GeoIP："+local.geo+"　ASN："+local.asn,
-        "ASO："+local.org);
-      if(local.geo!=="无数据"&&local.geo!=="未知"&&
-         item.countryCode!=="未知"&&
-         local.geo.toUpperCase()!==item.countryCode.toUpperCase()) {
-        lines.push("注意：本地 GeoIP 与在线位置数据不一致。");
-      }
-    }
-    if(direct) {
-      lines.push("","【出口对照】","直连 IP："+direct.ip,
-        item.ip===direct.ip?"代理与直连出口相同，请确认当前策略。":"代理与直连出口不同。");
-    } else if(args.compare_direct===true&&route!=="DIRECT") {
-      lines.push("","直连出口查询失败。");
-    }
-    lines.push("","提示：出口 IP 不一定是节点服务器的 IP。");
+    if(local && local.geo!=="无数据" && local.geo!=="未知" &&
+        item.countryCode!=="未知" && local.geo.toUpperCase()!==item.countryCode.toUpperCase())
+      lines.push("","本地 GeoIP："+brief(local.geo,27),"提示：本地与在线地区不同");
+    if(direct)lines.push("","直连对照："+brief(direct.ip,30),
+      item.ip===direct.ip?"与代理出口相同":"与代理出口不同");
+    else if(args.compare_direct===true&&route!=="DIRECT")lines.push("","直连出口查询失败");
+    lines.push("","网络特征为数据源参考信息");
     return lines.join("\n");
   }
 
