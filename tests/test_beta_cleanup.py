@@ -36,6 +36,23 @@ class BetaCleanupTests(unittest.TestCase):
             'publication':{'status':'VERIFIED_ON_MAIN','published_main_commit_sha':'d'*40}}))
         return path,raw,archive
 
+    def test_archive_verifier_accepts_matching_immutable_bytes_and_rejects_damage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            path, raw, archive=self.fixture(root)
+            class Response:
+                def __init__(self, body): self.body=body
+                def __enter__(self): return self
+                def __exit__(self,*args): pass
+                def geturl(self): return archive['uri']
+                def read(self,n): return self.body
+            with patch.object(beta_cleanup.urllib.request,'urlopen',return_value=Response(raw)):
+                self.assertEqual(beta_cleanup.verify_archives(root)['verified_history_resources'],1)
+            path.unlink()
+            with patch.object(beta_cleanup.urllib.request,'urlopen',return_value=Response(b'damaged')):
+                with self.assertRaisesRegex(ValueError,'archive hash mismatch'):
+                    beta_cleanup.verify_archives(root)
+
     def test_failed_archive_verification_retains_all_files(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);path,raw,archive=self.fixture(root)
