@@ -1,5 +1,12 @@
 # LoonKit 测试渠道
 
+## v6.5.5 发布候选与持续维护
+
+截至 PR #119 准备时，已验收的 beta.4 仍为当前测试版，SHA256 为 `fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7`。main 正式版仍为 v6.5.4；[v6.5.5 草稿发布 PR](https://github.com/YohakuSama/loonkit/pull/119) 尚未合并。此次只迁移已测试的有效指令，不从上游重新合并规则。
+
+发布候选包含独立 `build/baselines/v6.5.4/` 模板，避免根目录正式配置变更之后影响 beta 重新构建。下一轮候选需更新独立 manifest 和审核记录，不得继承本轮总体设备反馈作为新的 PASS。
+
+
 当前版本与完整校验值以 [beta manifest](../build/beta_manifest.json) 为准。正式版仍为 v6.5.4；测试改动尚未提升正式版。
 
 - 正式入口：https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf

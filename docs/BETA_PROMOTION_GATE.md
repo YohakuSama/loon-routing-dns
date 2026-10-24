@@ -1,5 +1,12 @@
 # 测试版正式发布预检
 
+## 独立发布 PR 模型
+
+v6.5.5 的测试来源提交是 `adc567168eed8e21dc8d80aebc40b85f35fc1a1b`，发布 PR 的 head 是独立 release 分支，最终 main 提交必须在合并后重新核对。不能把这个 PR 当作原生 beta→main PR 假装旧版门禁直接通过；新模型必须同时约束精确测试来源、固定资源及哈希、head 的 production CI 与 main 目标。
+
+当前七天观察、全部设备场景逐项证据未记录；任何静态检查或总体“未发现问题”反馈不能代替现有强制要求。保持草稿，不自动绕过或禁用。
+
+
 此前用户已经报告真机运行未发现问题，记录在 BETA_OWNER_FEEDBACK.json。该记录缺少精确 SHA 和逐项场景；新 beta.4 的改动仍需有针对性的验收。
 
 docs/BETA_ACCEPTANCE_TEMPLATE.json 是空白模板，不是测试结果。仅凭本地 JSON 中的 true 或 success 不能授权正式发布。
