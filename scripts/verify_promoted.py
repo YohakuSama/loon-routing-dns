@@ -29,7 +29,7 @@ def verify(remote: bool = False, root: Path = ROOT, historical_v655: bool = Fals
     candidate = json.loads((root / "build/beta_manifest.json").read_text())
     if spec["stable_release_version"] != ("v6.5.6" if historical_v655 else "v6.5.5") or published["label"] != "v6.5.5":
         raise ValueError("unexpected release version")
-    historical.check_public_checksums(root, published, spec)
+    historical.check_public_checksums(root, json.loads((root / "build/release_manifest.json").read_text()), spec)
     historical.check_lock(root)
     old_profile = (root / "build/baselines/v6.5.4/LoonKit.lcf").read_bytes()
     if historical.sha(old_profile) != "6bb6f4dc936e250fbff36763391a976a7f3d7bc833ea549c322832a9c3086a69":
