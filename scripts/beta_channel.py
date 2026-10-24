@@ -65,13 +65,13 @@ def validate(root: Path = ROOT, *, remote: bool = False) -> dict:
         raise ValueError("beta entry must be isolated from production")
     if hashlib.sha256(profile).hexdigest() != meta["configuration_sha256"]:
         raise ValueError("beta profile checksum mismatch")
-    if hashlib.sha256((root / "LoonKit.lcf").read_bytes()).hexdigest() != meta["original_production_config_sha256"]:
+    if hashlib.sha256((root / "build/baselines/v6.5.4/LoonKit.lcf").read_bytes()).hexdigest() != meta["original_production_config_sha256"]:
         raise ValueError("formal configuration changed during beta work")
     text = profile.decode()
     if text.splitlines()[0] != "# LoonKit " + meta["version"] + " · BETA TEST ONLY":
         raise ValueError("beta version and manifest differ")
     records = resource_records(meta)
-    published = json.loads((root / "build/release_manifest.json").read_text())["rules"]
+    published = json.loads((root / "build/baselines/v6.5.4/release_manifest.json").read_text())["rules"]
     formal = {row["path"]: row for row in published.values()}
     entries = remote_entries(text)
     used = set()

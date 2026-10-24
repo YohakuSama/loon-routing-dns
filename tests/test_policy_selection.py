@@ -77,7 +77,7 @@ class PolicySelectionTests(unittest.TestCase):
                 pattern = self.filters[name].split('FilterKey = "', 1)[1].rstrip('"')
                 matched = [node for node in nodes if re.search(pattern, node)]
                 self.assertEqual(matched, nodes, (size, name))
-        self.assertEqual(self.profile.splitlines()[0], "# LoonKit v6.5.4")
+        self.assertEqual(self.profile.splitlines()[0], "# LoonKit v6.5.5")
 
     def test_auto_prioritizes_latency_and_fallback_uses_order(self):
         # Confirm group strategy semantics; Loon makes actual runtime decisions.
@@ -86,12 +86,12 @@ class PolicySelectionTests(unittest.TestCase):
         self.assertNotIn("max-timeout =", self.groups["Auto"])
         self.assertNotIn("tolerance =", self.groups["Fallback"])
 
-    def test_comment_cleanup_preserves_v653_active_directives(self):
+    def test_promoted_active_directives_match_frozen_candidate(self):
         import hashlib
         active = "\n".join(line for line in self.profile.splitlines()
                            if line.strip() and not line.lstrip().startswith("#")) + "\n"
         self.assertEqual(hashlib.sha256(active.encode("utf-8")).hexdigest(),
-                         "3c57e22227da4ee8dfd8df1ad0459f0e6632cd9756e0e7a80de976b6ff551116")
+                         "16c7ae59c51dc46ed92af8cb38d9aa2635062a0b1bbb5aa5ab21659600f539a9")
 
     def test_no_internal_candidate_or_audit_comments_in_profile(self):
         comment_lines = [line for line in self.profile.splitlines()

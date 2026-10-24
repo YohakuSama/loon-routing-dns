@@ -37,7 +37,10 @@ def inventory(root: Path = ROOT) -> dict:
         if relative not in current and relative not in referenced:
             orphan.append({"path":relative, "sha256":hashlib.sha256(path.read_bytes()).hexdigest(),
                            "archival_reference":archival.get(relative)})
-    stable = (release.get("label") == meta["version"].split("-beta.")[0]
+    publication = release.get("publication", {})
+    stable = (publication.get("status") == "VERIFIED_ON_MAIN"
+              and re.fullmatch(r"[a-f0-9]{40}", str(publication.get("published_main_commit_sha", ""))) is not None
+              and release.get("label") == meta["version"].split("-beta.")[0]
               and release.get("promoted_beta_config_sha256") == meta["configuration_sha256"]
               and release.get("profile_sha256", {}).get("LoonKit.lcf") == hashlib.sha256((root / "LoonKit.lcf").read_bytes()).hexdigest())
     return {"status":"READY_FOR_ARCHIVAL_VERIFICATION" if stable else "BLOCKED_UNTIL_EXACT_STABLE_PROMOTION",
