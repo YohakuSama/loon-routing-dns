@@ -15,7 +15,7 @@ class ReleaseGateTests(unittest.TestCase):
     def test_unfilled_device_template_blocks_real_release(self):
         outcome=gate.offline()
         self.assertEqual(outcome["status"],"RELEASE_PROMOTION_BLOCKED")
-        self.assertIn("seven days"," ".join(outcome["problems"]))
+        self.assertTrue(any("observation dates" in p or "seven days" in p for p in outcome["problems"]))
         self.assertIs(outcome["publication_is_authorized"],False)
 
     def fixture(self):
@@ -52,6 +52,53 @@ class ReleaseGateTests(unittest.TestCase):
         r=gate.check_live(outcome,{}, {},Client(),119)
         self.assertEqual(r["status"],"RELEASE_PROMOTION_BLOCKED")
         self.assertEqual(r["live_status"],"NOT_RUN_DEVICE_GATE_BLOCKED")
+
+    def test_live_release_gate_rejects_stale_head_and_wrong_ci(self):
+        # Complete synthetic evidence is not real user approval; inspect the live model only.
+        stable=json.loads((ROOT/"build/release_manifest.json").read_text())
+        release_bytes=(ROOT/"LoonKit.lcf").read_bytes()
+        beta_bytes=(ROOT/"beta/LoonKit.lcf").read_bytes()
+        sha="a"*40
+        class Fake:
+            stale=False
+            wrong_ci=False
+            def get(self,path):
+                if path=="/pulls/119":
+                    return {"state":"open","draft":False,"mergeable_state":"clean",
+                        "head":{"ref":gate.HEAD_BRANCH,"sha":sha,"repo":{"full_name":"YohakuSama/loonkit"}},
+                        "base":{"ref":"main","sha":gate.BASE,"repo":{"full_name":"YohakuSama/loonkit"}}}
+                if path=="/git/ref/heads/main": return {"object":{"sha":gate.BASE}}
+                if path=="/git/ref/heads/beta": return {"object":{"sha":gate.SOURCE}}
+                if path=="/git/ref/heads/"+gate.HEAD_BRANCH:
+                    return {"object":{"sha":"b"*40 if self.stale else sha}}
+                if path=="/actions/runs/123":
+                    return {"head_sha":gate.SOURCE,"conclusion":"success","status":"completed","name":"LoonKit Beta CI",
+                            "repository":{"full_name":"YohakuSama/loonkit"}}
+                if path=="/actions/runs/123/jobs?per_page=100":
+                    return {"jobs":[{"name":"beta","conclusion":"success"}]}
+                if path.startswith("/actions/runs?head_sha="):
+                    return {"workflow_runs":[{"id":444,"name":"LoonKit Production CI","head_sha":sha,
+                        "status":"completed","conclusion":"failure" if self.wrong_ci else "success",
+                        "repository":{"full_name":"YohakuSama/loonkit"}}]}
+                if path=="/actions/runs/444/jobs?per_page=100":
+                    return {"jobs":[{"name":"production","conclusion":"success","head_sha":sha}]}
+                raise AssertionError("unexpected fake API route "+path)
+            def file(self,path,ref):
+                if (path,ref)==("beta/LoonKit.lcf",gate.SOURCE): return beta_bytes
+                if (path,ref)==("LoonKit.lcf",sha): return release_bytes
+                if (path,ref)==("build/release_manifest.json",sha): return json.dumps(stable).encode()
+                raise AssertionError("unexpected fake file "+path)
+        evidence={"ci":{"run_url":"https://github.com/YohakuSama/loonkit/actions/runs/123"}}
+        ready={"status":"READY_FOR_LIVE_RELEASE_PR_CHECK","problems":[]}
+        api=Fake()
+        r=gate.check_live(ready,evidence,stable,api,119)
+        self.assertEqual(r["status"],"LIVE_READY_FOR_PROTECTED_REVIEW")
+        self.assertIs(r["publication_is_authorized"],False)
+        api.stale=True
+        self.assertEqual(gate.check_live(ready,evidence,stable,api,119)["status"],"RELEASE_PROMOTION_BLOCKED")
+        api.stale=False
+        api.wrong_ci=True
+        self.assertEqual(gate.check_live(ready,evidence,stable,api,119)["status"],"RELEASE_PROMOTION_BLOCKED")
 
 
 if __name__=="__main__":
