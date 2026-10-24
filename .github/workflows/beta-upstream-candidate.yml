@@ -4,6 +4,7 @@ on:
     branches: [beta]
     paths:
       - scripts/beta_upstream_candidate.py
+      - scripts/beta_upstream_triage.py
       - scripts/upstream_review.py
       - rules/sources.json
       - .github/workflows/beta-upstream-candidate.yml
@@ -30,6 +31,11 @@ jobs:
           python3 scripts/verify_release.py --check
       - name: Write actual proposed rules, source snapshots, full diff and risk report
         run: python3 scripts/beta_upstream_candidate.py --version v6.5.6-beta.1 --output "$RUNNER_TEMP/beta-upstream"
+      - name: Triage risks with strict exact-domain-only draft PR eligibility
+        run: |
+          python3 scripts/beta_upstream_triage.py \
+            --candidate "$RUNNER_TEMP/beta-upstream" \
+            --output "$RUNNER_TEMP/beta-upstream/RISK_TRIAGE.json"
       - name: Archive candidates without publishing them
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
