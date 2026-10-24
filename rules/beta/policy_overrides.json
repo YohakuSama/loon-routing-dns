@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "version": "v6.5.5-beta.1",
+  "version": "v6.5.5-beta.4",
   "provenance": {
     "base_commit": "87ba3f50e80ba90212a0eeba7df223949f50e32b",
     "rules_release_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4",
     "local_rules_source": "main/LoonKit.lcf",
     "steamcn_source": "rules/releases/vNext-RC2/SteamCN.list"
   },
-  "intent": "Move local ad blocking and six service-owner fallback groups into controlled remote subscriptions; split global Steam suffixes from China-direct candidates. Exact DNS and device behavior pending review.",
+  "intent": "Single reversible balanced filter; precise service and shared-infrastructure owners; AliDNS unchanged.",
   "adblock_local_rules": [
     "DOMAIN,buttons.reddit.com",
     "DOMAIN,platform.linkedin.com",
@@ -115,6 +115,17 @@
       "DOMAIN-SUFFIX,linkedin.cn",
       "DOMAIN-SUFFIX,licdn.cn",
       "DOMAIN-SUFFIX,lnkd.in"
+    ],
+    "Abema": [
+      "DOMAIN-SUFFIX,abema.tv",
+      "DOMAIN-SUFFIX,abema.io",
+      "DOMAIN-SUFFIX,abema-tv.com",
+      "DOMAIN-SUFFIX,abematv.akamaized.net",
+      "DOMAIN-SUFFIX,abematv.co.jp",
+      "DOMAIN-SUFFIX,ds-linear-abematv.akamaized.net",
+      "DOMAIN-SUFFIX,ds-vod-abematv.akamaized.net",
+      "DOMAIN-SUFFIX,linear-abematv.akamaized.net",
+      "DOMAIN-SUFFIX,vod-abematv.akamaized.net"
     ]
   },
   "steamcn_mainland_candidates": [
@@ -143,18 +154,15 @@
     "Facebook"
   ],
   "warnings": [
-    "ChinaDirect remains pinned and unmodified; .cn / USER-AGENT audit unresolved.",
-    "SteamCN candidate host locality needs on-device evidence.",
-    "Resource disable does not disable NovaXNS filtering.",
-    "AI keyword colab/developerprofiles/generativelanguage replaced with explicit service hosts; device validation pending."
+    "AliDNS remains unchanged; App DNS fallback requires device verification.",
+    "Shared infrastructure follows Proxy or Google rather than an AI-only region.",
+    "Previous device feedback does not certify new beta.4 routing changes."
   ],
   "ai_scoped_rules": [
     "DOMAIN,alkalicore-pa.clients6.google.com",
     "DOMAIN,alkalimakersuite-pa.clients6.google.com",
     "DOMAIN,antigravity-pa.googleapis.com",
     "DOMAIN,antigravity.googleapis.com",
-    "DOMAIN,browser-intake-datadoghq.com",
-    "DOMAIN,cdn.usefathom.com",
     "DOMAIN,cloudaicompanion.googleapis.com",
     "DOMAIN,cloudcode-pa.googleapis.com",
     "DOMAIN,colab.research.google.com",
@@ -189,8 +197,6 @@
     "DOMAIN-SUFFIX,anthropic.com",
     "DOMAIN-SUFFIX,antigravity-unleash.goog",
     "DOMAIN-SUFFIX,antigravity.google",
-    "DOMAIN-SUFFIX,api.statsig.com",
-    "DOMAIN-SUFFIX,apis.google.com",
     "DOMAIN-SUFFIX,bard.google.com",
     "DOMAIN-SUFFIX,chat.com",
     "DOMAIN-SUFFIX,chatgpt.com",
@@ -203,7 +209,6 @@
     "DOMAIN-SUFFIX,claudemcpclient.com",
     "DOMAIN-SUFFIX,claudemcpcontent.com",
     "DOMAIN-SUFFIX,claudeusercontent.com",
-    "DOMAIN-SUFFIX,client-api.arkoselabs.com",
     "DOMAIN-SUFFIX,crixet.com",
     "DOMAIN-SUFFIX,cursor-cdn.com",
     "DOMAIN-SUFFIX,cursor.com",
@@ -212,8 +217,6 @@
     "DOMAIN-SUFFIX,cursorvm.com",
     "DOMAIN-SUFFIX,deepmind.com",
     "DOMAIN-SUFFIX,deepmind.google",
-    "DOMAIN-SUFFIX,events.statsigapi.net",
-    "DOMAIN-SUFFIX,featuregates.org",
     "DOMAIN-SUFFIX,flow.google",
     "DOMAIN-SUFFIX,flow.google.com",
     "DOMAIN-SUFFIX,geller-pa.googleapis.com",
@@ -227,7 +230,6 @@
     "DOMAIN-SUFFIX,grok.com",
     "DOMAIN-SUFFIX,grok.x.com",
     "DOMAIN-SUFFIX,grokipedia.com",
-    "DOMAIN-SUFFIX,host.livekit.cloud",
     "DOMAIN-SUFFIX,jules.google",
     "DOMAIN-SUFFIX,jules.google.com",
     "DOMAIN-SUFFIX,labs.google",
@@ -255,12 +257,41 @@
     "DOMAIN-SUFFIX,robinfrontend-pa.googleapis.com",
     "DOMAIN-SUFFIX,sora.com",
     "DOMAIN-SUFFIX,stitch.withgoogle.com",
-    "DOMAIN-SUFFIX,turn.livekit.cloud",
     "DOMAIN-SUFFIX,x.ai"
   ],
   "ai_keyword_removed": [
     "DOMAIN-KEYWORD,colab",
     "DOMAIN-KEYWORD,developerprofiles",
     "DOMAIN-KEYWORD,generativelanguage"
+  ],
+  "adblock_mode": "single_balanced_resource",
+  "shared_infrastructure_rules": [
+    "DOMAIN,api.statsig.com",
+    "DOMAIN,client-api.arkoselabs.com",
+    "DOMAIN-SUFFIX,featuregates.org",
+    "DOMAIN-SUFFIX,host.livekit.cloud",
+    "DOMAIN-SUFFIX,turn.livekit.cloud"
+  ],
+  "shared_ai_exclusions": [
+    "DOMAIN,browser-intake-datadoghq.com",
+    "DOMAIN,cdn.usefathom.com",
+    "DOMAIN-SUFFIX,api.statsig.com",
+    "DOMAIN-SUFFIX,apis.google.com",
+    "DOMAIN-SUFFIX,client-api.arkoselabs.com",
+    "DOMAIN-SUFFIX,events.statsigapi.net",
+    "DOMAIN-SUFFIX,featuregates.org",
+    "DOMAIN-SUFFIX,host.livekit.cloud",
+    "DOMAIN-SUFFIX,turn.livekit.cloud"
+  ],
+  "domestic_supplement_rules": [
+    "DOMAIN-SUFFIX,abchina.com.cn",
+    "DOMAIN-SUFFIX,t3go.cn",
+    "DOMAIN-SUFFIX,wo.cn"
+  ],
+  "local_priority_rules": [
+    "DOMAIN-SUFFIX,raw.githubusercontent.com,Proxy",
+    "DOMAIN,gemini.google.com,AI",
+    "DOMAIN,aistudio.google.com,AI",
+    "DOMAIN,copilot.microsoft.com,AI"
   ]
 }

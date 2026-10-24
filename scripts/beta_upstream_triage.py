@@ -11,13 +11,14 @@ import argparse
 import json
 from pathlib import Path
 import re
+from beta_upstream_delivery import DOMAIN
 
 DIRECT = {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}
 RESTRICTED = DIRECT | {"AdBlock", "AI", "Apple", "Microsoft", "Paypal"}
 LOW_RISK_OWNERS = {"YouTube", "Netflix", "Disney", "PrimeVideo", "TikTok",
                    "Bilibili", "Telegram", "Whatsapp", "Instagram", "Facebook",
-                   "Twitter", "Discord", "Google", "Steam", "HBO", "Dazn", "動畫瘋"}
-DOMAIN = re.compile(r"DOMAIN,([a-z0-9-]+\.)+[a-z0-9-]+\Z")
+                   "Twitter", "Discord", "Google", "Steam", "HBO", "Dazn", "動畫瘋",
+                   "Spotify", "Twitch", "Abema", "BBC", "Line", "Reddit", "Linkedin"}
 SHA = re.compile(r"[a-f0-9]{64}\Z")
 SHARED = (
     "googleapis.com", "apis.google.com", "appspot.com", "cloudfront.net", "akamaihd.net",
@@ -64,6 +65,8 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
         adds = diff[group].get("added", [])
         removes = diff[group].get("removed", [])
         entries = risk[group].get("additions", [])
+        if not isinstance(entries, list) or any(not isinstance(e, dict) or not isinstance(e.get("rule"), str) for e in entries):
+            raise ValueError("invalid risk entries for " + group)
         mapped = {entry["rule"]: entry for entry in entries}
         if (not isinstance(adds, list) or not isinstance(removes, list)
                 or not isinstance(entries, list)
@@ -72,7 +75,12 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
         reasons = set()
         if not snapshot_complete:
             reasons.add("SOURCE_FETCH_OR_SOURCE_HASH_INCOMPLETE")
-        elif not exact_translation:
+        relevant = [s for s in source_rows if s.get("group") == group]
+        # A documented regex exclusion in AdBlock must not permanently stop
+        # an independent, losslessly parsed Spotify/YouTube exact addition.
+        group_exact = (all(s.get("status") == "PARSED_FOR_REVIEW" for s in relevant)
+                       if relevant else exact_translation)
+        if snapshot_complete and not group_exact:
             reasons.add("LOSSY_SOURCE_EXPRESSIONS_REVIEW_REQUIRED")
         if group not in LOW_RISK_OWNERS or group in RESTRICTED:
             reasons.add("SENSITIVE_OR_DIRECT_OWNER_REVIEW")
@@ -81,7 +89,7 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
         if removes:
             reasons.add("REMOVALS_NEVER_AUTOMATED")
         if not adds and not removes:
-            output[group] = {"status": "UNCHANGED" if exact_translation else "SOURCE_BLOCKED",
+            output[group] = {"status": "UNCHANGED" if snapshot_complete and group_exact else "SOURCE_BLOCKED",
                              "added": 0, "removed": 0, "reasons": sorted(reasons)}
             continue
         before = info.get("baseline_count", 0)
@@ -104,6 +112,11 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
             provenance = row.get("source_ids", [])
             if not provenance or any(s not in source_by_id for s in provenance):
                 reasons.add("UNKNOWN_SOURCE_PROVENANCE")
+            elif any(source_by_id[s].get("status") != "PARSED_FOR_REVIEW" or
+                     source_by_id[s].get("group", group) != group for s in provenance):
+                reasons.add("LOSSY_OR_DIFFERENT_OWNER_SOURCE")
+        if set(mapped) != set(adds):
+            reasons.add("RISK_DELTA_SET_MISMATCH")
         if eligible_total + len(adds) > MAX_TOTAL_ADD:
             reasons.add("TOTAL_CHANGED_RULE_LIMIT")
         if not reasons:

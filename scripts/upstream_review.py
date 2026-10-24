@@ -436,7 +436,7 @@ def _domain_risk(rule: str, group: str, protected: tuple[str, ...]) -> list[str]
     return tags
 
 
-def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes], dict]:
+def build_report(root: Path = ROOT, fetcher=None, *, baseline_rules=None) -> tuple[dict, dict[str, bytes], dict]:
     """Return report, exact fetched snapshots, and full change record (no writes)."""
     root = Path(root)
     sources = json.loads((root / "rules/sources.json").read_text(encoding="utf-8"))["sources"]
@@ -444,6 +444,13 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
     active = manifest["active_groups"]
     if len(sources) != 87 or len(active) != 26:
         raise ValueError("source catalog or active policy set unexpectedly changed")
+    if baseline_rules is not None:
+        allowed = set(active) | set(manifest["inactive_groups"])
+        if not isinstance(baseline_rules, dict) or not baseline_rules or set(baseline_rules) - allowed:
+            raise ValueError("unreviewed beta baseline owners")
+        if any(not isinstance(v, set) or not v for v in baseline_rules.values()):
+            raise ValueError("empty or invalid last-known-good beta baseline")
+        active = sorted(baseline_rules)
     groups: dict[str, set[str]] = {g: set() for g in active}
     provenance = defaultdict(set)
     snapshots: dict[str, bytes] = {}
@@ -516,8 +523,9 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
     for group in active:
         name = "AnimeCrazy" if group == "動畫瘋" else group
         path = root / "rules/releases/vNext-RC2" / (name + ".list")
-        baseline[group] = {canonical(x) for x in path.read_text(encoding="utf-8").splitlines()
-                           if x.strip() and not x.lstrip().startswith(("#", ";", "//"))}
+        baseline[group] = (set(baseline_rules[group]) if baseline_rules is not None else
+                           {canonical(x) for x in path.read_text(encoding="utf-8").splitlines()
+                            if x.strip() and not x.lstrip().startswith(("#", ";", "//"))})
         candidate[group], _ = _same_policy_reduce(groups[group])
     index, domains = _overlap_index(baseline)
     proposal_index, proposal_domains = _overlap_index(candidate)

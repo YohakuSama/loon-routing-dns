@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "status": "TEMPLATE_NOT_EVIDENCE",
-  "version": "v6.5.5-beta.3",
-  "configuration_sha256": "9bc445e6fdf0f93d7a2e9dac51a3ac83a23d92461b5c8055f1002f25d098a121",
+  "version": "v6.5.5-beta.4",
+  "configuration_sha256": "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7",
   "commit_sha": null,
   "rollback_commit_sha": "87ba3f50e80ba90212a0eeba7df223949f50e32b",
   "observation_started_utc": null,
@@ -30,9 +30,9 @@
     "ai_login_api_attachments": "NOT_TESTED",
     "captcha_and_2fa": "NOT_TESTED",
     "adblock_on_service_function": "NOT_TESTED",
-    "adblock_both_resources_disabled_routes_restored": "NOT_TESTED",
     "ip_sni_tls_and_unknown_ech": "NOT_TESTED",
-    "important_policy_change_and_recovery": "NOT_TESTED"
+    "important_policy_change_and_recovery": "NOT_TESTED",
+    "adblock_single_resource_disabled_routes_restored": "NOT_TESTED"
   },
   "risk_reviews": {
     "adblock_cross_source_precedence": "OPEN",

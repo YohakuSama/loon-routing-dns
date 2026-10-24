@@ -1,0 +1,104 @@
+name: Scheduled Beta Upstream Draft
+on:
+  schedule:
+    - cron: '40 2 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/beta-upstream-update.yml
+      - scripts/beta_upstream_delivery.py
+      - scripts/beta_github.py
+permissions:
+  contents: read
+concurrency:
+  group: beta-upstream-draft-publication
+  cancel-in-progress: false
+jobs:
+  stage:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      eligible: ${{ steps.plan.outputs.eligible }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: beta
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Validate exact active beta and its immutable resources
+        run: |
+          python3 scripts/beta_channel.py --remote
+          python3 -m unittest discover -s tests -p 'test_beta*.py' -v
+      - name: Fetch upstream against all actual beta service baselines
+        run: |
+          next_version="$(python3 -c 'import json,sys; sys.path.insert(0,"scripts"); from beta_upstream_delivery import next_version; print(next_version(json.load(open("build/beta_manifest.json"))["version"]))')"
+          python3 scripts/beta_upstream_candidate.py --version "$next_version" --output "$RUNNER_TEMP/beta-upstream"
+          python3 scripts/beta_upstream_triage.py --candidate "$RUNNER_TEMP/beta-upstream" --output "$RUNNER_TEMP/beta-upstream/RISK_TRIAGE.json"
+      - name: Prepare bounded exact-domain plan with effective-owner checks
+        id: plan
+        run: |
+          python3 scripts/beta_upstream_delivery.py prepare --candidate "$RUNNER_TEMP/beta-upstream" --output "$RUNNER_TEMP/publication/plan.json"
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          plan=json.loads((Path(os.environ['RUNNER_TEMP'])/'publication/plan.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('eligible='+('true' if plan['groups'] else 'false')+'\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('## Beta upstream review\n')
+              f.write('Source integrity complete: '+str(plan['source_integrity_complete'])+'\n\n')
+              f.write('Eligible runtime groups: '+str(len(plan['groups']))+'\n\n')
+              f.write('All other changes remain review-only. No automatic beta merge or stable publication.\n')
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: beta-upstream-full-review
+          path: ${{ runner.temp }}/beta-upstream/
+          retention-days: 14
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: beta-upstream-publication-plan
+          path: ${{ runner.temp }}/publication/plan.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Report incomplete source retrieval as failure without changing runtime rules
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          plan=json.loads((Path(os.environ['RUNNER_TEMP'])/'publication/plan.json').read_text())
+          if not plan['source_integrity_complete']:
+              raise SystemExit('Incomplete source snapshots; existing beta rules retained, publication blocked.')
+          PY
+  publish-draft:
+    needs: stage
+    if: needs.stage.outputs.eligible == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      # Never run beta-checkout code with write credentials.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.workflow_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # verified v7
+        with:
+          name: beta-upstream-publication-plan
+          path: ${{ runner.temp }}/publication/
+      - name: Create immutable assets, pinned beta profile and draft PR, then dispatch exact CI
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/beta_upstream_delivery.py publish --plan "$RUNNER_TEMP/publication/plan.json"

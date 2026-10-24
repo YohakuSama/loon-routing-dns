@@ -5,6 +5,7 @@ on:
     paths:
       - scripts/beta_upstream_candidate.py
       - scripts/beta_upstream_triage.py
+      - scripts/beta_upstream_delivery.py
       - scripts/upstream_review.py
       - rules/sources.json
       - .github/workflows/beta-upstream-candidate.yml
@@ -30,7 +31,9 @@ jobs:
           python3 scripts/source_lock.py --check
           python3 scripts/verify_release.py --check
       - name: Write actual proposed rules, source snapshots, full diff and risk report
-        run: python3 scripts/beta_upstream_candidate.py --version v6.5.6-beta.1 --output "$RUNNER_TEMP/beta-upstream"
+        run: |
+          next_version="$(python3 -c 'import json,sys; sys.path.insert(0,"scripts"); from beta_upstream_delivery import next_version; print(next_version(json.load(open("build/beta_manifest.json"))["version"]))')"
+          python3 scripts/beta_upstream_candidate.py --version "$next_version" --output "$RUNNER_TEMP/beta-upstream"
       - name: Triage risks with strict exact-domain-only draft PR eligibility
         run: |
           python3 scripts/beta_upstream_triage.py \

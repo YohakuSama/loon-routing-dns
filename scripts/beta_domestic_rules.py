@@ -11,7 +11,7 @@ POLICY = ROOT / "rules/beta/domestic_decisions.json"
 
 def render(root: Path = ROOT) -> tuple[Path, bytes]:
     policy = json.loads((root/"rules/beta/domestic_decisions.json").read_text(encoding="utf-8"))
-    if policy["schema_version"] != 1 or len(policy["reviewed_exclusions"]) != 2:
+    if policy["schema_version"] != 1 or not policy["reviewed_exclusions"]:
         raise ValueError("unreviewed direct-rule decisions")
     path = root/policy["upstream_baseline"]
     source = path.read_bytes()
@@ -21,10 +21,17 @@ def render(root: Path = ROOT) -> tuple[Path, bytes]:
              if x and not x.startswith(("#", ";", "//"))]
     if len(lines) != policy["original_matchers"] or len(lines) != len(set(lines)):
         raise ValueError("baseline ChinaDirect matcher count or duplicates changed")
-    exclusion = [x for x in lines if x == "DOMAIN-SUFFIX,cn" or x.startswith("USER-AGENT,")]
-    expected = policy["reviewed_exclusions"]
-    if exclusion.count("DOMAIN-SUFFIX,cn") != expected[0]["count"] or sum(x.startswith("USER-AGENT,") for x in exclusion) != expected[1]["count"]:
-        raise ValueError("unreviewed ChinaDirect exclusion changed")
+    exclusion = set()
+    for decision in policy["reviewed_exclusions"]:
+        if decision.get("matcher"):
+            selected = [x for x in lines if x == decision["matcher"]]
+        elif decision.get("kind") == "USER-AGENT":
+            selected = [x for x in lines if x.startswith("USER-AGENT,")]
+        else:
+            raise ValueError("unsupported domestic exclusion decision")
+        if len(selected) != decision["count"] or exclusion.intersection(selected):
+            raise ValueError("unreviewed ChinaDirect exclusion changed")
+        exclusion.update(selected)
     remaining = [x for x in lines if x not in exclusion]
     if len(remaining) != policy["expected_output_matchers"]:
         raise ValueError("unexpected direct matcher count")
@@ -38,7 +45,7 @@ def check(root: Path = ROOT):
     if not dest.is_file() or dest.read_bytes() != expected:
         raise ValueError("beta ChinaDirect is not bit-identical to reviewed decisions")
     return {"status":"MATCH", "sha256":hashlib.sha256(expected).hexdigest(),
-            "matcher_count":114777}
+            "matcher_count":len([x for x in expected.decode().splitlines() if x and not x.startswith("#")])}
 
 if __name__ == "__main__":
     parser=argparse.ArgumentParser(description=__doc__)

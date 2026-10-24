@@ -64,12 +64,15 @@ class BetaPromotionPreflightTests(unittest.TestCase):
                 self.assertEqual(self.assess(ev)["status"], "PROMOTION_BLOCKED")
 
     def test_fail_closed_for_day_six_failures_and_unresolved_risk(self):
-        for mutation in ("six_days","failed_case","open_risk","missing_case",
+        for mutation in ("six_days","future_days","failed_case","open_risk","missing_case",
                          "no_review","raw_secret","invalid_ci_link"):
             with self.subTest(mutation=mutation):
                 ev = self.synthetic_complete_fixture()
                 if mutation == "six_days":
                     ev["observation_finished_utc"] = "2026-10-07T00:00:00Z"
+                if mutation == "future_days":
+                    ev["observation_started_utc"] = "2099-01-01T00:00:00Z"
+                    ev["observation_finished_utc"] = "2099-01-09T00:00:00Z"
                 if mutation == "failed_case":
                     ev["device_cases"]["mainland_payment_login_map"] = "FAIL"
                 if mutation == "open_risk":
@@ -81,6 +84,31 @@ class BetaPromotionPreflightTests(unittest.TestCase):
                 if mutation == "invalid_ci_link":
                     ev["ci"]["run_url"] = "https://not-github.example/jobs/1"
                 self.assertEqual(self.assess(ev)["status"], "PROMOTION_BLOCKED")
+
+    def test_live_ci_and_protected_pr_cannot_be_replaced_by_local_booleans(self):
+        ev=self.synthetic_complete_fixture()
+        manifest=self.manifest
+        profile=self.profile
+        class API:
+            failed=False
+            def get(self,path):
+                if path.startswith('/actions/runs/') and path.endswith('/jobs?per_page=100'):
+                    return {'jobs':[{'name':'beta','status':'completed','conclusion':'success'}]}
+                if path.startswith('/actions/runs/'):
+                    return {'head_sha':ev['commit_sha'],'conclusion':'failure' if self.failed else 'success','status':'completed',
+                        'name':'LoonKit Beta CI','path':'.github/workflows/beta-ci.yml',
+                        'repository':{'full_name':'YohakuSama/loonkit'},'head_repository':{'full_name':'YohakuSama/loonkit'}}
+                if path=='/git/ref/heads/beta': return {'object':{'sha':ev['commit_sha']}}
+                if path=='/pulls/999': return {'state':'open','draft':False,'head':{'ref':'beta','sha':ev['commit_sha']},
+                    'base':{'ref':'main'},'mergeable_state':'clean'}
+                raise AssertionError(path)
+            def file(self,path,ref):
+                return profile if path=='beta/LoonKit.lcf' else json.dumps(manifest).encode()
+        api=API()
+        passed=gate.verify_live(self.assess(ev),manifest,ev,api,999)
+        self.assertEqual(passed['status'],'LIVE_PREFLIGHT_READY_FOR_PROTECTED_MERGE')
+        api.failed=True
+        self.assertEqual(gate.verify_live(self.assess(ev),manifest,ev,api,999)['status'],'PROMOTION_BLOCKED')
 
 
 if __name__ == "__main__":

@@ -17,10 +17,15 @@ def render(root: Path = ROOT) -> dict[str, bytes]:
     if spec.get("schema_version") != 1:
         raise ValueError("unreviewed beta policy schema")
     prefix = "rules/beta/" + spec["version"] + "/"
-    rules = {"RoutingAdBlock": spec["adblock_local_rules"],
-             "SteamCN": spec["steamcn_mainland_candidates"],
+    rules = {"SteamCN": spec["steamcn_mainland_candidates"],
              "SteamGlobal": spec["steam_global_rules"],
              "AIScoped": spec["ai_scoped_rules"]}
+    if spec.get("adblock_mode") != "single_balanced_resource":
+        rules["RoutingAdBlock"] = spec["adblock_local_rules"]
+    if spec.get("shared_infrastructure_rules"):
+        rules["SharedInfrastructure"] = spec["shared_infrastructure_rules"]
+    if spec.get("domestic_supplement_rules"):
+        rules["DomesticSupplement"] = spec["domestic_supplement_rules"]
     for group, entries in spec["service_groups"].items():
         rules["Service-" + group] = entries
     paths = {}
@@ -41,10 +46,8 @@ def check(root: Path = ROOT) -> None:
     for path, data in files.items():
         if not (root / path).is_file() or (root / path).read_bytes() != data:
             raise ValueError("beta overlay not reproducible: " + path)
-    directory = root / "rules/beta" / json.loads(DEFINITION.read_text())["version"]
-    actual = {p.relative_to(root).as_posix() for p in directory.glob("*.list")}
-    if actual != set(files):
-        raise ValueError("unexpected or missing beta overlay files")
+    # Large, separately reproducible resources share the version directory.
+    # The release manifest validates the complete active resource set.
 
 
 if __name__ == "__main__":
