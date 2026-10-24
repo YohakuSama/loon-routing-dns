@@ -78,3 +78,7 @@ This profile now sets `sni-sniffing = true`. Loon's 2026 example documents this 
 ## Effective source priority audit
 
 The [offline trace documentation](BETA_EFFECTIVE_AUDIT.md) and `scripts/beta_effective_audit.py` test current local/remote/plugin sources with on/off advertising comparisons. The CI artifact is **synthetic**, not a real iOS/Loon capture; unresolved shared-Google infrastructure and WeChat root domains remain flagged.
+
+## Promotion preflight gate
+
+The [fail-closed beta promotion preflight](BETA_PROMOTION_GATE.md) and `scripts/beta_promotion_gate.py` reject missing/mismatched CI, a missing full device matrix, unresolved risk register and less than seven days of observation. CI tests only **synthetic fixtures** and proves the real device template is still blocked; it does not approve formal promotion.

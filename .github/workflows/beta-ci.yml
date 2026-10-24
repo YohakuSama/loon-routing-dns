@@ -50,6 +50,8 @@ jobs:
           node --check scripts/v20261022r11/node-intelligence.js
           node --check scripts/v20261022r11/network-diagnostics.js
           node --check scripts/v20261022r11/media-unlock.js
+      - name: Prove promotion cannot pass with blank device template
+        run: python3 scripts/beta_promotion_gate.py --assert-template-blocked
       - name: Preserve production git tree
         run: |
           git diff --exit-code
