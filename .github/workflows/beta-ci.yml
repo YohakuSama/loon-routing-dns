@@ -1,0 +1,61 @@
+name: LoonKit Beta CI
+on:
+  push:
+    branches: [beta]
+  pull_request:
+    branches: [beta]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: beta-validation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  beta:
+    if: github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - name: Validate unmodified formal publication baseline
+        run: |
+          python3 scripts/source_lock.py --check
+          python3 scripts/verify_release.py --check --remote
+          python3 scripts/license_audit.py --check
+      - name: Reproduce frozen beta asset bytes
+        run: |
+          python3 scripts/beta_assets.py --check
+          python3 scripts/beta_domestic_rules.py --check
+          python3 scripts/beta_policy_review.py --check
+          python3 scripts/beta_channel.py --remote
+      - name: Beta routing/priority and channel regressions
+        run: python3 -m unittest discover -s tests -p 'test_beta*.py' -v
+      - name: Reproduce effective source-priority and AdBlock toggle route audit
+        run: python3 scripts/beta_effective_audit.py --output "$RUNNER_TEMP/beta-effective.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: beta-effective-static-only
+          path: ${{ runner.temp }}/beta-effective.json
+          retention-days: 14
+          if-no-files-found: error
+      - name: Existing maintenance and client-script regression suite
+        run: |
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
+          node --test tests/diagnostics.test.cjs
+          node --check scripts/v20261022r11/node-intelligence.js
+          node --check scripts/v20261022r11/network-diagnostics.js
+          node --check scripts/v20261022r11/media-unlock.js
+      - name: Prove promotion cannot pass with blank device template
+        run: python3 scripts/beta_promotion_gate.py --assert-template-blocked
+      - name: Preserve production git tree
+        run: |
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
