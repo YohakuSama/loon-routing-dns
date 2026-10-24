@@ -26,6 +26,8 @@ LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整�
 
 已有个人配置时，建议先备份节点及自定义设置。首次加载远程资源需要能够访问 GitHub Raw。
 
+测试渠道：[导入测试版](https://raw.githubusercontent.com/YohakuSama/loonkit/beta/beta/LoonKit.lcf) · [测试说明与验收状态](https://github.com/YohakuSama/loonkit/blob/beta/docs/BETA_CHANNEL.md)。测试版保持默认 AliDNS，与正式入口独立更新。
+
 ## 功能概览
 
 | 功能 | 说明 |

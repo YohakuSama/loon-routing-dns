@@ -4,6 +4,8 @@
 
 .github/workflows/beta-upstream-update.yml 必须安装到默认分支 main，才能按周一 02:40 UTC（台北 10:40）定时运行。也支持选择 main 手动运行；仅在 beta 中存在的 YAML 不会形成独立的 GitHub 定时任务。
 
+已通过 [PR #116](https://github.com/YohakuSama/loonkit/pull/116) 安装到 main。[2026-10-24 首次线上运行](https://github.com/YohakuSama/loonkit/actions/runs/40093458478)成功：来源完整，已比较 33 个实际 beta 服务组，本轮没有合格新增，未创建空 PR。首轮写入 job 被跳过，真实自动 PR 权限与 CI dispatch 仍需在首次合格增量出现时核实；事务和连续更新测试均通过，不冒充真实写入结果。
+
 1. 只读 job checkout 精确 beta 版本，验证资源与回归。
 2. 复用 upstream_review 解析器拉取现有 87 条来源，和当前 beta 的 33 个来源组比较；保留快照、UTC、HTTP ETag/Last-Modified、哈希、完整差异与风险报告。
 3. 对来源完整、该组无损解析、无移除/共享设施/跨归属冲突、数量受限的精确 DOMAIN 新增做候选筛选。无关广告来源的已记录正则排除不会永久冻结一个无损的视频服务来源。
@@ -12,6 +14,8 @@
 6. 创建唯一、可重复运行的 automation/beta-upstream-* 草稿 PR，目标 beta；不覆盖人工分支、不强推、不自动合并。
 7. 显式 dispatch beta-ci.yml 检查该分支。GITHUB_TOKEN 创建的 PR 不会自然触发 pull_request Actions，不能省略这一步。
 8. 维护者审查并合并 beta 后再观察；正式入口不自动跟随。
+
+每轮生成结果保留已有服务的不可变引用，按确定次序插入累计 overlay，并同步下一轮审阅的来源组标签/数量。可复现生成器已覆盖连续三轮跨服务及同服务累计更新，避免“草稿已创建，但配置重建清空规则或回退版本”的死路。
 
 没有合格新增时不创建空 PR。来源不完整会保留现役资源、上传证据并报告失败。广告、直连、AI、Apple、Microsoft、支付、宽后缀/IP/ASN、删除、异常数量与来源翻译不确定性继续需要审核。
 
