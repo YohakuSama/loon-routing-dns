@@ -1,4 +1,4 @@
-# DNS 设置与检查（v6.5.5）
+# DNS 设置与检查（v6.5.6）
 
 当前配置及 DNS 设置详见 [LoonKit.lcf](../LoonKit.lcf)。
 
@@ -9,6 +9,8 @@
 | DNS 劫持 | `hijack-dns = *:53` |
 | IP 模式 | `ip-mode = dual` |
 | IPv6 虚拟接口 | `ipv6-vif = auto` |
+| DNS 拦截行为 | `domain-reject-mode = DNS` |
+| DNS 拦截返回 | `dns-reject-mode = LOOPBACKIP` |
 
 `interface-mode`、`skip-proxy`、`bypass-tun` 与 `real-ip` 的具体内容以正式配置为准。
 
@@ -23,3 +25,7 @@
 ## v6.5.5 DNS 边界
 
 候选原样保留已验收 beta.4 中的 AliDNS 普通 DNS、DoH、UDP/53 劫持、IPv4/IPv6、TUN 绕过和应用设置控制的 DNS 回退。未提供设备抓包、DoH 故障回退或应用自带 DoH 的测试记录，因此不能作零 DNS 泄漏、零明文回退或所有 IPv6/旁路场景已验证的结论。
+
+## v6.5.6 DNS 拦截
+
+对于命中拒绝规则的域名，LOOPBACKIP 返回回环 IP（旧版 NOANSWER 返回空 DNS 应答），不会因此改变上游 DNS 服务器。DNS 泄漏风险依然与普通 DNS 回退、应用私有 DoH、IPv6 和旁路设置有关，不可据此宣称零泄漏。Loon App 端功能参阅 [设备设置指南](./LOON_APP_SETTINGS.md)。

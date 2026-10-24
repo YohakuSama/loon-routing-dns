@@ -22,14 +22,14 @@ def active(data: bytes) -> bytes:
                       if line.strip() and not line.lstrip().startswith("#")) + "\n").encode("utf-8")
 
 
-def verify(remote: bool = False, root: Path = ROOT) -> dict:
+def verify(remote: bool = False, root: Path = ROOT, historical_v655: bool = False) -> dict:
     spec = json.loads((root / "build/release_spec.json").read_text())
-    published = json.loads((root / "build/release_manifest.json").read_text())
+    published = json.loads((root / ("build/baselines/v6.5.5/release_manifest.json" if historical_v655 else "build/release_manifest.json")).read_text())
     baseline = json.loads((root / "build/baselines/v6.5.4/release_manifest.json").read_text())
     candidate = json.loads((root / "build/beta_manifest.json").read_text())
-    if spec["stable_release_version"] != "v6.5.5" or published["label"] != "v6.5.5":
+    if spec["stable_release_version"] != ("v6.5.6" if historical_v655 else "v6.5.5") or published["label"] != "v6.5.5":
         raise ValueError("unexpected release version")
-    historical.check_public_checksums(root, published, spec)
+    historical.check_public_checksums(root, json.loads((root / "build/release_manifest.json").read_text()), spec)
     historical.check_lock(root)
     old_profile = (root / "build/baselines/v6.5.4/LoonKit.lcf").read_bytes()
     if historical.sha(old_profile) != "6bb6f4dc936e250fbff36763391a976a7f3d7bc833ea549c322832a9c3086a69":
@@ -37,7 +37,9 @@ def verify(remote: bool = False, root: Path = ROOT) -> dict:
     if baseline["profile_sha256"] != {"LoonKit.lcf": historical.sha(old_profile)}:
         raise ValueError("historical publication manifest was changed")
     beta = (root / "beta/LoonKit.lcf").read_bytes()
-    stable = (root / "LoonKit.lcf").read_bytes()
+    stable = (root / ("build/baselines/v6.5.5/LoonKit.lcf" if historical_v655 else "LoonKit.lcf")).read_bytes()
+    if historical_v655 and historical.sha(stable) != "d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03":
+        raise ValueError("v6.5.5 released profile baseline changed")
     if any((historical.sha(beta) != CANDIDATE_SHA,
             published.get("promoted_beta_config_sha256") != CANDIDATE_SHA,
             spec.get("promoted_beta_config_sha256") != CANDIDATE_SHA,

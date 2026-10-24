@@ -1,4 +1,4 @@
-# LoonKit v6.5.5
+# LoonKit v6.5.6
 # Maintainer: @YohakuSama
 # Repository: https://github.com/YohakuSama/loonkit
 # Community configuration; not affiliated with Loon.
@@ -19,7 +19,7 @@ real-ip = *.apple.com,*.icloud.com,dns.msftncsi.com,*.srv.nintendo.net,*.xboxliv
 disable-stun = true
 udp-fallback-mode = REJECT
 domain-reject-mode = DNS
-dns-reject-mode = NOANSWER
+dns-reject-mode = LOOPBACKIP
 proxy-test-url = http://cp.cloudflare.com/generate_204
 internet-test-url = http://wifi.vivo.com.cn/generate_204
 test-timeout = 5

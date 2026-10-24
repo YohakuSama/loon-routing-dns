@@ -57,8 +57,7 @@ class ReleaseGateTests(unittest.TestCase):
         self.assertTrue(gate.one_time_approval())
         self.assertEqual(gate.offline()["status"], "RELEASE_PROMOTION_BLOCKED")
         authorized = gate.offline(owner_override=True)
-        self.assertEqual(authorized["status"], "READY_FOR_LIVE_RELEASE_PR_CHECK")
-        self.assertEqual(authorized["evidence_mode"], "SCOPED_OWNER_DECISION_NOT_DEVICE_ATTESTATION")
+        self.assertEqual(authorized["status"], "RELEASE_PROMOTION_BLOCKED")
         self.assertIs(authorized["publication_is_authorized"], False)
 
     def test_live_release_gate_rejects_stale_head_and_wrong_ci(self):

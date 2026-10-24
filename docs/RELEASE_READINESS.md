@@ -1,5 +1,10 @@
 # 发布与维护检查
 
+## v6.5.6 发布
+
+从历史 v6.5.5 完整配置确定性生成新版，唯一运行时变化为 `dns-reject-mode = LOOPBACKIP`，版本头同步更新。需通过完整构建、36 个固定资源、全部历史 checksum、准确 PR head 的 CI 和 main 合并后 Raw 检查；App 端权限及 HTTPS 证书不能由配置自动启用。真机实际效果尚未收到新的使用反馈。
+
+
 ## v6.5.5 正式发布核验记录
 
 [PR #119](https://github.com/YohakuSama/loonkit/pull/119) 将 beta.4 的有效指令确定性提升至正式入口。维护者已明确批准这一版的单次发布，详见 [版本专属决定](RELEASE_OWNER_DECISION_v6.5.5.json)，并保留严格的资源、CI、合并后检查。
@@ -48,9 +53,9 @@ python3 scripts/verify_release.py --check --remote
 
 | 项目 | 状态 |
 | --- | --- |
-| 正式配置 | v6.5.5 · [获取配置](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf) |
+| 正式配置 | v6.5.6 · [获取配置](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf) |
 | 完整性核验 | [Production CI](https://github.com/YohakuSama/loonkit/actions/workflows/ci.yml) |
-| 真机测试 | v6.5.5-beta.4 维护者反馈使用未发现问题；详细 Build、抓包和观察区间未提供；本次采用维护者一次性发布决定，见[测试记录](./DEVICE_TEST_STATUS.md) |
+| 真机测试 | v6.5.6 的回环 DNS 拒绝效果尚未收到独立真机反馈，历史测试记录不代表新版 PASS；见[设备状态](./DEVICE_TEST_STATUS.md) |
 | GitHub Releases | [发布页](https://github.com/YohakuSama/loonkit/releases)（实时条目以 GitHub 为准） |
 
 ## 开源许可与来源
