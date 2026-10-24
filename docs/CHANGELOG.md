@@ -1,5 +1,16 @@
 # LoonKit 更新记录
 
+## v6.5.7 · 2026-10-25
+
+- 移除 Netflix 对 AWS 区域、共享同意平台和通用云网段的宽泛归属，IP 目标改用 Netflix 官方列出的 AS2906/AS40027；保留明确的 Netflix 服务域名。
+- 收紧 Microsoft 的共享 Azure/Akamai 范围及 Twitch 的通用 IVS 范围；Disney OneTrust、Apple CDN 恢复各自归属。
+- 移除活动规则中的 19 条宽关键词；Nicegram 使用明确的 nicegram.app 后缀，已有 Steam 等服务端点保留。
+- 放行 OneSignal Web Push SDK 和网站入口，精确增加 static.cloudflareinsights.com 统计脚本拦截。
+- 修复真实正式配置的离线 match/coverage/audit/triage 资源解析，使用 manifest 允许名单与 hash 校验；七服务现役域名登记为 75 条。
+- 历史批准快照与发展中的 beta 分开；下一轮 beta 为 v6.5.8-beta.1，从 v6.5.7 构建，不继承历史设备批准。连续三轮模拟更新同时验证正式版保持通过。
+- 修复清理器 URL 正则与版本关联，保护现役配置独占资源和必要冻结基线。
+- 正式规则为 36 个固定资源、196624 条记录、33 个策略组。AliDNS、LOOPBACKIP、所有 General 设置及 GEOIP,CN,DIRECT,no-resolve 原样保留。
+
 ## v6.5.6 — 正式版本（2026-10-24）
 
 - 应维护者要求采用 Loon 官方示例的 `dns-reject-mode = LOOPBACKIP`，继续使用 `domain-reject-mode = DNS`。

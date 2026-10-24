@@ -24,7 +24,7 @@ class BetaUpstreamRoundtripTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(dir=ROOT.parent) as directory:
             root = Path(directory) / "repo"
             root.mkdir()
-            for folder in ("rules", "build", "beta", "docs"):
+            for folder in ("rules", "build", "beta", "docs", "release", "icons", "scripts"):
                 shutil.copytree(ROOT / folder, root / folder)
             shutil.copy2(ROOT / "LoonKit.lcf", root / "LoonKit.lcf")
             stable = (root / "LoonKit.lcf").read_bytes()
@@ -62,6 +62,8 @@ class BetaUpstreamRoundtripTests(unittest.TestCase):
                                 target.write_text(entry["content"])
                     updated = json.loads((root / "build/beta_manifest.json").read_text())
                     beta_channel.validate(root)
+                    from reviewed_release import verify as verify_formal
+                    self.assertEqual(verify_formal(root=root)["release"], "v6.5.7")
                     rendered, rebuilt = beta_profile.render(meta["immutable_overlay_commit"], root)
                     self.assertEqual(rendered, (root / "beta/LoonKit.lcf").read_bytes())
                     self.assertEqual(rebuilt, updated)

@@ -20,5 +20,12 @@
     "scope": "v6.5.5 from v6.5.5-beta.4 only",
     "seven_day_observation": "NOT_PROVIDED",
     "all_device_cases_passed": null
+  },
+  "audit_fix_release_request": {
+    "date": "2026-10-25",
+    "version": "v6.5.7",
+    "request": "Fix audited issues except GEOIP no-resolve, merge and publish, update related files.",
+    "new_device_case_results": "NOT_PROVIDED",
+    "future_beta_approval": false
   }
 }

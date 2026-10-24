@@ -18,18 +18,18 @@ class PublishedCandidateTests(unittest.TestCase):
         expected = (ROOT/"build/baselines/v6.5.5/LoonKit.lcf").read_bytes()
         self.assertEqual(build.render(), expected)
         self.assertEqual(build.check()["sha256"], hashlib.sha256(expected).hexdigest())
-        self.assertEqual(release.active(expected), release.active((ROOT/"beta/LoonKit.lcf").read_bytes()))
-        self.assertEqual(new_build.render(), (ROOT/"LoonKit.lcf").read_bytes())
+        self.assertEqual(release.active(expected), release.active((ROOT/"build/baselines/v6.5.5-beta.4/LoonKit.lcf").read_bytes()))
+        self.assertEqual(new_build.render(), (ROOT/"build/baselines/v6.5.6/LoonKit.lcf").read_bytes())
         self.assertTrue(all(ord(c) < 128 for line in expected.decode().splitlines()
                             if line.lstrip().startswith("#") for c in line))
 
     def test_exact_immutable_record_and_service_ownership(self):
-        published=json.loads((ROOT/"build/release_manifest.json").read_text())
-        original=json.loads((ROOT/"build/beta_manifest.json").read_text())
+        published=json.loads((ROOT/"build/baselines/v6.5.5/release_manifest.json").read_text())
+        original=json.loads((ROOT/"build/baselines/v6.5.5-beta.4/beta_manifest.json").read_text())
         self.assertEqual(published["promoted_beta_config_sha256"], original["configuration_sha256"])
         self.assertEqual(published["promoted_beta_commit_sha"], release.CANDIDATE_COMMIT)
         self.assertEqual(published["promoted_beta_asset_commit"], release.ASSET_COMMIT)
-        items=beta_channel.remote_entries((ROOT/"LoonKit.lcf").read_text())
+        items=beta_channel.remote_entries((ROOT/"build/baselines/v6.5.5/LoonKit.lcf").read_text())
         self.assertEqual(len(items), 36)
         self.assertEqual([(r["uri"],r["policy"],r["tag"]) for r in items],
                          [(r["uri"],r["policy"],r["tag"]) for r in
@@ -41,7 +41,7 @@ class PublishedCandidateTests(unittest.TestCase):
 
     def test_modified_directive_fails_exact_comparison(self):
         source=(ROOT/"LoonKit.lcf").read_bytes()
-        candidate=(ROOT/"beta/LoonKit.lcf").read_bytes()
+        candidate=(ROOT/"build/baselines/v6.5.5-beta.4/LoonKit.lcf").read_bytes()
         changed=source.replace(b"doh-server = https://dns.alidns.com/dns-query",
                                b"doh-server = https://different.invalid/dns-query")
         self.assertNotEqual(release.active(changed), release.active(source))
@@ -51,7 +51,7 @@ class PublishedCandidateTests(unittest.TestCase):
 
     def test_one_reject_setting_change_only(self):
         old=(ROOT/"build/baselines/v6.5.5/LoonKit.lcf").read_bytes()
-        new=(ROOT/"LoonKit.lcf").read_bytes()
+        new=(ROOT/"build/baselines/v6.5.6/LoonKit.lcf").read_bytes()
         expected=old.replace(b"# LoonKit v6.5.5\n",b"# LoonKit v6.5.6\n",1).replace(b"\ndns-reject-mode = NOANSWER\n",b"\ndns-reject-mode = LOOPBACKIP\n",1)
         self.assertEqual(new,expected)
         self.assertNotIn(b"[Mitm]",new)
@@ -62,7 +62,7 @@ class PublishedCandidateTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(frozen).hexdigest(),
                          manifest["original_production_config_sha256"])
         self.assertNotEqual(frozen, (ROOT/"LoonKit.lcf").read_bytes())
-        self.assertEqual(beta_channel.validate()["configuration_sha256"],
+        self.assertEqual(beta_channel.validate(profile_path="build/baselines/v6.5.5-beta.4/LoonKit.lcf", manifest_path="build/baselines/v6.5.5-beta.4/beta_manifest.json")["configuration_sha256"],
                          release.CANDIDATE_SHA)
 
 

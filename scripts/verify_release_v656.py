@@ -12,8 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def verify(remote: bool = False, root: Path = ROOT) -> dict:
-    spec = json.loads((root / "build/release_spec.json").read_text())
-    latest = json.loads((root / "build/release_manifest.json").read_text())
+    current_spec = json.loads((root / "build/release_spec.json").read_text())
+    archived = current_spec["stable_release_version"] != "v6.5.6"
+    spec = json.loads((root / "build/baselines/v6.5.6/release_spec.json").read_text()) if archived else current_spec
+    latest = json.loads((root / ("build/baselines/v6.5.6/release_manifest.json" if archived else "build/release_manifest.json")).read_text())
     frozen = json.loads((root / "build/baselines/v6.5.5/release_manifest.json").read_text())
     if spec["stable_release_version"] != "v6.5.6" or latest["label"] != "v6.5.6":
         raise ValueError("unexpected new release version")
@@ -36,9 +38,9 @@ def verify(remote: bool = False, root: Path = ROOT) -> dict:
         new.pop(key, None)
     if new != previous:
         raise ValueError("immutable manifest fields changed")
-    check_public_checksums(root, latest, spec)
+    check_public_checksums(root, json.loads((root / "build/release_manifest.json").read_text()), current_spec)
     check_build(root)
-    profile = (root / "LoonKit.lcf").read_bytes()
+    profile = (root / ("build/baselines/v6.5.6/LoonKit.lcf" if archived else "LoonKit.lcf")).read_bytes()
     if (hashlib.sha256(active(profile)).hexdigest() != EXPECTED_DIRECTIVES_SHA256 or
             b"\ndomain-reject-mode = DNS\n" not in profile or
             b"\ndns-reject-mode = LOOPBACKIP\n" not in profile or

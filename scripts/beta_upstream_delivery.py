@@ -28,7 +28,11 @@ SHARED = ("googleapis.com", "apis.google.com", "appspot.com", "cloudfront.net", 
           "akamaized.net", "fastly.net", "windows.net", "blob.core.windows.net", "amazonaws.com",
           "github.io", "pages.dev", "workers.dev", "vercel.app", "stripe.com", "auth0.com",
           "microsoftonline.com", "icloud.com", "apple.com", "paypal.com", "recaptcha.net", "gstatic.com",
-          "livekit.cloud", "twilio.com", "githubusercontent.com")
+          "livekit.cloud", "twilio.com", "githubusercontent.com", "azurewebsites.net",
+          "azurefd.net", "azurefd.us", "azureedge.net", "cloudapp.net", "trafficmanager.net",
+          "azurecontainer.io", "azure-apim.net", "azurecosmos.net", "azurecosmosdb.com",
+          "azurecosmosdb.net", "azurecosmosdb.info", "azuredatabricks.net", "azure-devices.net",
+          "akamaiedge.net", "msecnd.net", "live-video.net", "onetrust.com", "cookielaw.org")
 RAW = "https://raw.githubusercontent.com/" + REPOSITORY + "/"
 MAX_TOTAL = 30
 
@@ -235,6 +239,22 @@ def publish(plan: dict, client) -> dict:
         tags = source_tags.setdefault(group, [])
         # Match the renderer's deterministic order: routine overlay first.
         source_tags[group] = [tag] + [t for t in tags if t != tag]
+    if next_meta.get('schema_version') == 2:
+        by_uri = {r['uri']:r for r in meta['runtime_resources']}
+        for group, item in overlays.items():
+            match = re.fullmatch(re.escape(RAW) + r'([a-f0-9]{40})/(rules/beta/upstream/[A-Za-z0-9._/-]+)', item['uri'])
+            if not match:
+                raise ValueError('routine overlay URI is not a generated immutable resource')
+            by_uri[item['uri']] = {**item, 'commit':match[1], 'path':match[2],
+                'policy':group, 'tag':'Beta-Upstream-' + group, 'enabled':'true'}
+        rows = []
+        for line in lines:
+            if line.startswith('https://') and ', policy=' in line:
+                uri = line.split(',',1)[0]
+                record = by_uri[uri].copy()
+                record.pop('source_commit',None)
+                rows.append(record)
+        next_meta['runtime_resources'] = rows
     evidence.update(version=plan["version"], configuration_sha256=digest(next_profile), commit_sha=None)
     review = ("# " + plan["version"] + " upstream draft\n\nBase: " + base + "\n\n"
               + "Exact additions: " + str(count) + ". Other source deltas remain manual review.\n"
