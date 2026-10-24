@@ -1,5 +1,9 @@
 # LoonKit 维护与发布
 
+## v6.5.6 DNS 行为维护
+
+v6.5.6 仅从 `build/baselines/v6.5.5/LoonKit.lcf` 迁移 `NOANSWER` 为 `LOOPBACKIP`，用 `scripts/prepare_release_v656.py` 与 `scripts/verify_release_v656.py` 确认确定性及旧版完整性，所有其他运行资源保持不变。版本 v6.5.5 的一次性发布授权不可用于新候选。App 级开关与证书安装无法由仓库远程设置，参阅 [Loon App 说明](./LOON_APP_SETTINGS.md)。
+
 ## v6.5.5 正式发布
 
 [独立发布 PR #119](https://github.com/YohakuSama/loonkit/pull/119) 保留已验收 beta.4 的全部 36 个固定远程资源。历史 v6.5.4 `LoonKit.lcf` 与正式 manifest 的独立、校验过的基线位于 `build/baselines/v6.5.4/`，供 beta 生成器持续重建；不是可删冗余。

@@ -14,7 +14,7 @@
 
 LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整合常用服务规则、独立策略组、广告拦截及网络辅助工具，让日常分流更清晰、管理更方便。
 
-当前正式版为 **v6.5.5**，默认使用 AliDNS，包含 36 份不可变远程规则和 33 个策略组。配置不包含代理节点，需要自行添加节点或订阅。
+当前正式版为 **v6.5.6**，默认使用 AliDNS，使用官方示例的 `DNS + LOOPBACKIP` 拦截行为，保留 36 份固定远程资源与 33 个策略组。配置不包含代理节点，需要自行添加节点或订阅。
 
 ## 快速开始
 
@@ -79,7 +79,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 ## DNS 与规则更新
 
-默认提供 AliDNS DoH，并支持在 Loon 中使用自选 DNS。相关选项和常见问题见 [DNS 设置说明](./docs/DNS_PRIVACY.md)。
+默认提供 AliDNS DoH，拦截域名返回回环 IP。相关 DNS 设置与需要手动启用的 App 功能参阅 [DNS 设置](./docs/DNS_PRIVACY.md) 和 [Loon App 设置](./docs/LOON_APP_SETTINGS.md)。
 
 规则来源按计划检查更新，新增规则会先经过格式、重复项和策略冲突检查，再由维护者审核后发布新版本。详见 [规则说明](./rules/README.md)。
 
@@ -97,7 +97,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[正式版校验](./docs/RELEASE_CHECKSUM_v6.5.5.md) · [历史版本校验](./docs/RELEASE_CHECKSUM_v6.5.4.md) · [安全报告](./SECURITY.md)
+[正式版校验](./docs/RELEASE_CHECKSUM_v6.5.6.md) · [历史版本校验](./docs/RELEASE_CHECKSUM_v6.5.5.md) · [安全报告](./SECURITY.md)
 
 ---
 
