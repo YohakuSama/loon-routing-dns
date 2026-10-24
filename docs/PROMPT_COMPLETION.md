@@ -12,7 +12,7 @@
 | 清理器 | 修复 URL 提取和版本关联，保护配置独占资源及必要基线 |
 | GEOIP | 根据维护者明确要求原样保留 GEOIP,CN,DIRECT,no-resolve |
 
-版本、README、现役依赖、构建/更新文档、校验记录及设备边界随本轮同步。准确 PR、CI 与合并后运行证据记录在 RELEASE_READINESS.md；未实际运行的步骤不能提前写成完成。以下段落是此前版本的历史实施记录。
+v6.5.7 已经 [PR #128](https://github.com/YohakuSama/loonkit/pull/128) 合入 main 并发布，[PR #129](https://github.com/YohakuSama/loonkit/pull/129) 已同步 beta。准确 head CI、合并后 CI、正式入口实际下载 hash，以及新 beta 基线上的真实上游审阅均通过，详见 [发布记录](./RELEASE_READINESS.md)。本轮来源完整但没有合格新增，因此写入 job 跳过；没有宣称已创建真实自动 PR。版本、README、现役依赖、构建/更新文档、校验记录及设备边界已同步，清理盘点没有新增可删候选。以下段落是此前版本的历史实施记录。
 
 ## 2026-10-24：v6.5.6 DNS 回环拦截
 

@@ -703,9 +703,19 @@
   "maintainer_approval": "OWNER_REQUESTED_AUDIT_FIXES_AND_PUBLICATION_2026_10_25",
   "device_test": "NEW_AUDIT_DELTAS_NOT_INDEPENDENTLY_DEVICE_OBSERVED",
   "publication": {
-    "status": "PENDING_EXACT_PR_HEAD_CI",
+    "status": "VERIFIED_ON_MAIN",
     "rollback_main_commit_sha": "67c9060fc41c0fc9c7960612f33c9eb6e4c33cbe",
-    "published_main_commit_sha": null
+    "published_main_commit_sha": "425433e0c4e7d3e5d8c5494d8767fa9560883479",
+    "release_pull_request": "https://github.com/YohakuSama/loonkit/pull/128",
+    "reviewed_pr_head_sha": "f22bd7379fae615cff453126642b338b5e5bd429",
+    "pr_ci_run_url": "https://github.com/YohakuSama/loonkit/actions/runs/40113803904",
+    "main_ci_run_url": "https://github.com/YohakuSama/loonkit/actions/runs/40113944093",
+    "raw_profile_sha256": "9dbcb5bff0cae6be233053e13b464176a0af4ad714efd27b3fa290f3c86ee84b",
+    "beta_sync_pull_request": "https://github.com/YohakuSama/loonkit/pull/129",
+    "beta_sync_commit_sha": "a0898bd422b7335cc705932c0ab36f7375a53562",
+    "beta_ci_run_url": "https://github.com/YohakuSama/loonkit/actions/runs/40113948082",
+    "upstream_review_run_url": "https://github.com/YohakuSama/loonkit/actions/runs/40113944082",
+    "upstream_review_result": "SOURCE_INTEGRITY_COMPLETE_NO_ROUTINE_ADDITIONS"
   },
   "service_roots": {
     "Spotify": [
@@ -803,7 +813,7 @@
   "source_snapshot_commit": "d405e4be28c447b6e57a4790e965c89f342d6dd6",
   "upstream_historical_lineage": "UNRECOVERABLE",
   "legacy_compiler_rule_count": 26,
-  "stage": "REVIEWED_RELEASE_PENDING_CI",
+  "stage": "VERIFIED_PUBLISHED",
   "old_main_rollback_commit": "67c9060fc41c0fc9c7960612f33c9eb6e4c33cbe",
   "device_test_evidence": "docs/DEVICE_TEST_STATUS.md",
   "approved_runtime_directives_sha256": "493a0148858af0ec9a52eb89fc29b94e976e7234633aff03314a56b6ea7ec1c4",
