@@ -2,7 +2,7 @@
 
 Status: **documented / CI contract tests / actual Loon runtime NOT tested**.
 This audit makes **no runtime configuration changes**. Keep production main v6.5.4,
-beta v6.5.5-beta.1, AliDNS, all pinned rules and the current 7-day device gate.
+beta v6.5.5-beta.2, AliDNS, all pinned rules and the current 7-day device gate.
 
 ## Reference order and provenance
 
@@ -28,7 +28,7 @@ beta v6.5.5-beta.1, AliDNS, all pinned rules and the current 7-day device gate.
 | `[Rewrite]` / `[Script]` expressive conditions and pipes | Modern expression syntax; older syntax remains readable | Main LoonKit config has no new Rewrite or direct Script sections. Pinned diagnostics plugin already uses `generic then script(...)` and `network-changed then script(...)`. Do not bulk-rewrite an unrelated working plugin merely because samples changed. Plugin argument interpolation still needs Loon-device verification. |
 | Plugin `pin`, tag, policy, enable | New example shows optional `pin` and `policy` | Plugin/script URLs already reference immutable Git commits. Do not attach mutable default-branch demonstration plugins. UI `pin` is not a replacement for reviewing actual content SHA. |
 | `ssid-trigger` and `ssid` strategy | Both valid options | Do not copy demo SSID global DIRECT triggers; they can bypass effective REJECT rules. No global mode switch added to beta. |
-| `disable-stun`, `sni-sniffing`, `real-ip` | Supported | Current beta deliberately retains existing policy (`disable-stun=true`, existing `real-ip` list), with no blanket new SNI/MITM/IPv6/QUIC changes. Individual changes require evidence. |
+| `disable-stun`, `sni-sniffing`, `real-ip` | Supported | Beta.2 explicitly tests `sni-sniffing=true` for IP-target TLS routing. `disable-stun=true` and `real-ip` remain unchanged. No blanket new MITM/IPv6/QUIC changes; compare real-device routing and revert if important misclassification occurs. |
 | Nodes (WireGuard, Hysteria2, Reality, AnyTLS, QUIC) | Illustrative example credentials | No sample nodes, passwords or parser placeholders are copied into shared profiles. Personal subscriptions remain local; preserve manual node selection. |
 | `[Host]` and per-SSID DNS override | Demonstrated | Absent from LoonKit public beta; do not inject bypass resolvers or host overrides just to mirror the example. |
 | `[MITM]` certificate and private CA | Optional example | Do not install certificates, skip TLS checks or force MITM globally. HTTPS URL-level rewrites require legitimate MITM prerequisites and individual test evidence. |

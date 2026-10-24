@@ -70,7 +70,7 @@ class BetaChannelTests(unittest.TestCase):
                          self.manifest["configuration_sha256"])
         self.assertEqual(hashlib.sha256(self.main.encode()).hexdigest(),
                          self.manifest["original_production_config_sha256"])
-        self.assertEqual(self.beta.splitlines()[0], "# LoonKit v6.5.5-beta.1 · BETA TEST ONLY")
+        self.assertEqual(self.beta.splitlines()[0], "# LoonKit v6.5.5-beta.2 · BETA TEST ONLY")
         self.assertEqual(len(self.manifest["overlay_rules"]), 10)
         for item in self.manifest["overlay_rules"].values():
             path = ROOT / item["uri"].split("/loonkit/" + self.manifest["immutable_overlay_commit"] + "/", 1)[1]
@@ -110,6 +110,16 @@ class BetaChannelTests(unittest.TestCase):
         self.assertEqual(self.effective("unregistered-service.example"), "Final")
         self.assertEqual(self.effective("notcolab-specific-example.invalid"), "Final")
         self.assertIn("DOMAIN,copilot.microsoft.com,AI", self.local)
+
+    def test_tls_sni_assisted_ip_target_routing_is_beta_only(self):
+        general_beta = section(self.beta, "General")
+        general_main = section(self.main, "General")
+        self.assertIn("sni-sniffing = true", general_beta)
+        self.assertNotIn("sni-sniffing =", general_main)
+        self.assertEqual(self.manifest["version"], "v6.5.5-beta.2")
+        self.assertEqual(self.manifest["candidate_features"]["sni_sniffing"]["status"],
+                         "ENABLE_IN_BETA_ONLY_PENDING_DEVICE_VERIFICATION")
+        self.assertIn("GEOIP,CN,DIRECT,no-resolve", section(self.beta, "Rule"))
 
     def test_no_lie_about_selector_direct(self):
         self.assertIn("AdBlock = select,REJECT,DIRECT", section(self.beta, "Proxy Group"))

@@ -1,4 +1,4 @@
-# LoonKit v6.5.5-beta.1 · BETA TEST ONLY
+# LoonKit v6.5.5-beta.2 · BETA TEST ONLY
 # Separate test channel; do not use as a replacement for production without acceptance.
 # DNS remains AliDNS. Disable both AdBlock remote resources to restore service routing; DIRECT in AdBlock is NOT bypass/continue matching.
 # Maintainer: @YohakuSama
@@ -15,6 +15,8 @@ hijack-dns = *:53
 ip-mode = dual
 ipv6-vif = auto
 interface-mode = auto
+# SNI辅助：仅对可见TLS SNI的IP目标尝试域名规则匹配；ECH/其他协议不保证识别。
+sni-sniffing = true
 skip-proxy = 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,localhost,*.local,captive.apple.com
 bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
 real-ip = *.apple.com,*.icloud.com,dns.msftncsi.com,*.srv.nintendo.net,*.xboxlive.com

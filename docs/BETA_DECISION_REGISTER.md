@@ -1,4 +1,4 @@
-# Beta v6.5.5-beta.1 decision and conflict ledger
+# Beta v6.5.5-beta.2 decision and conflict ledger
 
 Last edited 2026-10-24. This records repository facts and predicted routes, NOT device results.
 
@@ -54,3 +54,10 @@ status should be assigned here.
 - Beta: `beta/LoonKit.lcf` through branch `beta`. For exact reproduction use the beta commit and manifest, not a moving link.
 - Roll back Loon by reimporting existing verified stable entry, checking node
   and app-specific settings. Do not force-push or remove pinned historical resources.
+
+## v6.5.5-beta.2 SNI/IP target experiment
+
+- Added only `sni-sniffing = true` to the beta's `[General]` based on the Loon-maintained 2026-09-11 syntax. Main remains unchanged.
+- Intended benefit: for TLS connections addressed to a literal IP, available SNI can provide the hostname needed to select a service rule rather than falling directly to IP/Final.
+- Conditions: visible SNI, supported TLS type and Loon's runtime interpretation. No claim for ECH, QUIC, UDP, or generic TLS with hidden names; does not change the AliDNS resolver or `no-resolve` semantics.
+- New risk: IP-targeted traffic with SNI may match a new rule, including REJECT; log effective match and compare with earlier beta on-device. Roll back to previous beta.1 commit if critical false-positives appear.
