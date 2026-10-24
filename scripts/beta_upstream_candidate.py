@@ -128,10 +128,8 @@ def run(version: str, destination: Path, root: Path = ROOT) -> dict:
             entry = by_tag[tag]
             baseline[group].update(upstream_review.canonical(r) for r in
                 beta_channel.content_rules((root / entry["path"]).read_bytes()))
-    # Generated routine overlays belong to their service, not a new source.
-    for group, item in meta.get("upstream_overlays", {}).items():
-        path = beta_channel.URI.fullmatch(item["uri"])["path"]
-        baseline[group].update(beta_channel.content_rules((root / path).read_bytes()))
+    # Generated routine overlays are members of source_group_tags and have
+    # already been included once in their existing service baseline.
     report, snapshots, data = upstream_review.build_report(root=root, baseline_rules=baseline)
     report["runtime_baseline"] = True
     report["baseline_commit"] = subprocess.check_output(

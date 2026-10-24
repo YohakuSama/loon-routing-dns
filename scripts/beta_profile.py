@@ -25,7 +25,8 @@ def render(asset_commit: str, root: Path = ROOT) -> tuple[bytes, dict]:
     if hashlib.sha256(stable).hexdigest() != meta["original_production_config_sha256"]:
         raise ValueError("formal baseline changed; explicit template migration required")
     spec = json.loads((root / "rules/beta/policy_overrides.json").read_text())
-    version = spec["version"]
+    routine = meta.get("upstream_overlays", {})
+    version = meta["version"] if routine else spec["version"]
     source = stable.decode()
     source = source.replace(source.splitlines()[0], "# LoonKit " + version + " · BETA TEST ONLY", 1)
     source = source.replace("[General]", "# 测试渠道；DNS 保持默认 AliDNS。\n# 关闭广告拦截：停用 Beta-AdBlock-Balanced 远程规则即可恢复服务分流。\n[General]", 1)
@@ -54,6 +55,8 @@ def render(asset_commit: str, root: Path = ROOT) -> tuple[bytes, dict]:
         group_tags.setdefault(group, []).append(tag)
 
     add(ad["uri"], "AdBlock", "Beta-AdBlock-Balanced", "AdBlock")
+    for group, item in sorted(routine.items()):
+        add(item["uri"], group, "Beta-Upstream-" + group, group)
     for group in spec["service_groups"]:
         add(resources["Service-" + group]["uri"], group, "Beta-Service-" + group, group)
     original = remote_entries(stable.decode())
@@ -81,17 +84,19 @@ def render(asset_commit: str, root: Path = ROOT) -> tuple[bytes, dict]:
     profile = source.encode()
     meta.update(version=version, configuration_entry="beta/LoonKit.lcf",
                 configuration_sha256=hashlib.sha256(profile).hexdigest(),
-                immutable_overlay_commit=asset_commit, candidate_source_commit=asset_commit,
+                immutable_overlay_commit=asset_commit, candidate_source_commit=meta["candidate_source_commit"] if routine else asset_commit,
                 overlay_rules=resources, adblock=ad, china_direct={**domestic,
                     "removed_count": 62, "decisions_path": "rules/beta/domestic_decisions.json"},
                 runtime_remote_count=len(rows), production_rule_refs_preserved=22,
                 source_group_tags={k:v for k,v in group_tags.items() if k != "SharedInfrastructure"},
-                upstream_overlays={}, generator="scripts/beta_profile.py")
+                upstream_overlays=routine, generator="scripts/beta_profile.py")
     runtime = {r["tag"]:r for r in remote_entries(source)}
     meta["source_group_counts"] = {group:len(set().union(*[
         set(content_rules((root / runtime[tag]["path"]).read_bytes())) for tag in tags]))
         for group,tags in meta["source_group_tags"].items()}
-    meta["acceptance"] = {"ci": "PENDING_EXACT_CANDIDATE_CHECKS", "device": "NEW_CHANGES_REQUIRE_TARGETED_ACCEPTANCE",
+    # Upstream overlays are already included in group_tags by add(), so the
+    # next source review and reproducible renderer see the same active baseline.
+    meta["acceptance"] = {"ci": "PENDING_EXACT_CANDIDATE_CHECKS", "device": "NEW_RULE_DELTA_REVIEW_REQUIRED" if routine else "NEW_CHANGES_REQUIRE_TARGETED_ACCEPTANCE",
                           "minimum_observation_days": 7, "promotion": "BLOCKED"}
     meta["limitations"] = [
         "Prior owner feedback reported no issues but did not identify an exact tested SHA or all scenarios.",
