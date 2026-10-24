@@ -45,10 +45,15 @@ class BetaChannelTests(unittest.TestCase):
             uri, *args = entry.split(",")
             props = {k.strip(): v.strip() for a in args if "=" in a
                      for k, v in [a.strip().split("=", 1)]}
-            if "/rules/beta/" in uri:
-                path = ROOT / uri.split("/loonkit/" + cls.manifest["immutable_overlay_commit"] + "/", 1)[1]
-            else:
-                path = ROOT / uri.split("/loonkit/" + cls.manifest["production_release_commit"] + "/", 1)[1]
+            pinned, local_path = uri.split("/loonkit/", 1)[1].split("/", 1)
+            allowed = {cls.manifest["immutable_overlay_commit"],
+                       cls.manifest["production_release_commit"],
+                       cls.manifest["china_direct"]["source_commit"]}
+            if pinned not in allowed:
+                raise AssertionError("unapproved remote pin " + pinned)
+            path = ROOT / local_path
+            if not path.is_file():
+                raise AssertionError("missing immutable local resource: " + local_path)
             cls.remotes.append((props, path))
 
     def effective(self, host: str, *, without_adblock: bool = False) -> str:
