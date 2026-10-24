@@ -1,9 +1,9 @@
 {
-  "device_test": "GENERAL_NO_ISSUES_REPORTED_SCENARIOS_NOT_ITEMIZED",
+  "device_test": "OWNER_REPORT_NO_ISSUES_ITEMIZED_SCENARIOS_NOT_PROVIDED",
   "label": "v6.5.5",
   "licenses": "NOTICES_DOCUMENTED_NOT_INDEPENDENTLY_CERTIFIED",
   "locked_inputs_path": "build/sources.lock.json",
-  "maintainer_approval": "OWNER_GENERAL_FEEDBACK_RECORDED_SEVEN_DAY_OBSERVATION_NOT_DOCUMENTED",
+  "maintainer_approval": "OWNER_ONE_TIME_APPROVAL_V6_5_5_NO_SEVEN_DAY_CLAIM",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
   "plugin_path": "release/Network_Diagnostics.plugin",
   "plugin_sha256": "0aa39949f5778dc9fd49177ed543069d9a9de93dfbf0952033ffc999d2c287cd",
@@ -536,9 +536,10 @@
   "legacy_compiler_rule_count": 26,
   "legacy_compiler_matcher_count": 197765,
   "publication": {
-    "status": "PREPARED_PENDING_PROMOTION_GATE",
+    "status": "OWNER_APPROVED_PENDING_MERGE_AND_MAIN_VERIFICATION",
     "published_main_commit_sha": null,
     "rollback_main_commit_sha": "62dcaa273ebff92176b510186f7b73ea994e72b6",
-    "tested_beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299"
+    "tested_beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299",
+    "authorization_record": "docs/RELEASE_OWNER_DECISION_v6.5.5.json"
   }
 }
