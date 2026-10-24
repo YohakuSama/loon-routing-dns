@@ -90,3 +90,7 @@ The read-only [beta updater workflow](../.github/workflows/beta-upstream-candida
 ### Source completeness versus normalization fidelity
 
 The updater distinguishes `source_integrity_complete` (all registered source snapshots fetched and hashed) from `source_translation_exact_for_routine` (none require excluded-expression review). The read-only review may succeed while the automatic draft gate remains closed for lossy or unsupported expressions. This is a manual translation-review case, not a falsely reported fetch failure.
+
+## Upstream HTTP provenance
+
+For each of the 87 registered upstream sources, the read-only review now captures the actual UTC fetch time and, when returned by the approved GitHub Raw server, HTTP `ETag` and `Last-Modified`. Missing headers are recorded as null rather than invented version labels. A fetched HTML error page is rejected before parsing. V2Fly include snapshots also record optional header metadata. The snapshot content SHA-256 remains the authoritative byte identity; an ETag is an auxiliary HTTP validator, not proof of semantic compatibility or a fixed Git commit.

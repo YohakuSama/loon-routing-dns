@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from bisect import bisect_left
 from collections import Counter, defaultdict
+from datetime import datetime, timezone
 import hashlib
 import ipaddress
 import json
@@ -241,7 +242,13 @@ def _local_path(root: Path, rel: str) -> Path:
     return p
 
 
-def fetch_source(source: dict, root: Path = ROOT) -> bytes:
+def fetch_source(source: dict, root: Path = ROOT, metadata: dict | None = None) -> bytes:
+    """Fetch only approved sources; HTTP metadata is evidence, never a version guess.
+
+    Existing injected fetchers returning bytes stay compatible. The caller
+    optionally receives ETag and Last-Modified if actually returned; None is
+    explicit when the server supplies no value.
+    """
     if source.get("url"):
         parsed = urlsplit(source["url"])
         pieces = parsed.path.strip("/").split("/")
@@ -253,11 +260,28 @@ def fetch_source(source: dict, root: Path = ROOT) -> bytes:
         with request.urlopen(req, timeout=25) as response:
             if urlsplit(response.geturl()).hostname != "raw.githubusercontent.com":
                 raise ValueError("unexpected upstream redirect")
+            content_type = response.headers.get("Content-Type", "").split(";", 1)[0].lower()
+            if content_type in {"text/html", "application/xhtml+xml"}:
+                raise ValueError("upstream returned HTML, not a rule source")
+            # Do not include arbitrary headers, URLs with tokens or cookies.
+            def safe_header(name):
+                value = response.headers.get(name)
+                return value if (isinstance(value, str) and len(value) <= 256
+                                 and all(32 <= ord(x) < 127 for x in value)) else None
+            evidence = {"transport": "HTTPS",
+                        "http_etag": safe_header("ETag"),
+                        "http_last_modified": safe_header("Last-Modified")}
             blob = response.read(MAX_SOURCE + 1)
         if not blob or len(blob) > MAX_SOURCE:
             raise ValueError("upstream source empty or oversized")
+        if metadata is not None:
+            metadata.update(evidence)
         return blob
-    return _local_path(root, source["path"]).read_bytes()
+    content = _local_path(root, source["path"]).read_bytes()
+    if metadata is not None:
+        metadata.update({"transport": "LOCAL", "http_etag": None,
+                         "http_last_modified": None})
+    return content
 
 
 # Recursively expand upstream's own include files from ONE whitelisted repo.
@@ -425,7 +449,14 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
     snapshots: dict[str, bytes] = {}
     included_snapshots: dict[str, bytes] = {}
     records = []
-    fetcher = fetcher or (lambda item: fetch_source(item, root))
+    source_http_meta: dict[str, dict] = {}
+    if fetcher is None:
+        def default_fetch(item):
+            info = {}
+            content = fetch_source(item, root, metadata=info)
+            source_http_meta[item["id"]] = info
+            return content
+        fetcher = default_fetch
     invalid_groups = set()
     unique_ids = set()
     for source in sources:
@@ -434,9 +465,15 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             raise ValueError("invalid or repeated source id")
         unique_ids.add(sid)
         row = {"id": sid, "group": source["group"], "format": source["format"],
-               "enabled": bool(source.get("enabled", False)), "url": source.get("url")}
+               "enabled": bool(source.get("enabled", False)), "url": source.get("url"),
+               "fetched_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+               "http_etag": None, "http_last_modified": None}
         try:
             data = fetcher(source)
+            metadata = source_http_meta.get(sid, {})
+            row["http_etag"] = metadata.get("http_etag")
+            row["http_last_modified"] = metadata.get("http_last_modified")
+            row["transport"] = metadata.get("transport", "INJECTED_FETCHER")
             snapshots[sid] = data
             if source["format"] == "v2fly":
                 def load_include(name):
@@ -450,7 +487,9 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
                         raise ValueError("v2fly include source changed during audit: " + name)
                     included_snapshots[name] = included
                 row["expanded_includes"] = [
-                    {"name": name, "sha256": digest(content), "bytes": len(content)}
+                    {"name": name, "sha256": digest(content), "bytes": len(content),
+                     "http_etag": source_http_meta.get("include:" + name, {}).get("http_etag"),
+                     "http_last_modified": source_http_meta.get("include:" + name, {}).get("http_last_modified")}
                     for name, content in sorted(includes.items())]
                 rules, parse = parse_source(source, expanded)
             else:
