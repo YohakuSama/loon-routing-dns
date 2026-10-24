@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
   "channel": "beta",
-  "version": "v6.5.5-beta.2",
+  "version": "v6.5.5-beta.3",
   "status": "BETA_PENDING_CI_AND_DEVICE_TESTS",
   "production_baseline": "87ba3f50e80ba90212a0eeba7df223949f50e32b",
   "stable_release": "v6.5.4",
   "candidate_source_commit": "26a24c86b58b133b2d094956f0f615680275a1b0",
   "immutable_overlay_commit": "26a24c86b58b133b2d094956f0f615680275a1b0",
   "configuration_entry": "LoonKit.lcf",
-  "configuration_sha256": "81914934b6eef37018982473c72277ca464e803080271e7465d91d2652f403a8",
+  "configuration_sha256": "9bc445e6fdf0f93d7a2e9dac51a3ac83a23d92461b5c8055f1002f25d098a121",
   "original_production_config_sha256": "6bb6f4dc936e250fbff36763391a976a7f3d7bc833ea549c322832a9c3086a69",
   "production_release_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4",
-  "production_rule_refs_preserved": 24,
+  "production_rule_refs_preserved": 23,
   "retired_beta_subscription": "Our-SteamCN",
   "ali_dns_preserved": true,
   "overlay_rules": {
@@ -77,7 +77,8 @@
     "AliDNS DoH failure fallback remains an App-level setting; not guaranteed by this profile.",
     "ChinaDirect/AppleOTA broad upstream policy remains unchanged and needs separate audited candidate.",
     "AdBlock DIRECT does not restore routing; disable both AdBlock rule resources.",
-    "AI wide keywords removed in beta; missing Google developer-profile hostnames could now use Google/Final rather than AI."
+    "AI wide keywords removed in beta; missing Google developer-profile hostnames could now use Google/Final rather than AI.",
+    "ChinaDirect beta removed wildcard .cn and all 59 User-Agent direct rules; 114777 remaining historical rules still need service-region tests."
   ],
   "candidate_features": {
     "sni_sniffing": {
@@ -91,5 +92,17 @@
         "Requires device route capture comparison with previous beta"
       ]
     }
+  },
+  "china_direct": {
+    "source_commit": "2f4980593843dbe28d4b983c309de6713913b8c9",
+    "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/2f4980593843dbe28d4b983c309de6713913b8c9/rules/beta/v6.5.5-beta.3/ChinaDirect.list",
+    "sha256": "bdeafed6ce861f1f72e1f891c798257687123a8f29867ae4e7a89b007001b68a",
+    "matcher_count": 114777,
+    "removed_count": 60,
+    "removed_kinds": {
+      "DOMAIN-SUFFIX": 1,
+      "USER-AGENT": 59
+    },
+    "decisions_path": "rules/beta/domestic_decisions.json"
   }
 }

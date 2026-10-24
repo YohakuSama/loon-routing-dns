@@ -1,4 +1,4 @@
-# Beta v6.5.5-beta.2 device acceptance — PENDING, NOT A TEST RESULT
+# Beta v6.5.5-beta.3 device acceptance — PENDING, NOT A TEST RESULT
 
 This document is a blank real-device acceptance register. No tests below have been
 performed or confirmed by maintainers in this change. Do not substitute offline
@@ -7,7 +7,7 @@ routing simulation or a public DNS leak page for packet-path evidence.
 ## Candidate identity (fill these fields with real observations)
 - Observed UTC/local test date, tester and sanitized evidence link: **NOT_RECORDED**
 - Profile: `beta/LoonKit.lcf`; beta branch moving; record the **exact imported Git commit** from the reviewed candidate and do not infer it from a prior branch head
-- Profile SHA-256: `81914934b6eef37018982473c72277ca464e803080271e7465d91d2652f403a8`
+- Profile SHA-256: `9bc445e6fdf0f93d7a2e9dac51a3ac83a23d92461b5c8055f1002f25d098a121`
 - Pinned overlays: `26a24c86b58b133b2d094956f0f615680275a1b0`
 - Device/iOS/Loon Build (minimum intended 3.5.1/983): **NOT_RECORDED**
 - Wi-Fi/cellular/operator, IPv4/IPv6, node protocol/UDP support and node region: **NOT_RECORDED**
@@ -35,6 +35,8 @@ routing simulation or a public DNS leak page for packet-path evidence.
 | AdBlock on; Spotify analytics and playback | Block selected tracking without breaking auth/playback | NOT_TESTED | — |
 | Both `Our-AdBlock` and `Beta-LocalAdBlock` disabled | Previously blocked domains follow original service policy | NOT_TESTED | — |
 | Apple push, system update, iCloud, App Store, certificate OCSP | Sign-in, update, push and checks remain functional | NOT_TESTED | — |
+| Unlisted .cn hostname after removal of broad suffix | Should reach other exact route or Final rather than unconditional DIRECT; evaluate mainland false negatives | NOT_TESTED | — |
+| 59 former USER-AGENT direct patterns (e.g. WeChat/TeamViewer) | No route chosen solely from client identification | NOT_TESTED | — |
 | WeChat and international WeChat; mainland payment/map/login | Regions and login/payment redirects correct | NOT_TESTED | — |
 | Captchas, 2FA, account validation and payment redirects | No critical feature misclassification | NOT_TESTED | — |
 | Media representative playback and social app media upload | Policy works beyond page loading | NOT_TESTED | — |

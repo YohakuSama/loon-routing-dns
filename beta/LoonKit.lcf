@@ -1,4 +1,4 @@
-# LoonKit v6.5.5-beta.2 · BETA TEST ONLY
+# LoonKit v6.5.5-beta.3 · BETA TEST ONLY
 # Separate test channel; do not use as a replacement for production without acceptance.
 # DNS remains AliDNS. Disable both AdBlock remote resources to restore service routing; DIRECT in AdBlock is NOT bypass/continue matching.
 # Maintainer: @YohakuSama
@@ -119,7 +119,7 @@ https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe0364
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/Apple.list, policy=Apple, tag=Our-Apple, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/Steam.list, policy=Steam, tag=Our-Steam, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/Paypal.list, policy=Paypal, tag=Our-Paypal, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/ChinaDirect.list, policy=DIRECT, tag=Our-ChinaDirect, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/2f4980593843dbe28d4b983c309de6713913b8c9/rules/beta/v6.5.5-beta.3/ChinaDirect.list, policy=DIRECT, tag=Beta-ChinaDirect-Scoped, enabled=true
 
 [Rule]
 # 本地服务分流规则。

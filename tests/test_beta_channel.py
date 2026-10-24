@@ -45,10 +45,15 @@ class BetaChannelTests(unittest.TestCase):
             uri, *args = entry.split(",")
             props = {k.strip(): v.strip() for a in args if "=" in a
                      for k, v in [a.strip().split("=", 1)]}
-            if "/rules/beta/" in uri:
-                path = ROOT / uri.split("/loonkit/" + cls.manifest["immutable_overlay_commit"] + "/", 1)[1]
-            else:
-                path = ROOT / uri.split("/loonkit/" + cls.manifest["production_release_commit"] + "/", 1)[1]
+            pinned, local_path = uri.split("/loonkit/", 1)[1].split("/", 1)
+            allowed = {cls.manifest["immutable_overlay_commit"],
+                       cls.manifest["production_release_commit"],
+                       cls.manifest["china_direct"]["source_commit"]}
+            if pinned not in allowed:
+                raise AssertionError("unapproved remote pin " + pinned)
+            path = ROOT / local_path
+            if not path.is_file():
+                raise AssertionError("missing immutable local resource: " + local_path)
             cls.remotes.append((props, path))
 
     def effective(self, host: str, *, without_adblock: bool = False) -> str:
@@ -70,7 +75,7 @@ class BetaChannelTests(unittest.TestCase):
                          self.manifest["configuration_sha256"])
         self.assertEqual(hashlib.sha256(self.main.encode()).hexdigest(),
                          self.manifest["original_production_config_sha256"])
-        self.assertEqual(self.beta.splitlines()[0], "# LoonKit v6.5.5-beta.2 · BETA TEST ONLY")
+        self.assertEqual(self.beta.splitlines()[0], "# LoonKit v6.5.5-beta.3 · BETA TEST ONLY")
         self.assertEqual(len(self.manifest["overlay_rules"]), 10)
         for item in self.manifest["overlay_rules"].values():
             path = ROOT / item["uri"].split("/loonkit/" + self.manifest["immutable_overlay_commit"] + "/", 1)[1]
@@ -116,10 +121,31 @@ class BetaChannelTests(unittest.TestCase):
         general_main = section(self.main, "General")
         self.assertIn("sni-sniffing = true", general_beta)
         self.assertNotIn("sni-sniffing =", general_main)
-        self.assertEqual(self.manifest["version"], "v6.5.5-beta.2")
+        self.assertEqual(self.manifest["version"], "v6.5.5-beta.3")
         self.assertEqual(self.manifest["candidate_features"]["sni_sniffing"]["status"],
                          "ENABLE_IN_BETA_ONLY_PENDING_DEVICE_VERIFICATION")
         self.assertIn("GEOIP,CN,DIRECT,no-resolve", section(self.beta, "Rule"))
+
+    def test_china_direct_is_scoped_and_source_is_bit_reproducible(self):
+        source = ROOT / "rules/releases/vNext-RC2/ChinaDirect.list"
+        scoped = ROOT / "rules/beta/v6.5.5-beta.3/ChinaDirect.list"
+        original = [s for s in source.read_text(encoding="utf-8").splitlines()
+                    if s and not s.startswith(("#",";","//"))]
+        candidate = [s for s in scoped.read_text(encoding="utf-8").splitlines()
+                     if s and not s.startswith(("#",";","//"))]
+        exclusions = [s for s in original if s == "DOMAIN-SUFFIX,cn" or s.startswith("USER-AGENT,")]
+        self.assertEqual(len(original), 114837)
+        self.assertEqual(len(exclusions), 60)
+        self.assertEqual(len(candidate), 114777)
+        self.assertEqual(candidate, [s for s in original if s not in exclusions])
+        self.assertFalse(any(s == "DOMAIN-SUFFIX,cn" or s.startswith("USER-AGENT,")
+                             for s in candidate))
+        self.assertEqual(hashlib.sha256(scoped.read_bytes()).hexdigest(),
+                         self.manifest["china_direct"]["sha256"])
+        self.assertEqual(self.effective("unlisted-special-case.cn"), "Final")
+        self.assertEqual(self.effective("api.weixin.qq.com"), "DIRECT")
+        self.assertEqual(self.effective("wechat.com"), "DIRECT")
+        self.assertEqual(self.manifest["version"], "v6.5.5-beta.3")
 
     def test_no_lie_about_selector_direct(self):
         self.assertIn("AdBlock = select,REJECT,DIRECT", section(self.beta, "Proxy Group"))
