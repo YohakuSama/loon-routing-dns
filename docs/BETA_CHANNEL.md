@@ -54,3 +54,8 @@ Its `proposed-assets/` files contain actual newly fetched, normalized proposals 
 The read-only beta workflow uploads a review artifact on relevant beta pushes. GitHub scheduled workflows run from the default branch, so **this workflow is not a working independent weekly beta scheduler** while the default branch is main. The existing Monday weekly read-only audit continues unchanged. Automatic creation of a beta PR after low-risk acceptance remains **not implemented**: a reviewed policy decision, immutable asset commit and verified beta config repinning must be added first, then the default-branch scheduler updated through the formal release gate. A green artifact job is not permission to publish any rules.
 
 Never install the `proposed-assets/` outputs directly; they are review-only raw proposals, without pinned configuration URLs. Never delete pinned last-known-good or historical resources to make the artifact pass.
+
+## Device test and decision evidence
+
+- [Beta device acceptance matrix](BETA_DEVICE_MATRIX.md): all real-device checks still marked NOT_TESTED; contains required device metadata, DNS failures and 7-day observation.
+- [Routing, AdBlock and source conflict ledger](BETA_DECISION_REGISTER.md): baseline vs beta ownership decisions, offline-test boundaries and unverified domains.
