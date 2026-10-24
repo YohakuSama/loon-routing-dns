@@ -9,6 +9,8 @@
 - [发布 PR #119](https://github.com/YohakuSama/loonkit/pull/119) 采用维护者对此准确候选的一次性放行决策。七天观察时长与逐项设备场景仍为未提供，不伪称完成；资源哈希和最终 PR CI 仍须通过。
 
 
+- 正式 main 发布提交：[7c7ca4f67180437c962c3bc7eae07c6042e519d6](https://github.com/YohakuSama/loonkit/commit/7c7ca4f67180437c962c3bc7eae07c6042e519d6)；合并后 [Production CI](https://github.com/YohakuSama/loonkit/actions/runs/40097998603) 通过，公开配置哈希一致。
+
 ## v6.5.4
 
 - 优化正式配置文件中的技术注释，统一语言，移除迁移、候选和内部审计措辞。

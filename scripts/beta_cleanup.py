@@ -19,6 +19,16 @@ def inventory(root: Path = ROOT) -> dict:
     release = json.loads((root / "build/release_manifest.json").read_text())
     history = json.loads((root / "build/beta_history.json").read_text())
     current = {URI.fullmatch(uri)["path"] for uri in resource_records(meta)}
+    # Preserve every path named by the active formal configuration or manifest.
+    current.update(row["path"] for row in release.get("runtime_resources", [])
+                   if isinstance(row, dict) and "path" in row)
+    for profile_path in ("LoonKit.lcf", "beta/LoonKit.lcf"):
+        path = root / profile_path
+        if path.is_file():
+            for match in re.finditer(r"https://raw\\.githubusercontent\\.com/YohakuSama/loonkit/[a-f0-9]{40}/[^,\\s]+", path.read_text(encoding="utf-8")):
+                uri = URI.fullmatch(match.group())
+                if uri:
+                    current.add(uri["path"])
     archival = {}
     for revision in history["revisions"]:
         for row in revision["resources"]:
@@ -49,6 +59,31 @@ def inventory(root: Path = ROOT) -> dict:
             "rules":"Only historical beta working-tree copies; all original inputs, stable rules and Git objects retained."}
 
 
+def verify_archives(root: Path = ROOT) -> dict:
+    """Verify historical commit URL bytes even after working-tree copies are deleted."""
+    history = json.loads((root / "build/beta_history.json").read_text())
+    rows = [entry for revision in history["revisions"] for entry in revision["resources"]]
+    checked = set()
+    for row in rows:
+        uri, digest = row.get("uri"), row.get("sha256")
+        hit = URI.fullmatch(uri or "")
+        if not hit or not re.fullmatch(r"[a-f0-9]{64}", digest or ""):
+            raise ValueError("invalid pinned rollback reference")
+        if uri in checked:
+            raise ValueError("duplicate archived rollback reference")
+        checked.add(uri)
+        path = root / hit["path"]
+        if path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            raise ValueError("historical worktree copy changed")
+        with urllib.request.urlopen(uri, timeout=35) as response:
+            if response.geturl() != uri:
+                raise ValueError("historical archive redirect changed")
+            content = response.read(8 * 1024 * 1024 + 1)
+        if len(content) > 8 * 1024 * 1024 or hashlib.sha256(content).hexdigest() != digest:
+            raise ValueError("historical archive hash mismatch: " + hit["path"])
+    return {"verified_history_resources": len(checked), "status": "ARCHIVAL_URLS_AND_HASHES_VERIFIED"}
+
+
 def apply(root: Path = ROOT):
     plan = inventory(root)
     if plan["status"] != "READY_FOR_ARCHIVAL_VERIFICATION":
@@ -74,6 +109,9 @@ def apply(root: Path = ROOT):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--apply", action="store_true")
+    task = parser.add_mutually_exclusive_group()
+    task.add_argument("--apply", action="store_true")
+    task.add_argument("--verify-archives", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(apply() if args.apply else inventory(), ensure_ascii=False, indent=2))
+    result = (apply() if args.apply else verify_archives() if args.verify_archives else inventory())
+    print(json.dumps(result, ensure_ascii=False, indent=2))

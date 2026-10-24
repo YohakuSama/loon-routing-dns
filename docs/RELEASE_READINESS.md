@@ -1,6 +1,6 @@
 # 发布与维护检查
 
-## v6.5.5 发布候选
+## v6.5.5 正式发布核验记录
 
 [PR #119](https://github.com/YohakuSama/loonkit/pull/119) 将 beta.4 的有效指令确定性提升至正式入口。维护者已明确批准这一版的单次发布，详见 [版本专属决定](RELEASE_OWNER_DECISION_v6.5.5.json)，并保留严格的资源、CI、合并后检查。
 
@@ -13,6 +13,8 @@
 
 
 本页记录 LoonKit 的发布流程、版本核验和维护要求。正式配置为 [LoonKit.lcf](../LoonKit.lcf)，许可证与来源信息见 [第三方许可与来源](./THIRD_PARTY_NOTICES.md)。
+
+正式 main 发布提交：[7c7ca4f67180437c962c3bc7eae07c6042e519d6](https://github.com/YohakuSama/loonkit/commit/7c7ca4f67180437c962c3bc7eae07c6042e519d6)；合并后 [Production CI #40097998603](https://github.com/YohakuSama/loonkit/actions/runs/40097998603) 成功。正式入口 SHA256：`d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03`。
 
 ## 发布流程
 

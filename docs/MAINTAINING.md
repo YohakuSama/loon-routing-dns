@@ -9,6 +9,8 @@
 
 正式配置为 `LoonKit.lcf`，通过 `release/Network_Diagnostics.plugin` 提供节点信息、网络检测和解锁检测三个入口。
 
+已发布 main 提交：[7c7ca4f67180437c962c3bc7eae07c6042e519d6](https://github.com/YohakuSama/loonkit/commit/7c7ca4f67180437c962c3bc7eae07c6042e519d6)。合并后实际 [production CI](https://github.com/YohakuSama/loonkit/actions/runs/40097998603) 已通过；回滚入口为 [v6.5.4 固定提交](https://raw.githubusercontent.com/YohakuSama/loonkit/62dcaa273ebff92176b510186f7b73ea994e72b6/LoonKit.lcf)。
+
 ## 当前固定依赖
 
 - 规则：36 个不可变远程资源（22 个历史 RC2、14 个已验收 beta.4 资源）；准确引用和 SHA256 见 `build/release_manifest.json`。
