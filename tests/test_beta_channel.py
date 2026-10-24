@@ -5,6 +5,9 @@ import json
 from pathlib import Path
 import re
 import unittest
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+import beta_channel
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "LoonKit.lcf"
@@ -49,6 +52,8 @@ class BetaChannelTests(unittest.TestCase):
             allowed = {cls.manifest["immutable_overlay_commit"],
                        cls.manifest["production_release_commit"],
                        cls.manifest["china_direct"]["source_commit"]}
+            allowed.update(beta_channel.URI.fullmatch(uri)["sha"]
+                           for uri in beta_channel.resource_records(cls.manifest))
             if pinned not in allowed:
                 raise AssertionError("unapproved remote pin " + pinned)
             path = ROOT / local_path
@@ -75,12 +80,13 @@ class BetaChannelTests(unittest.TestCase):
                          self.manifest["configuration_sha256"])
         self.assertEqual(hashlib.sha256(self.main.encode()).hexdigest(),
                          self.manifest["original_production_config_sha256"])
-        self.assertEqual(self.beta.splitlines()[0], "# LoonKit v6.5.5-beta.3 · BETA TEST ONLY")
-        self.assertEqual(len(self.manifest["overlay_rules"]), 10)
+        self.assertEqual(self.beta.splitlines()[0], "# LoonKit " + self.manifest["version"] + " · BETA TEST ONLY")
+        self.assertEqual(len(self.manifest["overlay_rules"]), 12)
         for item in self.manifest["overlay_rules"].values():
             path = ROOT / item["uri"].split("/loonkit/" + self.manifest["immutable_overlay_commit"] + "/", 1)[1]
             self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"])
-        self.assertEqual(len(self.remotes), 34)
+        self.assertEqual(len(self.remotes), self.manifest["runtime_remote_count"])
+        self.assertEqual(beta_channel.validate()["resources"], len(self.remotes))
 
     def test_dns_equal_to_production_and_no_private_dns(self):
         for key in ("dns-server", "doh-server", "hijack-dns", "ip-mode", "ipv6-vif",
@@ -96,7 +102,7 @@ class BetaChannelTests(unittest.TestCase):
     def test_adblock_resources_are_reversible(self):
         self.assertFalse(any(x.endswith(",AdBlock") for x in self.local))
         self.assertEqual({p["tag"] for p, _ in self.remotes if p["policy"] == "AdBlock"},
-                         {"Our-AdBlock", "Beta-LocalAdBlock"})
+                         {"Beta-AdBlock-Balanced"})
         self.assertEqual(self.effective("analytics.spotify.com"), "AdBlock")
         self.assertEqual(self.effective("analytics.spotify.com", without_adblock=True), "Spotify")
         self.assertEqual(self.effective("pixel.facebook.com", without_adblock=True), "Facebook")
@@ -121,22 +127,22 @@ class BetaChannelTests(unittest.TestCase):
         general_main = section(self.main, "General")
         self.assertIn("sni-sniffing = true", general_beta)
         self.assertNotIn("sni-sniffing =", general_main)
-        self.assertEqual(self.manifest["version"], "v6.5.5-beta.3")
+        self.assertRegex(self.manifest["version"], r"v[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+")
         self.assertEqual(self.manifest["candidate_features"]["sni_sniffing"]["status"],
                          "ENABLE_IN_BETA_ONLY_PENDING_DEVICE_VERIFICATION")
         self.assertIn("GEOIP,CN,DIRECT,no-resolve", section(self.beta, "Rule"))
 
     def test_china_direct_is_scoped_and_source_is_bit_reproducible(self):
         source = ROOT / "rules/releases/vNext-RC2/ChinaDirect.list"
-        scoped = ROOT / "rules/beta/v6.5.5-beta.3/ChinaDirect.list"
+        scoped = ROOT / beta_channel.URI.fullmatch(self.manifest["china_direct"]["uri"])["path"]
         original = [s for s in source.read_text(encoding="utf-8").splitlines()
                     if s and not s.startswith(("#",";","//"))]
         candidate = [s for s in scoped.read_text(encoding="utf-8").splitlines()
                      if s and not s.startswith(("#",";","//"))]
-        exclusions = [s for s in original if s == "DOMAIN-SUFFIX,cn" or s.startswith("USER-AGENT,")]
+        exclusions = [s for s in original if s in {"DOMAIN-SUFFIX,cn", "DOMAIN-SUFFIX,wechat.com", "DOMAIN-SUFFIX,wechatapp.com"} or s.startswith("USER-AGENT,")]
         self.assertEqual(len(original), 114837)
-        self.assertEqual(len(exclusions), 60)
-        self.assertEqual(len(candidate), 114777)
+        self.assertEqual(len(exclusions), 62)
+        self.assertEqual(len(candidate), 114775)
         self.assertEqual(candidate, [s for s in original if s not in exclusions])
         self.assertFalse(any(s == "DOMAIN-SUFFIX,cn" or s.startswith("USER-AGENT,")
                              for s in candidate))
@@ -144,13 +150,20 @@ class BetaChannelTests(unittest.TestCase):
                          self.manifest["china_direct"]["sha256"])
         self.assertEqual(self.effective("unlisted-special-case.cn"), "Final")
         self.assertEqual(self.effective("api.weixin.qq.com"), "DIRECT")
-        self.assertEqual(self.effective("wechat.com"), "DIRECT")
-        self.assertEqual(self.manifest["version"], "v6.5.5-beta.3")
+        self.assertEqual(self.effective("wechat.com"), "Final")
 
     def test_no_lie_about_selector_direct(self):
-        self.assertIn("AdBlock = select,REJECT,DIRECT", section(self.beta, "Proxy Group"))
-        self.assertIn("DIRECT in AdBlock is NOT bypass/continue matching", self.beta)
+        self.assertIn("AdBlock = select,REJECT,Proxy", section(self.beta, "Proxy Group"))
+        self.assertNotIn("AdBlock = select,REJECT,DIRECT", self.beta)
         self.assertNotIn("policy=PASS", self.beta)
+
+    def test_critical_functions_and_shared_dependencies(self):
+        for host, owner in {"crl.microsoft.com":"Microsoft", "ocsp.godaddy.com":"Final",
+                            "ocsp.apple.com":"Apple", "api.statsig.com":"Proxy",
+                            "tenant.apis.google.com":"Google", "room.host.livekit.cloud":"Proxy"}.items():
+            self.assertEqual(self.effective(host), owner, host)
+        self.assertEqual(len(self.local), 4)
+        self.assertEqual(self.effective("browser-intake-datadoghq.com"), "AdBlock")
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import beta_channel
 
 ROOT = Path(__file__).resolve().parents[1]
 URI = re.compile(
@@ -30,8 +31,51 @@ EXPECTED = {
     "events.data.microsoft.com": ("AdBlock", "Microsoft"),
     "copilot.microsoft.com": ("AI", "AI"),
     "login.microsoftonline.com": ("Microsoft", "Microsoft"),
-    "ocsp.apple.com": ("DIRECT", "DIRECT"),
-    "mesu.apple.com": ("DIRECT", "DIRECT"),
+    "ocsp.apple.com": ("Apple", "Apple"),
+    "mesu.apple.com": ("Apple", "Apple"),
+    "crl.microsoft.com": ("Microsoft", "Microsoft"),
+    "ocsp.godaddy.com": ("Final", "Final"),
+    "wechat.com": ("Final", "Final"),
+    "wechatapp.com": ("Final", "Final"),
+    "tenant-unknown.apis.google.com": ("Google", "Google"),
+    "api.statsig.com": ("Proxy", "Proxy"),
+    "room.host.livekit.cloud": ("Proxy", "Proxy"),
+    "client-api.arkoselabs.com": ("Proxy", "Proxy"),
+    "browser-intake-datadoghq.com": ("AdBlock", "Final"),
+    "cdn.usefathom.com": ("AdBlock", "Final"),
+    "events.statsigapi.net": ("AdBlock", "Final"),
+    "abema.tv": ("Abema", "Abema"),
+    "abchina.com.cn": ("DIRECT", "DIRECT"),
+    "ebank.ccb.com": ("DIRECT", "DIRECT"),
+    "notcolab-specific-example.invalid": ("Final", "Final"),
+    "www.youtube.com": ("YouTube", "YouTube"),
+    "www.netflix.com": ("Netflix", "Netflix"),
+    "www.disneyplus.com": ("Disney", "Disney"),
+    "www.primevideo.com": ("PrimeVideo", "PrimeVideo"),
+    "www.tiktok.com": ("TikTok", "TikTok"),
+    "www.bilibili.com": ("Bilibili", "Bilibili"),
+    "www.gamer.com.tw": ("動畫瘋", "動畫瘋"),
+    "www.dazn.com": ("Dazn", "Dazn"),
+    "www.max.com": ("HBO", "HBO"),
+    "api.telegram.org": ("Telegram", "Telegram"),
+    "www.whatsapp.com": ("Whatsapp", "Whatsapp"),
+    "www.instagram.com": ("Instagram", "Instagram"),
+    "www.facebook.com": ("Facebook", "Facebook"),
+    "www.x.com": ("Twitter", "Twitter"),
+    "www.discord.com": ("Discord", "Discord"),
+    "www.paypal.com": ("Paypal", "Paypal"),
+    "www.bbc.com": ("BBC", "BBC"),
+    "www.line.me": ("Line", "Line"),
+    "www.reddit.com": ("Reddit", "Reddit"),
+    "www.linkedin.com": ("Linkedin", "Linkedin"),
+    "www.twitch.tv": ("Twitch", "Twitch"),
+    "www.spotify.com": ("Spotify", "Spotify"),
+    "www.google.com": ("Google", "Google"),
+    "www.amap.com": ("DIRECT", "DIRECT"),
+    "www.alipayobjects.com": ("DIRECT", "DIRECT"),
+    "www.t3go.cn": ("DIRECT", "DIRECT"),
+    "grok.x.com": ("AI", "AI"),
+    "notebooklm.google.com": ("AI", "AI"),
     "cm.steampowered.com": ("Steam", "Steam"),
     "downloads.steamcontent.com": ("Steam", "Steam"),
     "downloads.steamusercontent.com": ("Steam", "Steam"),
@@ -41,10 +85,7 @@ EXPECTED = {
     "unknown-unlisted-overseas.example": ("Final", "Final"),
 }
 PENDING = {
-    "wechat.com": "Historical ChinaDirect suffix, mainland/international hosting needs evidence.",
-    "wechatapp.com": "Historical ChinaDirect suffix, mainland/international hosting needs evidence.",
-    "tenant-unknown.apis.google.com": "Shared Google APIs may be incorrectly owned by AI.",
-    "configuration.apple.com": "AppleOTA includes configuration and device service, not just OTA.",
+    "configuration.apple.com": "Follows Apple selector; actual client system behavior still needs targeted verification.",
     "servicewechat.com": "Service ownership and region do not follow from a domain name.",
 }
 
@@ -112,6 +153,7 @@ class DomainIndex:
 
 
 def build(root: Path = ROOT):
+    beta_channel.validate(root)
     profile = (root / "beta/LoonKit.lcf").read_text(encoding="utf-8")
     meta = json.loads((root / "build/beta_manifest.json").read_text(encoding="utf-8"))
     if hashlib.sha256(profile.encode()).hexdigest() != meta["configuration_sha256"]:
@@ -121,6 +163,7 @@ def build(root: Path = ROOT):
         meta["production_release_commit"],
         meta["china_direct"]["source_commit"],
     }
+    allow.update(URI.fullmatch(uri)["sha"] for uri in beta_channel.resource_records(meta))
     local = []
     for row in section(profile, "Rule").splitlines():
         if not row.strip() or row.lstrip().startswith(("#", ";", "//")):
@@ -159,7 +202,7 @@ def build(root: Path = ROOT):
             raise ValueError("empty remote asset " + str(path))
         # Exact hashes are checked elsewhere for formal rules. The beta
         # manifest hashes all ten beta overlays and the new ChinaDirect asset.
-        if uri_match["sha"] == meta["china_direct"]["source_commit"]:
+        if pieces[0] == meta["china_direct"]["uri"]:
             if hashlib.sha256(raw).hexdigest() != meta["china_direct"]["sha256"]:
                 raise ValueError("scoped domestic content hash mismatch")
         else:
@@ -177,7 +220,7 @@ def build(root: Path = ROOT):
             "index": DomainIndex(lines),
             "lines": lines,
         })
-    if len(remotes) != 34:
+    if len(remotes) != meta["runtime_remote_count"]:
         raise ValueError("beta remote source count drift")
     return meta, local, remotes
 
@@ -218,15 +261,13 @@ def report(root: Path = ROOT):
         "actual_offline": trace(host, local, remotes),
         "review_reason": reason, "device_verification": "NOT_TESTED"
     } for host, reason in PENDING.items()}
-    if pending["tenant-unknown.apis.google.com"]["actual_offline"]["policy"] == "AI":
-        pending["tenant-unknown.apis.google.com"]["risk"] = "SHARED_INFRASTRUCTURE_OWNER_REVIEW"
     return {
         "schema_version": 1, "status": "DOMAIN_ONLY_STATIC_ANALYSIS_NOT_DEVICE_OBSERVATION",
         "candidate": meta["version"],
         "configuration_sha256": meta["configuration_sha256"],
         "remote_subscriptions": len(remotes),
         "plugin_rules": 0,
-        "adblock_disabled_means": "Both remote AdBlock subscriptions toggled off",
+        "adblock_disabled_means": "Beta-AdBlock-Balanced remote resource toggled off",
         "verified_synthetic_routes": verified,
         "open_scope_review": pending,
         "limitations": [

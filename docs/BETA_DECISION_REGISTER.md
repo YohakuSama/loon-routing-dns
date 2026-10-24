@@ -1,70 +1,35 @@
-# Beta v6.5.5-beta.3 decision and conflict ledger
+# Beta 规则决策与证据登记
 
-Last edited 2026-10-24. This records repository facts and predicted routes, NOT device results.
+正式 v6.5.4 保持不变；当前配置身份以 build/beta_manifest.json 为准。以下为代码事实和离线结果，不冒充真机观测。
 
-## Effective rule precedence
+| 决策 | 实施结果 | 证据与边界 |
+| --- | --- | --- |
+| 广告开关 | 单个 Beta-AdBlock-Balanced 资源；关闭后恢复服务归属；Proxy 放行有独立含义 | 58 个离线场景中的 on/off 对照；其他插件和外部 DNS 过滤不受此开关影响 |
+| 本地优先级 | 仅保留 Raw 访问和 Gemini/AI Studio/Copilot 的 4 条优先例外 | 去掉重复服务父后缀，避免遮蔽远程广告规则；补齐 Abema 与国内三个缺口 |
+| 证书误杀 | 移除 crl.microsoft.com、ocsp.godaddy.com 拦截匹配 | 证书用途证据保存在 rules/beta/balanced_decisions.json，未放行整个微软或证书厂商 |
+| 精确隐私增强 | Datadog Browser RUM、Fathom embed、Statsig exposure 三个精确主机进入广告资源 | 与功能配置 api.statsig.com、验证码接口分别处理，不默认封杀所有统计厂商 |
+| Steam | 全球四个后缀归 Steam；13 个明确 CDN 候选保留 | 全局归属回归已测，CDN 地区/下载能力要真机确认 |
+| 国际 WeChat 父域 | wechat.com、wechatapp.com 不再强制 DIRECT，未知子域使用 Final | 国内 qq.com、weixin.com 等保留；并非声称所有 WeChat 请求都在境外 |
+| ChinaDirect | 精确排除总后缀/UA/国际父域，共 62 条 | 其余 114,775 条按原顺序保留，历史大表不等于每个目标的地区认证 |
+| 共享 Google/AI | apis.google.com 跟随 Google，通用功能/实时通信平台跟随 Proxy | AI 自有租户继续 AI；单独指定不同服务节点时应复测验证码与语音依赖 |
+| Apple | 82 条 AppleOTA 域名全部保留，策略跟随 Apple | 默认 DIRECT、real-ip 未改；切换 Apple 组时系统域名不再偷偷固定直连 |
+| DNS | 用户指定保留默认 AliDNS | 不更换为 NovaXNS，不宣称解析一定经过代理；App 回退和私有 DoH 需实测 |
+| 更新基线 | 原正式版 26 组 → 当前 beta 33 个来源组 | 复用同一个上游解析器；来源失败保留运行版本，无自动删除 |
+| 更新权限 | 只自动创建受限草稿 PR，资产先提交、配置后 pin | 不自动合并 beta 或 main；显式 dispatch CI，避免 GITHUB_TOKEN 创建 PR 不触发检查 |
+| 用户设备反馈 | 已记录“未发现问题”的概括反馈 | 精确版本/范围未记录，不补写 18 个 PASS，也不把新改动说成已经测试 |
 
-Loon's documented sources are **local rules → plugin rules → remote rule
-subscriptions**. Rules within subscriptions are evaluated according to Loon's
-rule priority/ordering; do not infer a "continue matching" action that Loon
-does not support. In this candidate, local AI exact exceptions remain local;
-AdBlock rules moved out of local into explicit remote subscription resources.
-The active diagnostic plugin has no REJECT/filter rules (check again if user
-installs additional plugins). The GeoIP and Final terms remain at the end
-of [Rule]. The offline matcher tests model supported domain types only,
-not actual DNS/IP-triggered matching or Fake IP behavior.
+## 来源优先级
 
-| Domain / route | Baseline conflict | Candidate prediction | Evidence category |
-| --- | --- | --- | --- |
-| `analytics.spotify.com` | local AdBlock may be assigned REJECT/DIRECT before Spotify | AdBlock on; Spotify when both filter resources disabled | CI offline; device pending |
-| `pixel.facebook.com` | local `facebook.com` root shadowed remote advertiser rule | Not locally shadowed; exact remote result needs individual source inspection | Static rule-order check; device pending |
-| `telemetry.microsoft.com` | local `microsoft.com` root shadowed remote matcher | Not locally shadowed; eventual remote rule must be examined | Static conflict check; device pending |
-| `events.data.microsoft.com` | local Microsoft root | Local root removed, remote rules retain ownership | Static conflict check; device pending |
-| `copilot.microsoft.com` | AI exact before Microsoft owner | Local `DOMAIN` → AI preserved | CI offline |
-| `store.steampowered.com` | Remote Steam | Steam | CI offline |
-| `cm.steampowered.com` | Frozen broad SteamCN DIRECT | Steam overlay before frozen Steam | CI offline |
-| `example.steamcontent.com` | Frozen broad SteamCN DIRECT | Steam overlay | CI offline |
-| `dl.steam.ksyna.com` | SteamCN direct candidate | Beta SteamCN DIRECT candidate remains; actual CDN geography unverified | CI offline, device pending |
-| unknown foreign domain | Final selector | Final selector (by domain matching only) | CI offline |
-| IP literal with geolocation | GEOIP CN no-resolve, then Final | Unchanged, subject to Loon runtime matching | Official semantics + device pending |
+按 Loon 官方的本地、插件、订阅规则来源优先级审查。公共诊断插件没有过滤规则；另行安装的用户插件不在公共配置静态分析范围内。相同文本的去重也要验证最终命中，不能只比较文本集合。
 
-## Key scope decisions
+规则的离线类别、策略组默认选择、节点出口及 DNS 解析位置是不同层次。GEOIP,CN,DIRECT,no-resolve 保留；它不承诺所有未收录的国内域名都能自动直连。
 
-1. **Advertising**: 26 previously local rules moved into `Beta-LocalAdBlock`, with existing `Our-AdBlock` first. Selecting **DIRECT** inside AdBlock does not skip filtering and would override service selection. Turn off *both remote* AdBlock subscriptions in Loon instead (two manual switches). A user's other installed plugins, DNS host mappings and NovaXNS cloud filter may remain effective independently.
-2. **Microsoft/Facebook**: remove broad local roots on beta only; original immutable remote Microsoft/Facebook lists are still present. Never indiscriminately REJECT shared login/OCSP/identity hosts. `pixel.facebook.com` and `telemetry.microsoft.com` require effective-rule logging before concluding they are blocked.
-3. **Steam**: four global families leave SteamCN direct and are now Steam policy; 13 SteamCN exact/owned China candidates remain for device review. Original frozen source still contains many overlapping Steam entries: use effective-match tests, not raw deduplication, before removing any other rule.
-4. **AI**: remove keyword `colab`, `developerprofiles`, `generativelanguage` from beta AI subscription. Retain the known `generativelanguage.googleapis.com` suffix and exact `copilot.microsoft.com`; add exact Colab / developer profile hosts. Shared public Cloud APIs and LiveKit are not categorically AI-owned.
-5. **Domestic**: frozen ChinaDirect is intentionally untouched pending specific audits of `.cn`, `wechat.com`, UA, wide CIDR and unknown IP ownership; `GEOIP,CN,DIRECT,no-resolve` never promises all unknown mainland hostnames are direct. No evidence for default-disabling IPv6/UDP.
-6. **Apple**: OTA, certificate and push exceptions are unchanged pending real-device evidence. The `real-ip` setting changes resolution behavior, not route `DIRECT`.
-7. **DNS**: AliDNS is unchanged, per user. Encrypted transport does not establish resolver anonymity, and Loon UI settings may enable UDP fallback under DoH failure. Verify actual packet path. Node bootstrap vs business target DNS are different.
+## 仍需真实环境确认
 
-## Source-update state
+- 新单广告资源关闭与 Proxy 放行的实际客户端行为。
+- 关键功能、验证码、语音、系统更新、支付和下载的回归。
+- AliDNS DoH 故障回退、IPv6、节点故障与网络切换的真实解析路径。
+- CDN 的实际地区、账号地区及指定不同服务节点后的兼容性。
+- 新版本的观察期与精确提交验收。
 
-The weekly read-only upstream review on main remains operational. On beta,
-`beta-upstream-candidate.yml` can run after code changes or manually. It
-produces actual 26-group proposed changes plus full source evidence and checks
-upstream integrity. A green candidate job **does not write beta PRs or update
-runtime rules**. Low-risk automatic beta PR and release promotion remain
-pending explicit trusted workflow design and mandatory gates. No fake success
-status should be assigned here.
-
-## Promotion and rollback
-
-- Stable: `main/LoonKit.lcf` at verified prior commit `87ba3f50e80ba90212a0eeba7df223949f50e32b`.
-- Beta: `beta/LoonKit.lcf` through branch `beta`. For exact reproduction use the beta commit and manifest, not a moving link.
-- Roll back Loon by reimporting existing verified stable entry, checking node
-  and app-specific settings. Do not force-push or remove pinned historical resources.
-
-## v6.5.5-beta.2 SNI/IP target experiment
-
-- Added only `sni-sniffing = true` to the beta's `[General]` based on the Loon-maintained 2026-09-11 syntax. Main remains unchanged.
-- Intended benefit: for TLS connections addressed to a literal IP, available SNI can provide the hostname needed to select a service rule rather than falling directly to IP/Final.
-- Conditions: visible SNI, supported TLS type and Loon's runtime interpretation. No claim for ECH, QUIC, UDP, or generic TLS with hidden names; does not change the AliDNS resolver or `no-resolve` semantics.
-- New risk: IP-targeted traffic with SNI may match a new rule, including REJECT; log effective match and compare with earlier beta on-device. Roll back to previous beta.1 commit if critical false-positives appear.
-
-## v6.5.5-beta.3 audited ChinaDirect delta
-
-- Excluded `DOMAIN-SUFFIX,cn` and 59 USER-AGENT items from the pinned ChinaDirect only in beta; all other 114,777 entries are retained in the previous order. This removes two **classes of unproven geographic inference**, not a statement about app origin.
-- `api.weixin.qq.com` remains explicitly domestic through `qq.com`. Broader `wechat.com`, `wechatapp.com` still demand real dependency/location evidence; no blanket overseas WeChat rewrite is claimed.
-- The complete explicit diff can be reconstructed from [domestic decisions](../rules/beta/domestic_decisions.json), the old pinned release and new [ChinaDirect beta rule](../rules/beta/v6.5.5-beta.3/ChinaDirect.list). SHA: `bdeafed6ce861f1f72e1f891c798257687123a8f29867ae4e7a89b007001b68a`.
-- AppleOTA system check and update routes unchanged; no claim of narrower Apple region routing without field results.
+这些是明确的设备/现场证据缺项，不再以“尚未审计”掩盖已经做出的代码决策。

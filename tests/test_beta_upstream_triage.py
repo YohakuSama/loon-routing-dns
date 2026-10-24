@@ -77,6 +77,21 @@ class BetaRiskTriageTests(unittest.TestCase):
         self.assertIn("LOSSY_SOURCE_EXPRESSIONS_REVIEW_REQUIRED",
                       result["groups"]["YouTube"]["reasons"])
 
+    def test_unrelated_documented_exclusion_does_not_freeze_clean_owner(self):
+        a,b,c=self.fixture()
+        a["source_snapshots"][0]["group"]="YouTube"
+        a["source_snapshots"].append({"id":"ad-review","group":"AdBlock",
+            "status":"PARSED_WITH_DOCUMENTED_EXCLUSIONS","sha256":"f"*64})
+        a["source_count"]=2
+        result=triage.evaluate(a,b,c)
+        self.assertFalse(result["source_translation_exact_for_routine"])
+        self.assertEqual(result["groups"]["YouTube"]["status"], "LOW_RISK_DRAFT_PR_ELIGIBLE_REVIEW_REQUIRED")
+
+    def test_delivery_and_triage_owner_and_shared_root_contract(self):
+        import beta_upstream_delivery as delivery
+        self.assertEqual(delivery.OWNERS, triage.LOW_RISK_OWNERS)
+        self.assertEqual(set(delivery.SHARED), set(triage.SHARED))
+
     def test_conflicting_or_partial_audit_group_set_fails(self):
         a,b,c=self.fixture()
         c.pop("ChinaDirect")

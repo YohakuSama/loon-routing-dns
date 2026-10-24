@@ -12,6 +12,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   beta:
+    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -33,6 +34,8 @@ jobs:
         run: |
           python3 scripts/beta_assets.py --check
           python3 scripts/beta_domestic_rules.py --check
+          python3 scripts/beta_policy_review.py --check
+          python3 scripts/beta_channel.py --remote
       - name: Beta routing/priority and channel regressions
         run: python3 -m unittest discover -s tests -p 'test_beta*.py' -v
       - name: Reproduce effective source-priority and AdBlock toggle route audit

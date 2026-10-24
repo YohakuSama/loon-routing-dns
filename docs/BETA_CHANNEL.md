@@ -1,96 +1,51 @@
-# LoonKit v6.5.5-beta.3 · isolated beta
-**Status: beta CI verified on latest merged candidate; actual Loon device verification remains pending. Do not merge to main yet.**
+# LoonKit 测试渠道
 
-## Entry and pinned assets
-- Stable: https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf (v6.5.4; unchanged)
-- Active beta channel (moving branch): https://raw.githubusercontent.com/YohakuSama/loonkit/beta/beta/LoonKit.lcf
-- The entry follows `beta`; all ten beta overlay resources are pinned to commit `26a24c86b58b133b2d094956f0f615680275a1b0`.
-- Existing 23 production rule subscriptions, diagnostics plugin, icons and scripts keep their unchanged immutable refs.
-- Exact content hashes and matcher counts: [beta_manifest.json](../build/beta_manifest.json).
-- The policy generator is `python3 scripts/beta_assets.py --check`. All ten overlays reproduce from the single [policy_overrides.json](../rules/beta/policy_overrides.json).
-- Channel config checksum: `9bc445e6fdf0f93d7a2e9dac51a3ac83a23d92461b5c8055f1002f25d098a121`.
-- Resource source commit: `26a24c86b58b133b2d094956f0f615680275a1b0`.
-- Minimum documented features: Loon 3.2.5 (789) for `hijack-dns`; linked plugin declares 3.5.1 (983). **Use Loon 3.5.1 (983) or newer for beta**, and confirm compatibility on device.
+当前版本与完整校验值以 [beta manifest](../build/beta_manifest.json) 为准。正式版仍为 v6.5.4；测试改动尚未提升正式版。
 
-## Changes and decision evidence
-- Baseline: main commit `87ba3f50e80ba90212a0eeba7df223949f50e32b`, v6.5.4.
-- AliDNS untouched: UDP servers `223.5.5.5,223.6.6.6` and DoH `https://dns.alidns.com/dns-query`.
-- The old frozen SteamCN subscription is **replaced only in beta** with 13 conservative CDN/China candidates. Four broad global suffixes (`cm.steampowered.com`, `steamcontent.com`, `steamserver.net`, `steamusercontent.com`) now belong to Steam. The other 13 still require geographic validation.
-- 26 previously local AdBlock matchers are migrated to a dedicated `Beta-LocalAdBlock` subscription. Existing frozen `Our-AdBlock` stays first. Removed local Microsoft/Facebook roots are already covered by the frozen remote owner groups; their local priority no longer shadows the earlier remote AdBlock matcher.
-- Six supplementary service groups (Spotify, Twitch, BBC, Line, Reddit, Linkedin) migrate from local to pinned remote lists, preserving ownership when ad-block lists are disabled.
-- AI/Copilot exact local exceptions remain ahead of remote Microsoft rules. The beta replaces the fixed AI list with a generated scoped copy: removes broad keywords `colab`, `developerprofiles`, `generativelanguage`, adds explicit Colab/developer-profile hosts and keeps the existing `generativelanguage.googleapis.com` suffix.
-- Beta.3 removes the global `.cn` suffix and all 59 USER-AGENT direct matchers, retaining the other 114,777 ChinaDirect lines. Broad WeChat parents, some historical owner overlap and AppleOTA still require review.
-- The published app-level `AdBlock = select,REJECT,DIRECT` choice remains for compatibility. **DIRECT is not a disable switch**: it forces direct connection and can leak routing intentions. To stop Loon ad filtering while retaining service routing, turn **off both** `Our-AdBlock` and `Beta-LocalAdBlock` in Remote Rule. This is a manual two-toggle mechanism; it must be confirmed on device. The diagnostics plugin contains no Loon REJECT rules; third-party user plugins must be audited separately. NovaXNS filtering is independent.
-- `GEOIP,CN,DIRECT,no-resolve` and `FINAL,Final` remain; no assumption that unrecognized domestic domains are always direct.
+- 正式入口：https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
+- 测试入口：https://raw.githubusercontent.com/YohakuSama/loonkit/beta/beta/LoonKit.lcf
+- 导入前备份个人节点、订阅和 App 开关。公共配置不含节点或私人 DNS。
+- DNS 保持默认 AliDNS；推荐的最低客户端沿用 Loon 3.5.1 (983)，新特性仍以实际客户端支持为准。
 
-## DNS privacy acceptance
-- Official Loon docs: when both encrypted and ordinary DNS are present, encrypted is preferred; fallback to UDP is enabled by default. **In Loon App → DNS Servers, disable encrypted-DNS failure fallback to ordinary DNS** for a fail-closed test, then check actual packet/log paths. Config cannot prove that switch state.
-- Test Loon DNS, proxy-node bootstrap vs target resolution, Wi-Fi/cellular and IPv4/IPv6, DoH outage and node outage. `hijack-dns = *:53` does not intercept all DoT, private DoH and TCP DNS. Do not claim zero leaks from a web leak-test alone.
-- NovaXNS endpoint/tokens, cloud filtering, ECS and Mask+ settings are not used or committed. User requested AliDNS for now.
+## beta.4 已实施的变化
 
-## Pending gates
-1. Beta CI, manifest hashes and immutable GitHub Raw URLs green against the exact test commit.
-2. Loon import plus traffic analysis: telemetry.microsoft.com, events.data.microsoft.com, pixel.facebook.com, analytics.spotify.com, copilot.microsoft.com; Apple update, login, cert checks; Steam global vs CDN; payments, login, push, captcha.
-3. Four blocking combinations: Loon-only, NovaXNS-only, both on, both off **only if** NovaXNS is later configured. Currently AliDNS, so NovaXNS comparison is not applicable.
-4. Document iOS, device, Loon Build, network, node protocol, DNS switches, failures and sanitized evidence. Minimum first observation window **7 days** after usable device test entry.
-5. No beta→main promotion, release publication or cleanup before evidence and review.
+1. 合并为一个 Beta-AdBlock-Balanced 远程规则，默认 REJECT。关闭这个资源即可恢复各服务规则；AdBlock 策略中的 Proxy 仅表示“通过通用代理放行”，不能冒充恢复原分流。已移除易造成意外直连的 DIRECT 选项。
+2. 旧版所有 26 条本地广告规则已经被原始广告规则集覆盖，合并后去重。排除 crl.microsoft.com、ocsp.godaddy.com 两个证书相关误杀；新增三个有官方用途证据的精确遥测/统计主机，保留验证码、登录和功能配置接口。
+3. 公共本地域名规则由 beta.3 的 54 条减为 4 条必要优先例外，其余服务归属交由固定远程规则和生成器管理。保留 Abema 的 9 条域名与 3 条明确国内补充，避免去重后丢失功能。
+4. Steam 全球四类后缀归 Steam，13 条境内 CDN 候选保留；仍需用真实下载结果验证地理调度。
+5. 从 ChinaDirect 排除 .cn 总后缀、59 条 User-Agent，以及 wechat.com、wechatapp.com 两个缺乏 CN-only 依据的国际服务父域；保留其余 114,775 条和微信国内明确域名。未知目标遵循 Final，不臆造地区。
+6. apis.google.com 归 Google；Statsig/验证码/通用 LiveKit 基础设施使用通用 Proxy，避免强行归入 AI 的单独节点；明确 AI 自有域名继续归 AI。
+7. AppleOTA 保留全部系统/更新/证书域名，但跟随 Apple 策略组，不再成为绕过用户选择的硬编码 DIRECT。Apple 默认 DIRECT 和 General 中的 real-ip 均保持兼容性基线。
+8. AliDNS、IPv4/IPv6、TUN、UDP fallback、节点筛选和现有 33 个策略组保留；sni-sniffing 仍为上一轮已经启用的测试功能，不新增全局 QUIC/IPv6/MITM 限制。
 
-## Recover
-- Return to stable channel `https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf` and select your prior node/subscription.
-- The previous main commit `87ba3f50e80ba90212a0eeba7df223949f50e32b` remains immutable.
-- Do not change old pinned rule blobs. Open beta PRs must be reviewed; no forced history rewrite.
+## 构建和验收
 
-## Safe beta upstream proposals (2026-10-24)
-The original `.github/workflows/rules-update.yml` remains the weekly default-branch read-only audit. Its `candidate/` directory is deliberately unchanged. It is **not** an upstream beta update and must not be described as such.
+配置由 scripts/beta_profile.py 从正式模板与审核后的策略输入生成；资源必须先提交，再使用真实提交 SHA 生成配置，禁止自引用 SHA。36 份资源均由 scripts/beta_channel.py 校验实际字节、数量和不可变引用，支持 --remote 核对线上资源。
 
-Beta now has `scripts/beta_upstream_candidate.py`, reusing `upstream_review.build_report()` rather than implementing an alternative parser. Execute:
+    python3 scripts/beta_assets.py --check
+    python3 scripts/beta_domestic_rules.py --check
+    python3 scripts/beta_policy_review.py --check
+    python3 scripts/beta_channel.py --remote
+    python3 scripts/beta_effective_audit.py --output /tmp/beta-effective.json
+    python3 -m unittest discover -s tests -p 'test_*.py' -v
+    node --test tests/diagnostics.test.cjs
 
-```sh
-python3 scripts/beta_upstream_candidate.py --version v6.5.6-beta.1 --output /tmp/loonkit-beta-upstream
-```
+当前离线路由覆盖 58 个独立预期场景，包括全部现有服务类型和关键误杀反例。静态结果不证明登录、支付、播放、DNS 或客户端行为已经通过。
 
-Its `proposed-assets/` files contain actual newly fetched, normalized proposals instead of copies of the current 26 published lists. The artifact includes snapshots, v2fly includes, full diffs, provenance and risk review. Any invalid/empty/partial source results in retention of last valid baseline rules and a blocked publication status. Changed direct/IP/keyword/large-risk rules and removals require explicit review; the manifest **always** marks `publication_allowed=false` until a separate gated publication step exists.
+## DNS 与用户反馈
 
-The read-only beta workflow uploads a review artifact on relevant beta pushes. GitHub scheduled workflows run from the default branch, so **this workflow is not a working independent weekly beta scheduler** while the default branch is main. The existing Monday weekly read-only audit continues unchanged. Automatic creation of a beta PR after low-risk acceptance remains **not implemented**: a reviewed policy decision, immutable asset commit and verified beta config repinning must be added first, then the default-branch scheduler updated through the formal release gate. A green artifact job is not permission to publish any rules.
+AliDNS 普通服务器 223.5.5.5/223.6.6.6、DoH https://dns.alidns.com/dns-query 和其他 DNS/TUN 设置均未更换。加密 DNS 失败回退是 Loon App 设置，配置不能替用户保证开关状态。UDP/53 劫持也不能证明所有应用的私有解析均被接管。
 
-Never install the `proposed-assets/` outputs directly; they are review-only raw proposals, without pinned configuration URLs. Never delete pinned last-known-good or historical resources to make the artifact pass.
+[已记录此前用户“真机测试未发现问题”的反馈](BETA_OWNER_FEEDBACK.json)。该反馈没有附精确版本/SHA、设备和逐项场景，不能伪造为全部矩阵 PASS；新 beta.4 行为另需有针对性验证。NovaXNS 根据用户最新要求延期，不再作为本轮阻塞输入。
 
-## Device test and decision evidence
+## 自动上游更新
 
-- [Beta device acceptance matrix](BETA_DEVICE_MATRIX.md): all real-device checks still marked NOT_TESTED; contains required device metadata, DNS failures and 7-day observation.
-- [Routing, AdBlock and source conflict ledger](BETA_DECISION_REGISTER.md): baseline vs beta ownership decisions, offline-test boundaries and unverified domains.
+见 [自动更新说明](BETA_UPSTREAM_AUTOMATION.md)。候选现在与当前 beta 的全部 33 个来源组比较，覆盖 Spotify、Twitch、Abema、BBC、Line、Reddit、Linkedin，不再只比较旧正式版的 26 组。
 
-## Official Loon syntax reference (2026-09-11)
+只对来源完整、无损解析、无跨策略冲突、数量受限的精确主机新增创建草稿 PR；广告、直连、Apple/Microsoft/AI、共享设施、宽规则、移除和异常变化保留人工审核。正式版运行时仍使用固定资源，不直接跟随可变上游。
 
-The [2026 syntax audit](SYNTAX_BASELINE_2026-09-11.md) compares the current Loon-maintained example and online manual with beta. It deliberately does not copy optional example settings or adjust AliDNS, the DNS privacy tradeoff or immutable resource URLs. CI includes a narrow syntax-baseline regression contract; **actual Loon Build and device behavior remain unverified**.
+## 正式发布和回滚
 
-## v6.5.5-beta.3: optional 2026 capability under test
+[发布预检](BETA_PROMOTION_GATE.md)保持先静态、再 GitHub 实时检查的双层门禁。空模板、未来观察日期、错 SHA、伪造 CI 成功和未完成的风险审核都会阻断。首次结构变化观察期仍为 7 天；时间和用户概括反馈均不能替代具体场景证据。
 
-This profile now sets `sni-sniffing = true`. Loon's 2026 example documents this switch as a way to use available TLS SNI for domain-rule decisions on connections whose target is an IP. It is not an ad-block bypass, not a new resolver, and not a general ECH/QUIC name detector. It may affect IP-literal routing; compare real request routing against beta.1 for IP-literal HTTPS, encrypted/ECH and non-TLS/UDP control cases. If SNI is unavailable, normal IP/no-resolve/Final behavior should remain; **verify on device rather than claiming this as a test result**. The switch can be disabled in a personal local copy by deleting that line; a public rollback must use a reviewed candidate PR. All ten beta.1 rules remain pinned to the same immutable commit; this is a config-only beta.2 release. No changes to AliDNS, REJECT/UDP fallback, real-ip, or system routing.
-
-## v6.5.5-beta.3 domestic scope reduction (frozen in 2f4980593843dbe28d4b983c309de6713913b8c9)
-
-- Beta replaces only `Our-ChinaDirect` with a new 114,777-line generated, **content-addressed** `Beta-ChinaDirect-Scoped`. Exactly 60 from the historical 114,837 matchers are excluded: `DOMAIN-SUFFIX,cn` and 59 `USER-AGENT` rules. These rules can match a client name instead of the actual server, so they lack proof of mainland geography. The other 114,777 lines (including 4,443 IP/ASN rules) are preserved byte-for-byte in their original relative order.
-- Other known mainland service suffixes remain direct; `api.weixin.qq.com` remains covered by `qq.com`. Unknown `.cn` domains can now be Final/Proxy if no more-specific route. This is deliberate; do not claim every mainland website will direct.
-- Broad WeChat-related suffixes and some other service-owned historical ChinaDirect suffixes are **still quarantined for review, not silently removed**. The AppleOTA whitelist remains unchanged. This change needs import, route and payment/WeChat tests before stable promotion.
-- Regeneration: `python3 scripts/beta_domestic_rules.py --check`; exact matcher decisions: [domestic_decisions.json](../rules/beta/domestic_decisions.json). The old immutable ChinaDirect and formal release remain intact.
-
-## Effective source priority audit
-
-The [offline trace documentation](BETA_EFFECTIVE_AUDIT.md) and `scripts/beta_effective_audit.py` test current local/remote/plugin sources with on/off advertising comparisons. The CI artifact is **synthetic**, not a real iOS/Loon capture; unresolved shared-Google infrastructure and WeChat root domains remain flagged.
-
-## Promotion preflight gate
-
-The [fail-closed beta promotion preflight](BETA_PROMOTION_GATE.md) and `scripts/beta_promotion_gate.py` reject missing/mismatched CI, a missing full device matrix, unresolved risk register and less than seven days of observation. CI tests only **synthetic fixtures** and proves the real device template is still blocked; it does not approve formal promotion.
-
-## Upstream risk triage (review only)
-
-The read-only [beta updater workflow](../.github/workflows/beta-upstream-candidate.yml) now runs [beta_upstream_triage.py](../scripts/beta_upstream_triage.py) after staged actual proposed rule snapshots. It archives an additional `RISK_TRIAGE.json` assigning source-failure, removals, broad IP/suffix, direct, advertising, shared infra and cross-policy changes to manual review. Only tightly bounded exact domain additions under approved routine service groups can be marked **draft PR eligible**. This classification does not create a PR, write rules, relax the source lock, authorize automated publication, or bypass seven-day/device gates. Full unattended beta PR creation remains unfinished and intentionally must not be represented as live.
-
-### Source completeness versus normalization fidelity
-
-The updater distinguishes `source_integrity_complete` (all registered source snapshots fetched and hashed) from `source_translation_exact_for_routine` (none require excluded-expression review). The read-only review may succeed while the automatic draft gate remains closed for lossy or unsupported expressions. This is a manual translation-review case, not a falsely reported fetch failure.
-
-## Upstream HTTP provenance
-
-For each of the 87 registered upstream sources, the read-only review now captures the actual UTC fetch time and, when returned by the approved GitHub Raw server, HTTP `ETag` and `Last-Modified`. Missing headers are recorded as null rather than invented version labels. A fetched HTML error page is rejected before parsing. V2Fly include snapshots also record optional header metadata. The snapshot content SHA-256 remains the authoritative byte identity; an ETag is an auxiliary HTTP validator, not proof of semantic compatibility or a fixed Git commit.
+出现问题可重新导入正式入口，或使用 [历史测试版引用](../build/beta_history.json) 对应的精确提交。正式发布后才能运行 scripts/beta_cleanup.py --apply，且必须先确认历史固定 URL 的原始字节仍可访问；现在仅输出清理计划，不删除历史资源。

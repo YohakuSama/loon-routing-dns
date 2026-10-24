@@ -14,9 +14,9 @@ class BetaEffectiveAuditTests(unittest.TestCase):
 
     def test_real_enabled_profile_has_expected_static_routes(self):
         info = audit.report()
-        self.assertEqual(info["candidate"], "v6.5.5-beta.3")
-        self.assertEqual(len(info["verified_synthetic_routes"]), 15)
-        self.assertEqual(info["remote_subscriptions"], 34)
+        self.assertEqual(info["candidate"], self.meta["version"])
+        self.assertEqual(len(info["verified_synthetic_routes"]), len(audit.EXPECTED))
+        self.assertEqual(info["remote_subscriptions"], self.meta["runtime_remote_count"])
         for host in ("pixel.facebook.com", "telemetry.microsoft.com",
                      "analytics.spotify.com", "events.data.microsoft.com"):
             self.assertEqual(info["verified_synthetic_routes"][host]
@@ -24,7 +24,7 @@ class BetaEffectiveAuditTests(unittest.TestCase):
         self.assertEqual(info["verified_synthetic_routes"]
                          ["copilot.microsoft.com"]["adblock_on"]["policy"], "AI")
         self.assertEqual(info["verified_synthetic_routes"]
-                         ["ocsp.apple.com"]["adblock_on"]["policy"], "DIRECT")
+                         ["ocsp.apple.com"]["adblock_on"]["policy"], "Apple")
 
     def test_domain_index_matches_naive_independent_membership(self):
         samples = [
@@ -43,10 +43,8 @@ class BetaEffectiveAuditTests(unittest.TestCase):
         for host in ("ocsp.apple.com", "mesu.apple.com", "login.microsoftonline.com"):
             self.assertNotEqual(audit.trace(host, self.local, self.remotes)["policy"],
                                 "AdBlock", host)
-        pending = audit.report()["open_scope_review"]
-        self.assertEqual(pending["tenant-unknown.apis.google.com"].get("risk"),
-                         "SHARED_INFRASTRUCTURE_OWNER_REVIEW")
-        self.assertEqual(pending["wechat.com"]["device_verification"], "NOT_TESTED")
+        self.assertEqual(audit.trace("tenant-unknown.apis.google.com", self.local, self.remotes)["policy"], "Google")
+        self.assertEqual(audit.trace("wechat.com", self.local, self.remotes)["policy"], "Final")
 
     def test_traffic_logs_and_private_dns_not_required_or_uploaded(self):
         import inspect

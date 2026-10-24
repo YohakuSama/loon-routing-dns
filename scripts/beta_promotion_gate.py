@@ -12,6 +12,8 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import os
+from beta_github import GitHub, REPOSITORY
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT/"docs/BETA_ACCEPTANCE_TEMPLATE.json"
@@ -81,6 +83,8 @@ def assess(manifest: dict, evidence: dict, profile: bytes,
         end = _date(evidence.get("observation_finished_utc"))
         if end <= begin or (end - begin).total_seconds() < 7 * 86400:
             problems.append("first structural beta observation shorter than seven days")
+        if end > datetime.now(timezone.utc) or begin > datetime.now(timezone.utc):
+            problems.append("future timestamps cannot count as completed device observation")
     except (TypeError, ValueError, OverflowError):
         problems.append("required UTC observation dates missing or malformed")
     results = evidence.get("device_cases", {})
@@ -122,6 +126,53 @@ def assess(manifest: dict, evidence: dict, profile: bytes,
     }
 
 
+def verify_live(result: dict, manifest: dict, evidence: dict, client, promotion_pr: int | None = None) -> dict:
+    """Read server state; a forged local CI boolean/URL can never grant release."""
+    out = dict(result)
+    problems = list(result["problems"])
+    if problems:
+        out["live_status"] = "NOT_CHECKED_OFFLINE_GATE_BLOCKED"
+        return out
+    sha = result["evaluated_commit"]
+    run_id = evidence["ci"]["run_url"].rsplit("/", 1)[1]
+    run = client.get("/actions/runs/" + run_id)
+    if not run or any((run.get("head_sha") != sha, run.get("conclusion") != "success",
+                       run.get("status") != "completed", run.get("name") != "LoonKit Beta CI",
+                       run.get("repository", {}).get("full_name") != REPOSITORY,
+                       run.get("head_repository", {}).get("full_name") != REPOSITORY,
+                       run.get("path", "").split("@")[0] != ".github/workflows/beta-ci.yml")):
+        problems.append("live GitHub run does not prove exact repository, beta workflow and successful tested SHA")
+    if run:
+        jobs = client.get("/actions/runs/" + run_id + "/jobs?per_page=100") or {}
+        if not any(j.get("name") == "beta" and j.get("conclusion") == "success" and j.get("status") == "completed"
+                   for j in jobs.get("jobs", [])):
+            problems.append("required beta job is absent, skipped or failed")
+    head = client.get("/git/ref/heads/beta")
+    if not head or head["object"]["sha"] != sha:
+        problems.append("beta head moved since the tested commit")
+    remote_profile = client.file("beta/LoonKit.lcf", sha)
+    remote_manifest = json.loads(client.file("build/beta_manifest.json", sha))
+    if hashlib.sha256(remote_profile).hexdigest() != manifest["configuration_sha256"]:
+        problems.append("tested GitHub profile bytes differ from local candidate")
+    for key in ("version", "configuration_sha256", "overlay_rules", "china_direct", "adblock", "upstream_overlays", "production_baseline"):
+        if remote_manifest.get(key) != manifest.get(key):
+            problems.append("tested GitHub manifest differs: " + key)
+    if promotion_pr is None:
+        problems.append("a distinct live beta-to-main promotion PR is required")
+    else:
+        pr = client.get("/pulls/" + str(promotion_pr))
+        if not pr or pr.get("state") != "open" or pr.get("draft") is not False or (
+            pr.get("head", {}).get("ref") != "beta" or pr.get("head", {}).get("sha") != sha
+            or pr.get("base", {}).get("ref") != "main"
+            or pr.get("mergeable_state") != "clean"
+        ):
+            problems.append("live promotion PR is stale, draft, blocked or not beta-to-main")
+    out["problems"] = problems
+    out["status"] = "PROMOTION_BLOCKED" if problems else "LIVE_PREFLIGHT_READY_FOR_PROTECTED_MERGE"
+    out["live_status"] = "VERIFIED_AGAINST_GITHUB"
+    return out
+
+
 def check(evidence_path: Path):
     manifest = load(MANIFEST)
     template = load(TEMPLATE)
@@ -134,11 +185,16 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--evidence", type=Path, default=TEMPLATE)
     p.add_argument("--assert-template-blocked", action="store_true")
+    p.add_argument("--live", action="store_true")
+    p.add_argument("--promotion-pr", type=int)
     opts = p.parse_args()
     result = check(opts.evidence)
+    if opts.live:
+        result = verify_live(result, load(MANIFEST), load(opts.evidence),
+                             GitHub(os.environ.get("GITHUB_TOKEN", "")), opts.promotion_pr)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     if opts.assert_template_blocked:
         if opts.evidence.resolve() != TEMPLATE.resolve() or result["status"] != "PROMOTION_BLOCKED":
             raise SystemExit("current template must remain blocked")
-    elif result["status"] != "PREFLIGHT_READY_REQUIRES_LIVE_GITHUB_APPROVAL_AND_PR":
+    elif result["status"] not in {"PREFLIGHT_READY_REQUIRES_LIVE_GITHUB_APPROVAL_AND_PR", "LIVE_PREFLIGHT_READY_FOR_PROTECTED_MERGE"}:
         raise SystemExit(1)

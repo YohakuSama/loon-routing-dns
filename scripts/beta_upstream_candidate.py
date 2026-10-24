@@ -11,6 +11,7 @@ import json
 from pathlib import Path
 import re
 import sys
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -95,11 +96,12 @@ def stage(report: dict, snapshots: dict[str, bytes], review_data: dict,
         "global_source_integrity_complete": complete,
         "source_count": report["source_count"],
         "source_snapshots": [
-            {"id": row["id"], "url": row.get("url"), "status": row["status"],
-             "sha256": row.get("sha256"), "bytes": row.get("bytes")}
+            {key: row.get(key) for key in ("id", "group", "url", "status", "sha256", "bytes",
+                "fetched_at_utc", "http_etag", "http_last_modified", "expanded_includes")}
             for row in records],
         "groups": staged_groups,
-        "baseline_commit": "87ba3f50e80ba90212a0eeba7df223949f50e32b",
+        "baseline_commit": report.get("baseline_commit"),
+        "runtime_baseline": report.get("runtime_baseline") is True,
         "must_pin_assets_in_reviewed_git_commit": True,
         "do_not_replace_any_published_resource": True,
         "requires_staged_diff_acceptance": True,
@@ -112,8 +114,28 @@ def stage(report: dict, snapshots: dict[str, bytes], review_data: dict,
 
 
 def run(version: str, destination: Path, root: Path = ROOT) -> dict:
-    # No subprocesses, no credentials, no mutable output inside repository.
-    report, snapshots, data = upstream_review.build_report(root=root)
+    # Compare against the actual beta, including its seven supplementary
+    # service owners. Never reintroduce the old formal CN/UA/ad-filter policy.
+    import beta_channel
+    beta_channel.validate(root)
+    profile = (root / "beta/LoonKit.lcf").read_text()
+    meta = json.loads((root / "build/beta_manifest.json").read_text())
+    by_tag = {row["tag"]: row for row in beta_channel.remote_entries(profile)}
+    baseline = {}
+    for group, tags in meta["source_group_tags"].items():
+        baseline[group] = set()
+        for tag in tags:
+            entry = by_tag[tag]
+            baseline[group].update(upstream_review.canonical(r) for r in
+                beta_channel.content_rules((root / entry["path"]).read_bytes()))
+    # Generated routine overlays belong to their service, not a new source.
+    for group, item in meta.get("upstream_overlays", {}).items():
+        path = beta_channel.URI.fullmatch(item["uri"])["path"]
+        baseline[group].update(beta_channel.content_rules((root / path).read_bytes()))
+    report, snapshots, data = upstream_review.build_report(root=root, baseline_rules=baseline)
+    report["runtime_baseline"] = True
+    report["baseline_commit"] = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
     return stage(report, snapshots, data, destination, version, root=root)
 
 
