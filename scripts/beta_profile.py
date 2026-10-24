@@ -21,6 +21,11 @@ def render(asset_commit: str, root: Path = ROOT) -> tuple[bytes, dict]:
     if not re.fullmatch(r"[a-f0-9]{40}", asset_commit):
         raise ValueError("assets must be committed before profile generation")
     meta = json.loads((root / "build/beta_manifest.json").read_text())
+    if meta.get('schema_version') == 2:
+        from reviewed_release import render_beta
+        if asset_commit != meta['immutable_overlay_commit']:
+            raise ValueError('foundation commit must remain fixed during routine updates')
+        return render_beta(meta, root)
     stable = (root / "build/baselines/v6.5.4/LoonKit.lcf").read_bytes()
     if hashlib.sha256(stable).hexdigest() != meta["original_production_config_sha256"]:
         raise ValueError("formal baseline changed; explicit template migration required")

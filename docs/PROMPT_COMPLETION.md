@@ -1,5 +1,19 @@
 # 完整提示词实施对照
 
+## 2026-10-25：v6.5.7 审计问题修复
+
+| 审计项 | 实施 |
+| --- | --- |
+| 共享云归属 | 收紧 AWS、Azure/Akamai、OneTrust 与 IVS 宽范围；恢复明确 Disney/Apple 归属 |
+| 宽关键词 | 移除活动规则全部 19 条关键词，保留受支持的服务域名并补足 Nicegram 后缀 |
+| 广告/隐私 | OneSignal SDK 与网站入口放行；精确拦截 Cloudflare 统计脚本 |
+| 自动更新耦合 | 冻结历史批准候选，下一轮 beta 使用 v6.5.7 foundation，连续更新同时运行完整正式校验 |
+| 排查工具 | 以现役 manifest 允许名单和 hash 读取所有资源，真实 CLI 回归 |
+| 清理器 | 修复 URL 提取和版本关联，保护配置独占资源及必要基线 |
+| GEOIP | 根据维护者明确要求原样保留 GEOIP,CN,DIRECT,no-resolve |
+
+版本、README、现役依赖、构建/更新文档、校验记录及设备边界随本轮同步。准确 PR、CI 与合并后运行证据记录在 RELEASE_READINESS.md；未实际运行的步骤不能提前写成完成。以下段落是此前版本的历史实施记录。
+
 ## 2026-10-24：v6.5.6 DNS 回环拦截
 
 维护者指定跟随官方 DNS + LoopbackIP 示例；[PR #124](https://github.com/YohakuSama/loonkit/pull/124) 已发布。仅变更 DNS 拒绝返回方式，36 个规则资源和 AliDNS 不变。图中 Loon App 开关与 iOS 证书仍由用户自行操作，具体见 [Loon App 设置](./LOON_APP_SETTINGS.md)。本节以下 v6.5.5/beta 工程过程均属当时历史记录。

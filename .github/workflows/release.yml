@@ -1,11 +1,6 @@
-name: Manual Release Candidate (read only)
+name: Manual Reviewed Release Verification (read only)
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        required: true
-        description: 'New version (e.g. v6.0.1-rc1)'
-        type: string
 permissions:
   contents: read
 jobs:
@@ -18,16 +13,30 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
-      - run: python3 scripts/verify_release.py --check
-      - run: python3 scripts/license_audit.py --check
-      - name: Build immutable-input release preview
-        env:
-          # Never interpolate workflow_dispatch input inside a shell script.
-          RELEASE_VERSION: ${{ inputs.version }}
-        run: python3 scripts/prepare_release.py --version "$RELEASE_VERSION" --output "$RUNNER_TEMP/candidate" --build
+      - name: Verify current reviewed release and immutable resources
+        run: |
+          python3 scripts/verify_release.py --check --remote
+          python3 scripts/reviewed_release.py --check
+          python3 scripts/license_audit.py --check
+      - name: Package verified entry and exact manifest without publishing
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          spec=json.loads(Path('build/release_spec.json').read_text())
+          version=spec['stable_release_version']
+          output=Path(os.environ['RUNNER_TEMP'])/'verified-release'
+          names=['LoonKit.lcf','build/release_manifest.json','build/release_spec.json',
+                 'rules/reviewed/v6.5.7/decisions.json','release/SHA256SUMS.'+version,
+                 'docs/RELEASE_CHECKSUM_'+version+'.md']
+          for name in names:
+              dest=output/name
+              dest.parent.mkdir(parents=True,exist_ok=True)
+              shutil.copy2(name,dest)
+          PY
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: reviewed-release-candidate
-          path: ${{ runner.temp }}/candidate/
+          name: verified-current-release
+          path: ${{ runner.temp }}/verified-release/
           retention-days: 30
           if-no-files-found: error

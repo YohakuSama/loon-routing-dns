@@ -1,4 +1,6 @@
-# Loon App 设置与权限（v6.5.6）
+# Loon App 设置与权限（v6.5.7）
+
+v6.5.7 沿用 v6.5.6 的 AliDNS、LOOPBACKIP 与全部 General 设置，保留 GEOIP,CN,DIRECT,no-resolve；不远程更改 App 回退开关，不宣称零 DNS 泄漏。
 
 LoonKit 配置文件不能远程更改 iOS VPN 权限、系统证书信任或 Loon App 的所有功能开关。参考 [Loon 配置文档](https://nsloon.app/docs/General/)与[社区功能图](https://raw.githubusercontent.com/luestr/ProxyResource/main/Tool/Loon/Lcf/zh-CN/Resource/ConfigDiagram.png)。
 

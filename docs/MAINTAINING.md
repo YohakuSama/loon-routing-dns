@@ -1,5 +1,15 @@
 # LoonKit 维护与发布
 
+## v6.5.7 当前维护方式
+
+当前审核配方为 `rules/reviewed/v6.5.7/decisions.json`；检查 `python3 scripts/reviewed_release.py --check --remote` 与 `python3 scripts/verify_release.py --check --remote`。配置/资源的可复现结果、公开 checksum、准确 PR head 的真实 Production CI 和 main 合并后 Raw 都应一致。
+
+历史 beta.4、v6.5.5 和 v6.5.6 校验改用独立冻结快照，不再要求工作树 beta 永远保持旧 SHA。发展中的 v6.5.8-beta.1 使用 v6.5.7 foundation，完整来源组和累计 overlay 一起校验。新增来源仍须通过受限草稿 PR，不能自动提升 main。
+
+清理器先核实真实正式发布身份和当前配置 hash，再保护正式/测试配置、manifest、代码及必要冻结基线；当前 beta 版本递增不会自动使正式清理无效。`--verify-archives` 验证历史链接后才允许删除，Git 历史和原始输入始终保留。
+
+旧 `prepare_release.py` 是 26 组历史编译器的预览工具，不用于替换当前 36 资源配置。手动发布工作流验证并打包当前已审核版本。以下 v6.5.6 及更早段落为历史记录。
+
 ## v6.5.6 DNS 行为维护
 
 v6.5.6 已经由 [发布 PR #124](https://github.com/YohakuSama/loonkit/pull/124) 合入，原始 main SHA `d28aa3d71a3339aa7a540bd3bd31f90e1090e52d`，真实合并后 [Production CI](https://github.com/YohakuSama/loonkit/actions/runs/40101935676) 通过。v6.5.6 仅从 `build/baselines/v6.5.5/LoonKit.lcf` 迁移 `NOANSWER` 为 `LOOPBACKIP`，用 `scripts/prepare_release_v656.py` 与 `scripts/verify_release_v656.py` 确认确定性及旧版完整性，所有其他运行资源保持不变。版本 v6.5.5 的一次性发布授权不可用于新候选。App 级开关与证书安装无法由仓库远程设置，参阅 [Loon App 说明](./LOON_APP_SETTINGS.md)。
@@ -15,7 +25,7 @@ v6.5.6 已经由 [发布 PR #124](https://github.com/YohakuSama/loonkit/pull/124
 
 已发布 main 提交：[7c7ca4f67180437c962c3bc7eae07c6042e519d6](https://github.com/YohakuSama/loonkit/commit/7c7ca4f67180437c962c3bc7eae07c6042e519d6)。合并后实际 [production CI](https://github.com/YohakuSama/loonkit/actions/runs/40097998603) 已通过；回滚入口为 [v6.5.4 固定提交](https://raw.githubusercontent.com/YohakuSama/loonkit/62dcaa273ebff92176b510186f7b73ea994e72b6/LoonKit.lcf)。
 
-## 当前固定依赖
+## v6.5.5 历史固定依赖
 
 - 规则：36 个不可变远程资源（22 个历史 RC2、14 个已验收 beta.4 资源）；准确引用和 SHA256 见 `build/release_manifest.json`。
 - 图标：`icons/v20261021r1/`，固定提交 `97c48a5d14087597dbba35119d5ee8d43b1ce537`。

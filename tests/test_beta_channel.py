@@ -83,7 +83,7 @@ class BetaChannelTests(unittest.TestCase):
         self.assertEqual(self.beta.splitlines()[0], "# LoonKit " + self.manifest["version"] + " · BETA TEST ONLY")
         self.assertEqual(len(self.manifest["overlay_rules"]), 12)
         for item in self.manifest["overlay_rules"].values():
-            path = ROOT / item["uri"].split("/loonkit/" + self.manifest["immutable_overlay_commit"] + "/", 1)[1]
+            path = ROOT / beta_channel.URI.fullmatch(item["uri"])["path"]
             self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"])
         self.assertEqual(len(self.remotes), self.manifest["runtime_remote_count"])
         self.assertEqual(beta_channel.validate()["resources"], len(self.remotes))
@@ -129,7 +129,7 @@ class BetaChannelTests(unittest.TestCase):
         self.assertIn("sni-sniffing = true", general_main)
         self.assertRegex(self.manifest["version"], r"v[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+")
         self.assertEqual(self.manifest["candidate_features"]["sni_sniffing"]["status"],
-                         "ENABLE_IN_BETA_ONLY_PENDING_DEVICE_VERIFICATION")
+                         "PUBLISHED_BASELINE_FEATURE")
         self.assertIn("GEOIP,CN,DIRECT,no-resolve", section(self.beta, "Rule"))
 
     def test_china_direct_is_scoped_and_source_is_bit_reproducible(self):

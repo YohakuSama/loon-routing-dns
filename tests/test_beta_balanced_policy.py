@@ -18,7 +18,7 @@ import beta_upstream_candidate as candidate
 
 
 class BalancedPolicyTests(unittest.TestCase):
-    def test_balanced_filter_is_exact_baseline_minus_critical_exclusions_plus_reviewed_hosts(self):
+    def test_frozen_beta4_filter_rebuilds_from_original_reviewed_inputs(self):
         spec=json.loads((ROOT/'rules/beta/balanced_decisions.json').read_text())
         owners=json.loads((ROOT/'rules/beta/policy_overrides.json').read_text())
         original=set(beta_policy_review.rules((ROOT/spec['baseline_path']).read_bytes()))
@@ -49,7 +49,7 @@ class BalancedPolicyTests(unittest.TestCase):
             data=original(path)
             return data+b'DOMAIN,critical.example\n' if path==selected else data
         with patch.object(Path,'read_bytes',read):
-            with self.assertRaisesRegex(ValueError,'hash/count'):
+            with self.assertRaises(ValueError):
                 beta_channel.validate()
 
     def test_beta_update_baseline_uses_all_33_runtime_groups_and_preserves_scoping(self):

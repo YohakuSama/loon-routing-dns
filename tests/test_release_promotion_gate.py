@@ -62,9 +62,9 @@ class ReleaseGateTests(unittest.TestCase):
 
     def test_live_release_gate_rejects_stale_head_and_wrong_ci(self):
         # Complete synthetic evidence is not real user approval; inspect the live model only.
-        stable=json.loads((ROOT/"build/release_manifest.json").read_text())
-        release_bytes=(ROOT/"LoonKit.lcf").read_bytes()
-        beta_bytes=(ROOT/"beta/LoonKit.lcf").read_bytes()
+        stable=json.loads((ROOT/"build/baselines/v6.5.5/release_manifest.json").read_text())
+        release_bytes=(ROOT/"build/baselines/v6.5.5/LoonKit.lcf").read_bytes()
+        beta_bytes=(ROOT/"build/baselines/v6.5.5-beta.4/LoonKit.lcf").read_bytes()
         sha="a"*40
         class Fake:
             stale=False

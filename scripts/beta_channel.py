@@ -43,6 +43,11 @@ def remote_entries(profile: str) -> list[dict]:
 
 
 def resource_records(meta: dict) -> dict[str, dict]:
+    if meta.get('schema_version') == 2:
+        rows = meta['runtime_resources']
+        if len({r['uri'] for r in rows}) != len(rows):
+            raise ValueError('duplicate channel resource URI')
+        return {r['uri']: r for r in rows}
     records = list(meta["overlay_rules"].values()) + [meta["china_direct"], meta["adblock"]]
     records += list(meta.get("upstream_overlays", {}).values())
     result = {}
@@ -58,9 +63,9 @@ def content_rules(raw: bytes) -> list[str]:
             if r.strip() and not r.lstrip().startswith(("#", ";", "//"))]
 
 
-def validate(root: Path = ROOT, *, remote: bool = False) -> dict:
-    meta = json.loads((root / "build/beta_manifest.json").read_text())
-    profile = (root / "beta/LoonKit.lcf").read_bytes()
+def validate(root: Path = ROOT, *, remote: bool = False, profile_path="beta/LoonKit.lcf", manifest_path="build/beta_manifest.json") -> dict:
+    meta = json.loads((root / manifest_path).read_text())
+    profile = (root / profile_path).read_bytes()
     if meta.get("configuration_entry") != "beta/LoonKit.lcf":
         raise ValueError("beta entry must be isolated from production")
     if hashlib.sha256(profile).hexdigest() != meta["configuration_sha256"]:
@@ -70,6 +75,14 @@ def validate(root: Path = ROOT, *, remote: bool = False) -> dict:
     text = profile.decode()
     if text.splitlines()[0] != "# LoonKit " + meta["version"] + " · BETA TEST ONLY":
         raise ValueError("beta version and manifest differ")
+    if meta.get('schema_version') == 2:
+        from reviewed_release import render_beta, validate_records
+        rendered, rebuilt = render_beta(meta, root)
+        if rendered != profile or rebuilt != meta:
+            raise ValueError('beta profile/manifest is not a reproducible foundation plus routine overlays')
+        validate_records(profile, meta['runtime_resources'], root, remote)
+        return {'version':meta['version'], 'resources':len(meta['runtime_resources']),
+                'remote_verified':remote, 'configuration_sha256':meta['configuration_sha256']}
     records = resource_records(meta)
     published = json.loads((root / "build/baselines/v6.5.4/release_manifest.json").read_text())["rules"]
     formal = {row["path"]: row for row in published.values()}

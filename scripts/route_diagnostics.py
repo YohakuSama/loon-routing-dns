@@ -8,16 +8,14 @@ from __future__ import annotations
 import argparse
 from collections import Counter, defaultdict
 import ipaddress
+import hashlib
 import json
 from pathlib import Path
 import re
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-RAW_RULE = re.compile(
-    r"^https://raw\.githubusercontent\.com/YohakuSama/loonkit/"
-    r"[0-9a-f]{40}/(rules/releases/vNext-RC2/[A-Za-z0-9_-]+\.list)$"
-)
+from beta_channel import URI
 VALID_HOST = re.compile(r"^(?=.{1,253}$)[a-z0-9-]+(?:\.[a-z0-9-]+)+$", re.I)
 KINDS = {"DOMAIN", "DOMAIN-SUFFIX", "DOMAIN-KEYWORD", "IP-CIDR", "IP-CIDR6"}
 SERVICE_GROUPS = ("Spotify", "Twitch", "Abema", "BBC", "Line", "Reddit", "Linkedin")
@@ -65,6 +63,12 @@ def known_services(root=ROOT):
     additions are tracked separately from the immutable rule inputs.
     """
     root = Path(root)
+    release = json.loads((root / 'build/release_manifest.json').read_text())
+    if release.get('schema_version') == 2:
+        groups = release['service_roots']
+        if set(groups) != set(SERVICE_GROUPS) or any(not values or any(not VALID_HOST.fullmatch(v) for v in values) for values in groups.values()):
+            raise ValueError('current reviewed service root registry invalid')
+        return {group:tuple(values) for group,values in groups.items()}
     manifest = json.loads((root / "build/engine_manifest.json").read_text(encoding="utf-8"))
     data = manifest["reviewed_overseas_inline_minimal"]
     if set(SERVICE_GROUPS) != set(data):
@@ -101,23 +105,30 @@ class Router:
         self.ips = []
         self.subscriptions = []
         self.count = 0
+        release = json.loads((self.root / 'build/release_manifest.json').read_text())
+        allowed = {r['uri']:r for r in release.get('runtime_resources', [])}
+        if not allowed:
+            allowed = {r['url']:{'sha256':r['sha256']} for r in release['rules'].values()}
         for line in self.sections["Rule"]:
             cols = [x.strip() for x in line.split(",")]
             if len(cols) >= 3:
                 self._add(",".join(cols[:2]), cols[2], "本地规则")
         for entry in self.sections["Remote Rule"]:
             parts = [x.strip() for x in entry.split(",")]
-            hit = RAW_RULE.fullmatch(parts[0])
-            if not hit:
+            hit = URI.fullmatch(parts[0])
+            if not hit or '..' in hit['path'].split('/') or parts[0] not in allowed:
                 raise ValueError("untrusted or unfrozen subscription: " + parts[0][:90])
             settings = dict((key.strip(), value.strip()) for x in parts[1:] if "=" in x
                             for key, value in (x.split("=", 1),))
             policy = settings.get("policy", "").strip()
             if not policy or settings.get("enabled", "true").strip().lower() == "false":
                 continue
-            rel = hit.group(1)
+            rel = hit['path']
+            content = (self.root / rel).read_bytes()
+            if hashlib.sha256(content).hexdigest() != allowed[parts[0]]['sha256']:
+                raise ValueError('subscription differs from reviewed manifest: ' + rel)
             self.subscriptions.append(rel)
-            for raw in (self.root / rel).read_text(encoding="utf-8").splitlines():
+            for raw in content.decode('utf-8').splitlines():
                 self._add(raw, policy, rel)
 
     def _add(self, line: str, policy: str, origin: str):

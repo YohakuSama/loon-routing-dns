@@ -1,4 +1,6 @@
-# DNS 设置与检查（v6.5.6）
+# DNS 设置与检查（v6.5.7）
+
+v6.5.7 沿用 v6.5.6 的 AliDNS、LOOPBACKIP 与全部 General 设置，保留 GEOIP,CN,DIRECT,no-resolve；不远程更改 App 回退开关，不宣称零 DNS 泄漏。
 
 当前配置及 DNS 设置详见 [LoonKit.lcf](../LoonKit.lcf)。
 

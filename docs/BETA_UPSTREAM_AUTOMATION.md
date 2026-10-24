@@ -1,5 +1,13 @@
 # 测试版自动上游更新
 
+## v6.5.7 发布后的当前链路
+
+发展中的 v6.5.8-beta.1 从独立 v6.5.7 foundation 生成，保留 LOOPBACKIP 与全部现役审核修正；原 beta.4 存放在历史批准基线，不再与工作树 beta 强行比较。合法 routine overlay 更新后，正式版验证仍应通过，回归测试覆盖三轮连续更新。
+
+共享基础设施允许名单在受信任发布器中统一维护，triage 复用同一表，避免新草稿把 Azure、IVS、OneTrust 等重新分给单一业务。默认分支调度继续拉取 87 条来源、比较全部 33 组；无合格新增不创建空 PR，实际写入/dispatch 以真实运行结果为准。
+
+下方首次运行、beta.4 与旧版本说明均为历史记录。
+
 ## 实际链路
 
 .github/workflows/beta-upstream-update.yml 必须安装到默认分支 main，才能按周一 02:40 UTC（台北 10:40）定时运行。也支持选择 main 手动运行；仅在 beta 中存在的 YAML 不会形成独立的 GitHub 定时任务。

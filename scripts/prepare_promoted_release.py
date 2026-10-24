@@ -25,7 +25,7 @@ SECTION_NOTES = {
 
 
 def render(root: Path = ROOT) -> bytes:
-    source = (root / "beta/LoonKit.lcf").read_bytes()
+    source = (root / "build/baselines/v6.5.5-beta.4/LoonKit.lcf").read_bytes()
     if hashlib.sha256(source).hexdigest() != CANDIDATE_SHA:
         raise ValueError("tested beta profile bytes changed")
     if not source.startswith(b"# LoonKit v6.5.5-beta.4"):
@@ -50,7 +50,7 @@ def render(root: Path = ROOT) -> bytes:
 
 def check(root: Path = ROOT) -> dict:
     data = render(root)
-    new = json.loads((root / "build/release_spec.json").read_text())["stable_release_version"] == "v6.5.6"
+    new = json.loads((root / "build/release_spec.json").read_text())["stable_release_version"] != "v6.5.5"
     target = root / ("build/baselines/v6.5.5/LoonKit.lcf" if new else "LoonKit.lcf")
     if data != target.read_bytes():
         raise ValueError("formal candidate is not reproducible")

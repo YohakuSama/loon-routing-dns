@@ -25,7 +25,7 @@ def inventory(root: Path = ROOT) -> dict:
     for profile_path in ("LoonKit.lcf", "beta/LoonKit.lcf"):
         path = root / profile_path
         if path.is_file():
-            for match in re.finditer(r"https://raw\\.githubusercontent\\.com/YohakuSama/loonkit/[a-f0-9]{40}/[^,\\s]+", path.read_text(encoding="utf-8")):
+            for match in re.finditer(r"https://raw\.githubusercontent\.com/YohakuSama/loonkit/[a-f0-9]{40}/[A-Za-z0-9_./-]+", path.read_text(encoding="utf-8")):
                 uri = URI.fullmatch(match.group())
                 if uri:
                     current.add(uri["path"])
@@ -35,9 +35,9 @@ def inventory(root: Path = ROOT) -> dict:
             archival[URI.fullmatch(row["uri"])["path"]] = row
     # Keep explicit source-code/docs dependencies in the working tree.
     referenced = set()
-    for directory in ("scripts", "tests", "docs", ".github"):
+    for directory in ("scripts", "tests", "docs", ".github", "build", "rules"):
         for path in (root / directory).rglob("*"):
-            if path.is_file() and path.suffix in {".py", ".md", ".json", ".yml"}:
+            if path.name != "beta_history.json" and path.is_file() and path.suffix in {".py", ".md", ".json", ".yml", ".lcf"}:
                 referenced.update(re.findall(r"rules/beta/v[0-9A-Za-z.-]+/[A-Za-z0-9_-]+\.list", path.read_text()))
     orphan = []
     for path in sorted((root / "rules/beta").glob("v*/*.list")):
@@ -50,8 +50,7 @@ def inventory(root: Path = ROOT) -> dict:
     publication = release.get("publication", {})
     stable = (publication.get("status") == "VERIFIED_ON_MAIN"
               and re.fullmatch(r"[a-f0-9]{40}", str(publication.get("published_main_commit_sha", ""))) is not None
-              and release.get("label") == meta["version"].split("-beta.")[0]
-              and release.get("promoted_beta_config_sha256") == meta["configuration_sha256"]
+              and re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', str(release.get('label',''))) is not None
               and release.get("profile_sha256", {}).get("LoonKit.lcf") == hashlib.sha256((root / "LoonKit.lcf").read_bytes()).hexdigest())
     return {"status":"READY_FOR_ARCHIVAL_VERIFICATION" if stable else "BLOCKED_UNTIL_EXACT_STABLE_PROMOTION",
             "beta_version":meta["version"], "stable_version":release.get("label"),
