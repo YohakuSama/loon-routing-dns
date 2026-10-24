@@ -26,6 +26,7 @@ jobs:
           python3 scripts/source_lock.py --check
           python3 scripts/verify_release.py --check
           python3 scripts/prepare_promoted_release.py --check
+          python3 scripts/release_promotion_gate.py --assert-template-blocked
       - name: Validate all immutable Raw resources and content hashes
         run: python3 scripts/verify_release.py --check --remote
       - name: Verify rule rebuild is independent of Python hash seed
