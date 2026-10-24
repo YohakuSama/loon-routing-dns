@@ -1,14 +1,14 @@
 {
-  "device_test": "OWNER_REPORT_NO_ISSUES_ITEMIZED_SCENARIOS_NOT_PROVIDED",
-  "label": "v6.5.5",
+  "device_test": "NEW_DNS_RESPONSE_BEHAVIOR_NOT_YET_DEVICE_TESTED",
+  "label": "v6.5.6",
   "licenses": "NOTICES_DOCUMENTED_NOT_INDEPENDENTLY_CERTIFIED",
   "locked_inputs_path": "build/sources.lock.json",
-  "maintainer_approval": "OWNER_ONE_TIME_APPROVAL_V6_5_5_NO_SEVEN_DAY_CLAIM",
+  "maintainer_approval": "OWNER_REQUESTED_V6_5_6_DNS_LOOPBACK_MODE_2026_10_24",
   "old_main_rollback_commit": "f19421933d2177f95e7537f1208d990b3094f1f4",
   "plugin_path": "release/Network_Diagnostics.plugin",
   "plugin_sha256": "0aa39949f5778dc9fd49177ed543069d9a9de93dfbf0952033ffc999d2c287cd",
   "profile_sha256": {
-    "LoonKit.lcf": "d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03"
+    "LoonKit.lcf": "d75c37a9dc0dcb8a109c1cdaa0cae647a95b7f70dcf22ec94a5e1ac179528b11"
   },
   "remote_rule_count": 197776,
   "remote_subscription_count": 36,
@@ -536,15 +536,27 @@
   "legacy_compiler_rule_count": 26,
   "legacy_compiler_matcher_count": 197765,
   "publication": {
-    "status": "VERIFIED_ON_MAIN",
+    "status": "RELEASE_PR_PENDING_CI",
+    "published_main_commit_sha": null,
+    "previous_main_commit_sha": "d6170dd640325c27d16ae780d510c4868b5cc2d9",
+    "rollback_fixed_commit_sha": "7c7ca4f67180437c962c3bc7eae07c6042e519d6",
+    "owner_request_date": "2026-10-24",
+    "tested_beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299"
+  },
+  "previous_release": {
+    "version": "v6.5.5",
+    "profile_sha256": "d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03",
     "published_main_commit_sha": "7c7ca4f67180437c962c3bc7eae07c6042e519d6",
-    "rollback_main_commit_sha": "62dcaa273ebff92176b510186f7b73ea994e72b6",
-    "tested_beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299",
-    "authorization_record": "docs/RELEASE_OWNER_DECISION_v6.5.5.json",
-    "postmerge_production_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40097998603",
-    "postmerge_import_url": "https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf",
-    "postmerge_verified_version": "v6.5.5",
-    "postmerge_verified_profile_sha256": "d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03",
-    "postmerge_verified_beta_equivalence": true
+    "prior_main_head_sha": "d6170dd640325c27d16ae780d510c4868b5cc2d9"
+  },
+  "runtime_change": {
+    "changed_options": {
+      "dns-reject-mode": {
+        "before": "NOANSWER",
+        "after": "LOOPBACKIP"
+      }
+    },
+    "unchanged_resources": 36,
+    "unchanged_source_beta_sha256": "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7"
   }
 }

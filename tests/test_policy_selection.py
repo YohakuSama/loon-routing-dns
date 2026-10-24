@@ -77,7 +77,7 @@ class PolicySelectionTests(unittest.TestCase):
                 pattern = self.filters[name].split('FilterKey = "', 1)[1].rstrip('"')
                 matched = [node for node in nodes if re.search(pattern, node)]
                 self.assertEqual(matched, nodes, (size, name))
-        self.assertEqual(self.profile.splitlines()[0], "# LoonKit v6.5.5")
+        self.assertEqual(self.profile.splitlines()[0], "# LoonKit v6.5.6")
 
     def test_auto_prioritizes_latency_and_fallback_uses_order(self):
         # Confirm group strategy semantics; Loon makes actual runtime decisions.
@@ -91,7 +91,7 @@ class PolicySelectionTests(unittest.TestCase):
         active = "\n".join(line for line in self.profile.splitlines()
                            if line.strip() and not line.lstrip().startswith("#")) + "\n"
         self.assertEqual(hashlib.sha256(active.encode("utf-8")).hexdigest(),
-                         "16c7ae59c51dc46ed92af8cb38d9aa2635062a0b1bbb5aa5ab21659600f539a9")
+                         "e19dc446bddf93fea2d3c31367325ede139b725fdb4b08b7c82f11d40c60fb12")
 
     def test_no_internal_candidate_or_audit_comments_in_profile(self):
         comment_lines = [line for line in self.profile.splitlines()
@@ -100,6 +100,10 @@ class PolicySelectionTests(unittest.TestCase):
         for word in ("candidate only", "pre-migration", "reviewed local", "fallback routes",
                      "提示两条", "两条检测路线"):
             self.assertNotIn(word, joined)
+
+    def test_dns_mode(self):
+        self.assertEqual(self.general["domain-reject-mode"],"DNS")
+        self.assertEqual(self.general["dns-reject-mode"],"LOOPBACKIP")
 
     def test_dns_routes_and_plugin_are_unchanged_in_scope(self):
         rules = get_section(self.profile, "Rule")
