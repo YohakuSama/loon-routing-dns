@@ -100,7 +100,9 @@
       "remove_kinds": {
         "DOMAIN-KEYWORD": 1
       },
-      "add": []
+      "add": [
+        "DOMAIN-SUFFIX,nicegram.app"
+      ]
     },
     {
       "tag": "Our-Microsoft",
@@ -185,6 +187,12 @@
         "https://documentation.onesignal.com/docs/en/web-sdk-setup",
         "https://documentation.onesignal.com/docs/en/onesignal-service-worker",
         "https://developers.cloudflare.com/web-analytics/data-metrics/data-origin-and-collection/"
+      ]
+    },
+    {
+      "purpose": "Bound the former Nicegram keyword to its maintained client domain",
+      "urls": [
+        "https://nicegram.app/"
       ]
     }
   ],
