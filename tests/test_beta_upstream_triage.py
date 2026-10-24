@@ -62,9 +62,11 @@ class BetaRiskTriageTests(unittest.TestCase):
                 r=triage.evaluate(a,b,c)
                 if scenario=="direct_owner":
                     self.assertEqual(r["groups"]["ChinaDirect"]["status"],"MANUAL_RISK_REVIEW")
+                    # Unrelated eligible YouTube addition remains independent.
+                    self.assertEqual(r["draft_eligible_added_rules"],1)
                 else:
                     self.assertEqual(r["groups"]["YouTube"]["status"],"MANUAL_RISK_REVIEW")
-                self.assertEqual(r["draft_eligible_added_rules"],0)
+                    self.assertEqual(r["draft_eligible_added_rules"],0)
 
     def test_conflicting_or_partial_audit_group_set_fails(self):
         a,b,c=self.fixture()
