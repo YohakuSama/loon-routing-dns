@@ -121,7 +121,7 @@ class BetaChannelTests(unittest.TestCase):
         general_main = section(self.main, "General")
         self.assertIn("sni-sniffing = true", general_beta)
         self.assertNotIn("sni-sniffing =", general_main)
-        self.assertEqual(self.manifest["version"], "v6.5.5-beta.2")
+        self.assertEqual(self.manifest["version"], "v6.5.5-beta.3")
         self.assertEqual(self.manifest["candidate_features"]["sni_sniffing"]["status"],
                          "ENABLE_IN_BETA_ONLY_PENDING_DEVICE_VERIFICATION")
         self.assertIn("GEOIP,CN,DIRECT,no-resolve", section(self.beta, "Rule"))
