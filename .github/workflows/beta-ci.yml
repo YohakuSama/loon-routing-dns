@@ -35,6 +35,14 @@ jobs:
           python3 scripts/beta_domestic_rules.py --check
       - name: Beta routing/priority and channel regressions
         run: python3 -m unittest discover -s tests -p 'test_beta*.py' -v
+      - name: Reproduce effective source-priority and AdBlock toggle route audit
+        run: python3 scripts/beta_effective_audit.py --output "$RUNNER_TEMP/beta-effective.json"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: beta-effective-static-only
+          path: ${{ runner.temp }}/beta-effective.json
+          retention-days: 14
+          if-no-files-found: error
       - name: Existing maintenance and client-script regression suite
         run: |
           python3 -m unittest discover -s tests -p 'test_*.py' -v

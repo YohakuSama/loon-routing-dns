@@ -74,3 +74,7 @@ This profile now sets `sni-sniffing = true`. Loon's 2026 example documents this 
 - Other known mainland service suffixes remain direct; `api.weixin.qq.com` remains covered by `qq.com`. Unknown `.cn` domains can now be Final/Proxy if no more-specific route. This is deliberate; do not claim every mainland website will direct.
 - Broad WeChat-related suffixes and some other service-owned historical ChinaDirect suffixes are **still quarantined for review, not silently removed**. The AppleOTA whitelist remains unchanged. This change needs import, route and payment/WeChat tests before stable promotion.
 - Regeneration: `python3 scripts/beta_domestic_rules.py --check`; exact matcher decisions: [domestic_decisions.json](../rules/beta/domestic_decisions.json). The old immutable ChinaDirect and formal release remain intact.
+
+## Effective source priority audit
+
+The [offline trace documentation](BETA_EFFECTIVE_AUDIT.md) and `scripts/beta_effective_audit.py` test current local/remote/plugin sources with on/off advertising comparisons. The CI artifact is **synthetic**, not a real iOS/Loon capture; unresolved shared-Google infrastructure and WeChat root domains remain flagged.
