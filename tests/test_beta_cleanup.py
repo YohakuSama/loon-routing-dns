@@ -13,12 +13,11 @@ import beta_cleanup
 
 
 class BetaCleanupTests(unittest.TestCase):
-    def test_current_real_checkout_is_blocked_without_network_or_deletion(self):
-        plan=beta_cleanup.inventory()
-        self.assertEqual(plan['status'],'BLOCKED_UNTIL_EXACT_STABLE_PROMOTION')
-        with patch.object(beta_cleanup.urllib.request,'urlopen') as network:
-            with self.assertRaisesRegex(ValueError,'stable promotion'):
-                beta_cleanup.apply()
+    def test_current_real_checkout_inventory_does_not_delete_or_access_network(self):
+        with patch.object(beta_cleanup.urllib.request, 'urlopen') as network:
+            plan=beta_cleanup.inventory()
+            self.assertEqual(plan['status'], 'READY_FOR_ARCHIVAL_VERIFICATION')
+            self.assertGreater(plan['current_resources_protected'], 0)
             network.assert_not_called()
 
     def fixture(self,root):

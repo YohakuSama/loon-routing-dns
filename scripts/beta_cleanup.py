@@ -19,6 +19,16 @@ def inventory(root: Path = ROOT) -> dict:
     release = json.loads((root / "build/release_manifest.json").read_text())
     history = json.loads((root / "build/beta_history.json").read_text())
     current = {URI.fullmatch(uri)["path"] for uri in resource_records(meta)}
+    # Preserve every path named by the active formal configuration or manifest.
+    current.update(row["path"] for row in release.get("runtime_resources", [])
+                   if isinstance(row, dict) and "path" in row)
+    for profile_path in ("LoonKit.lcf", "beta/LoonKit.lcf"):
+        path = root / profile_path
+        if path.is_file():
+            for match in re.finditer(r"https://raw\\.githubusercontent\\.com/YohakuSama/loonkit/[a-f0-9]{40}/[^,\\s]+", path.read_text(encoding="utf-8")):
+                uri = URI.fullmatch(match.group())
+                if uri:
+                    current.add(uri["path"])
     archival = {}
     for revision in history["revisions"]:
         for row in revision["resources"]:

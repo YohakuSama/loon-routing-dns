@@ -536,10 +536,15 @@
   "legacy_compiler_rule_count": 26,
   "legacy_compiler_matcher_count": 197765,
   "publication": {
-    "status": "OWNER_APPROVED_PENDING_MERGE_AND_MAIN_VERIFICATION",
-    "published_main_commit_sha": null,
+    "status": "VERIFIED_ON_MAIN",
+    "published_main_commit_sha": "7c7ca4f67180437c962c3bc7eae07c6042e519d6",
     "rollback_main_commit_sha": "62dcaa273ebff92176b510186f7b73ea994e72b6",
     "tested_beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299",
-    "authorization_record": "docs/RELEASE_OWNER_DECISION_v6.5.5.json"
+    "authorization_record": "docs/RELEASE_OWNER_DECISION_v6.5.5.json",
+    "postmerge_production_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40097998603",
+    "postmerge_import_url": "https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf",
+    "postmerge_verified_version": "v6.5.5",
+    "postmerge_verified_profile_sha256": "d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03",
+    "postmerge_verified_beta_equivalence": true
   }
 }
