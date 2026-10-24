@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "v6.5.5-beta.3",
+  "version": "v6.5.5-beta.4",
   "upstream_baseline": "rules/releases/vNext-RC2/ChinaDirect.list",
   "original_sha256": "d92c4c4b30b3d27aad2941358a26991824e1a56be268bdb1bbd1f65f2e103f90",
   "original_matchers": 114837,
@@ -14,9 +14,19 @@
       "kind": "USER-AGENT",
       "count": 59,
       "rationale": "Client name / URL encoding is not server region or route ownership evidence, including WeChat and TeamViewer; leave actual destination matching to domain and IP rules"
+    },
+    {
+      "matcher": "DOMAIN-SUFFIX,wechat.com",
+      "count": 1,
+      "rationale": "International service parent has no evidence of CN-only hosting; remove forced DIRECT, preserve mainland qq.com/weixin.com owners and follow Final for otherwise unknown requests."
+    },
+    {
+      "matcher": "DOMAIN-SUFFIX,wechatapp.com",
+      "count": 1,
+      "rationale": "International service parent has no evidence of CN-only hosting; remove forced DIRECT, preserve mainland qq.com/weixin.com owners and follow Final for otherwise unknown requests."
     }
   ],
-  "expected_output_matchers": 114777,
+  "expected_output_matchers": 114775,
   "mandatory_invariants": [
     "Preserve every other source matcher in original order",
     "No whitespace/case normalization for retained matching kinds",
@@ -25,23 +35,14 @@
   ],
   "deferred_review": [
     {
-      "rules": [
-        "DOMAIN-SUFFIX,wechat.com",
-        "DOMAIN-SUFFIX,wechatapp.com"
-      ],
-      "status": "NEEDS_RUNTIME_REGION_EVIDENCE",
-      "reason": "May serve mainland and international app variants; not automatically forced overseas"
-    },
-    {
       "group": "ChinaDirect",
-      "kind": "DOMAIN-SUFFIX",
-      "status": "BROAD_SERVICE_SCOPE_AUDIT_POOLED",
-      "reason": "Large historical composite preserved to avoid unsourced deletion"
+      "status": "HISTORICAL_REMAINDER_NOT_GEOGRAPHICALLY_CERTIFIED",
+      "reason": "Preserve unrelated historical destinations; removal must have explicit predicates and effective-route tests."
     },
     {
       "group": "AppleOTA",
-      "status": "DEVICE_GATED",
-      "reason": "Certificate, updates and system traffic cannot be safely narrowed by names alone"
+      "status": "FOLLOWS_APPLE_SELECTOR",
+      "reason": "Certificate and update destinations retain Apple ownership rather than an unconditional DIRECT exception."
     }
   ]
 }
