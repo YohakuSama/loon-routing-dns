@@ -78,8 +78,9 @@
     "asset_commit_sha": "1b54e079486a06a5cfff5c5f03016628a52a7701",
     "candidate_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299",
     "release_pr": "https://github.com/YohakuSama/loonkit/pull/119",
-    "promotion_status": "PREPARED_PENDING_DEVICE_GATE",
+    "promotion_status": "OWNER_AUTHORIZED_RELEASE_PENDING_MAIN_VERIFICATION",
     "device_observation_dates": null,
-    "rollback_main_sha": "62dcaa273ebff92176b510186f7b73ea994e72b6"
+    "rollback_main_sha": "62dcaa273ebff92176b510186f7b73ea994e72b6",
+    "owner_decision_file": "docs/RELEASE_OWNER_DECISION_v6.5.5.json"
   }
 }
