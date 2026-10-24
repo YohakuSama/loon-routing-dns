@@ -217,10 +217,10 @@ def publish(plan: dict, client) -> dict:
     if lines[0] != "# LoonKit " + meta["version"] + " · BETA TEST ONLY":
         raise ValueError("unrecognized beta entry header")
     lines[0] = "# LoonKit " + plan["version"] + " · BETA TEST ONLY"
-    tags = {"Beta-Upstream-" + g for g in entries}
+    tags = {"Beta-Upstream-" + g for g in overlays}
     lines = [line for line in lines if not any("tag=" + tag + "," in line for tag in tags)]
     position = next(i for i,line in enumerate(lines) if "tag=Beta-AdBlock-Balanced," in line) + 1
-    additions = [overlays[g]["uri"] + ", policy=" + g + ", tag=Beta-Upstream-" + g + ", enabled=true" for g in sorted(entries)]
+    additions = [overlays[g]["uri"] + ", policy=" + g + ", tag=Beta-Upstream-" + g + ", enabled=true" for g in sorted(overlays)]
     lines[position:position] = additions
     next_profile = ("\n".join(lines) + "\n").encode()
     next_meta.update(version=plan["version"], configuration_sha256=digest(next_profile), candidate_source_commit=assets,
@@ -230,6 +230,11 @@ def publish(plan: dict, client) -> dict:
         "full_diff_sha256":plan["full_diff_sha256"], "source_snapshots":plan["sources"], "created_at_utc":plan["created_at_utc"]}
     for group, selection in plan["groups"].items():
         next_meta["source_group_counts"][group] += len(selection["rules"])
+        tag = "Beta-Upstream-" + group
+        source_tags = next_meta.setdefault("source_group_tags", {})
+        tags = source_tags.setdefault(group, [])
+        # Match the renderer's deterministic order: routine overlay first.
+        source_tags[group] = [tag] + [t for t in tags if t != tag]
     evidence.update(version=plan["version"], configuration_sha256=digest(next_profile), commit_sha=None)
     review = ("# " + plan["version"] + " upstream draft\n\nBase: " + base + "\n\n"
               + "Exact additions: " + str(count) + ". Other source deltas remain manual review.\n"
