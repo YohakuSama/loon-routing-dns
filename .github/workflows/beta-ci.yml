@@ -30,7 +30,9 @@ jobs:
           python3 scripts/verify_release.py --check --remote
           python3 scripts/license_audit.py --check
       - name: Reproduce frozen beta asset bytes
-        run: python3 scripts/beta_assets.py --check
+        run: |
+          python3 scripts/beta_assets.py --check
+          python3 scripts/beta_domestic_rules.py --check
       - name: Beta routing/priority and channel regressions
         run: python3 -m unittest discover -s tests -p 'test_beta*.py' -v
       - name: Existing maintenance and client-script regression suite
