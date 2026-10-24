@@ -39,3 +39,18 @@
 - Return to stable channel `https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf` and select your prior node/subscription.
 - The previous main commit `87ba3f50e80ba90212a0eeba7df223949f50e32b` remains immutable.
 - Do not change old pinned rule blobs. Open beta PRs must be reviewed; no forced history rewrite.
+
+## Safe beta upstream proposals (2026-10-24)
+The original `.github/workflows/rules-update.yml` remains the weekly default-branch read-only audit. Its `candidate/` directory is deliberately unchanged. It is **not** an upstream beta update and must not be described as such.
+
+Beta now has `scripts/beta_upstream_candidate.py`, reusing `upstream_review.build_report()` rather than implementing an alternative parser. Execute:
+
+```sh
+python3 scripts/beta_upstream_candidate.py --version v6.5.6-beta.1 --output /tmp/loonkit-beta-upstream
+```
+
+Its `proposed-assets/` files contain actual newly fetched, normalized proposals instead of copies of the current 26 published lists. The artifact includes snapshots, v2fly includes, full diffs, provenance and risk review. Any invalid/empty/partial source results in retention of last valid baseline rules and a blocked publication status. Changed direct/IP/keyword/large-risk rules and removals require explicit review; the manifest **always** marks `publication_allowed=false` until a separate gated publication step exists.
+
+The read-only beta workflow uploads a review artifact on relevant beta pushes. GitHub scheduled workflows run from the default branch, so **this workflow is not a working independent weekly beta scheduler** while the default branch is main. The existing Monday weekly read-only audit continues unchanged. Automatic creation of a beta PR after low-risk acceptance remains **not implemented**: a reviewed policy decision, immutable asset commit and verified beta config repinning must be added first, then the default-branch scheduler updated through the formal release gate. A green artifact job is not permission to publish any rules.
+
+Never install the `proposed-assets/` outputs directly; they are review-only raw proposals, without pinned configuration URLs. Never delete pinned last-known-good or historical resources to make the artifact pass.
