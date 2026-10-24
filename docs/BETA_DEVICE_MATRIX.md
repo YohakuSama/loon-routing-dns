@@ -1,4 +1,4 @@
-# Beta v6.5.5-beta.1 device acceptance — PENDING, NOT A TEST RESULT
+# Beta v6.5.5-beta.2 device acceptance — PENDING, NOT A TEST RESULT
 
 This document is a blank real-device acceptance register. No tests below have been
 performed or confirmed by maintainers in this change. Do not substitute offline
@@ -6,8 +6,8 @@ routing simulation or a public DNS leak page for packet-path evidence.
 
 ## Candidate identity (fill these fields with real observations)
 - Observed UTC/local test date, tester and sanitized evidence link: **NOT_RECORDED**
-- Profile: `beta/LoonKit.lcf`; beta commit `b071bfd9d569cb40287a49c95882523cc0909991` (initial test candidate; record the **actual imported** beta SHA if branch advances)
-- Profile SHA-256: `4abdad9e0542a4f84493b63efe3a18ec91eb61b4c35f9cf26a76d37524d52d75`
+- Profile: `beta/LoonKit.lcf`; beta branch moving; record the **exact imported Git commit** from the reviewed candidate and do not infer it from a prior branch head
+- Profile SHA-256: `81914934b6eef37018982473c72277ca464e803080271e7465d91d2652f403a8`
 - Pinned overlays: `26a24c86b58b133b2d094956f0f615680275a1b0`
 - Device/iOS/Loon Build (minimum intended 3.5.1/983): **NOT_RECORDED**
 - Wi-Fi/cellular/operator, IPv4/IPv6, node protocol/UDP support and node region: **NOT_RECORDED**
@@ -26,6 +26,8 @@ routing simulation or a public DNS leak page for packet-path evidence.
 | Block DoH, ordinary fallback disabled in Loon UI | Fail closed or explicitly document leaks/failure | NOT_TESTED | — |
 | DoH outage with UI fallback enabled (control only) | Identify any unencrypted DNS requests | NOT_TESTED | — |
 | Node DNS/bootstrap failure; node outage; UDP unsupported | No silently invented resolver guarantees | NOT_TESTED | — |
+| HTTPS request addressed to IP with visible TLS SNI vs beta.1 | Compare effective domain/service policy, ensure no unintended DIRECT/REJECT | NOT_TESTED | — |
+| IP-based non-TLS UDP and ECH/unknown SNI controls | Verify fallback does not misclassify or promise SNI match | NOT_TESTED | — |
 | Steam login/store/community and global content | Steam policy, functional playback/download | NOT_TESTED | — |
 | Steam exact China CDN candidates and download | Direct only where proven appropriate; successful download | NOT_TESTED | — |
 | AI ChatGPT, Gemini, Claude, GitHub Copilot, NotebookLM | Login/API/streaming/attachment flows and service ownership | NOT_TESTED | — |

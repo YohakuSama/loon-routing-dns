@@ -1,4 +1,4 @@
-# LoonKit v6.5.5-beta.1 · isolated beta
+# LoonKit v6.5.5-beta.2 · isolated beta
 **Status: pending CI and actual Loon device verification. Do not merge to main yet.**
 
 ## Entry and pinned assets
@@ -8,7 +8,7 @@
 - Existing 24 production rule subscriptions, diagnostics plugin, icons and scripts keep their unchanged immutable refs.
 - Exact content hashes and matcher counts: [beta_manifest.json](../build/beta_manifest.json).
 - The policy generator is `python3 scripts/beta_assets.py --check`. All ten overlays reproduce from the single [policy_overrides.json](../rules/beta/policy_overrides.json).
-- Channel config checksum: `4abdad9e0542a4f84493b63efe3a18ec91eb61b4c35f9cf26a76d37524d52d75`.
+- Channel config checksum: `81914934b6eef37018982473c72277ca464e803080271e7465d91d2652f403a8`.
 - Resource source commit: `26a24c86b58b133b2d094956f0f615680275a1b0`.
 - Minimum documented features: Loon 3.2.5 (789) for `hijack-dns`; linked plugin declares 3.5.1 (983). **Use Loon 3.5.1 (983) or newer for beta**, and confirm compatibility on device.
 
@@ -63,3 +63,7 @@ Never install the `proposed-assets/` outputs directly; they are review-only raw 
 ## Official Loon syntax reference (2026-09-11)
 
 The [2026 syntax audit](SYNTAX_BASELINE_2026-09-11.md) compares the current Loon-maintained example and online manual with beta. It deliberately does not copy optional example settings or adjust AliDNS, the DNS privacy tradeoff or immutable resource URLs. CI includes a narrow syntax-baseline regression contract; **actual Loon Build and device behavior remain unverified**.
+
+## v6.5.5-beta.2: optional 2026 capability under test
+
+This profile now sets `sni-sniffing = true`. Loon's 2026 example documents this switch as a way to use available TLS SNI for domain-rule decisions on connections whose target is an IP. It is not an ad-block bypass, not a new resolver, and not a general ECH/QUIC name detector. It may affect IP-literal routing; compare real request routing against beta.1 for IP-literal HTTPS, encrypted/ECH and non-TLS/UDP control cases. If SNI is unavailable, normal IP/no-resolve/Final behavior should remain; **verify on device rather than claiming this as a test result**. The switch can be disabled in a personal local copy by deleting that line; a public rollback must use a reviewed candidate PR. All ten beta.1 rules remain pinned to the same immutable commit; this is a config-only beta.2 release. No changes to AliDNS, REJECT/UDP fallback, real-ip, or system routing.
