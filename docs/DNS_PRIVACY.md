@@ -1,4 +1,4 @@
-# DNS 设置与检查（v6.5.4）
+# DNS 设置与检查（v6.5.5）
 
 当前配置及 DNS 设置详见 [LoonKit.lcf](../LoonKit.lcf)。
 
@@ -20,6 +20,6 @@
 
 参考：[Loon DNS 文档](https://nsloon.app/docs/DNS/)。
 
-## v6.5.5 候选 DNS 边界
+## v6.5.5 DNS 边界
 
 候选原样保留已验收 beta.4 中的 AliDNS 普通 DNS、DoH、UDP/53 劫持、IPv4/IPv6、TUN 绕过和应用设置控制的 DNS 回退。未提供设备抓包、DoH 故障回退或应用自带 DoH 的测试记录，因此不能作零 DNS 泄漏、零明文回退或所有 IPv6/旁路场景已验证的结论。

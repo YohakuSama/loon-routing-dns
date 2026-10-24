@@ -1,6 +1,6 @@
-# LoonKit v6.5.5 配置校验（发布候选）
+# LoonKit v6.5.5 配置校验
 
-以下校验值对应发布 PR 中的正式配置候选；在通过门禁并合入 main 前，不代表已经上线。
+以下校验值对应正式入口 `main/LoonKit.lcf` 的 v6.5.5 配置。
 
 ```text
 d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03  LoonKit.lcf

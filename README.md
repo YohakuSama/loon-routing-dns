@@ -14,7 +14,7 @@
 
 LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整合常用服务规则、独立策略组、广告拦截及网络辅助工具，让日常分流更清晰、管理更方便。
 
-当前 `main` 正式版为 **v6.5.4**。已验收的 **v6.5.5-beta.4** 正在 [发布 PR #119](https://github.com/YohakuSama/loonkit/pull/119) 中准备升级，尚未替换正式入口。配置不包含代理节点，需要自行添加节点或订阅。
+当前正式版为 **v6.5.5**，默认使用 AliDNS，包含 36 份不可变远程规则和 33 个策略组。配置不包含代理节点，需要自行添加节点或订阅。
 
 ## 快速开始
 
@@ -26,7 +26,7 @@ LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整�
 
 已有个人配置时，建议先备份节点及自定义设置。首次加载远程资源需要能够访问 GitHub Raw。
 
-测试渠道：[导入测试版](https://raw.githubusercontent.com/YohakuSama/loonkit/beta/beta/LoonKit.lcf) · [测试说明与验收状态](https://github.com/YohakuSama/loonkit/blob/beta/docs/BETA_CHANNEL.md)。测试版保持默认 AliDNS，与正式入口独立更新。测试版可单独停用 `Beta-AdBlock-Balanced` 远程资源以恢复服务分流；把 `AdBlock` 改为 `Proxy` 仅表示通过通用代理放行。
+测试渠道：[导入测试版](https://raw.githubusercontent.com/YohakuSama/loonkit/beta/beta/LoonKit.lcf) · [测试说明与验收状态](https://github.com/YohakuSama/loonkit/blob/beta/docs/BETA_CHANNEL.md)。测试版继续独立更新，保留历史资源与回滚路径。
 
 ## 功能概览
 
@@ -48,7 +48,7 @@ LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整�
 | `Proxy` | 手动指定节点，也可选择自动或回退策略。 |
 | `Auto` | 根据连通性测试结果选择节点。 |
 | `Fallback` | 优先使用可用节点，故障时尝试回退。 |
-| `AdBlock` | 正式 v6.5.4：`REJECT` 拦截、`DIRECT` 放行；测试版 v6.5.5-beta.4：`REJECT` 拦截、`Proxy` 通用代理放行。 |
+| `AdBlock` | `REJECT` 拦截，`Proxy` 经通用代理放行；关闭唯一的 `Beta-AdBlock-Balanced` 远程资源可恢复服务分流。 |
 | `Final` | 决定未命中其他规则的连接如何处理。 |
 
 AI、各流媒体与社交服务也有各自的策略组，可按需要选择线路，无须改动整份配置。
@@ -97,7 +97,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[正式版校验](./docs/RELEASE_CHECKSUM_v6.5.4.md) · [下一版候选校验](./docs/RELEASE_CHECKSUM_v6.5.5.md) · [安全报告](./SECURITY.md)
+[正式版校验](./docs/RELEASE_CHECKSUM_v6.5.5.md) · [历史版本校验](./docs/RELEASE_CHECKSUM_v6.5.4.md) · [安全报告](./SECURITY.md)
 
 ---
 
