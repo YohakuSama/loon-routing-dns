@@ -66,5 +66,5 @@ status should be assigned here.
 
 - Excluded `DOMAIN-SUFFIX,cn` and 59 USER-AGENT items from the pinned ChinaDirect only in beta; all other 114,777 entries are retained in the previous order. This removes two **classes of unproven geographic inference**, not a statement about app origin.
 - `api.weixin.qq.com` remains explicitly domestic through `qq.com`. Broader `wechat.com`, `wechatapp.com` still demand real dependency/location evidence; no blanket overseas WeChat rewrite is claimed.
-- The complete explicit diff can be reconstructed from [domestic decisions](../rules/beta/domestic_decisions.json), the old pinned release and new [ChinaDirect beta rule](../rules/beta/v6.5.5-beta.3/ChinaDirect.list). SHA: `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`.
+- The complete explicit diff can be reconstructed from [domestic decisions](../rules/beta/domestic_decisions.json), the old pinned release and new [ChinaDirect beta rule](../rules/beta/v6.5.5-beta.3/ChinaDirect.list). SHA: `bdeafed6ce861f1f72e1f891c798257687123a8f29867ae4e7a89b007001b68a`.
 - AppleOTA system check and update routes unchanged; no claim of narrower Apple region routing without field results.
