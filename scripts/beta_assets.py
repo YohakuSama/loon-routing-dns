@@ -19,7 +19,8 @@ def render(root: Path = ROOT) -> dict[str, bytes]:
     prefix = "rules/beta/" + spec["version"] + "/"
     rules = {"RoutingAdBlock": spec["adblock_local_rules"],
              "SteamCN": spec["steamcn_mainland_candidates"],
-             "SteamGlobal": spec["steam_global_rules"]}
+             "SteamGlobal": spec["steam_global_rules"],
+             "AIScoped": spec["ai_scoped_rules"]}
     for group, entries in spec["service_groups"].items():
         rules["Service-" + group] = entries
     paths = {}
