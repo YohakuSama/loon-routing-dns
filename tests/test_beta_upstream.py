@@ -43,6 +43,10 @@ class BetaUpdaterTests(unittest.TestCase):
                 "AdBlock": {"additions": [{"review_tier": "STANDARD"}]},
                 "SteamCN": {"additions": []}},
             "source_ids_by_rule": {},
+            "include_snapshots": {},
+            "deltas": {"AdBlock": {"added": ["DOMAIN,new.example"],
+                                   "removed": ["DOMAIN,old.example"]},
+                       "SteamCN": {"added": [], "removed": []}},
         }
 
     def stage(self):
