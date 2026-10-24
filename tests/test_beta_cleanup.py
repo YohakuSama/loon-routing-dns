@@ -33,7 +33,8 @@ class BetaCleanupTests(unittest.TestCase):
         (root/'build/beta_manifest.json').write_text(json.dumps(meta))
         (root/'build/beta_history.json').write_text(json.dumps({'revisions':[{'resources':[archive]}]}))
         (root/'build/release_manifest.json').write_text(json.dumps({'label':'v1.0.0','promoted_beta_config_sha256':'b'*64,
-            'profile_sha256':{'LoonKit.lcf':hashlib.sha256((root/'LoonKit.lcf').read_bytes()).hexdigest()}}))
+            'profile_sha256':{'LoonKit.lcf':hashlib.sha256((root/'LoonKit.lcf').read_bytes()).hexdigest()},
+            'publication':{'status':'VERIFIED_ON_MAIN','published_main_commit_sha':'d'*40}}))
         return path,raw,archive
 
     def test_failed_archive_verification_retains_all_files(self):
