@@ -42,14 +42,19 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
         for s in source_rows
     )
     source_by_id = {s["id"]: s for s in source_rows} if valid_sources else {}
-    complete = (bool(manifest.get("global_source_integrity_complete"))
+    # Complete upstream fetches and lossless normalization are different gates.
+    snapshot_complete = (bool(manifest.get("global_source_integrity_complete"))
                 and manifest.get("publication_allowed") is False
                 and manifest.get("branch_push_allowed") is False
                 and valid_sources
                 and len(source_rows) == manifest.get("source_count") == len(source_by_id)
-                and all(s.get("status") == "PARSED_FOR_REVIEW"
+                and all(s.get("status") in {"PARSED_FOR_REVIEW",
+                                           "PARSED_WITH_DOCUMENTED_EXCLUSIONS"}
                         and isinstance(s.get("sha256"), str)
                         and SHA.fullmatch(s["sha256"]) for s in source_rows))
+    exact_translation = snapshot_complete and all(
+        s.get("status") == "PARSED_FOR_REVIEW" for s in source_rows
+    )
     groups = manifest.get("groups", {})
     if not isinstance(groups, dict) or not groups or set(groups) != set(diff) or set(groups) != set(risk):
         raise ValueError("complete candidate manifest/diff/risk groups required")
@@ -65,8 +70,10 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
                 or len(mapped) != len(entries) or len(set(adds)) != len(adds)):
             raise ValueError("bad or duplicated full risk delta for " + group)
         reasons = set()
-        if not complete:
-            reasons.add("SOURCE_INCOMPLETE_OR_EXCLUSIONS")
+        if not snapshot_complete:
+            reasons.add("SOURCE_FETCH_OR_SOURCE_HASH_INCOMPLETE")
+        elif not exact_translation:
+            reasons.add("LOSSY_SOURCE_EXPRESSIONS_REVIEW_REQUIRED")
         if group not in LOW_RISK_OWNERS or group in RESTRICTED:
             reasons.add("SENSITIVE_OR_DIRECT_OWNER_REVIEW")
         if info.get("status") not in {"UNCHANGED", "ROUTINE_CANDIDATE_REVIEW"}:
@@ -74,7 +81,7 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
         if removes:
             reasons.add("REMOVALS_NEVER_AUTOMATED")
         if not adds and not removes:
-            output[group] = {"status": "UNCHANGED" if complete else "SOURCE_BLOCKED",
+            output[group] = {"status": "UNCHANGED" if exact_translation else "SOURCE_BLOCKED",
                              "added": 0, "removed": 0, "reasons": sorted(reasons)}
             continue
         before = info.get("baseline_count", 0)
@@ -107,7 +114,9 @@ def evaluate(manifest: dict, diff: dict, risk: dict) -> dict:
             "routine_cap": limit, "reasons": sorted(reasons),
         }
     return {
-        "schema_version": 1, "source_integrity_complete": complete,
+        "schema_version": 1,
+        "source_integrity_complete": snapshot_complete,
+        "source_translation_exact_for_routine": exact_translation,
         "candidate_version": manifest.get("version"),
         "status": "REVIEW_ONLY_NEVER_AUTO_MERGE",
         "draft_eligible_added_rules": eligible_total,
@@ -136,6 +145,7 @@ def main():
     print(json.dumps({
         "status": result["status"],
         "source_integrity_complete": result["source_integrity_complete"],
+        "source_translation_exact_for_routine": result["source_translation_exact_for_routine"],
         "draft_eligible_added_rules": result["draft_eligible_added_rules"],
     }, sort_keys=True))
 

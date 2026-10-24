@@ -68,6 +68,15 @@ class BetaRiskTriageTests(unittest.TestCase):
                     self.assertEqual(r["groups"]["YouTube"]["status"],"MANUAL_RISK_REVIEW")
                     self.assertEqual(r["draft_eligible_added_rules"],0)
 
+    def test_sources_complete_but_excluded_expressions_block_routine(self):
+        a,b,c=self.fixture()
+        a["source_snapshots"][0]["status"]="PARSED_WITH_DOCUMENTED_EXCLUSIONS"
+        result=triage.evaluate(a,b,c)
+        self.assertTrue(result["source_integrity_complete"])
+        self.assertFalse(result["source_translation_exact_for_routine"])
+        self.assertIn("LOSSY_SOURCE_EXPRESSIONS_REVIEW_REQUIRED",
+                      result["groups"]["YouTube"]["reasons"])
+
     def test_conflicting_or_partial_audit_group_set_fails(self):
         a,b,c=self.fixture()
         c.pop("ChinaDirect")
