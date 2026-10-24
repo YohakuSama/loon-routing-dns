@@ -31,6 +31,8 @@ jobs:
           python-version: '3.12'
       - name: Validate exact active beta and its immutable resources
         run: |
+          python3 scripts/source_lock.py --check
+          python3 scripts/verify_release.py --check
           python3 scripts/beta_channel.py --remote
           python3 -m unittest discover -s tests -p 'test_beta*.py' -v
       - name: Fetch upstream against all actual beta service baselines
