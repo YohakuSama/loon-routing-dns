@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from bisect import bisect_left
 from collections import Counter, defaultdict
+from datetime import datetime, timezone
 import hashlib
 import ipaddress
 import json
@@ -241,7 +242,13 @@ def _local_path(root: Path, rel: str) -> Path:
     return p
 
 
-def fetch_source(source: dict, root: Path = ROOT) -> bytes:
+def fetch_source(source: dict, root: Path = ROOT, metadata: dict | None = None) -> bytes:
+    """Fetch only approved sources; HTTP metadata is evidence, never a version guess.
+
+    Existing injected fetchers returning bytes stay compatible. The caller
+    optionally receives ETag and Last-Modified if actually returned; None is
+    explicit when the server supplies no value.
+    """
     if source.get("url"):
         parsed = urlsplit(source["url"])
         pieces = parsed.path.strip("/").split("/")
@@ -253,11 +260,28 @@ def fetch_source(source: dict, root: Path = ROOT) -> bytes:
         with request.urlopen(req, timeout=25) as response:
             if urlsplit(response.geturl()).hostname != "raw.githubusercontent.com":
                 raise ValueError("unexpected upstream redirect")
+            content_type = response.headers.get("Content-Type", "").split(";", 1)[0].lower()
+            if content_type in {"text/html", "application/xhtml+xml"}:
+                raise ValueError("upstream returned HTML, not a rule source")
+            # Do not include arbitrary headers, URLs with tokens or cookies.
+            def safe_header(name):
+                value = response.headers.get(name)
+                return value if (isinstance(value, str) and len(value) <= 256
+                                 and all(32 <= ord(x) < 127 for x in value)) else None
+            evidence = {"transport": "HTTPS",
+                        "http_etag": safe_header("ETag"),
+                        "http_last_modified": safe_header("Last-Modified")}
             blob = response.read(MAX_SOURCE + 1)
         if not blob or len(blob) > MAX_SOURCE:
             raise ValueError("upstream source empty or oversized")
+        if metadata is not None:
+            metadata.update(evidence)
         return blob
-    return _local_path(root, source["path"]).read_bytes()
+    content = _local_path(root, source["path"]).read_bytes()
+    if metadata is not None:
+        metadata.update({"transport": "LOCAL", "http_etag": None,
+                         "http_last_modified": None})
+    return content
 
 
 # Recursively expand upstream's own include files from ONE whitelisted repo.
@@ -412,7 +436,7 @@ def _domain_risk(rule: str, group: str, protected: tuple[str, ...]) -> list[str]
     return tags
 
 
-def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes], dict]:
+def build_report(root: Path = ROOT, fetcher=None, *, baseline_rules=None) -> tuple[dict, dict[str, bytes], dict]:
     """Return report, exact fetched snapshots, and full change record (no writes)."""
     root = Path(root)
     sources = json.loads((root / "rules/sources.json").read_text(encoding="utf-8"))["sources"]
@@ -420,12 +444,26 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
     active = manifest["active_groups"]
     if len(sources) != 87 or len(active) != 26:
         raise ValueError("source catalog or active policy set unexpectedly changed")
+    if baseline_rules is not None:
+        allowed = set(active) | set(manifest["inactive_groups"])
+        if not isinstance(baseline_rules, dict) or not baseline_rules or set(baseline_rules) - allowed:
+            raise ValueError("unreviewed beta baseline owners")
+        if any(not isinstance(v, set) or not v for v in baseline_rules.values()):
+            raise ValueError("empty or invalid last-known-good beta baseline")
+        active = sorted(baseline_rules)
     groups: dict[str, set[str]] = {g: set() for g in active}
     provenance = defaultdict(set)
     snapshots: dict[str, bytes] = {}
     included_snapshots: dict[str, bytes] = {}
     records = []
-    fetcher = fetcher or (lambda item: fetch_source(item, root))
+    source_http_meta: dict[str, dict] = {}
+    if fetcher is None:
+        def default_fetch(item):
+            info = {}
+            content = fetch_source(item, root, metadata=info)
+            source_http_meta[item["id"]] = info
+            return content
+        fetcher = default_fetch
     invalid_groups = set()
     unique_ids = set()
     for source in sources:
@@ -434,9 +472,15 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
             raise ValueError("invalid or repeated source id")
         unique_ids.add(sid)
         row = {"id": sid, "group": source["group"], "format": source["format"],
-               "enabled": bool(source.get("enabled", False)), "url": source.get("url")}
+               "enabled": bool(source.get("enabled", False)), "url": source.get("url"),
+               "fetched_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+               "http_etag": None, "http_last_modified": None}
         try:
             data = fetcher(source)
+            metadata = source_http_meta.get(sid, {})
+            row["http_etag"] = metadata.get("http_etag")
+            row["http_last_modified"] = metadata.get("http_last_modified")
+            row["transport"] = metadata.get("transport", "INJECTED_FETCHER")
             snapshots[sid] = data
             if source["format"] == "v2fly":
                 def load_include(name):
@@ -450,7 +494,9 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
                         raise ValueError("v2fly include source changed during audit: " + name)
                     included_snapshots[name] = included
                 row["expanded_includes"] = [
-                    {"name": name, "sha256": digest(content), "bytes": len(content)}
+                    {"name": name, "sha256": digest(content), "bytes": len(content),
+                     "http_etag": source_http_meta.get("include:" + name, {}).get("http_etag"),
+                     "http_last_modified": source_http_meta.get("include:" + name, {}).get("http_last_modified")}
                     for name, content in sorted(includes.items())]
                 rules, parse = parse_source(source, expanded)
             else:
@@ -477,8 +523,9 @@ def build_report(root: Path = ROOT, fetcher=None) -> tuple[dict, dict[str, bytes
     for group in active:
         name = "AnimeCrazy" if group == "動畫瘋" else group
         path = root / "rules/releases/vNext-RC2" / (name + ".list")
-        baseline[group] = {canonical(x) for x in path.read_text(encoding="utf-8").splitlines()
-                           if x.strip() and not x.lstrip().startswith(("#", ";", "//"))}
+        baseline[group] = (set(baseline_rules[group]) if baseline_rules is not None else
+                           {canonical(x) for x in path.read_text(encoding="utf-8").splitlines()
+                            if x.strip() and not x.lstrip().startswith(("#", ";", "//"))})
         candidate[group], _ = _same_policy_reduce(groups[group])
     index, domains = _overlap_index(baseline)
     proposal_index, proposal_domains = _overlap_index(candidate)

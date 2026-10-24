@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "baseline_path": "rules/releases/vNext-RC2/AdBlock.list",
+  "baseline_sha256": "c3989f42cc76bf6b5e29dbaf5b53cd1a610dd873e47f69c2d7d9c7fb5109ad16",
+  "excluded_rules": [
+    {
+      "rule": "DOMAIN-SUFFIX,crl.microsoft.com",
+      "reason": "Certificate revocation distribution, not advertising; retain Microsoft owner even for legacy clients.",
+      "evidence": "https://techcommunity.microsoft.com/blog/coreinfrastructureandsecurityblog/basic-crl-checking-with-certutil/1128367"
+    },
+    {
+      "rule": "DOMAIN-SUFFIX,ocsp.godaddy.com",
+      "reason": "CA certificate-status checking; a critical functional false-positive.",
+      "evidence": "https://certs.godaddy.com/repository/previous_doc_versions/StarfieldCertificatePolicyandCertificationPracticeStatement_v5.02.pdf"
+    }
+  ],
+  "privacy_additions": [
+    {
+      "rule": "DOMAIN,browser-intake-datadoghq.com",
+      "reason": "Browser RUM intake; exact endpoint only, not all Datadog services.",
+      "evidence": "https://docs.datadoghq.com/real_user_monitoring/guide/proxy-rum-data/"
+    },
+    {
+      "rule": "DOMAIN,cdn.usefathom.com",
+      "reason": "Analytics embed script; exact endpoint only.",
+      "evidence": "https://usefathom.com/docs/script/embed"
+    },
+    {
+      "rule": "DOMAIN,events.statsigapi.net",
+      "reason": "Experiment exposure/event logging; leave api.statsig.com feature configuration functional.",
+      "evidence": "https://docs-legacy.statsig.com/http-api/"
+    }
+  ],
+  "critical_function_hosts": [
+    "crl.microsoft.com",
+    "ocsp.godaddy.com",
+    "ocsp.apple.com",
+    "login.microsoftonline.com",
+    "accounts.google.com",
+    "js.stripe.com",
+    "www.paypal.com",
+    "client-api.arkoselabs.com",
+    "api.statsig.com"
+  ],
+  "shared_infrastructure_evidence": [
+    "https://docs.statsig.com/client/javascript-sdk",
+    "https://docs.livekit.io/deploy/admin/firewall/"
+  ],
+  "disabled_behavior": "Disable Beta-AdBlock-Balanced Remote Rule; this removes all public LoonKit AdBlock rules. Other installed plugins or DNS filters remain independent."
+}

@@ -32,3 +32,7 @@ LoonKit 的原创代码、脚本和配置贡献采用 [GPL-2.0-only](../LICENSE)
 发现遗漏署名、许可信息不准确或素材权利问题，请通过 [Issues](https://github.com/YohakuSama/loonkit/issues) 提供相应资源路径和参考来源。
 
 [返回首页](../README.md) · [发布检查](./RELEASE_READINESS.md)
+
+## v6.5.5 候选的第三方依赖
+
+发布候选只沿用已冻结 RC2 与 beta.4 规则文件，未重新引入不明来源或更换许可证。87 条历史来源记录并非逐条规则的完整溯源，不宣称版权已获得独立认证。当前已验证的许可证正文和原始上游声明继续保留于仓库；`rules/beta/` 与旧版 `rules/releases/` 均可能被仍在运行的历史提交引用。

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "decision": "OWNER_APPROVED_ONE_TIME_RELEASE",
+  "owner_decision_received": "2026-10-24",
+  "owner_statement": "The maintainer reported satisfactory personal device use and explicitly directed publishing v6.5.5 now rather than waiting for seven-day observation.",
+  "scope": {
+    "release_version": "v6.5.5",
+    "release_profile_sha256": "d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03",
+    "beta_version": "v6.5.5-beta.4",
+    "beta_commit": "adc567168eed8e21dc8d80aebc40b85f35fc1a1b",
+    "beta_profile_sha256": "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7",
+    "resource_commit": "1b54e079486a06a5cfff5c5f03016628a52a7701",
+    "rollback_main_commit": "62dcaa273ebff92176b510186f7b73ea994e72b6",
+    "promotion_pr": 119,
+    "base_branch": "main",
+    "beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299"
+  },
+  "observed_seven_days": "NOT_PROVIDED",
+  "device_case_matrix": "NOT_PROVIDED",
+  "device_build": "NOT_PROVIDED",
+  "dns_capture": "NOT_PROVIDED",
+  "independent_license_clearance": "NOT_EXECUTED",
+  "apply_to_future_versions": false,
+  "require_green_actual_pr_head_ci": true,
+  "require_real_merge_and_postmerge_verification": true
+}

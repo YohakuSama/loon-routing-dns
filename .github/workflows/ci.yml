@@ -25,6 +25,9 @@ jobs:
         run: |
           python3 scripts/source_lock.py --check
           python3 scripts/verify_release.py --check
+          python3 scripts/prepare_promoted_release.py --check
+          python3 scripts/release_promotion_gate.py --assert-template-blocked
+          python3 scripts/release_promotion_gate.py --owner-override
       - name: Validate all immutable Raw resources and content hashes
         run: python3 scripts/verify_release.py --check --remote
       - name: Verify rule rebuild is independent of Python hash seed
@@ -33,7 +36,9 @@ jobs:
             PYTHONHASHSEED="$seed" python3 scripts/verify_release.py --check
           done
       - name: Third-party license evidence
-        run: python3 scripts/license_audit.py --check
+        run: |
+          python3 scripts/license_audit.py --check
+          python3 scripts/license_evidence.py --check
       - name: Python regression tests (real assertions)
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Native Loon mocked-response regressions

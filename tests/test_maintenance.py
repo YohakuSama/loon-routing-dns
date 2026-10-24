@@ -167,6 +167,58 @@ class UpstreamParsingTests(unittest.TestCase):
             upstream_review.parse_source({"format": "guess"}, b"example.com")
 
 
+class UpstreamHttpProvenanceTests(unittest.TestCase):
+    def test_upstream_etag_modified_and_html_fail_closed(self):
+        from unittest.mock import patch
+        from io import BytesIO
+
+        class FakeResponse:
+            def __init__(self, body: bytes, content_type: str):
+                self.body = body
+                self.headers = {"ETag": 'W/"version-123"',
+                                "Last-Modified": "Mon, 19 Oct 2026 10:00:00 GMT",
+                                "Content-Type": content_type}
+            def __enter__(self): return self
+            def __exit__(self, *_): pass
+            def geturl(self):
+                return "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AdvertisingLite/AdvertisingLite.list"
+            def read(self, n): return self.body[:n]
+
+        source = {
+            "url":"https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/AdvertisingLite/AdvertisingLite.list"
+        }
+        captured = {}
+        with patch.object(upstream_review.request, "urlopen", return_value=FakeResponse(
+                b"DOMAIN,ad.example.com\n", "text/plain; charset=utf-8")):
+            blob = upstream_review.fetch_source(source, metadata=captured)
+        self.assertEqual(blob, b"DOMAIN,ad.example.com\n")
+        self.assertEqual(captured["http_etag"], 'W/"version-123"')
+        self.assertEqual(captured["http_last_modified"], "Mon, 19 Oct 2026 10:00:00 GMT")
+        self.assertEqual(captured["transport"], "HTTPS")
+        with patch.object(upstream_review.request, "urlopen", return_value=FakeResponse(
+                b"<html>blocked</html>", "text/html")):
+            with self.assertRaisesRegex(ValueError, "HTML"):
+                upstream_review.fetch_source(source)
+
+    def test_absent_http_version_headers_are_not_invented(self):
+        from unittest.mock import patch
+
+        class FakeResponse:
+            headers = {"Content-Type": "text/plain"}
+            def __enter__(self): return self
+            def __exit__(self, *_): pass
+            def geturl(self):
+                return "https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/google"
+            def read(self, n): return b"domain:example.com\n"
+
+        source={"url":"https://raw.githubusercontent.com/v2fly/domain-list-community/master/data/google"}
+        info={}
+        with patch.object(upstream_review.request, "urlopen", return_value=FakeResponse()):
+            upstream_review.fetch_source(source, metadata=info)
+        self.assertIsNone(info["http_etag"])
+        self.assertIsNone(info["http_last_modified"])
+
+
 class UpstreamCoverageTests(unittest.TestCase):
     def fixture(self):
         return ({"sources": [{"id": "source-one"}, {"id": "source-two"}]},

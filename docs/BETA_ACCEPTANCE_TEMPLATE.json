@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "status": "TEMPLATE_NOT_EVIDENCE",
+  "version": "v6.5.5-beta.4",
+  "configuration_sha256": "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7",
+  "commit_sha": null,
+  "rollback_commit_sha": "87ba3f50e80ba90212a0eeba7df223949f50e32b",
+  "observation_started_utc": null,
+  "observation_finished_utc": null,
+  "ci": {
+    "workflow": "LoonKit Beta CI",
+    "commit_sha": null,
+    "conclusion": "NOT_RUN",
+    "run_url": null
+  },
+  "sanitized_evidence_refs": [],
+  "device_cases": {
+    "initial_import": "NOT_TESTED",
+    "resource_refresh": "NOT_TESTED",
+    "dns_doh_working": "NOT_TESTED",
+    "dns_doh_failed_without_plain_fallback": "NOT_TESTED",
+    "dns_node_bootstrap_failure": "NOT_TESTED",
+    "wifi_cellular_reconnect": "NOT_TESTED",
+    "ipv4_ipv6": "NOT_TESTED",
+    "system_apple_login_updates_ocsp_push": "NOT_TESTED",
+    "mainland_payment_login_map": "NOT_TESTED",
+    "wechat_and_international_wechat": "NOT_TESTED",
+    "steam_store_login_community_download": "NOT_TESTED",
+    "streaming_video_audio": "NOT_TESTED",
+    "ai_login_api_attachments": "NOT_TESTED",
+    "captcha_and_2fa": "NOT_TESTED",
+    "adblock_on_service_function": "NOT_TESTED",
+    "ip_sni_tls_and_unknown_ech": "NOT_TESTED",
+    "important_policy_change_and_recovery": "NOT_TESTED",
+    "adblock_single_resource_disabled_routes_restored": "NOT_TESTED"
+  },
+  "risk_reviews": {
+    "adblock_cross_source_precedence": "OPEN",
+    "wechat_region_scope": "OPEN",
+    "appleota_cert_and_update": "OPEN",
+    "shared_ai_google_apis": "OPEN",
+    "steamcn_cdn_locality": "OPEN",
+    "dns_fallback_and_bypass": "OPEN",
+    "china_direct_cn_and_ua_false_negatives": "OPEN"
+  },
+  "maintainer_approved": false,
+  "notes": "Copy locally, fill only based on real device observations. Do not submit private URLs, nodes, device IDs or raw logs. Offline preflight does not replace GitHub review."
+}

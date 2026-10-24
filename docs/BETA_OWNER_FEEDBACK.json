@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "evidence_type": "OWNER_REPORTED_GENERAL_FUNCTIONAL_SUCCESS",
+  "report_received_date": "2026-10-24",
+  "statement": "维护者在本轮会话中报告：经测试目前未发现任何问题。",
+  "exact_tested_version": null,
+  "exact_tested_commit": null,
+  "device_build_network_metadata": null,
+  "per_scenario_results": null,
+  "interpretation": "Candidate identity follows the reviewed configuration in this project discussion. Exact tested version/commit were not explicitly present in the device report. Device Build, individual scenarios, packet captures and a seven-day observation interval were not provided. No all-scenarios PASS or release approval is inferred.",
+  "release_approval": true,
+  "associated_candidate_version": "v6.5.5-beta.4",
+  "associated_candidate_commit": "adc567168eed8e21dc8d80aebc40b85f35fc1a1b",
+  "associated_candidate_config_sha256": "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7",
+  "observation_start_utc": null,
+  "observation_end_utc": null,
+  "release_authorization": {
+    "type": "ONE_TIME_OWNER_RELEASE_DECISION",
+    "document": "docs/RELEASE_OWNER_DECISION_v6.5.5.json",
+    "scope": "v6.5.5 from v6.5.5-beta.4 only",
+    "seven_day_observation": "NOT_PROVIDED",
+    "all_device_cases_passed": null
+  }
+}

@@ -1,0 +1,64 @@
+name: Beta Upstream Proposal Artifact
+on:
+  push:
+    branches: [beta]
+    paths:
+      - scripts/beta_upstream_candidate.py
+      - scripts/beta_upstream_triage.py
+      - scripts/beta_upstream_delivery.py
+      - scripts/upstream_review.py
+      - rules/sources.json
+      - .github/workflows/beta-upstream-candidate.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: beta-upstream-proposal-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  proposal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Protect the formal release baseline
+        run: |
+          python3 scripts/source_lock.py --check
+          python3 scripts/verify_release.py --check
+      - name: Write actual proposed rules, source snapshots, full diff and risk report
+        run: |
+          next_version="$(python3 -c 'import json,sys; sys.path.insert(0,"scripts"); from beta_upstream_delivery import next_version; print(next_version(json.load(open("build/beta_manifest.json"))["version"]))')"
+          python3 scripts/beta_upstream_candidate.py --version "$next_version" --output "$RUNNER_TEMP/beta-upstream"
+      - name: Triage risks with strict exact-domain-only draft PR eligibility
+        run: |
+          python3 scripts/beta_upstream_triage.py \
+            --candidate "$RUNNER_TEMP/beta-upstream" \
+            --output "$RUNNER_TEMP/beta-upstream/RISK_TRIAGE.json"
+      - name: Archive candidates without publishing them
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: beta-upstream-not-for-import
+          path: ${{ runner.temp }}/beta-upstream/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Fail closed if incomplete or missing source coverage
+        run: |
+          python3 scripts/verify_upstream_coverage.py \
+            --catalog rules/sources.json \
+            --report "$RUNNER_TEMP/beta-upstream/evidence/UPSTREAM_REVIEW.json"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import os
+          p=Path(os.environ["RUNNER_TEMP"])/"beta-upstream"/"BETA_UPSTREAM_MANIFEST.json"
+          m=json.loads(p.read_text(encoding="utf-8"))
+          assert m["global_source_integrity_complete"], "incomplete upstream snapshots: beta proposal quarantined"
+          assert m["publication_allowed"] is False
+          assert m["branch_push_allowed"] is False
+          PY
