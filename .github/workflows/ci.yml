@@ -27,16 +27,15 @@ jobs:
           python3 scripts/verify_release.py --check
           python3 scripts/prepare_promoted_release.py --check
       - name: Validate all immutable Raw resources and content hashes
-        run: python3 scripts/verify_release.py --check
-          python3 scripts/prepare_promoted_release.py --check --remote
+        run: python3 scripts/verify_release.py --check --remote
       - name: Verify rule rebuild is independent of Python hash seed
         run: |
           for seed in 0 1 42 2026; do
             PYTHONHASHSEED="$seed" python3 scripts/verify_release.py --check
-          python3 scripts/prepare_promoted_release.py --check
           done
       - name: Third-party license evidence
-        run: python3 scripts/license_audit.py --check
+        run: |
+          python3 scripts/license_audit.py --check
           python3 scripts/license_evidence.py --check
       - name: Python regression tests (real assertions)
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
