@@ -96,7 +96,7 @@
   "china_direct": {
     "source_commit": "2f4980593843dbe28d4b983c309de6713913b8c9",
     "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/2f4980593843dbe28d4b983c309de6713913b8c9/rules/beta/v6.5.5-beta.3/ChinaDirect.list",
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256": "bdeafed6ce861f1f72e1f891c798257687123a8f29867ae4e7a89b007001b68a",
     "matcher_count": 114777,
     "removed_count": 60,
     "removed_kinds": {
