@@ -50,6 +50,12 @@ def check_public_checksums(root: Path, release: dict, spec: dict) -> str:
         expected["v6.5.4"] = "6bb6f4dc936e250fbff36763391a976a7f3d7bc833ea549c322832a9c3086a69"
     if version == "v6.5.6":
         expected["v6.5.5"] = "d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03"
+    if spec.get('schema_version') == 2:
+        # Explicit versioned history replaces the old growing version ladder.
+        for old, value in spec['historical_profile_sha256'].items():
+            if not re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', old) or not re.fullmatch(r'[a-f0-9]{64}', value):
+                raise ValueError('invalid historical checksum identity')
+            expected[old] = value
     expected_docs = sorted(root / "docs" / ("RELEASE_CHECKSUM_" + v + ".md") for v in expected)
     expected_sums = sorted(root / "release" / ("SHA256SUMS." + v) for v in expected)
     if (sorted((root / "docs").glob("RELEASE_CHECKSUM_*.md")) != expected_docs
@@ -71,6 +77,9 @@ def check_public_checksums(root: Path, release: dict, spec: dict) -> str:
 
 def verify(remote=False):
     current = json.loads((ROOT/"build/release_spec.json").read_text())
+    if current.get('schema_version') == 2:
+        from reviewed_release import verify as verify_reviewed
+        return verify_reviewed(remote=remote)
     if current["stable_release_version"] == "v6.5.6":
         from verify_release_v656 import verify as verify_v656
         return verify_v656(remote=remote)

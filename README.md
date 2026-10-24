@@ -14,7 +14,7 @@
 
 LoonKit 是一套面向 [Loon](https://nsloon.app/) 的完整分流配置，整合常用服务规则、独立策略组、广告拦截及网络辅助工具，让日常分流更清晰、管理更方便。
 
-当前正式版为 **v6.5.6**，默认使用 AliDNS，使用官方示例的 `DNS + LOOPBACKIP` 拦截行为，保留 36 份固定远程资源与 33 个策略组。配置不包含代理节点，需要自行添加节点或订阅。
+当前正式版为 **v6.5.7**，默认使用 AliDNS，使用官方示例的 `DNS + LOOPBACKIP` 拦截行为，保留 36 份固定远程资源与 33 个策略组。本版收紧共享云平台归属、放行通知 SDK，并修复离线排查和测试渠道更新。配置不包含代理节点，需要自行添加节点或订阅。
 
 ## 快速开始
 
@@ -97,7 +97,7 @@ AI、各流媒体与社交服务也有各自的策略组，可按需要选择线
 
 LoonKit 的原创代码与配置贡献采用 [GPL-2.0-only](./LICENSE) 许可；第三方规则与素材适用各自的许可及权利声明，详见 [第三方许可与来源](./docs/THIRD_PARTY_NOTICES.md)。
 
-[正式版校验](./docs/RELEASE_CHECKSUM_v6.5.6.md) · [历史版本校验](./docs/RELEASE_CHECKSUM_v6.5.5.md) · [安全报告](./SECURITY.md)
+[正式版校验](./docs/RELEASE_CHECKSUM_v6.5.7.md) · [历史版本校验](./docs/RELEASE_CHECKSUM_v6.5.6.md) · [安全报告](./SECURITY.md)
 
 ---
 

@@ -11,7 +11,7 @@ import argparse
 import json
 from pathlib import Path
 import re
-from beta_upstream_delivery import DOMAIN
+from beta_upstream_delivery import DOMAIN, SHARED
 
 DIRECT = {"ChinaDirect", "DomesticCore", "SteamCN", "AppleOTA"}
 RESTRICTED = DIRECT | {"AdBlock", "AI", "Apple", "Microsoft", "Paypal"}
@@ -20,14 +20,6 @@ LOW_RISK_OWNERS = {"YouTube", "Netflix", "Disney", "PrimeVideo", "TikTok",
                    "Twitter", "Discord", "Google", "Steam", "HBO", "Dazn", "動畫瘋",
                    "Spotify", "Twitch", "Abema", "BBC", "Line", "Reddit", "Linkedin"}
 SHA = re.compile(r"[a-f0-9]{64}\Z")
-SHARED = (
-    "googleapis.com", "apis.google.com", "appspot.com", "cloudfront.net", "akamaihd.net",
-    "akamaized.net", "fastly.net", "windows.net", "blob.core.windows.net",
-    "amazonaws.com", "github.io", "pages.dev", "workers.dev", "vercel.app",
-    "stripe.com", "auth0.com", "microsoftonline.com", "icloud.com",
-    "apple.com", "paypal.com", "recaptcha.net", "gstatic.com",
-    "livekit.cloud", "twilio.com", "githubusercontent.com",
-)
 MAX_GROUP_ADD = 10
 MAX_TOTAL_ADD = 30
 

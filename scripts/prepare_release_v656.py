@@ -31,9 +31,11 @@ def render(root: Path = ROOT) -> bytes:
 
 def check(root: Path = ROOT) -> dict:
     output = render(root)
-    if output != (root / "LoonKit.lcf").read_bytes():
+    historical = json.loads((root / "build/release_spec.json").read_text())["stable_release_version"] != "v6.5.6"
+    prefix = "build/baselines/v6.5.6/" if historical else ""
+    if output != (root / (prefix + "LoonKit.lcf")).read_bytes():
         raise ValueError("current v6.5.6 profile does not reproduce")
-    release = json.loads((root / "build/release_manifest.json").read_text())
+    release = json.loads((root / (prefix + "release_manifest.json" if historical else "build/release_manifest.json")).read_text())
     if release["label"] != "v6.5.6" or release["profile_sha256"] != {"LoonKit.lcf": EXPECTED_SHA256}:
         raise ValueError("release manifest version/hash mismatch")
     return {"version": "v6.5.6", "sha256": EXPECTED_SHA256}

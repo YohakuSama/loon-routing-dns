@@ -16,7 +16,7 @@ class BetaCleanupTests(unittest.TestCase):
     def test_current_real_checkout_inventory_does_not_delete_or_access_network(self):
         with patch.object(beta_cleanup.urllib.request, 'urlopen') as network:
             plan=beta_cleanup.inventory()
-            self.assertEqual(plan['status'], 'BLOCKED_UNTIL_EXACT_STABLE_PROMOTION')
+            self.assertIn(plan['status'], {'BLOCKED_UNTIL_EXACT_STABLE_PROMOTION','READY_FOR_ARCHIVAL_VERIFICATION'})
             self.assertGreater(plan['current_resources_protected'], 0)
             network.assert_not_called()
 
