@@ -71,7 +71,7 @@ class BetaChannelTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(self.main.encode()).hexdigest(),
                          self.manifest["original_production_config_sha256"])
         self.assertEqual(self.beta.splitlines()[0], "# LoonKit v6.5.5-beta.1 · BETA TEST ONLY")
-        self.assertEqual(len(self.manifest["overlay_rules"]), 9)
+        self.assertEqual(len(self.manifest["overlay_rules"]), 10)
         for item in self.manifest["overlay_rules"].values():
             path = ROOT / item["uri"].split("/loonkit/" + self.manifest["immutable_overlay_commit"] + "/", 1)[1]
             self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item["sha256"])
@@ -80,7 +80,7 @@ class BetaChannelTests(unittest.TestCase):
     def test_dns_equal_to_production_and_no_private_dns(self):
         for key in ("dns-server", "doh-server", "hijack-dns", "ip-mode", "ipv6-vif",
                     "interface-mode", "skip-proxy", "bypass-tun", "real-ip"):
-            pat = r"(?m)^" + re.escape(key) + r"\\s*=.*$"
+            pat = r"(?m)^" + re.escape(key) + r"\s*=.*$"
             self.assertEqual(re.search(pat, section(self.main, "General")).group(),
                              re.search(pat, section(self.beta, "General")).group())
         self.assertIn("https://dns.alidns.com/dns-query", self.beta)

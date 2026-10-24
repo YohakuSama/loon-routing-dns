@@ -5,60 +5,65 @@
   "status": "BETA_PENDING_CI_AND_DEVICE_TESTS",
   "production_baseline": "87ba3f50e80ba90212a0eeba7df223949f50e32b",
   "stable_release": "v6.5.4",
-  "candidate_source_commit": "fe1779929d045c6d3099bea0dad750c921630f36",
-  "immutable_overlay_commit": "fe1779929d045c6d3099bea0dad750c921630f36",
+  "candidate_source_commit": "26a24c86b58b133b2d094956f0f615680275a1b0",
+  "immutable_overlay_commit": "26a24c86b58b133b2d094956f0f615680275a1b0",
   "configuration_entry": "LoonKit.lcf",
-  "configuration_sha256": "4ef770d93a2066aa98b5c8ca86047ce5b4e72582b1d25296dbda92a0a2be9b79",
+  "configuration_sha256": "4abdad9e0542a4f84493b63efe3a18ec91eb61b4c35f9cf26a76d37524d52d75",
   "original_production_config_sha256": "6bb6f4dc936e250fbff36763391a976a7f3d7bc833ea549c322832a9c3086a69",
   "production_release_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4",
-  "production_rule_refs_preserved": 25,
+  "production_rule_refs_preserved": 24,
   "retired_beta_subscription": "Our-SteamCN",
   "ali_dns_preserved": true,
   "overlay_rules": {
     "RoutingAdBlock": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/RoutingAdBlock.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/RoutingAdBlock.list",
       "sha256": "712afa25c2ca6ec603bc296d195a6a82af01c1a58aea61ddcd6fceabb81320ab",
       "matcher_count": 26
     },
     "SteamCN": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/SteamCN.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/SteamCN.list",
       "sha256": "45e0ccb6848cf49773fddec26962c8508d692d778de6f47ce0cb29f5e6550526",
       "matcher_count": 13
     },
     "SteamGlobal": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/SteamGlobal.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/SteamGlobal.list",
       "sha256": "1a6e5296f61e91c30de8d978848cc918a7cb9a07ebc10cf42db7bd6e5a7b2a0f",
       "matcher_count": 4
     },
     "Service-Spotify": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Spotify.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Spotify.list",
       "sha256": "f25bd281e6b2c230ab54477a88355986d15cf4edce761507d502ddf576c1fcea",
       "matcher_count": 15
     },
     "Service-Twitch": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Twitch.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Twitch.list",
       "sha256": "c20e138ba791bd9b95d7bd0a7eb97502ce85067ffe7092f2618b29723fff8d32",
       "matcher_count": 8
     },
     "Service-BBC": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-BBC.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-BBC.list",
       "sha256": "fd77987c0a38f126ffded997e15012bb46e429cfb2d2137d6724153e6f731fb5",
       "matcher_count": 13
     },
     "Service-Line": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Line.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Line.list",
       "sha256": "5ea83d6c33ffb66315878b761361499776d946e612cd838d7d2de04a87a64395",
       "matcher_count": 13
     },
     "Service-Reddit": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Reddit.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Reddit.list",
       "sha256": "aa66c24708a107bee9709c69e499c7b1f9f53e3a5c17dd9145078ca0d176f34f",
       "matcher_count": 12
     },
     "Service-Linkedin": {
-      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Linkedin.list",
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Linkedin.list",
       "sha256": "efb9d832a9d6dd7a0268abe128fe7e2bff7cb988481b1bc65881fc00b7d5d34e",
       "matcher_count": 6
+    },
+    "AIScoped": {
+      "uri": "https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/AIScoped.list",
+      "sha256": "25869eeb05134296ea083f8d68095f7723a08dec25f1372ceb0a698a299d1e25",
+      "matcher_count": 108
     }
   },
   "acceptance": {
@@ -71,6 +76,7 @@
     "Loon client import and priority not verified on a device.",
     "AliDNS DoH failure fallback remains an App-level setting; not guaranteed by this profile.",
     "ChinaDirect/AppleOTA broad upstream policy remains unchanged and needs separate audited candidate.",
-    "AdBlock DIRECT does not restore routing; disable both AdBlock rule resources."
+    "AdBlock DIRECT does not restore routing; disable both AdBlock rule resources.",
+    "AI wide keywords removed in beta; missing Google developer-profile hostnames could now use Google/Final rather than AI."
   ]
 }

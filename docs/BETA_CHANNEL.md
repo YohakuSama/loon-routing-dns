@@ -4,12 +4,12 @@
 ## Entry and pinned assets
 - Stable: https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf (v6.5.4; unchanged)
 - Beta after beta branch merges this PR: https://raw.githubusercontent.com/YohakuSama/loonkit/beta/beta/LoonKit.lcf
-- The entry follows `beta`; all nine beta overlay resources are pinned to commit `fe1779929d045c6d3099bea0dad750c921630f36`.
-- Existing 25 production rule subscriptions, diagnostics plugin, icons and scripts keep their unchanged immutable refs.
+- The entry follows `beta`; all ten beta overlay resources are pinned to commit `26a24c86b58b133b2d094956f0f615680275a1b0`.
+- Existing 24 production rule subscriptions, diagnostics plugin, icons and scripts keep their unchanged immutable refs.
 - Exact content hashes and matcher counts: [beta_manifest.json](../build/beta_manifest.json).
-- The policy generator is `python3 scripts/beta_assets.py --check`. All nine overlays reproduce from the single [policy_overrides.json](../rules/beta/policy_overrides.json).
-- Channel config checksum: `4ef770d93a2066aa98b5c8ca86047ce5b4e72582b1d25296dbda92a0a2be9b79`.
-- Resource source commit: `fe1779929d045c6d3099bea0dad750c921630f36`.
+- The policy generator is `python3 scripts/beta_assets.py --check`. All ten overlays reproduce from the single [policy_overrides.json](../rules/beta/policy_overrides.json).
+- Channel config checksum: `4abdad9e0542a4f84493b63efe3a18ec91eb61b4c35f9cf26a76d37524d52d75`.
+- Resource source commit: `26a24c86b58b133b2d094956f0f615680275a1b0`.
 - Minimum documented features: Loon 3.2.5 (789) for `hijack-dns`; linked plugin declares 3.5.1 (983). **Use Loon 3.5.1 (983) or newer for beta**, and confirm compatibility on device.
 
 ## Changes and decision evidence
@@ -18,8 +18,8 @@
 - The old frozen SteamCN subscription is **replaced only in beta** with 13 conservative CDN/China candidates. Four broad global suffixes (`cm.steampowered.com`, `steamcontent.com`, `steamserver.net`, `steamusercontent.com`) now belong to Steam. The other 13 still require geographic validation.
 - 26 previously local AdBlock matchers are migrated to a dedicated `Beta-LocalAdBlock` subscription. Existing frozen `Our-AdBlock` stays first. Removed local Microsoft/Facebook roots are already covered by the frozen remote owner groups; their local priority no longer shadows the earlier remote AdBlock matcher.
 - Six supplementary service groups (Spotify, Twitch, BBC, Line, Reddit, Linkedin) migrate from local to pinned remote lists, preserving ownership when ad-block lists are disabled.
-- AI/Copilot exact local exceptions remain ahead of remote Microsoft rules.
-- Broad `.cn`, WeChat and historical user-agent rules in the giant frozen ChinaDirect source, Apple OTA, and AI keyword exclusions have **not** been modified. These remain explicit review work, not silently claimed fixed.
+- AI/Copilot exact local exceptions remain ahead of remote Microsoft rules. The beta replaces the fixed AI list with a generated scoped copy: removes broad keywords `colab`, `developerprofiles`, `generativelanguage`, adds explicit Colab/developer-profile hosts and keeps the existing `generativelanguage.googleapis.com` suffix.
+- Broad `.cn`, WeChat and historical user-agent rules in the giant frozen ChinaDirect source, Apple OTA, have **not** been modified. These remain explicit review work, not silently claimed fixed.
 - The published app-level `AdBlock = select,REJECT,DIRECT` choice remains for compatibility. **DIRECT is not a disable switch**: it forces direct connection and can leak routing intentions. To stop Loon ad filtering while retaining service routing, turn **off both** `Our-AdBlock` and `Beta-LocalAdBlock` in Remote Rule. This is a manual two-toggle mechanism; it must be confirmed on device. The diagnostics plugin contains no Loon REJECT rules; third-party user plugins must be audited separately. NovaXNS filtering is independent.
 - `GEOIP,CN,DIRECT,no-resolve` and `FINAL,Final` remain; no assumption that unrecognized domestic domains are always direct.
 

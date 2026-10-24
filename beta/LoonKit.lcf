@@ -85,18 +85,18 @@ Paypal = select,DIRECT,Proxy,Auto,Fallback,ALL_Filter,img-url = https://raw.gith
 [Remote Rule]
 # 固定版本远程规则。
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/AdBlock.list, policy=AdBlock, tag=Our-AdBlock, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/RoutingAdBlock.list, policy=AdBlock, tag=Beta-LocalAdBlock, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Spotify.list, policy=Spotify, tag=Beta-Service-Spotify, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Twitch.list, policy=Twitch, tag=Beta-Service-Twitch, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-BBC.list, policy=BBC, tag=Beta-Service-BBC, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Line.list, policy=Line, tag=Beta-Service-Line, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Reddit.list, policy=Reddit, tag=Beta-Service-Reddit, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/Service-Linkedin.list, policy=Linkedin, tag=Beta-Service-Linkedin, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/RoutingAdBlock.list, policy=AdBlock, tag=Beta-LocalAdBlock, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Spotify.list, policy=Spotify, tag=Beta-Service-Spotify, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Twitch.list, policy=Twitch, tag=Beta-Service-Twitch, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-BBC.list, policy=BBC, tag=Beta-Service-BBC, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Line.list, policy=Line, tag=Beta-Service-Line, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Reddit.list, policy=Reddit, tag=Beta-Service-Reddit, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/Service-Linkedin.list, policy=Linkedin, tag=Beta-Service-Linkedin, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/DomesticCore.list, policy=DIRECT, tag=Our-DomesticCore, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/AI.list, policy=AI, tag=Our-AI, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/AIScoped.list, policy=AI, tag=Beta-AIScoped, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/AppleOTA.list, policy=DIRECT, tag=Our-AppleOTA, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/SteamCN.list, policy=DIRECT, tag=Beta-SteamCN, enabled=true
-https://raw.githubusercontent.com/YohakuSama/loonkit/fe1779929d045c6d3099bea0dad750c921630f36/rules/beta/v6.5.5-beta.1/SteamGlobal.list, policy=Steam, tag=Beta-SteamGlobal, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/SteamCN.list, policy=DIRECT, tag=Beta-SteamCN, enabled=true
+https://raw.githubusercontent.com/YohakuSama/loonkit/26a24c86b58b133b2d094956f0f615680275a1b0/rules/beta/v6.5.5-beta.1/SteamGlobal.list, policy=Steam, tag=Beta-SteamGlobal, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/YouTube.list, policy=YouTube, tag=Our-YouTube, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/Netflix.list, policy=Netflix, tag=Our-Netflix, enabled=true
 https://raw.githubusercontent.com/YohakuSama/loonkit/9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4/rules/releases/vNext-RC2/Disney.list, policy=Disney, tag=Our-Disney, enabled=true
