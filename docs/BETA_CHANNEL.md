@@ -86,3 +86,7 @@ The [fail-closed beta promotion preflight](BETA_PROMOTION_GATE.md) and `scripts/
 ## Upstream risk triage (review only)
 
 The read-only [beta updater workflow](../.github/workflows/beta-upstream-candidate.yml) now runs [beta_upstream_triage.py](../scripts/beta_upstream_triage.py) after staged actual proposed rule snapshots. It archives an additional `RISK_TRIAGE.json` assigning source-failure, removals, broad IP/suffix, direct, advertising, shared infra and cross-policy changes to manual review. Only tightly bounded exact domain additions under approved routine service groups can be marked **draft PR eligible**. This classification does not create a PR, write rules, relax the source lock, authorize automated publication, or bypass seven-day/device gates. Full unattended beta PR creation remains unfinished and intentionally must not be represented as live.
+
+### Source completeness versus normalization fidelity
+
+The updater distinguishes `source_integrity_complete` (all registered source snapshots fetched and hashed) from `source_translation_exact_for_routine` (none require excluded-expression review). The read-only review may succeed while the automatic draft gate remains closed for lossy or unsupported expressions. This is a manual translation-review case, not a falsely reported fetch failure.
