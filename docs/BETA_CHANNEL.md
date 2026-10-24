@@ -59,3 +59,7 @@ Never install the `proposed-assets/` outputs directly; they are review-only raw 
 
 - [Beta device acceptance matrix](BETA_DEVICE_MATRIX.md): all real-device checks still marked NOT_TESTED; contains required device metadata, DNS failures and 7-day observation.
 - [Routing, AdBlock and source conflict ledger](BETA_DECISION_REGISTER.md): baseline vs beta ownership decisions, offline-test boundaries and unverified domains.
+
+## Official Loon syntax reference (2026-09-11)
+
+The [2026 syntax audit](SYNTAX_BASELINE_2026-09-11.md) compares the current Loon-maintained example and online manual with beta. It deliberately does not copy optional example settings or adjust AliDNS, the DNS privacy tradeoff or immutable resource URLs. CI includes a narrow syntax-baseline regression contract; **actual Loon Build and device behavior remain unverified**.
