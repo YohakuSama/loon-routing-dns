@@ -6,6 +6,7 @@
 - 相对 v6.5.5，运行时只改变这一条拦截响应参数；AliDNS、TUN、IPv4/IPv6、36 份不可变规则、策略组、脚本、插件、图标和节点默认行为不变。
 - 保存 v6.5.5 不可变基线，添加 v6.5.6 版本化可复现构建、哈希、校验与测试。App 的脚本/复写/MitM 开关和证书仍由用户按设备情况设置，未启用全域 HTTPS 解密。
 - 本轮设置变更尚无独立真机测试记录，不沿用旧版设备验收为新版 PASS。
+- [正式发布 PR #124](https://github.com/YohakuSama/loonkit/pull/124)、[最终 main 配置](https://github.com/YohakuSama/loonkit/commit/d28aa3d71a3339aa7a540bd3bd31f90e1090e52d) 及 [合并后 Production CI](https://github.com/YohakuSama/loonkit/actions/runs/40101935676) 已核对。
 
 
 

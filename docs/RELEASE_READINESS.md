@@ -1,6 +1,11 @@
 # 发布与维护检查
 
-## v6.5.6 发布
+## v6.5.6 已正式发布
+
+- 发布 PR：[ #124 ](https://github.com/YohakuSama/loonkit/pull/124)；原始正式 main 提交：[`d28aa3d71a3339aa7a540bd3bd31f90e1090e52d`](https://github.com/YohakuSama/loonkit/commit/d28aa3d71a3339aa7a540bd3bd31f90e1090e52d)。
+- PR head 验证：[Production CI #40101860396](https://github.com/YohakuSama/loonkit/actions/runs/40101860396)；合并后 main：[Production CI #40101935676](https://github.com/YohakuSama/loonkit/actions/runs/40101935676)。
+- 固定配置 SHA256：`d75c37a9dc0dcb8a109c1cdaa0cae647a95b7f70dcf22ec94a5e1ac179528b11`；[v6.5.5 固定回滚配置](https://raw.githubusercontent.com/YohakuSama/loonkit/d6170dd640325c27d16ae780d510c4868b5cc2d9/LoonKit.lcf)。
+- [beta 维护基础设施同步 PR #125](https://github.com/YohakuSama/loonkit/pull/125) 已通过 [Beta CI #40101996315](https://github.com/YohakuSama/loonkit/actions/runs/40101996315)。
 
 从历史 v6.5.5 完整配置确定性生成新版，唯一运行时变化为 `dns-reject-mode = LOOPBACKIP`，版本头同步更新。需通过完整构建、36 个固定资源、全部历史 checksum、准确 PR head 的 CI 和 main 合并后 Raw 检查；App 端权限及 HTTPS 证书不能由配置自动启用。真机实际效果尚未收到新的使用反馈。
 
