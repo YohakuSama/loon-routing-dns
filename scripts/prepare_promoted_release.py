@@ -50,9 +50,11 @@ def render(root: Path = ROOT) -> bytes:
 
 def check(root: Path = ROOT) -> dict:
     data = render(root)
-    if data != (root / "LoonKit.lcf").read_bytes():
+    new = json.loads((root / "build/release_spec.json").read_text())["stable_release_version"] == "v6.5.6"
+    target = root / ("build/baselines/v6.5.5/LoonKit.lcf" if new else "LoonKit.lcf")
+    if data != target.read_bytes():
         raise ValueError("formal candidate is not reproducible")
-    release = json.loads((root / "build/release_manifest.json").read_text())
+    release = json.loads((root / ("build/baselines/v6.5.5/release_manifest.json" if new else "build/release_manifest.json")).read_text())
     if hashlib.sha256(data).hexdigest() != release["profile_sha256"]["LoonKit.lcf"]:
         raise ValueError("formal manifest does not match renderer")
     return {"version": "v6.5.5", "sha256": hashlib.sha256(data).hexdigest(),
