@@ -2,11 +2,16 @@
   "schema_version": 1,
   "evidence_type": "OWNER_REPORTED_GENERAL_FUNCTIONAL_SUCCESS",
   "report_received_date": "2026-10-24",
-  "statement": "用户在此前项目对话中报告：已完成真机测试，目前未存在任何问题。",
+  "statement": "维护者在本轮会话中报告：经测试目前未发现任何问题。",
   "exact_tested_version": null,
   "exact_tested_commit": null,
   "device_build_network_metadata": null,
   "per_scenario_results": null,
-  "interpretation": "Preserve owner feedback without inventing missing device metadata, all-case PASS, DNS packet observations or seven elapsed days. New beta.4 changes require targeted acceptance.",
-  "release_approval": false
+  "interpretation": "Candidate identity follows the reviewed configuration in this project discussion. Exact tested version/commit were not explicitly present in the device report. Device Build, individual scenarios, packet captures and a seven-day observation interval were not provided. No all-scenarios PASS or release approval is inferred.",
+  "release_approval": false,
+  "associated_candidate_version": "v6.5.5-beta.4",
+  "associated_candidate_commit": "adc567168eed8e21dc8d80aebc40b85f35fc1a1b",
+  "associated_candidate_config_sha256": "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7",
+  "observation_start_utc": null,
+  "observation_end_utc": null
 }

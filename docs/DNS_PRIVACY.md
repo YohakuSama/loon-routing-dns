@@ -19,3 +19,7 @@
 公网出口 IP、DNS 解析器与具体 DNS 请求的传输方式是不同的指标。对于应用内置的 DoH/DoT 请求，可结合 Loon DNS 日志、请求策略及[网络辅助](./NETWORK_DIAGNOSTICS.md)进一步排查。
 
 参考：[Loon DNS 文档](https://nsloon.app/docs/DNS/)。
+
+## v6.5.5 候选 DNS 边界
+
+候选原样保留已验收 beta.4 中的 AliDNS 普通 DNS、DoH、UDP/53 劫持、IPv4/IPv6、TUN 绕过和应用设置控制的 DNS 回退。未提供设备抓包、DoH 故障回退或应用自带 DoH 的测试记录，因此不能作零 DNS 泄漏、零明文回退或所有 IPv6/旁路场景已验证的结论。
