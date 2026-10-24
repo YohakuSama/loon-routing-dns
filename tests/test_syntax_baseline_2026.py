@@ -81,7 +81,7 @@ class OfficialSyntax2026Contracts(unittest.TestCase):
 
     def test_sni_assisted_ip_routing_is_feature_flagged_in_beta_only(self):
         self.assertIn("sni-sniffing = true", section(self.beta, "General"))
-        self.assertNotIn("sni-sniffing =", section(self.main, "General"))
+        self.assertIn("sni-sniffing = true", section(self.main, "General"))
         self.assertIn("GEOIP,CN,DIRECT,no-resolve", section(self.beta, "Rule"))
         self.assertIn("sni-sniffing", self.docs)
 

@@ -78,7 +78,7 @@ class BetaChannelTests(unittest.TestCase):
     def test_manifest_and_frozen_rule_integrity(self):
         self.assertEqual(hashlib.sha256(self.beta.encode()).hexdigest(),
                          self.manifest["configuration_sha256"])
-        self.assertEqual(hashlib.sha256(self.main.encode()).hexdigest(),
+        self.assertEqual(hashlib.sha256((ROOT / "build/baselines/v6.5.4/LoonKit.lcf").read_bytes()).hexdigest(),
                          self.manifest["original_production_config_sha256"])
         self.assertEqual(self.beta.splitlines()[0], "# LoonKit " + self.manifest["version"] + " · BETA TEST ONLY")
         self.assertEqual(len(self.manifest["overlay_rules"]), 12)
@@ -126,7 +126,7 @@ class BetaChannelTests(unittest.TestCase):
         general_beta = section(self.beta, "General")
         general_main = section(self.main, "General")
         self.assertIn("sni-sniffing = true", general_beta)
-        self.assertNotIn("sni-sniffing =", general_main)
+        self.assertIn("sni-sniffing = true", general_main)
         self.assertRegex(self.manifest["version"], r"v[0-9]+\.[0-9]+\.[0-9]+-beta\.[0-9]+")
         self.assertEqual(self.manifest["candidate_features"]["sni_sniffing"]["status"],
                          "ENABLE_IN_BETA_ONLY_PENDING_DEVICE_VERIFICATION")

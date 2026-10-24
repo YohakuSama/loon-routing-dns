@@ -70,5 +70,19 @@
         }
       ]
     }
-  ]
+  ],
+  "promotion_candidate": {
+    "version": "v6.5.5-beta.4",
+    "candidate_commit_sha": "adc567168eed8e21dc8d80aebc40b85f35fc1a1b",
+    "config_sha256": "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7",
+    "asset_commit_sha": "1b54e079486a06a5cfff5c5f03016628a52a7701",
+    "candidate_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299",
+    "release_pr": "https://github.com/YohakuSama/loonkit/pull/119",
+    "promotion_status": "PROMOTED_V6_5_5_VERIFIED_ON_MAIN",
+    "device_observation_dates": null,
+    "rollback_main_sha": "62dcaa273ebff92176b510186f7b73ea994e72b6",
+    "owner_decision_file": "docs/RELEASE_OWNER_DECISION_v6.5.5.json",
+    "promoted_main_commit_sha": "7c7ca4f67180437c962c3bc7eae07c6042e519d6",
+    "postmerge_ci": "https://github.com/YohakuSama/loonkit/actions/runs/40097998603"
+  }
 }

@@ -1,6 +1,13 @@
 # LoonKit 测试渠道
 
-当前版本与完整校验值以 [beta manifest](../build/beta_manifest.json) 为准。正式版仍为 v6.5.4；测试改动尚未提升正式版。
+## v6.5.5 已发布及后续测试
+
+截至 PR #119 准备时，已验收的 beta.4 仍为当前测试版，SHA256 为 `fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7`。[v6.5.5 发布 PR](https://github.com/YohakuSama/loonkit/pull/119) 将该候选确定性迁移到正式配置，未引入任何上游增量或新的 DNS 参数。
+
+发布候选包含独立 `build/baselines/v6.5.4/` 模板，避免根目录正式配置变更之后影响 beta 重新构建。下一轮候选需更新独立 manifest 和审核记录，不得继承本轮总体设备反馈作为新的 PASS。
+
+
+测试渠道身份以 [beta manifest](../build/beta_manifest.json) 为准；正式入口已采用 v6.5.5，下一轮 beta 保留独立构建和验收。
 
 - 正式入口：https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf
 - 测试入口：https://raw.githubusercontent.com/YohakuSama/loonkit/beta/beta/LoonKit.lcf
@@ -20,7 +27,7 @@
 
 ## 构建和验收
 
-配置由 scripts/beta_profile.py 从正式模板与审核后的策略输入生成；资源必须先提交，再使用真实提交 SHA 生成配置，禁止自引用 SHA。36 份资源均由 scripts/beta_channel.py 校验实际字节、数量和不可变引用，支持 --remote 核对线上资源。
+配置由 scripts/beta_profile.py 从 v6.5.4 冻结历史模板与审核后的策略输入生成；资源必须先提交，再使用真实提交 SHA 生成配置，禁止自引用 SHA。36 份资源均由 scripts/beta_channel.py 校验实际字节、数量和不可变引用，支持 --remote 核对线上资源。
 
     python3 scripts/beta_assets.py --check
     python3 scripts/beta_domestic_rules.py --check
@@ -36,7 +43,7 @@
 
 AliDNS 普通服务器 223.5.5.5/223.6.6.6、DoH https://dns.alidns.com/dns-query 和其他 DNS/TUN 设置均未更换。加密 DNS 失败回退是 Loon App 设置，配置不能替用户保证开关状态。UDP/53 劫持也不能证明所有应用的私有解析均被接管。
 
-[已记录此前用户“真机测试未发现问题”的反馈](BETA_OWNER_FEEDBACK.json)。该反馈没有附精确版本/SHA、设备和逐项场景，不能伪造为全部矩阵 PASS；新 beta.4 行为另需有针对性验证。NovaXNS 根据用户最新要求延期，不再作为本轮阻塞输入。
+[已记录此前用户“真机测试未发现问题”的反馈](BETA_OWNER_FEEDBACK.json)。该反馈没有附精确版本/SHA、设备和逐项场景，不能伪造为全部矩阵 PASS；原始用户反馈与本次单次发布批准分别记录，缺少的逐项场景仍不标为完成。NovaXNS 根据用户最新要求延期，不再作为本轮阻塞输入。
 
 ## 自动上游更新
 
@@ -46,6 +53,6 @@ AliDNS 普通服务器 223.5.5.5/223.6.6.6、DoH https://dns.alidns.com/dns-quer
 
 ## 正式发布和回滚
 
-[发布预检](BETA_PROMOTION_GATE.md)保持先静态、再 GitHub 实时检查的双层门禁。空模板、未来观察日期、错 SHA、伪造 CI 成功和未完成的风险审核都会阻断。首次结构变化观察期仍为 7 天；时间和用户概括反馈均不能替代具体场景证据。
+[发布预检](BETA_PROMOTION_GATE.md)保持先静态、再 GitHub 实时检查的双层门禁。空模板、未来观察日期、错 SHA、伪造 CI 成功和未完成的风险审核都会阻断。默认观察期仍保留七天；本轮依据 [维护者对准确候选的一次性批准](RELEASE_OWNER_DECISION_v6.5.5.json) 直接发布，不声称七天或逐项测试已完成。
 
-出现问题可重新导入正式入口，或使用 [历史测试版引用](../build/beta_history.json) 对应的精确提交。正式发布后才能运行 scripts/beta_cleanup.py --apply，且必须先确认历史固定 URL 的原始字节仍可访问；现在仅输出清理计划，不删除历史资源。
+出现问题可重新导入正式入口，或使用 [历史测试版引用](../build/beta_history.json) 对应的精确提交。正式发布后才能运行 scripts/beta_cleanup.py --apply，且必须先确认历史固定 URL 的原始字节仍可访问；清理只在实际发布核验后单独审阅，保留所有正式引用与回滚依赖。

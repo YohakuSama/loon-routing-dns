@@ -1,5 +1,16 @@
 # LoonKit 更新记录
 
+## v6.5.5 — 正式版（2026-10-24）
+
+- 使用冻结的 v6.5.5-beta.4 配置作为确定性迁移来源，测试版本提交 `adc567168eed8e21dc8d80aebc40b85f35fc1a1b`。维护者反馈真机测试暂未发现问题；设备 Build、逐项情况和七天观察时长未提供。
+- 正式配置候选仅调整版本头和简洁英文注释，有效指令、顺序、36 个规则链接、33 个策略组、AliDNS 与插件、图标均不变。
+- 测试版单一广告资源继续支持按资源关闭恢复服务分流；AdBlock 的 `Proxy` 选项是通用代理放行。
+- 增加独立版本校验、确定性迁移和原 v6.5.4 冻结模板。保留旧版本公开 checksum。
+- [发布 PR #119](https://github.com/YohakuSama/loonkit/pull/119) 采用维护者对此准确候选的一次性放行决策。七天观察时长与逐项设备场景仍为未提供，不伪称完成；资源哈希和最终 PR CI 仍须通过。
+
+
+- 正式 main 发布提交：[7c7ca4f67180437c962c3bc7eae07c6042e519d6](https://github.com/YohakuSama/loonkit/commit/7c7ca4f67180437c962c3bc7eae07c6042e519d6)；合并后 [Production CI](https://github.com/YohakuSama/loonkit/actions/runs/40097998603) 通过，公开配置哈希一致。
+
 ## v6.5.4
 
 - 优化正式配置文件中的技术注释，统一语言，移除迁移、候选和内部审计措辞。

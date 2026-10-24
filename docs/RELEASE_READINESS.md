@@ -1,6 +1,20 @@
 # 发布与维护检查
 
+## v6.5.5 正式发布核验记录
+
+[PR #119](https://github.com/YohakuSama/loonkit/pull/119) 将 beta.4 的有效指令确定性提升至正式入口。维护者已明确批准这一版的单次发布，详见 [版本专属决定](RELEASE_OWNER_DECISION_v6.5.5.json)，并保留严格的资源、CI、合并后检查。
+
+- 原 beta 配置 SHA256：`fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7`。
+- 原 beta 提交：`adc567168eed8e21dc8d80aebc40b85f35fc1a1b`；固定资源：`1b54e079486a06a5cfff5c5f03016628a52a7701`。
+- 新的版本化路径：`python3 scripts/prepare_promoted_release.py --check`、`python3 scripts/verify_release.py --check --remote`；旧版 26 个 RC2 编译输出/197765 条匹配继续作为历史契约，不能和 36 个现役远程资源混用。
+- 需准确 PR head 的 `production` 必需检查成功，随后再做最终 main 下载/哈希核对。
+
+维护者反馈设备使用未发现问题，随后明确要求直接发布本准确候选。七天观察起止、逐项结果与设备 Build 未提供，记录保持未提供。例外仅适用 v6.5.5，不改变以后候选的默认门禁。
+
+
 本页记录 LoonKit 的发布流程、版本核验和维护要求。正式配置为 [LoonKit.lcf](../LoonKit.lcf)，许可证与来源信息见 [第三方许可与来源](./THIRD_PARTY_NOTICES.md)。
+
+正式 main 发布提交：[7c7ca4f67180437c962c3bc7eae07c6042e519d6](https://github.com/YohakuSama/loonkit/commit/7c7ca4f67180437c962c3bc7eae07c6042e519d6)；合并后 [Production CI #40097998603](https://github.com/YohakuSama/loonkit/actions/runs/40097998603) 成功。正式入口 SHA256：`d97984a42e313e5b4fc81c26ce760fd4d1163275ad7278e3930cbce69dcf9f03`。
 
 ## 发布流程
 
@@ -34,10 +48,10 @@ python3 scripts/verify_release.py --check --remote
 
 | 项目 | 状态 |
 | --- | --- |
-| 正式配置 | v6.5.4 · [获取配置](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf) |
+| 正式配置 | v6.5.5 · [获取配置](https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf) |
 | 完整性核验 | [Production CI](https://github.com/YohakuSama/loonkit/actions/workflows/ci.yml) |
-| 真机测试 | v6.5.2 真机反馈未发现异常；v6.5.3 调整测速和自动选路，真机回归待补充；v6.5.4 仅整理注释，未修改有效配置项，见[测试记录](./DEVICE_TEST_STATUS.md) |
-| GitHub Releases | [发布页](https://github.com/YohakuSama/loonkit/releases)（截至 2026-10-22 未发布条目） |
+| 真机测试 | v6.5.5-beta.4 维护者反馈使用未发现问题；详细 Build、抓包和观察区间未提供；本次采用维护者一次性发布决定，见[测试记录](./DEVICE_TEST_STATUS.md) |
+| GitHub Releases | [发布页](https://github.com/YohakuSama/loonkit/releases)（实时条目以 GitHub 为准） |
 
 ## 开源许可与来源
 

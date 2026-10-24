@@ -1,5 +1,12 @@
 # 测试版正式发布预检
 
+## 独立发布 PR 模型
+
+v6.5.5 的测试来源提交是 `adc567168eed8e21dc8d80aebc40b85f35fc1a1b`，发布 PR 的 head 是独立 release 分支，最终 main 提交必须在合并后重新核对。不能把这个 PR 当作原生 beta→main PR 假装旧版门禁直接通过；新模型必须同时约束精确测试来源、固定资源及哈希、head 的 production CI 与 main 目标。
+
+七天观察和全部设备逐项证据仍未提供。维护者对 v6.5.5 从准确 beta.4 的提升作了 [一次性批准](RELEASE_OWNER_DECISION_v6.5.5.json)。默认空白模板继续阻断；只有显式执行 `--owner-override` 并通过版本、配置 SHA、提交、回滚、真实 PR 与 CI 校验，才适用这一次例外。不将缺失数据改写为 PASS。
+
+
 此前用户已经报告真机运行未发现问题，记录在 BETA_OWNER_FEEDBACK.json。该记录缺少精确 SHA 和逐项场景；新 beta.4 的改动仍需有针对性的验收。
 
 docs/BETA_ACCEPTANCE_TEMPLATE.json 是空白模板，不是测试结果。仅凭本地 JSON 中的 true 或 success 不能授权正式发布。

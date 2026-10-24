@@ -1,10 +1,19 @@
 # LoonKit 维护与发布
 
+## v6.5.5 正式发布
+
+[独立发布 PR #119](https://github.com/YohakuSama/loonkit/pull/119) 保留已验收 beta.4 的全部 36 个固定远程资源。历史 v6.5.4 `LoonKit.lcf` 与正式 manifest 的独立、校验过的基线位于 `build/baselines/v6.5.4/`，供 beta 生成器持续重建；不是可删冗余。
+
+发布候选先由 `scripts/prepare_promoted_release.py` 重建，再由 `scripts/verify_promoted.py` 验证实际配置和原始 beta 有效指令完全一致。本次维护者明确授权对应候选的一次性放行；缺失的设备证据依然如实保留。必须通过当前 PR head 的 CI 和合并后 main 实际资源验证。之后独立创建清理 PR，不重写历史。
+
+
 正式配置为 `LoonKit.lcf`，通过 `release/Network_Diagnostics.plugin` 提供节点信息、网络检测和解锁检测三个入口。
+
+已发布 main 提交：[7c7ca4f67180437c962c3bc7eae07c6042e519d6](https://github.com/YohakuSama/loonkit/commit/7c7ca4f67180437c962c3bc7eae07c6042e519d6)。合并后实际 [production CI](https://github.com/YohakuSama/loonkit/actions/runs/40097998603) 已通过；回滚入口为 [v6.5.4 固定提交](https://raw.githubusercontent.com/YohakuSama/loonkit/62dcaa273ebff92176b510186f7b73ea994e72b6/LoonKit.lcf)。
 
 ## 当前固定依赖
 
-- 规则：26 份 `rules/releases/vNext-RC2/`，固定提交 `9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4`。
+- 规则：36 个不可变远程资源（22 个历史 RC2、14 个已验收 beta.4 资源）；准确引用和 SHA256 见 `build/release_manifest.json`。
 - 图标：`icons/v20261021r1/`，固定提交 `97c48a5d14087597dbba35119d5ee8d43b1ce537`。
 - 三份诊断脚本：`scripts/v20261022r11/`，固定提交 `db83bbe402c40c4ec5bb2421115989126fd5bf05`。
 - 插件：`release/Network_Diagnostics.plugin`，固定提交 `5c2498084539bce76fd1f0f12fd8e5d4a0e989ea`。

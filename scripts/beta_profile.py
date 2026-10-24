@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render beta from the stable template plus reviewed policy; never edit stable."""
+"""Render beta from its immutable v6.5.4 baseline and reviewed policy."""
 from __future__ import annotations
 import argparse
 import hashlib
@@ -21,7 +21,7 @@ def render(asset_commit: str, root: Path = ROOT) -> tuple[bytes, dict]:
     if not re.fullmatch(r"[a-f0-9]{40}", asset_commit):
         raise ValueError("assets must be committed before profile generation")
     meta = json.loads((root / "build/beta_manifest.json").read_text())
-    stable = (root / "LoonKit.lcf").read_bytes()
+    stable = (root / "build/baselines/v6.5.4/LoonKit.lcf").read_bytes()
     if hashlib.sha256(stable).hexdigest() != meta["original_production_config_sha256"]:
         raise ValueError("formal baseline changed; explicit template migration required")
     spec = json.loads((root / "rules/beta/policy_overrides.json").read_text())

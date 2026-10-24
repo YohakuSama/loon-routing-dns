@@ -13,12 +13,11 @@ import beta_cleanup
 
 
 class BetaCleanupTests(unittest.TestCase):
-    def test_current_real_checkout_is_blocked_without_network_or_deletion(self):
-        plan=beta_cleanup.inventory()
-        self.assertEqual(plan['status'],'BLOCKED_UNTIL_EXACT_STABLE_PROMOTION')
-        with patch.object(beta_cleanup.urllib.request,'urlopen') as network:
-            with self.assertRaisesRegex(ValueError,'stable promotion'):
-                beta_cleanup.apply()
+    def test_current_real_checkout_inventory_does_not_delete_or_access_network(self):
+        with patch.object(beta_cleanup.urllib.request, 'urlopen') as network:
+            plan=beta_cleanup.inventory()
+            self.assertEqual(plan['status'], 'READY_FOR_ARCHIVAL_VERIFICATION')
+            self.assertGreater(plan['current_resources_protected'], 0)
             network.assert_not_called()
 
     def fixture(self,root):
@@ -33,8 +32,26 @@ class BetaCleanupTests(unittest.TestCase):
         (root/'build/beta_manifest.json').write_text(json.dumps(meta))
         (root/'build/beta_history.json').write_text(json.dumps({'revisions':[{'resources':[archive]}]}))
         (root/'build/release_manifest.json').write_text(json.dumps({'label':'v1.0.0','promoted_beta_config_sha256':'b'*64,
-            'profile_sha256':{'LoonKit.lcf':hashlib.sha256((root/'LoonKit.lcf').read_bytes()).hexdigest()}}))
+            'profile_sha256':{'LoonKit.lcf':hashlib.sha256((root/'LoonKit.lcf').read_bytes()).hexdigest()},
+            'publication':{'status':'VERIFIED_ON_MAIN','published_main_commit_sha':'d'*40}}))
         return path,raw,archive
+
+    def test_archive_verifier_accepts_matching_immutable_bytes_and_rejects_damage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            path, raw, archive=self.fixture(root)
+            class Response:
+                def __init__(self, body): self.body=body
+                def __enter__(self): return self
+                def __exit__(self,*args): pass
+                def geturl(self): return archive['uri']
+                def read(self,n): return self.body
+            with patch.object(beta_cleanup.urllib.request,'urlopen',return_value=Response(raw)):
+                self.assertEqual(beta_cleanup.verify_archives(root)['verified_history_resources'],1)
+            path.unlink()
+            with patch.object(beta_cleanup.urllib.request,'urlopen',return_value=Response(b'damaged')):
+                with self.assertRaisesRegex(ValueError,'archive hash mismatch'):
+                    beta_cleanup.verify_archives(root)
 
     def test_failed_archive_verification_retains_all_files(self):
         with tempfile.TemporaryDirectory() as directory:
