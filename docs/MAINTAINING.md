@@ -1,5 +1,12 @@
 # LoonKit 维护与发布
 
+## v6.5.5 正式发布准备
+
+[独立发布 PR #119](https://github.com/YohakuSama/loonkit/pull/119) 保留已验收 beta.4 的全部 36 个固定远程资源。历史 v6.5.4 `LoonKit.lcf` 与正式 manifest 的独立、校验过的基线位于 `build/baselines/v6.5.4/`，供 beta 生成器持续重建；不是可删冗余。
+
+发布候选先由 `scripts/prepare_promoted_release.py` 重建，再由 `scripts/verify_promoted.py` 验证实际配置和原始 beta 有效指令完全一致。正式发布仍需要设备门禁及准确 CI 通过；成功合入后应记录最终 main 提交、公开 checksum、真实工作流 URL 与历史回滚链接，再单开清理 PR。当前 main 版本保持 v6.5.4，直到实际合并验证成功。
+
+
 正式配置为 `LoonKit.lcf`，通过 `release/Network_Diagnostics.plugin` 提供节点信息、网络检测和解锁检测三个入口。
 
 ## 当前固定依赖

@@ -1,5 +1,17 @@
 # 发布与维护检查
 
+## v6.5.5 发布候选
+
+[PR #119](https://github.com/YohakuSama/loonkit/pull/119) 将 v6.5.5-beta.4 的有效指令逐项固定为待发布根配置。**截至本次审阅，该 PR 仍是草稿，main 仍使用 v6.5.4。**
+
+- 原 beta 配置 SHA256：`fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7`。
+- 原 beta 提交：`adc567168eed8e21dc8d80aebc40b85f35fc1a1b`；固定资源：`1b54e079486a06a5cfff5c5f03016628a52a7701`。
+- 新的版本化路径：`python3 scripts/prepare_promoted_release.py --check`、`python3 scripts/verify_release.py --check --remote`；旧版 26 个 RC2 编译输出/197765 条匹配继续作为历史契约，不能和 36 个现役远程资源混用。
+- 需准确 PR head 的 `production` 必需检查成功，随后再做最终 main 下载/哈希核对。
+
+维护者已报告总体真机使用未发现问题，但**七天观察起止、逐项结果和设备 Build 均未提供**。现有严格门禁不允许将其等同于全部矩阵 PASS 或七天完成；空白模板与模拟结果不是证据。无门禁放行时不得合并、打标签、删除历史资源。
+
+
 本页记录 LoonKit 的发布流程、版本核验和维护要求。正式配置为 [LoonKit.lcf](../LoonKit.lcf)，许可证与来源信息见 [第三方许可与来源](./THIRD_PARTY_NOTICES.md)。
 
 ## 发布流程
