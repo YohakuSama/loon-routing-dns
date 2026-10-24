@@ -8,16 +8,18 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/"scripts"))
 import prepare_promoted_release as build
+import prepare_release_v656 as new_build
 import verify_promoted as release
 import beta_channel
 
 
 class PublishedCandidateTests(unittest.TestCase):
     def test_deterministic_migration_matches_formal_config(self):
-        expected = (ROOT/"LoonKit.lcf").read_bytes()
+        expected = (ROOT/"build/baselines/v6.5.5/LoonKit.lcf").read_bytes()
         self.assertEqual(build.render(), expected)
         self.assertEqual(build.check()["sha256"], hashlib.sha256(expected).hexdigest())
         self.assertEqual(release.active(expected), release.active((ROOT/"beta/LoonKit.lcf").read_bytes()))
+        self.assertEqual(new_build.render(), (ROOT/"LoonKit.lcf").read_bytes())
         self.assertTrue(all(ord(c) < 128 for line in expected.decode().splitlines()
                             if line.lstrip().startswith("#") for c in line))
 
@@ -42,10 +44,17 @@ class PublishedCandidateTests(unittest.TestCase):
         candidate=(ROOT/"beta/LoonKit.lcf").read_bytes()
         changed=source.replace(b"doh-server = https://dns.alidns.com/dns-query",
                                b"doh-server = https://different.invalid/dns-query")
-        self.assertNotEqual(release.active(changed), release.active(candidate))
+        self.assertNotEqual(release.active(changed), release.active(source))
         self.assertNotEqual(hashlib.sha256(changed).hexdigest(),
                             json.loads((ROOT/"build/release_manifest.json").read_text())
                             ["profile_sha256"]["LoonKit.lcf"])
+
+    def test_one_reject_setting_change_only(self):
+        old=(ROOT/"build/baselines/v6.5.5/LoonKit.lcf").read_bytes()
+        new=(ROOT/"LoonKit.lcf").read_bytes()
+        expected=old.replace(b"# LoonKit v6.5.5\n",b"# LoonKit v6.5.6\n",1).replace(b"\ndns-reject-mode = NOANSWER\n",b"\ndns-reject-mode = LOOPBACKIP\n",1)
+        self.assertEqual(new,expected)
+        self.assertNotIn(b"[Mitm]",new)
 
     def test_old_template_is_not_new_formal_entry(self):
         frozen=(ROOT/"build/baselines/v6.5.4/LoonKit.lcf").read_bytes()
