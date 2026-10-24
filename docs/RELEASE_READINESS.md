@@ -12,6 +12,8 @@
 
 当前修复分支的发布状态以 build/release_manifest.json.publication 为准。真实 PR、准确 head CI、合并后 main 和上游运行结果在发生后追加，不能在准备阶段预先标记已发布。
 
+准备阶段记录：正式发布 [PR #128](https://github.com/YohakuSama/loonkit/pull/128)，测试渠道 [PR #129](https://github.com/YohakuSama/loonkit/pull/129)。原始候选提交 `3388b2565af8e7b660c4af7a46ede011692e0c02` 的 [Beta CI #40113536649](https://github.com/YohakuSama/loonkit/actions/runs/40113536649) 已通过；正式合并仍需最终 PR head 的实际 Production CI 通过，不能使用旧提交的结果代替。
+
 ## 必要检查
 
 ```bash
