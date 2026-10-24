@@ -12,15 +12,14 @@ import verify_release as historical
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = "https://raw.githubusercontent.com/YohakuSama/loonkit/"
-URI = re.compile(r"https://raw\\.githubusercontent\\.com/YohakuSama/loonkit/([a-f0-9]{40})/([A-Za-z0-9_./-]+)".replace("\\\\", "\\"))
 CANDIDATE_SHA = "fd1a01c6f8363a5dffaa1db9dbf044014c711fa48ea46e34a7c107180acbe0b7"
 CANDIDATE_COMMIT = "adc567168eed8e21dc8d80aebc40b85f35fc1a1b"
 ASSET_COMMIT = "1b54e079486a06a5cfff5c5f03016628a52a7701"
 
 
 def active(data: bytes) -> bytes:
-    return ("\\n".join(line.strip() for line in data.decode("utf-8").splitlines()
-                      if line.strip() and not line.lstrip().startswith("#")) + "\\n").encode("utf-8")
+    return ("\n".join(line.strip() for line in data.decode("utf-8").splitlines()
+                      if line.strip() and not line.lstrip().startswith("#")) + "\n").encode("utf-8")
 
 
 def verify(remote: bool = False, root: Path = ROOT) -> dict:
@@ -47,7 +46,7 @@ def verify(remote: bool = False, root: Path = ROOT) -> dict:
             published.get("promoted_beta_asset_commit") != ASSET_COMMIT,
             spec.get("promoted_candidate_commit") != CANDIDATE_COMMIT)):
         raise ValueError("tested candidate is not preserved exactly")
-    if not stable.startswith(b"# LoonKit v6.5.5\\n") or active(stable) != active(beta):
+    if not stable.startswith(b"# LoonKit v6.5.5\n") or active(stable) != active(beta):
         raise ValueError("effective Loon directives or routing order differ from tested candidate")
     if historical.sha(active(stable)) != spec["approved_runtime_directives_sha256"]:
         raise ValueError("approved non-comment runtime hash changed")
@@ -94,7 +93,7 @@ def verify(remote: bool = False, root: Path = ROOT) -> dict:
     if sum(x["policy"] == "AdBlock" for x in actual) != 1:
         raise ValueError("AdBlock must remain one resource")
     for key in historical.DNS:
-        if re.search(r"(?m)^" + re.escape(key) + r"\\s*=", historical.section(stable.decode(), "General")) is None:
+        if re.search(r"(?m)^" + re.escape(key) + r"\s*=", historical.section(stable.decode(), "General")) is None:
             raise ValueError("missing DNS/TUN control: " + key)
     if "GEOIP,CN,DIRECT,no-resolve" not in stable.decode() or "FINAL,Final" not in stable.decode():
         raise ValueError("default routing guards missing")
