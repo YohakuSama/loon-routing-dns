@@ -6,6 +6,8 @@
 
 共享基础设施允许名单在受信任发布器中统一维护，triage 复用同一表，避免新草稿把 Azure、IVS、OneTrust 等重新分给单一业务。默认分支调度继续拉取 87 条来源、比较全部 33 组；无合格新增不创建空 PR，实际写入/dispatch 以真实运行结果为准。
 
+本次正式合并后的 [实际运行](https://github.com/YohakuSama/loonkit/actions/runs/40113944082) 已成功：stage checkout `a0898bd422b7335cc705932c0ab36f7375a53562`，验证 v6.5.8-beta.1 和 36 个不可变资源，来源完整、比较 33 组，输出 `NO_ROUTINE_ADDITIONS`。本轮没有合格新增，写入 job 跳过，未生成真实自动 PR；首次合格增量仍需核实实际创建权限和 CI dispatch。完整审阅与发布计划保存在该运行 artifacts 中。
+
 下方首次运行、beta.4 与旧版本说明均为历史记录。
 
 ## 实际链路

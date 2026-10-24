@@ -10,9 +10,13 @@
 - 本版本发布依据维护者明确请求，见 RELEASE_OWNER_DECISION_v6.5.7.json。新增设备结果没有被伪造为 PASS；未新增等待天数。
 - 回滚：[固定 v6.5.6 配置](https://raw.githubusercontent.com/YohakuSama/loonkit/67c9060fc41c0fc9c7960612f33c9eb6e4c33cbe/LoonKit.lcf)。历史 checksum 和 build/baselines 保留。
 
-当前修复分支的发布状态以 build/release_manifest.json.publication 为准。真实 PR、准确 head CI、合并后 main 和上游运行结果在发生后追加，不能在准备阶段预先标记已发布。
+已通过正式发布 [PR #128](https://github.com/YohakuSama/loonkit/pull/128) 合并，运行时发布提交为 `425433e0c4e7d3e5d8c5494d8767fa9560883479`。最终审阅 head `f22bd7379fae615cff453126642b338b5e5bd429` 的 [Production CI](https://github.com/YohakuSama/loonkit/actions/runs/40113803904) 与 [Beta CI](https://github.com/YohakuSama/loonkit/actions/runs/40113804107) 均通过；合并后的 [main CI](https://github.com/YohakuSama/loonkit/actions/runs/40113944093) 也通过。实际下载 main/LoonKit.lcf 已核对 v6.5.7 标题、上述 SHA256 与原样保留的 GEOIP 指令。后续元数据提交不改变该配置内容。
 
-准备阶段记录：正式发布 [PR #128](https://github.com/YohakuSama/loonkit/pull/128)，测试渠道 [PR #129](https://github.com/YohakuSama/loonkit/pull/129)。原始候选提交 `3388b2565af8e7b660c4af7a46ede011692e0c02` 的 [Beta CI #40113536649](https://github.com/YohakuSama/loonkit/actions/runs/40113536649) 已通过；正式合并仍需最终 PR head 的实际 Production CI 通过，不能使用旧提交的结果代替。
+测试渠道通过 [PR #129](https://github.com/YohakuSama/loonkit/pull/129) 同步，beta 合并提交 `a0898bd422b7335cc705932c0ab36f7375a53562` 的 [Beta CI](https://github.com/YohakuSama/loonkit/actions/runs/40113948082) 通过。发展中 beta 的正式回滚基线已改为本次发布提交；冻结 foundation manifest 保留构建时原字节及其 hash。
+
+[合并后的真实上游审阅](https://github.com/YohakuSama/loonkit/actions/runs/40113944082) 成功，stage 实际 checkout 上述 beta 合并提交，验证 v6.5.8-beta.1 的 36 个资源，来源完整并比较 33 组，结果为 `NO_ROUTINE_ADDITIONS`，写入 job 按条件跳过。自动 PR 创建权限和真实 CI dispatch 仍待首次合格增量核实；本轮未添加合成规则或创建空草稿。
+
+本地 101 项 Python、12 项 Node 测试通过；CI 同时覆盖全量不可变资源校验、历史构建、许可资料一致性与 11 个历史回滚资源。清理盘点没有新增可删候选，继续保留现役依赖与必要冻结基线。发布状态以 build/release_manifest.json.publication 为准。
 
 ## 必要检查
 

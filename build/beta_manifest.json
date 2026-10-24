@@ -3,7 +3,7 @@
   "channel": "beta",
   "version": "v6.5.8-beta.1",
   "status": "DEVELOPMENT_CHANNEL_FROM_V6_5_7_FOUNDATION",
-  "production_baseline": "67c9060fc41c0fc9c7960612f33c9eb6e4c33cbe",
+  "production_baseline": "425433e0c4e7d3e5d8c5494d8767fa9560883479",
   "stable_release": "v6.5.7",
   "candidate_source_commit": "8f144d9d74dfae4e5064e4c1eeed23addd62199d",
   "immutable_overlay_commit": "8f144d9d74dfae4e5064e4c1eeed23addd62199d",
