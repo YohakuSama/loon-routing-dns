@@ -536,12 +536,17 @@
   "legacy_compiler_rule_count": 26,
   "legacy_compiler_matcher_count": 197765,
   "publication": {
-    "status": "RELEASE_PR_PENDING_CI",
-    "published_main_commit_sha": null,
+    "status": "VERIFIED_ON_MAIN",
+    "published_main_commit_sha": "d28aa3d71a3339aa7a540bd3bd31f90e1090e52d",
     "previous_main_commit_sha": "d6170dd640325c27d16ae780d510c4868b5cc2d9",
     "rollback_fixed_commit_sha": "7c7ca4f67180437c962c3bc7eae07c6042e519d6",
     "owner_request_date": "2026-10-24",
-    "tested_beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299"
+    "tested_beta_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40093753299",
+    "production_ci_run": "https://github.com/YohakuSama/loonkit/actions/runs/40101935676",
+    "published_raw_url": "https://raw.githubusercontent.com/YohakuSama/loonkit/main/LoonKit.lcf",
+    "verified_config_sha256": "d75c37a9dc0dcb8a109c1cdaa0cae647a95b7f70dcf22ec94a5e1ac179528b11",
+    "runtime_delta": "ONLY_DNS_REJECT_MODE_NOANSWER_TO_LOOPBACKIP",
+    "device_validation": "NOT_YET_RECORDED"
   },
   "previous_release": {
     "version": "v6.5.5",

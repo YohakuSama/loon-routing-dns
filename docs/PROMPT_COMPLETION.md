@@ -1,5 +1,10 @@
 # 完整提示词实施对照
 
+## 2026-10-24：v6.5.6 DNS 回环拦截
+
+维护者指定跟随官方 DNS + LoopbackIP 示例；[PR #124](https://github.com/YohakuSama/loonkit/pull/124) 已发布。仅变更 DNS 拒绝返回方式，36 个规则资源和 AliDNS 不变。图中 Loon App 开关与 iOS 证书仍由用户自行操作，具体见 [Loon App 设置](./LOON_APP_SETTINGS.md)。本节以下 v6.5.5/beta 工程过程均属当时历史记录。
+
+
 ## 2026-10-24：v6.5.5 正式发布
 
 前述 beta 阶段的记录均为历史状态。v6.5.5 在 [PR #119](https://github.com/YohakuSama/loonkit/pull/119) 完成确定性迁移和版本验证；维护者明确批准该候选单次发布，没有提供的七天观察与场景结果仍保持缺失，不得写作已通过。

@@ -2,7 +2,7 @@
 
 ## v6.5.6 DNS 行为维护
 
-v6.5.6 仅从 `build/baselines/v6.5.5/LoonKit.lcf` 迁移 `NOANSWER` 为 `LOOPBACKIP`，用 `scripts/prepare_release_v656.py` 与 `scripts/verify_release_v656.py` 确认确定性及旧版完整性，所有其他运行资源保持不变。版本 v6.5.5 的一次性发布授权不可用于新候选。App 级开关与证书安装无法由仓库远程设置，参阅 [Loon App 说明](./LOON_APP_SETTINGS.md)。
+v6.5.6 已经由 [发布 PR #124](https://github.com/YohakuSama/loonkit/pull/124) 合入，原始 main SHA `d28aa3d71a3339aa7a540bd3bd31f90e1090e52d`，真实合并后 [Production CI](https://github.com/YohakuSama/loonkit/actions/runs/40101935676) 通过。v6.5.6 仅从 `build/baselines/v6.5.5/LoonKit.lcf` 迁移 `NOANSWER` 为 `LOOPBACKIP`，用 `scripts/prepare_release_v656.py` 与 `scripts/verify_release_v656.py` 确认确定性及旧版完整性，所有其他运行资源保持不变。版本 v6.5.5 的一次性发布授权不可用于新候选。App 级开关与证书安装无法由仓库远程设置，参阅 [Loon App 说明](./LOON_APP_SETTINGS.md)。
 
 ## v6.5.5 正式发布
 
