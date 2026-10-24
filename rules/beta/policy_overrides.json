@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "version": "v6.5.5-beta.1",
+  "provenance": {
+    "base_commit": "87ba3f50e80ba90212a0eeba7df223949f50e32b",
+    "rules_release_commit": "9bbac4c9aa0ec33c82ab5fe03648127f3f4754f4",
+    "local_rules_source": "main/LoonKit.lcf",
+    "steamcn_source": "rules/releases/vNext-RC2/SteamCN.list"
+  },
+  "intent": "Move local ad blocking and six service-owner fallback groups into controlled remote subscriptions; split global Steam suffixes from China-direct candidates. Exact DNS and device behavior pending review.",
+  "adblock_local_rules": [
+    "DOMAIN,buttons.reddit.com",
+    "DOMAIN,platform.linkedin.com",
+    "DOMAIN-SUFFIX,a1.api.bbc.co.uk",
+    "DOMAIN-SUFFIX,a1.api.bbc.com",
+    "DOMAIN-SUFFIX,adeventtracker.spotify.com",
+    "DOMAIN-SUFFIX,ads.linkedin.com",
+    "DOMAIN-SUFFIX,alb.reddit.com",
+    "DOMAIN-SUFFIX,analytics.m7g.twitch.tv",
+    "DOMAIN-SUFFIX,analytics.pointdrive.linkedin.com",
+    "DOMAIN-SUFFIX,analytics.spotify.com",
+    "DOMAIN-SUFFIX,client-event-reporter.twitch.tv",
+    "DOMAIN-SUFFIX,events.reddit.com",
+    "DOMAIN-SUFFIX,fan.twitch.tv",
+    "DOMAIN-SUFFIX,log.spotify.com",
+    "DOMAIN-SUFFIX,pixel-static.spotify.com",
+    "DOMAIN-SUFFIX,pixel.reddit.com",
+    "DOMAIN-SUFFIX,pixel.spotify.com",
+    "DOMAIN-SUFFIX,sa.bbc.co.uk",
+    "DOMAIN-SUFFIX,spade.twitch.tv",
+    "DOMAIN-SUFFIX,ssc.api.bbc.com",
+    "DOMAIN-SUFFIX,stats.bbc.co.uk",
+    "DOMAIN-SUFFIX,torimochi.line-apps.com",
+    "DOMAIN-SUFFIX,trowel.twitch.tv",
+    "DOMAIN-SUFFIX,visualscience.external.bbc.co.uk",
+    "DOMAIN-SUFFIX,w3-reporting.reddit.com",
+    "DOMAIN-SUFFIX,weblb-wg.gslb.spotify.com"
+  ],
+  "service_groups": {
+    "Spotify": [
+      "DOMAIN-SUFFIX,spotify.com",
+      "DOMAIN-SUFFIX,scdn.co",
+      "DOMAIN-SUFFIX,byspotify.com",
+      "DOMAIN-SUFFIX,pscdn.co",
+      "DOMAIN-SUFFIX,spoti.fi",
+      "DOMAIN-SUFFIX,spotify-com.akamaized.net",
+      "DOMAIN-SUFFIX,spotify-everywhere.com",
+      "DOMAIN-SUFFIX,spotify.app.link",
+      "DOMAIN-SUFFIX,spotify.design",
+      "DOMAIN-SUFFIX,spotify.link",
+      "DOMAIN-SUFFIX,spotifycdn.com",
+      "DOMAIN-SUFFIX,spotifycdn.net",
+      "DOMAIN-SUFFIX,spotifycharts.com",
+      "DOMAIN-SUFFIX,spotifycodes.com",
+      "DOMAIN-SUFFIX,spotilocal.com"
+    ],
+    "Twitch": [
+      "DOMAIN-SUFFIX,twitch.tv",
+      "DOMAIN-SUFFIX,ttvnw.net",
+      "DOMAIN-SUFFIX,ext-twitch.tv",
+      "DOMAIN-SUFFIX,jtvnw.net",
+      "DOMAIN-SUFFIX,live-video.net",
+      "DOMAIN-SUFFIX,twitchcdn.net",
+      "DOMAIN-SUFFIX,twitchcon.com",
+      "DOMAIN-SUFFIX,twitchsvc.net"
+    ],
+    "BBC": [
+      "DOMAIN-SUFFIX,bbc.co.uk",
+      "DOMAIN-SUFFIX,bbc.com",
+      "DOMAIN-SUFFIX,bbc.co",
+      "DOMAIN-SUFFIX,bbc.in",
+      "DOMAIN-SUFFIX,bbc.net.uk",
+      "DOMAIN-SUFFIX,bbci.co",
+      "DOMAIN-SUFFIX,bbci.co.uk",
+      "DOMAIN-SUFFIX,bbcmedia.co.uk",
+      "DOMAIN-SUFFIX,bbcchinese.com",
+      "DOMAIN-SUFFIX,bbcverticals.com",
+      "DOMAIN-SUFFIX,bbc.mp-pxcdn.com",
+      "DOMAIN-SUFFIX,bbcfmt.hs.llnwd.net",
+      "DOMAIN-SUFFIX,bbcfmt.s.llnwi.net"
+    ],
+    "Line": [
+      "DOMAIN-SUFFIX,line.me",
+      "DOMAIN-SUFFIX,line-apps.com",
+      "DOMAIN-SUFFIX,gcld-line.com",
+      "DOMAIN-SUFFIX,lin.ee",
+      "DOMAIN-SUFFIX,line-apps-beta.com",
+      "DOMAIN-SUFFIX,line-apps-rc.com",
+      "DOMAIN-SUFFIX,line-beta.me",
+      "DOMAIN-SUFFIX,line-cdn.net",
+      "DOMAIN-SUFFIX,line-scdn.net",
+      "DOMAIN-SUFFIX,line.biz",
+      "DOMAIN-SUFFIX,linecorp.com",
+      "DOMAIN-SUFFIX,linegame.jp",
+      "DOMAIN-SUFFIX,linemobile.com"
+    ],
+    "Reddit": [
+      "DOMAIN-SUFFIX,reddit.com",
+      "DOMAIN-SUFFIX,redd.it",
+      "DOMAIN-SUFFIX,reddit.app.link",
+      "DOMAIN-SUFFIX,redditblog.com",
+      "DOMAIN-SUFFIX,reddithelp.com",
+      "DOMAIN-SUFFIX,redditinc.com",
+      "DOMAIN-SUFFIX,redditmail.com",
+      "DOMAIN-SUFFIX,redditmedia.com",
+      "DOMAIN-SUFFIX,redditspace.com",
+      "DOMAIN-SUFFIX,redditstatic.com",
+      "DOMAIN-SUFFIX,redditstatus.com",
+      "DOMAIN-SUFFIX,reddituploads.com"
+    ],
+    "Linkedin": [
+      "DOMAIN-SUFFIX,linkedin.com",
+      "DOMAIN-SUFFIX,licdn.com",
+      "DOMAIN-SUFFIX,linkedin.at",
+      "DOMAIN-SUFFIX,linkedin.cn",
+      "DOMAIN-SUFFIX,licdn.cn",
+      "DOMAIN-SUFFIX,lnkd.in"
+    ]
+  },
+  "steamcn_mainland_candidates": [
+    "DOMAIN,csgo.wmsj.cn",
+    "DOMAIN,dl.steam.clngaa.com",
+    "DOMAIN,dl.steam.ksyna.com",
+    "DOMAIN,dota2.wmsj.cn",
+    "DOMAIN,st.dl.bscstorage.net",
+    "DOMAIN,st.dl.eccdnx.com",
+    "DOMAIN,st.dl.pinyuncloud.com",
+    "DOMAIN,steampipe.steamcontent.tnkjmec.com",
+    "DOMAIN,steampowered.com.8686c.com",
+    "DOMAIN,steamstatic.com.8686c.com",
+    "DOMAIN,wmsjsteam.com",
+    "DOMAIN,xz.pphimalayanrt.com",
+    "DOMAIN-SUFFIX,steamchina.com"
+  ],
+  "steam_global_rules": [
+    "DOMAIN-SUFFIX,cm.steampowered.com",
+    "DOMAIN-SUFFIX,steamcontent.com",
+    "DOMAIN-SUFFIX,steamserver.net",
+    "DOMAIN-SUFFIX,steamusercontent.com"
+  ],
+  "service_parent_roots_remove_from_local": [
+    "Microsoft",
+    "Facebook"
+  ],
+  "warnings": [
+    "ChinaDirect remains pinned and unmodified; .cn / USER-AGENT audit unresolved.",
+    "SteamCN candidate host locality needs on-device evidence.",
+    "Resource disable does not disable NovaXNS filtering."
+  ]
+}

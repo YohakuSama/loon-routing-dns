@@ -1,0 +1,9 @@
+# LoonKit v6.5.5-beta.1 immutable beta overlay; generated from rules/beta/policy_overrides.json
+DOMAIN-SUFFIX,twitch.tv
+DOMAIN-SUFFIX,ttvnw.net
+DOMAIN-SUFFIX,ext-twitch.tv
+DOMAIN-SUFFIX,jtvnw.net
+DOMAIN-SUFFIX,live-video.net
+DOMAIN-SUFFIX,twitchcdn.net
+DOMAIN-SUFFIX,twitchcon.com
+DOMAIN-SUFFIX,twitchsvc.net
